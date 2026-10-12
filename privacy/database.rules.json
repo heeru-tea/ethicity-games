@@ -1,0 +1,107 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "teachers": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": false
+      }
+    },
+    "rooms": {
+      ".indexOn": [
+        "owner"
+      ],
+      ".read": "auth != null && query.orderByChild == 'owner' && query.equalTo == auth.uid",
+      "$room": {
+        ".read": "auth != null && data.child('owner').val() == auth.uid",
+        ".write": "auth != null && ((!data.exists() && newData.child('owner').val() == auth.uid) || (data.child('owner').val() == auth.uid && (!newData.exists() || newData.child('owner').val() == auth.uid)))",
+        ".validate": "newData.hasChildren(['owner','control']) && $room.matches(/^[a-f0-9]{32}$/)",
+        "owner": {
+          ".validate": "newData.isString() && (!data.exists() || newData.val() == data.val())"
+        },
+        "control": {
+          ".read": "auth != null && ((auth != null && root.child('rooms').child($room).child('owner').val() == auth.uid) || root.child('rooms').child($room).child('members').child(auth.uid).exists() || data.child('accepting').val() == true)",
+          ".validate": "newData.hasChildren(['round','phase','accepting','createdAt','updatedAt']) && ((newData.child('phase').val() == 'lobby' && newData.child('round').val() == -1) || (newData.child('phase').val() != 'lobby' && newData.child('round').val() >= 0)) && (newData.child('phase').val() != 'ended' || newData.child('round').val() == 7)",
+          "round": {
+            ".validate": "newData.isNumber() && newData.val() >= -1 && newData.val() <= 7 && newData.val() % 1 == 0"
+          },
+          "phase": {
+            ".validate": "newData.isString() && (newData.val() == 'lobby' || newData.val() == 'collect' || newData.val() == 'reveal' || newData.val() == 'ended')"
+          },
+          "accepting": {
+            ".validate": "newData.isBoolean()"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        },
+        "members": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            ".write": "auth != null && auth.uid == $uid && !data.exists() && newData.exists() && root.child('rooms').child($room).child('control').child('accepting').val() == true && root.child('rooms').child($room).child('owner').exists()",
+            ".validate": "newData.hasChildren(['joinedAt'])",
+            "joinedAt": {
+              ".validate": "newData.isNumber() && newData.val() <= now + 60000 && newData.val() >= now - 60000"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "answers": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            "$round": {
+              ".write": "auth != null && root.child('rooms').child($room).child('members').child(auth.uid).exists() && auth.uid == $uid && !data.exists() && newData.exists() && ((root.child('rooms').child($room).child('control').child('phase').val() == 'collect' && $round == root.child('rooms').child($room).child('control').child('round').val() + '') || root.child('rooms').child($room).child('control').child('phase').val() == 'ended')",
+              ".validate": "$round.matches(/^[0-7]$/) && newData.hasChildren(['choice','signals','at'])",
+              "choice": {
+                ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 3 && newData.val() % 1 == 0"
+              },
+              "signals": {
+                ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 7 && newData.val() % 1 == 0"
+              },
+              "at": {
+                ".validate": "newData.isNumber() && newData.val() <= now + 60000 && newData.val() >= now - 60000"
+              },
+              "$other": {
+                ".validate": false
+              }
+            }
+          }
+        },
+        "results": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            ".write": "auth != null && root.child('rooms').child($room).child('members').child(auth.uid).exists() && auth.uid == $uid && newData.exists() && (root.child('rooms').child($room).child('control').child('phase').val() == 'ended' || (root.child('rooms').child($room).child('control').child('phase').val() == 'reveal' && root.child('rooms').child($room).child('control').child('round').val() == 7)) && root.child('rooms').child($room).child('answers').child(auth.uid).child('0').exists() && root.child('rooms').child($room).child('answers').child(auth.uid).child('1').exists() && root.child('rooms').child($room).child('answers').child(auth.uid).child('2').exists() && root.child('rooms').child($room).child('answers').child(auth.uid).child('3').exists() && root.child('rooms').child($room).child('answers').child(auth.uid).child('4').exists() && root.child('rooms').child($room).child('answers').child(auth.uid).child('5').exists() && root.child('rooms').child($room).child('answers').child(auth.uid).child('6').exists() && root.child('rooms').child($room).child('answers').child(auth.uid).child('7').exists()",
+            ".validate": "newData.hasChildren(['game','completed','ending','card'])",
+            "game": {
+              ".validate": "newData.val() == 'privacy'"
+            },
+            "completed": {
+              ".validate": "newData.val() == true"
+            },
+            "ending": {
+              ".validate": "newData.val() == 'A' || newData.val() == 'B' || newData.val() == 'C'"
+            },
+            "card": {
+              ".validate": "(newData.parent().child('ending').val() == 'A' && newData.val() == '개인정보는 모을 때부터 지울 때까지 보호해요.') || (newData.parent().child('ending').val() == 'B' && newData.val() == '정보가 왜 필요한지 확인하고 신중하게 제공해요.') || (newData.parent().child('ending').val() == 'C' && newData.val() == '남은 정보와 공유 설정을 확인하고 필요한 조치를 해요.')"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}
