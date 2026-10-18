@@ -1,12 +1,20 @@
 """게임 실행 파일은 index.html 하나입니다. 개발 원본을 바꾼 뒤 이 파일을 실행합니다."""
 from pathlib import Path
-import json, re, html, hashlib
+import json, re, html, hashlib, base64
 
 HERE=Path(__file__).resolve().parent
 OUT=HERE.parent
 REFERENCE=OUT.parent/'privacy-v3'/'index.html'
 ref=REFERENCE.read_text(encoding='utf-8')
 story=json.loads((OUT/'scenario.json').read_text(encoding='utf-8'))
+scene_manifest=json.loads((HERE/'scene-images.json').read_text(encoding='utf-8'))
+assert [s['id'] for s in scene_manifest['scenes']]==[r['id'] for r in story['rounds']]
+scenes={}
+for scene in scene_manifest['scenes']:
+    image=(OUT/'assets'/'scenes'/scene['file']).read_bytes()
+    assert image[:4]==b'RIFF' and image[8:12]==b'WEBP', 'Expected a WebP scene image'
+    scenes[str(scene['id'])]={k:scene[k] for k in ('alt','caption','width','height')}
+    scenes[str(scene['id'])]['src']='data:image/webp;base64,'+base64.b64encode(image).decode('ascii')
 def block(name):
     return re.search(r'<script id="'+name+r'"[^>]*>(.*?)</script>',ref,re.S)[1]
 config=json.loads(block('game-config'))
@@ -29,10 +37,11 @@ out='''<!DOCTYPE html>
 <div id="toast" class="toast hidden" role="status"></div>
 <script id="game-data" type="application/json">'''+dump(story)+'''</script>
 <script id="game-config" type="application/json">'''+dump(config)+'''</script>
+<script id="scene-assets" type="application/json">'''+dump(scenes)+'''</script>
 <script id="game-assets" type="application/json">'''+block('game-assets')+'''</script>
 <script id="game-code">'''+code+'''</script></body></html>'''
 (OUT/'index.html').write_text(out,encoding='utf-8',newline='\n')
-(OUT/'NanumSquareRound-LICENSE.txt').write_text(license_text,encoding='utf-8')
+(OUT/'NanumSquareRound-LICENSE.txt').write_text(license_text,encoding='utf-8',newline='\n')
 
 # 시나리오 문서도 같은 원본으로 만듭니다. 실행 파일은 이 문서를 요청하지 않습니다.
 e=html.escape
@@ -40,6 +49,8 @@ parts=[f'<h1>핵심 탐구 질문</h1><p class="question">{e(story["question"])}
 for n,v in story['elements'].items(): parts.append(f'<tr><td>{n}</td><td>{e(v["text"])}</td><td>{e(v["question"])}</td></tr>')
 parts+=['</table>',f'<h1>{e(story["title"])}</h1><p>게임 코드: harm · 도입 1분 + 8×100초 + 정리 1분 = 약 15분 20초</p>',f'<h2>도입</h2><p>{e(story["intro"]["text"])}</p><blockquote>다온: {e(story["intro"]["dialogue"])}</blockquote>']
 for r in story['rounds']:
+    scene=scenes[str(r['id'])]
+    parts.append(f'<figure style="margin:32px 0 0"><img src="{scene["src"]}" alt="{e(scene["alt"])}" width="{scene["width"]}" height="{scene["height"]}" style="display:block;width:100%;height:auto;border-radius:12px" loading="lazy"><figcaption>{e(scene["caption"])}</figcaption></figure>')
     parts += [f'<h2>{r["id"]}. {e(r["title"])}</h2><p class="question">{e(r["question"])}</p><p>{e(r["situation"])}</p><blockquote>다온: {e(r["dialogue"])}</blockquote><h3>화면 속 자료</h3>']
     for m in r['media']: parts.append(f'<p><b>{e(m["label"])}</b> — {e(m["text"])}</p>')
     parts.append('<h3>위험 신호</h3><ul>'+''.join(f'<li>{e(t)}</li>' for t in r['clues'])+'</ul><table><tr><th>선택</th><th>내용</th><th>결과·피드백</th><th>다온의 반응</th><th>학습 요소</th></tr>')
@@ -53,5 +64,5 @@ for g in story['recap']:
     for c in g['choices']: parts.append(f'<li>{e(c["text"])} <small>요소 {", ".join(map(str,c["tags"]))}</small></li>')
     parts.append('</ul>')
 doc='<!DOCTYPE html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>침해금지 시나리오</title><style>body{font-family:"Malgun Gothic",sans-serif;line-height:1.8;color:#163b43;max-width:1100px;margin:auto;padding:30px;background:#fffdf2}table{width:100%;border-collapse:collapse;margin:18px 0}td,th{border:1px solid #bed5c8;padding:12px;text-align:left;vertical-align:top}th,.question{background:#e2f2e7}.question{padding:16px;font-weight:bold}blockquote{border-left:4px solid #145d4f;margin:18px 0;padding:10px 20px;background:#f4f8ec}h2{margin-top:45px}@media print{h2{break-after:avoid}tr{break-inside:avoid}}</style><body>'+''.join(parts)+'</body></html>'
-(OUT/'시나리오.html').write_text(doc,encoding='utf-8')
+(OUT/'시나리오.html').write_text(doc,encoding='utf-8',newline='\n')
 print(json.dumps({'rounds':len(story['rounds']),'htmlBytes':len(out.encode()),'sha256':hashlib.sha256(out.encode()).hexdigest()},ensure_ascii=False))
