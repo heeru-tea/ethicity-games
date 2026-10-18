@@ -1,0 +1,17 @@
+/* ver4: 생활 사례와 새 장면 그림을 위한 화면 구성 */
+.case-screen .scene-picture img{object-fit:contain;background:#eaf1e8;aspect-ratio:16/9}
+.scene-picture{overflow:hidden}
+.observation-items{grid-template-columns:repeat(2,minmax(0,1fr));display:grid;gap:12px}
+.observation-item{align-items:flex-start;border:1px solid #ccd8d2;background:#fffdf7;padding:18px;border-radius:16px;min-width:0}
+.observation-item strong{font-size:19px;line-height:1.5}
+.observation-item p{font-size:17px;line-height:1.65;margin:8px 0 0;word-break:keep-all;overflow-wrap:anywhere}
+.signal-picks{grid-template-columns:repeat(2,minmax(0,1fr))}
+.choice{line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
+.choice-list{gap:13px}
+.result-screen .change{padding:22px;border-left:5px solid #527f74;background:#eff6ec;line-height:1.75}
+.trailstep.current{box-shadow:inset 0 -4px #25766a}
+.trailstep .dots{letter-spacing:3px}
+.intro-scene .scene-picture{height:100%;margin:0}
+.intro-scene .scene-picture img{width:100%;height:100%;object-fit:cover}
+.intro-scene .scene-picture figcaption{display:none}
+@media(max-width:720px){.observation-items,.signal-picks{grid-template-columns:1fr}.observation-item{padding:15px}.choice{font-size:18px}.trailstep .dots{display:none}.trailstep b{font-size:13px}.scene-picture figcaption{font-size:12px;gap:8px}.case-dialogue{padding:18px}.intro-scene .scene-picture img{aspect-ratio:16/9;height:auto}}

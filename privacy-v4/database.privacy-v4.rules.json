@@ -1,0 +1,102 @@
+{
+  "rules": {
+    "roomsV4": {
+      ".indexOn": [
+        "owner"
+      ],
+      ".read": "auth != null && query.orderByChild == 'owner' && query.equalTo == auth.uid",
+      "$room": {
+        ".read": "auth != null && data.child('owner').val() == auth.uid",
+        ".write": "auth != null && ((!data.exists() && newData.child('owner').val() == auth.uid) || (data.child('owner').val() == auth.uid && (!newData.exists() || newData.child('owner').val() == auth.uid)))",
+        ".validate": "newData.hasChildren(['owner','control']) && $room.matches(/^[a-f0-9]{32}$/)",
+        "owner": {
+          ".validate": "newData.isString() && (!data.exists() || newData.val() == data.val())"
+        },
+        "control": {
+          ".read": "auth != null && ((auth != null && root.child('roomsV4').child($room).child('owner').val() == auth.uid) || root.child('roomsV4').child($room).child('members').child(auth.uid).exists() || data.child('accepting').val() == true)",
+          ".validate": "newData.hasChildren(['round','phase','accepting','createdAt','updatedAt']) && ((newData.child('phase').val() == 'lobby' && newData.child('round').val() == -1) || (newData.child('phase').val() != 'lobby' && newData.child('round').val() >= 0)) && (newData.child('phase').val() != 'ended' || newData.child('round').val() == 7)",
+          "round": {
+            ".validate": "newData.isNumber() && newData.val() >= -1 && newData.val() <= 7 && newData.val() % 1 == 0"
+          },
+          "phase": {
+            ".validate": "newData.isString() && (newData.val() == 'lobby' || newData.val() == 'collect' || newData.val() == 'reveal' || newData.val() == 'ended')"
+          },
+          "accepting": {
+            ".validate": "newData.isBoolean()"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        },
+        "members": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            ".write": "auth != null && auth.uid == $uid && newData.exists() && root.child('roomsV4').child($room).child('owner').exists() && (data.exists() || root.child('roomsV4').child($room).child('control').child('accepting').val() == true)",
+            ".validate": "newData.hasChildren(['joinedAt','nickname'])",
+            "joinedAt": {
+              ".validate": "newData.isNumber() && ((!data.exists() && newData.val() <= now + 60000 && newData.val() >= now - 60000) || (data.exists() && newData.val() == data.val()))"
+            },
+            "$other": {
+              ".validate": false
+            },
+            "nickname": {
+              ".validate": "newData.isString() && newData.val().matches(/^[가-힣]{1,5}$/) && !newData.val().matches(/.*(시+발+|씨+발+|씨+팔+|시+팔+|씹+|좆+|좇+|지+랄+|병+신+|븅+신+|등+신+|새+끼+|개+새+|꺼+져+|죽+어+|멍+청+|바+보+|느+금+|니+엄+|니+애+|느+개+비+|창+녀+|성+기+|자+지+|보+지+|섹+스+|야+동+|변+태+).*/)"
+            }
+          }
+        },
+        "answers": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            "$round": {
+              ".write": "auth != null && root.child('roomsV4').child($room).child('members').child(auth.uid).exists() && auth.uid == $uid && !data.exists() && newData.exists() && ((root.child('roomsV4').child($room).child('control').child('phase').val() == 'collect' && $round == root.child('roomsV4').child($room).child('control').child('round').val() + '') || root.child('roomsV4').child($room).child('control').child('phase').val() == 'ended')",
+              ".validate": "$round.matches(/^[0-7]$/) && newData.hasChildren(['choice','signals','at'])",
+              "choice": {
+                ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 3 && newData.val() % 1 == 0"
+              },
+              "signals": {
+                ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 15 && newData.val() % 1 == 0"
+              },
+              "at": {
+                ".validate": "newData.isNumber() && newData.val() <= now + 60000 && newData.val() >= now - 60000"
+              },
+              "$other": {
+                ".validate": false
+              }
+            }
+          }
+        },
+        "results": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            ".write": "auth != null && root.child('roomsV4').child($room).child('members').child(auth.uid).exists() && auth.uid == $uid && newData.exists() && (root.child('roomsV4').child($room).child('control').child('phase').val() == 'ended' || (root.child('roomsV4').child($room).child('control').child('phase').val() == 'reveal' && root.child('roomsV4').child($room).child('control').child('round').val() == 7)) && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('0').exists() && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('1').exists() && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('2').exists() && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('3').exists() && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('4').exists() && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('5').exists() && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('6').exists() && root.child('roomsV4').child($room).child('answers').child(auth.uid).child('7').exists()",
+            ".validate": "newData.hasChildren(['game','completed','ending','card'])",
+            "game": {
+              ".validate": "newData.val() == 'privacy'"
+            },
+            "completed": {
+              ".validate": "newData.val() == true"
+            },
+            "ending": {
+              ".validate": "(newData.val() == 'A' && ((root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 2 ? 1 : 2)) >= 13) || (newData.val() == 'B' && ((root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 2 ? 1 : 2)) >= 8 && ((root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 2 ? 1 : 2)) < 13) || (newData.val() == 'C' && ((root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('0').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 1 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('1').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('2').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('3').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('4').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('5').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('6').child('choice').val() == 2 ? 1 : 2) + (root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 0 ? 0 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 1 ? 1 : root.child('roomsV4').child($room).child('answers').child($uid).child('7').child('choice').val() == 2 ? 1 : 2)) < 8)"
+            },
+            "card": {
+              ".validate": "(newData.parent().child('ending').val() == 'A' && newData.val() == '나와 다른 사람의 정보는 모을 때부터 지울 때까지 보호합니다.') || (newData.parent().child('ending').val() == 'B' && newData.val() == '정보가 왜 필요한지 확인하고, 필요한 것만 신중하게 줍니다.') || (newData.parent().child('ending').val() == 'C' && newData.val() == '남은 정보와 공유 설정을 정리하고 정보를 주기 전에 확인합니다.')"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}

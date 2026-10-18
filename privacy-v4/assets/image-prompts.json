@@ -1,0 +1,34 @@
+[
+  {
+    "key": "signup",
+    "prompt": "At an after-school library activity desk, the green-cap friend excitedly studies a large upright tablet showing a fictional AI assistant signup interface. A vibrant coupon/sticker pack reward card with cute smiling face icons catches his attention. On the screen are multiple empty registration rows represented ONLY by tiny pictograms of user, calendar, phone, school building and location pin; a prominent group of empty checkboxes and a broad colorful button. Beside the tablet a schoolbag and pencil case. A cozy sunlit school library in background. Clearly show the allure of the coupon and the long request list without preselecting anything."
+  },
+  {
+    "key": "group-chat",
+    "prompt": "In a cozy classroom reading corner after class, the green-cap friend holds a smartphone showing a fictional group chat screenshot. In the foreground another larger tablet displays the same chat screenshot ready to attach to an AI chat box, with several distinct round cartoon profile portraits and short colored text-like blocks that contain no legible letters. Friend looks thoughtful, not distressed; other children converse amicably far in the background. The core object is the unsent group-chat screenshot containing multiple people's profile images. No anger/violence, no actual names."
+  },
+  {
+    "key": "class-photo",
+    "prompt": "At a bright school courtyard picnic table, the green-cap friend is using a tablet photo editor. The screen prominently shows a cheerful group excursion photograph of FIVE fictional schoolchildren in green outdoor vests, in front of a leafy park; vest badges are blank rectangles with no real name. Beside the selected photo is a visible photo library grid containing distinct home, family, park and pet thumbnails plus two visual permission cards: an entire photo grid vs one selected photo, no words. A little picnic bag and cap on table. Show the question of editing and sharing a group photo before any decision."
+  },
+  {
+    "key": "account",
+    "prompt": "In a friendly school computer club corner, the green-cap friend and a different short-haired school friend in a peach sweater talk beside one open laptop. The laptop shows a fictional AI account page with a round profile portrait, miniature chat/history and picture tiles, and password dots. On the desk sits a birthday calendar represented by a cake icon and numbered-looking but illegible blocks, and two simple separate notebook covers. The second child gestures politely toward the same account; the green-cap child considers. Password is only bullet dots, never show real example credentials. No hacking, villains, padlocks giving the solution."
+  },
+  {
+    "key": "reward",
+    "prompt": "At a colorful study desk, green-cap friend leans toward a tablet with a shiny cosmetic avatar outfit reward pop-up in purple and gold. The popup shows an appealing avatar costume and a three-small-calendar-card icon, two neutral rounded decision buttons of different visual prominence and a small close X icon. Behind the popup is an AI chat and photo editing page. Nearby two small optional-use pictograms depict advertising megaphone and AI robot gears, linked visually by the popup layout but no arrow diagram. Emphasize the tempting reward and fine-print-like unreadable short lines, no actual letters or words. Friend is curious and tempted, not smiling with completed reward."
+  },
+  {
+    "key": "public-photo",
+    "prompt": "Outside a fictional sunny elementary school gate, green-cap friend stands taking time to inspect a large smartphone social photo posting screen. The phone contains a cheerful portrait of the friend and a classmate with school gate in the background. Within that picture a bag's blank name-tag card and a blank school sign are clearly visible, plus a small location pin tag under the photo and a globe privacy icon. The real school behind them has a blank sign, no text. Soft heart symbols float only inside the app interface indicating expected likes, not a success result. Clear photo details suitable to discuss hidden personal clues."
+  },
+  {
+    "key": "shared-tablet",
+    "prompt": "In a sunlit elementary classroom at the end of class, a wall clock and gently ringing small school bell show it is time to leave. Green-cap friend with backpack is about to return a blue-cased shared tablet to an orderly charging rack of several school tablets. Foreground tablet screen still shows a logged-in profile, chat thumbnails, a downloaded picture file thumbnail and a small save-password key icon; no readable text. A teacher with glasses stands calmly near the rack and an open door, no scolding. Put the shared tablet and its still-visible records in focus, creating a mild time-pressure decision."
+  },
+  {
+    "key": "delete-account",
+    "prompt": "At a calm home study desk one month later, green-cap friend reviews an account-closure screen on a tablet. Nearby phone shows the same fictional AI app icon being considered for removal, without completed removal. Tablet interface contains a profile/account symbol, chat and edited-photo thumbnails, a trash icon and a calendar illustration with a month of blank day squares. In the background a small desktop calendar and potted plant show passage of time. Visual distinction between a device app icon and stored chat/photo records, no technical diagram, no arrows, no outcome checks. Thoughtful warm conclusion atmosphere; no readable words, no real data."
+  }
+]

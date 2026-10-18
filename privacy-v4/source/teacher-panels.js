@@ -1,0 +1,25 @@
+// Normal dashboard and enlarged windows share the same live room listener and rendering.
+function teacherParticipants(){return Object.entries(S.room?.members||{}).sort((a,b)=>(a[1].joinedAt-b[1].joinedAt)||a[0].localeCompare(b[0]));}
+function memberNickname(member,index){return typeof member?.nickname==='string'&&!nicknameError(member.nickname)?member.nickname:'탐험가 '+String(index+1).padStart(2,'0');}
+function teacherChoicePanel(large=false){
+ const room=S.room,c=room.control,participants=teacherParticipants(),total=participants.length,r=STORY.rounds[Math.max(c.round,0)],counts=[0,0,0,0];
+ if(c.round>=0)for(const [uid]of participants){const a=room.answers?.[uid]?.[c.round];if(a&&Number.isInteger(a.choice)&&a.choice>=0&&a.choice<4)counts[a.choice]++;}
+ const revealed=c.phase==='reveal'||c.phase==='ended';
+ return `<section class="panel choice-panel"><div class="panel-heading"><div><span class="tag">${c.phase==='collect'?'교사에게만 보이는 집계':'함께 살펴보는 선택'}</span><h2>선택별 인원</h2></div>${large?'':btn('선택 집계 크게 보기 ↗','open-choices','')+btn('현재 화면 확대','expand-choices','')}</div><p class="small">${c.phase==='collect'?'응답 중에는 이 화면을 학생에게 공유하지 않습니다.':'각 선택을 고른 인원을 실시간으로 확인합니다.'}</p>${c.phase==='lobby'?'<p class="panel-empty">학생들이 입장하고 있습니다.<br>1라운드를 시작하면 선택 집계가 표시됩니다.</p>':`<h3>${c.round+1}라운드 · ${esc(r.title)}</h3><div class="bars">${r.choices.map((choice,i)=>`<div><div class="barlabel"><b>${i+1}.</b> ${esc(choice.text)}</div><div class="barrow"><b>${i+1}</b><div class="bar"><div class="fill ${revealed?choice.kind:''}" style="width:${total?counts[i]/total*100:0}%"></div></div><b>${counts[i]}명</b></div>${revealed?`<p class="small">${LABELS[choice.kind].icon} ${esc(choice.feedback)}</p>`:''}</div>`).join('')}</div><details class="guide"><summary>위험 신호와 학습 요소</summary>${r.signals.filter(x=>x.risk).map(x=>`<p>! ${esc(x.label)}<br>${esc(x.note)}</p>`).join('')}<p>${Object.entries(STORY.elements).map(([n,t])=>NUMS[n-1]+' '+esc(t)).join('<br>')}</p></details>`}</section>`;
+}
+function teacherRosterPanel(large=false){
+ const room=S.room,round=room.control.round,participants=teacherParticipants();
+ return `<section class="panel roster-panel"><div class="panel-heading"><div><span class="tag">실시간 입장 명단 · ${participants.length}명</span><h2>입장한 학생의 닉네임</h2></div>${large?'':btn('입장 명단 크게 보기 ↗','open-participants','')+btn('현재 화면 확대','expand-participants','')}</div><div class="roster"><table><thead><tr><th>닉네임</th><th>이번 선택</th><th>진행</th><th>완료</th></tr></thead><tbody>${participants.map(([uid,member],i)=>`<tr><td><strong>${esc(memberNickname(member,i))}</strong><small class="member-order">입장 ${String(i+1).padStart(2,'0')}</small></td><td>${room.answers?.[uid]?.[round]?'선택 '+(room.answers[uid][round].choice+1):round<0?'입장 완료':'응답 대기'}</td><td>${Object.keys(room.answers?.[uid]||{}).length} / 8</td><td>${room.results?.[uid]?.completed?'✔ 완료':'—'}</td></tr>`).join('')||'<tr><td colspan="4">아직 입장한 학생이 없습니다.</td></tr>'}</tbody></table></div><p class="small">학생이 수업 입장을 마치면 닉네임이 자동으로 나타납니다. 같은 닉네임은 입장 순서로 구별합니다.<br>이 명단은 입장 기록입니다. 창을 닫은 학생도 명단에 남습니다.</p></section>`;
+}
+function renderTeacherPanel(){
+ const title=S.teacherPanel==='choices'?'선택 집계':'입장 명단';
+ return `<section class="teacher-expanded"><header class="expanded-header"><div><span class="tag">ver4 · 교사 확대 화면</span>${heading(title,2)}<p>${esc(phaseLabel(S.room.control))} · <strong class="${S.network?'':'error'}">${S.network?'● 실시간 연결됨':'! 재연결 중 · 마지막으로 받은 기록입니다'}</strong></p></div><div class="buttons">${btn('화면 가득 보기','panel-fullscreen','primary')}${btn('교사 전체 화면으로','panel-back','')}</div></header>${S.panelNotice?`<p class="notice" role="status">${esc(S.panelNotice)}</p>`:''}${S.error?`<p class="notice error" role="alert">${esc(S.error)}</p>${btn('수업 다시 연결','teacher-reconnect','')}`:''}${S.teacherPanel==='choices'?teacherChoicePanel(true):teacherRosterPanel(true)}</section>`;
+}
+function openTeacherPanel(panel){
+ if(!S.roomId||!S.teacherAllowed||!['choices','participants'].includes(panel))return;
+ const url=new URL(location.href);url.search='';url.hash='';url.searchParams.set('mode','teacher');url.searchParams.set('room',S.roomId);url.searchParams.set('panel',panel);
+ if(S.cloud?.persistent!==false){let child=null;try{child=window.open(url.href,'ethicity-v4-'+S.roomId+'-'+panel,'popup,width=1280,height=850,resizable=yes,scrollbars=yes');}catch{}if(child){try{child.opener=null;child.focus();}catch{}return;}}
+ S.teacherPanel=panel;S.panelNotice=S.cloud?.persistent===false?'이 브라우저는 수업 열쇠를 별도 창과 공유할 수 없어 현재 화면을 확대했습니다.':'새 창이 차단되어 현재 화면을 확대했습니다. 브라우저에서 팝업을 허용하면 별도 창으로 열 수 있습니다.';render(true);
+}
+async function toggleTeacherFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else showToast('이 브라우저에서는 창 크기를 직접 늘려서 사용합니다.');}catch{showToast('전체 화면을 열지 못했습니다. 창 크기를 직접 늘려서 사용합니다.');}}
+function leaveTeacherPanel(){S.teacherPanel=null;S.panelNotice='';const url=new URL(location.href);url.searchParams.delete('panel');history.replaceState(null,'',url.href);render(true);}
