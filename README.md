@@ -8,3 +8,13 @@
 - [학생용 게임·혼자 탐험 실행](https://ethicity-privacy-20261011.web.app/privacy/)
 
 실시간 수업에 참여할 학생에게는 교사 화면의 **학생 입장 링크 복사**로 만든 주소를 공유해 주세요.
+
+
+## 프라이버시 보호 버전 구분
+
+| 폴더 | 버전 | 실행 |
+|---|---|---|
+| [privacy](privacy/) | 기존 v1 보존: ~해요·닉네임 서술 | [교사](https://ethicity-privacy-20261011.web.app/privacy/?mode=teacher) · [학생](https://ethicity-privacy-20261011.web.app/privacy/) |
+| [privacy-v2](privacy-v2/) | 새 v2: ~합니다·당신은·친구와 대화 | [교사](https://ethicity-privacy-20261011.web.app/privacy-v2/?mode=teacher) · [학생](https://ethicity-privacy-20261011.web.app/privacy-v2/) |
+
+2026-10-18: 새 버전은 `privacy-v2`에 추가했습니다. 기존 `privacy` 폴더와 실행 주소는 유지합니다. 실시간 수업 학생에게는 각 버전의 교사 화면에서 만든 학생 입장 링크를 전달합니다.

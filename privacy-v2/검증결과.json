@@ -1,0 +1,513 @@
+{
+  "date": "2026-10-18",
+  "version": 2,
+  "hostingVersion": "2159ece13b61222b",
+  "logic": {
+    "type": "non-browser functional tests",
+    "passed": 20,
+    "results": [
+      {
+        "name": "8 rounds, four choices, five learning elements",
+        "passed": true
+      },
+      {
+        "name": "Cards <=40 characters and polite Korean ending",
+        "passed": true
+      },
+      {
+        "name": "Nickname input restrictions and moderation examples",
+        "passed": true
+      },
+      {
+        "name": "Player save schema and setup-first entry for new and returning players",
+        "passed": true
+      },
+      {
+        "name": "Full eight-round progression ending A",
+        "passed": true
+      },
+      {
+        "name": "Full eight-round progression ending B",
+        "passed": true
+      },
+      {
+        "name": "Full eight-round progression ending C",
+        "passed": true
+      },
+      {
+        "name": "Storage denied: playable through ending",
+        "passed": true
+      },
+      {
+        "name": "Invalid room link shows guidance without crash",
+        "passed": true
+      },
+      {
+        "name": "A different game result does not affect this episode",
+        "passed": true
+      },
+      {
+        "name": "Connection recovery controls and teacher aggregate rendering",
+        "passed": true
+      },
+      {
+        "name": "No external assets or static network requests",
+        "passed": true
+      },
+      {
+        "name": "Case, observation, risk selection, protection choices and feedback are separate screens",
+        "passed": true
+      },
+      {
+        "name": "Back navigation retains selected signals and choice without submitting",
+        "passed": true
+      },
+      {
+        "name": "Live round updates preserve the current screen and new rounds begin with the case",
+        "passed": true
+      },
+      {
+        "name": "All eight scenario illustrations are embedded and referenced by their round",
+        "passed": true
+      },
+      {
+        "name": "Friend name is validated, saved separately and restored without changing player schema",
+        "passed": true
+      },
+      {
+        "name": "Custom friend names and Korean particles apply throughout every scenario and ending",
+        "passed": true
+      },
+      {
+        "name": "Both name drafts survive character changes and blocked storage still starts the story",
+        "passed": true
+      },
+      {
+        "name": "Every choice exposes learning numbers with meanings and feedback explains each element",
+        "passed": true
+      }
+    ]
+  },
+  "dialogue": {
+    "passed": 5,
+    "reports": [
+      {
+        "name": "All narratives use formal Korean and all choices have specific friend reactions",
+        "passed": true
+      },
+      {
+        "name": "Nickname does not address the participant in intro, cases, choices, waiting or all endings",
+        "passed": true
+      },
+      {
+        "name": "Each selected choice displays its own friend reply while learning tags remain intact",
+        "passed": true
+      },
+      {
+        "name": "Typing plan includes both dialogue turns and gates navigation until reveal",
+        "passed": true
+      },
+      {
+        "name": "V1 HTML and rules are preserved; V2 room paths and draft keys are isolated",
+        "passed": true
+      }
+    ]
+  },
+  "teacher": {
+    "passed": 6,
+    "results": [
+      {
+        "name": "New teacher connects anonymously without popup or allowlist read",
+        "passed": true
+      },
+      {
+        "name": "Persisted identity is reused, including previous Google-owned classes",
+        "passed": true
+      },
+      {
+        "name": "Failed connection has a retry that succeeds",
+        "passed": true
+      },
+      {
+        "name": "Navigating away during connection does not reopen the teacher view",
+        "passed": true
+      },
+      {
+        "name": "Memory-only authentication warns before closing or refreshing",
+        "passed": true
+      },
+      {
+        "name": "Teacher route automatically starts connection; home button uses the same flow",
+        "passed": true
+      }
+    ]
+  },
+  "sync": {
+    "type": "Simulated Firebase client, not a live server",
+    "passed": 3,
+    "checks": [
+      "Only server acknowledgement confirms saving; duplicate in-flight sends suppressed",
+      "Rejected writes remain queued and resend during catch-up",
+      "After class ends, the first missed round opens"
+    ],
+    "liveServerVerified": false
+  },
+  "v2Server": {
+    "type": "Deployed Firebase Auth and Realtime Database REST/SSE tests",
+    "passed": 39,
+    "results": [
+      {
+        "name": "Unauthenticated database read denied",
+        "passed": true
+      },
+      {
+        "name": "Student cannot grant teacher role",
+        "passed": true
+      },
+      {
+        "name": "Anonymous teacher can create own room without allowlist",
+        "passed": true
+      },
+      {
+        "name": "Unauthenticated room creation denied",
+        "passed": true
+      },
+      {
+        "name": "Cannot create a room for someone else",
+        "passed": true
+      },
+      {
+        "name": "Another anonymous browser can create its own room",
+        "passed": true
+      },
+      {
+        "name": "Room creator cannot read another room",
+        "passed": true
+      },
+      {
+        "name": "Room creator cannot control another room",
+        "passed": true
+      },
+      {
+        "name": "Room creator cannot delete another room",
+        "passed": true
+      },
+      {
+        "name": "Existing owner cannot transfer ownership",
+        "passed": true
+      },
+      {
+        "name": "Existing owner cannot delete just the ownership field",
+        "passed": true
+      },
+      {
+        "name": "Another user cannot take ownership with parent update",
+        "passed": true
+      },
+      {
+        "name": "Another user cannot take ownership with whole room overwrite",
+        "passed": true
+      },
+      {
+        "name": "Unauthenticated classroom read denied",
+        "passed": true
+      },
+      {
+        "name": "Unknown room fields rejected",
+        "passed": true
+      },
+      {
+        "name": "Owner-filtered room list contains only own classes",
+        "passed": true
+      },
+      {
+        "name": "Querying another owner is denied",
+        "passed": true
+      },
+      {
+        "name": "Student cannot read whole room",
+        "passed": true
+      },
+      {
+        "name": "Invited anonymous student can read open control",
+        "passed": true
+      },
+      {
+        "name": "Membership rejects nickname or other extra data",
+        "passed": true
+      },
+      {
+        "name": "Student can join own membership",
+        "passed": true
+      },
+      {
+        "name": "Second student can join",
+        "passed": true
+      },
+      {
+        "name": "Student cannot change teacher control",
+        "passed": true
+      },
+      {
+        "name": "Submission before teacher opens round denied",
+        "passed": true
+      },
+      {
+        "name": "Teacher opens first round",
+        "passed": true
+      },
+      {
+        "name": "Invalid choice rejected by deployed rules",
+        "passed": true
+      },
+      {
+        "name": "Own answer accepted and acknowledged",
+        "passed": true
+      },
+      {
+        "name": "Teacher realtime stream receives student answer",
+        "passed": true
+      },
+      {
+        "name": "Other student cannot read answer",
+        "passed": true
+      },
+      {
+        "name": "Other student cannot overwrite answer",
+        "passed": true
+      },
+      {
+        "name": "Own accepted answer is immutable",
+        "passed": true
+      },
+      {
+        "name": "Early completion rejected",
+        "passed": true
+      },
+      {
+        "name": "All eight rounds accept own valid choices",
+        "passed": true
+      },
+      {
+        "name": "Teacher closes classroom",
+        "passed": true
+      },
+      {
+        "name": "Arbitrary result card rejected",
+        "passed": true
+      },
+      {
+        "name": "Completed result stored with exact four fields",
+        "passed": true
+      },
+      {
+        "name": "Teacher receives the exact completed result",
+        "passed": true
+      },
+      {
+        "name": "Late student can complete missed round after class",
+        "passed": true
+      },
+      {
+        "name": "Student cannot list classrooms",
+        "passed": true
+      }
+    ],
+    "testDataCleaned": true
+  },
+  "v1Server": {
+    "type": "Deployed Firebase Auth and Realtime Database REST/SSE tests",
+    "passed": 39,
+    "results": [
+      {
+        "name": "Unauthenticated database read denied",
+        "passed": true
+      },
+      {
+        "name": "Student cannot grant teacher role",
+        "passed": true
+      },
+      {
+        "name": "Anonymous teacher can create own room without allowlist",
+        "passed": true
+      },
+      {
+        "name": "Unauthenticated room creation denied",
+        "passed": true
+      },
+      {
+        "name": "Cannot create a room for someone else",
+        "passed": true
+      },
+      {
+        "name": "Another anonymous browser can create its own room",
+        "passed": true
+      },
+      {
+        "name": "Room creator cannot read another room",
+        "passed": true
+      },
+      {
+        "name": "Room creator cannot control another room",
+        "passed": true
+      },
+      {
+        "name": "Room creator cannot delete another room",
+        "passed": true
+      },
+      {
+        "name": "Existing owner cannot transfer ownership",
+        "passed": true
+      },
+      {
+        "name": "Existing owner cannot delete just the ownership field",
+        "passed": true
+      },
+      {
+        "name": "Another user cannot take ownership with parent update",
+        "passed": true
+      },
+      {
+        "name": "Another user cannot take ownership with whole room overwrite",
+        "passed": true
+      },
+      {
+        "name": "Unauthenticated classroom read denied",
+        "passed": true
+      },
+      {
+        "name": "Unknown room fields rejected",
+        "passed": true
+      },
+      {
+        "name": "Owner-filtered room list contains only own classes",
+        "passed": true
+      },
+      {
+        "name": "Querying another owner is denied",
+        "passed": true
+      },
+      {
+        "name": "Student cannot read whole room",
+        "passed": true
+      },
+      {
+        "name": "Invited anonymous student can read open control",
+        "passed": true
+      },
+      {
+        "name": "Membership rejects nickname or other extra data",
+        "passed": true
+      },
+      {
+        "name": "Student can join own membership",
+        "passed": true
+      },
+      {
+        "name": "Second student can join",
+        "passed": true
+      },
+      {
+        "name": "Student cannot change teacher control",
+        "passed": true
+      },
+      {
+        "name": "Submission before teacher opens round denied",
+        "passed": true
+      },
+      {
+        "name": "Teacher opens first round",
+        "passed": true
+      },
+      {
+        "name": "Invalid choice rejected by deployed rules",
+        "passed": true
+      },
+      {
+        "name": "Own answer accepted and acknowledged",
+        "passed": true
+      },
+      {
+        "name": "Teacher realtime stream receives student answer",
+        "passed": true
+      },
+      {
+        "name": "Other student cannot read answer",
+        "passed": true
+      },
+      {
+        "name": "Other student cannot overwrite answer",
+        "passed": true
+      },
+      {
+        "name": "Own accepted answer is immutable",
+        "passed": true
+      },
+      {
+        "name": "Early completion rejected",
+        "passed": true
+      },
+      {
+        "name": "All eight rounds accept own valid choices",
+        "passed": true
+      },
+      {
+        "name": "Teacher closes classroom",
+        "passed": true
+      },
+      {
+        "name": "Arbitrary result card rejected",
+        "passed": true
+      },
+      {
+        "name": "Completed result stored with exact four fields",
+        "passed": true
+      },
+      {
+        "name": "Teacher receives the exact completed result",
+        "passed": true
+      },
+      {
+        "name": "Late student can complete missed round after class",
+        "passed": true
+      },
+      {
+        "name": "Student cannot list classrooms",
+        "passed": true
+      }
+    ],
+    "testDataCleaned": true
+  },
+  "preservation": {
+    "v1SHA256": "94beb750cecc15c30c46978267825faedebbe9221ac78f3e2b43ab107d9a7f45",
+    "v2SHA256": "874a233d0e8f3bc543e297a8f358f1e9443754b3ddf85895ed2c7ef5671754be",
+    "legacyRulesUnchanged": true,
+    "roomPaths": [
+      "rooms",
+      "roomsV2"
+    ]
+  },
+  "browser": {
+    "verified": [
+      "새 버전 첫 화면 및 도입의 친구·당신·안내봇 대화",
+      "첫 사례에서 그림과 친구/당신 말풍선 표시",
+      "클릭 및 Enter로 타이핑 전체 펼치기",
+      "위험 신호 선택과 보호 방법 화면 분리",
+      "선택 2에 맞는 친구 반응 표시",
+      "모바일 390px 환경에서 가로 넘침 없음"
+    ],
+    "scope": "화면은 첫 라운드까지 검증, 전체 8라운드·3개 엔딩·32개 친구 반응은 자동 검사, 서로 다른 실제 기기의 학교 네트워크 검사는 미수행"
+  },
+  "securityAudit": {
+    "score": 4,
+    "summary": "기존 rooms 규칙은 보존하고 같은 소유자·타입·필드 검증을 roomsV2에 적용했습니다. 새 버전 카드 문장만 별도 검증합니다. 두 버전 모두 실제 서버 접근 제한·저장·실시간 검사를 통과했습니다.",
+    "findings": [
+      {
+        "check": "Storage Abuse",
+        "severity": "minor",
+        "issue": "익명 사용자의 수업 생성 수에 별도 앱 한도가 없습니다. 기존 버전과 같은 제한입니다.",
+        "recommendation": "사용량이 커지면 Firebase 사용량을 확인하고 필요 시 서버에서 생성 수를 제한합니다."
+      }
+    ]
+  }
+}
