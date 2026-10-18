@@ -23,7 +23,7 @@ style=re.search(r'<style>(.*?)</style>',ref,re.S)[1]
 style+='\n'+(HERE/'harm.css').read_text(encoding='utf-8')
 art=block('game-code').split('// ==================== 문장과 설정을 읽는 곳')[0]
 art=art.replace('function drawVillage(canvas){drawOriginal(canvas,ART_CROPS.map,false);}',(HERE/'art-overlay.js').read_text(encoding='utf-8'))
-code=art+'\n'+(HERE/'game.js').read_text(encoding='utf-8')
+code=art+'\n'+(HERE/'experience.js').read_text(encoding='utf-8')+'\n'+(HERE/'game.js').read_text(encoding='utf-8')
 def dump(v): return json.dumps(v,ensure_ascii=False,indent=2).replace('<','\\u003c')
 license_path=OUT.parent/'privacy-v3'/'NanumSquareRound-LICENSE.txt'
 license_text=license_path.read_text(encoding='utf-8')

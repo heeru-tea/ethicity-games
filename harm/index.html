@@ -223,11 +223,13 @@ body{word-break:keep-all;overflow-wrap:anywhere}
 .teacher-expanded .barrow{grid-template-columns:32px minmax(0,1fr) minmax(62px,max-content)}.barrow>b:last-child{white-space:nowrap}
 
 /* 레퍼런스의 글꼴·색·테두리·말풍선을 유지한 공동 수업 화면 */
+.speech-hint{display:block;font-size:12px;color:#59756a;margin-top:8px}.dialogue-text[data-speech]:focus-visible{outline:3px solid #c39135;outline-offset:5px;border-radius:3px}.speech-ink{white-space:pre-wrap}.is-typing .speech-ink::after{content:'▍';color:#267562;font-size:.85em;margin-left:2px}.experience-settings{position:relative}.experience-settings>summary{cursor:pointer;font-size:14px;font-weight:800;padding:9px 12px;border:1px solid #b5cbbb;background:#eef5e7;border-radius:8px;white-space:nowrap;list-style:none}.experience-settings>summary::-webkit-details-marker{display:none}.experience-popover{position:absolute;right:0;top:calc(100% + 10px);width:280px;max-width:calc(100vw - 30px);padding:18px;z-index:70;border:2px solid #7fa794;border-radius:14px;background:#fffdf2;box-shadow:0 10px 30px #163b4326;display:flex;flex-direction:column;gap:10px}.experience-popover>strong{font-size:16px}.experience-popover p{margin:0;font-size:12px;line-height:1.65;color:#59756a}.effect-control{padding:10px 12px;min-height:42px;border:1px solid #aec7b7;border-radius:7px;background:white;text-align:left;font-size:14px;font-weight:700;cursor:pointer}.effect-control[aria-pressed=true]{background:#e7f1dd;color:#145d4f}.effect-control.music-control[aria-pressed=true]{background:#fff0b4}.music-volume{font-size:14px;margin:4px 0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}.music-volume input{width:100%;accent-color:#34765f;cursor:pointer}.experience-settings summary:focus-visible,.effect-control:focus-visible,.music-volume input:focus-visible{outline:3px solid #c39135;outline-offset:3px}.sparkle-layer{position:fixed;inset:0;pointer-events:none;z-index:2147483646;overflow:hidden}.click-sparkle{position:absolute;width:0;height:0;pointer-events:none}.sparkle-ring{position:absolute;left:-13px;top:-13px;width:26px;height:26px;border:2px solid #d0a23b;border-radius:50%;box-shadow:0 0 8px #fff7c8;animation:sparkle-ring .65s ease-out both}.sparkle-star{position:absolute;left:-10px;top:-13px;width:20px;text-align:center;font-style:normal;font-size:23px;line-height:26px;color:#c89626;text-shadow:0 0 3px #fffdf2,0 0 8px #ffed98;animation:sparkle-drift .68s ease-out both}.sparkle-star:nth-child(odd){color:#43866f;font-size:17px}.click-sparkle.reduced .sparkle-ring{animation:none;opacity:.8}.click-sparkle.reduced{opacity:.8}@keyframes sparkle-drift{0%{opacity:0;transform:translate(0,0) scale(.25)}18%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--turn)) scale(.55)}}@keyframes sparkle-ring{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(1.9)}}@media(max-width:760px){.experience-settings>summary{font-size:12px;padding:7px 9px}.experience-popover{position:fixed;top:80px;right:15px}.appbar{overflow:visible}.speech-hint{font-size:11px}}
 .story-chapter{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.3fr);gap:26px;align-items:start;margin-bottom:24px}.chapter-art{position:sticky;top:18px;overflow:hidden;border:1px solid #b8d0c0;border-radius:10px}.chapter-copy{min-width:0}.narrative-text p{font-size:18px;line-height:1.9;margin:14px 0;word-break:keep-all}.chapter-copy .conversation{margin:18px 0 0}.chapter-copy .definition{margin-bottom:0}.vote-time-options>span{display:block;font-size:15px;margin-bottom:10px;color:var(--forest)}.vote-timer-tools{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.vote-timer-tools .timer{background:#fff3cc;border-color:#dbc788}.reading-note{font-size:16px;line-height:1.8;color:var(--muted);padding:0 8px}.harm-gamegrid .clues:first-child{margin-top:0}@media(max-width:900px){.story-chapter{grid-template-columns:1fr;gap:20px}.chapter-art{position:static;max-width:640px;width:100%;margin:auto}.narrative-text p{font-size:17px}.vote-timer-tools{align-items:stretch}.vote-timer-tools .buttons{flex:1}}
 .round-scene{margin:0;background:#f4f3e8;overflow:hidden}.round-scene img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain}.round-scene figcaption{padding:11px 16px;border-bottom:1px solid #c9d9c6;color:#34574c;font-size:14px;line-height:1.6;background:#f5f7ec;word-break:keep-all}.scene-recall{margin-top:20px;border:1px solid #c9d9c6;border-radius:8px;overflow:hidden}.scene-recall summary{padding:12px 15px;cursor:pointer;font-size:15px;color:#34574c;background:#f5f7ec}.scene-recall .round-scene figcaption{border:0}.review-list .round-scene{margin:14px auto;max-width:720px;border-radius:8px}
 .section-gap{margin-top:22px}.inquiry{border:2px solid #a8c7ad;background:#edf5e5;border-radius:10px;padding:17px 20px;margin:20px 0;text-align:left}.inquiry p{font-size:20px!important;font-weight:800;line-height:1.65;margin:7px 0}.round-question{display:flex;flex-direction:column;gap:5px;background:#f4f8e9;border-left:5px solid var(--forest);padding:13px 20px;border-radius:6px;margin:0 0 20px}.round-question span{font-size:13px;color:var(--forest);font-weight:bold}.round-question strong{font-size:21px;line-height:1.55}.harm-gamegrid{display:grid;grid-template-columns:1.08fr 1fr;gap:22px;align-items:start}.harm-gamegrid>.panel,.harm-gamegrid>div{min-width:0}.harm-gamegrid .story{font-size:18px;background:none;border:0;padding:0}.harm-gamegrid .conversation{margin-bottom:8px}.harm-choice-list{grid-template-columns:1fr!important}.harm-choice-list .choice{font-size:18px!important;min-height:94px!important;padding:16px!important}.head-count{display:flex;align-items:center;gap:12px}.timer{background:#fffdf2;border:1px solid var(--line);border-radius:8px;text-align:center;padding:6px 17px;min-width:108px}.timer span{font-size:12px;display:block;color:var(--muted)}.timer strong{font-size:25px;font-variant-numeric:tabular-nums;line-height:1.2}.timer.paused{background:#fff3cc}.teacher-tools{display:flex;flex-direction:column;gap:12px;margin-bottom:22px;padding:16px 20px}.teacher-tools .btn{font-size:15px;min-height:42px;padding:8px 14px}.teacher-tools .buttons{gap:8px}.phase-pill{font-size:13px;padding:3px 10px;background:#e2eddf;border-radius:30px;margin-left:12px}.demo-banner{background:#fff3cc;border:1px solid #dbc788;padding:9px 18px;border-radius:7px;font-size:14px}.evidence-grid{display:grid;grid-template-columns:1fr;gap:15px;padding:22px}.evidence-card{border:1px solid #b8d0c0;border-radius:10px;background:#fffdf2;padding:18px}.evidence-card blockquote{margin:15px 0 0;font-size:23px;font-weight:800;line-height:1.6;word-break:keep-all}.evidence-card .chip{font-size:13px}.evidence-avatar{display:flex;gap:14px;align-items:center;margin:12px 0 0}.evidence-avatar span{font-size:13px;color:var(--muted)}.media-compare .evidence-grid{grid-template-columns:1fr 1fr;gap:12px;padding:16px}.media-compare .evidence-card{padding:14px}.media-compare .evidence-card blockquote{font-size:20px}.media-compare .evidence-avatar{flex-direction:column;gap:0}.media-compare .evidence-card:first-child{background:#edf6e5}.media-compare .evidence-card:last-child{background:#fff6df}.call-symbol{background:#145d4f;color:#fff3ce;text-align:center;padding:20px;font-size:45px;line-height:1.2}.call-symbol span{display:block;font-size:14px;margin-top:10px}.voice-track{background:#dcebf0;color:#245361;padding:16px 20px;letter-spacing:3px;line-height:1.7}.voice-track span{letter-spacing:0;font-size:14px;display:block}.clues{margin-top:18px;padding:18px}.clue-grid{display:grid;gap:10px;margin-top:12px}.clue{display:flex;align-items:flex-start;gap:10px;background:#f7faf2;border:1px solid #c9d9c6;border-radius:7px;padding:10px 12px}.clue>span{border-radius:5px;background:#e0eddb;min-width:25px;text-align:center;font-size:14px;font-weight:bold}.clue p{font-size:16px;line-height:1.6;margin:0}.definition{background:#e9f0f5;border-left:3px solid #7c9baf;padding:12px;font-size:15px}.speech-reserve{display:block;visibility:hidden}.speech-ink{position:absolute;inset:0}.dialogue-text[data-speech]{position:relative;cursor:pointer}.result-counts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0}.result-counts>span{background:#f1f6e8;padding:10px 15px;border:1px solid var(--line);border-radius:8px}.recap-choice{text-align:left;border-top:1px solid var(--line);padding-top:24px}.recap-group{margin:20px 0}.recap-option{display:block;text-align:left;width:100%;background:white;border:2px solid #bfd1c5;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:17px}.recap-option[aria-pressed=true]{background:#e2efce;border-color:#145d4f}.recap-option:disabled{opacity:1;cursor:default}.class-answer{padding:20px;background:#e9f3dd;border:2px solid #a3c59e;border-radius:10px;margin:25px 0;text-align:left}.class-answer p{font-size:18px}.device-top strong{font-size:17px}.device-top .chip{white-space:nowrap}.choice-screen{max-width:none}.btn:focus-visible,.choice:focus-visible{outline:4px solid #c56d15;outline-offset:3px}.barrow>span{white-space:nowrap;font-size:14px}.ending .conversation{text-align:left;max-width:720px;margin:20px auto}.teacher-wrap p{line-height:1.8}.teacher-wrap .buttons{margin-top:20px}
 @media(max-width:900px){.harm-gamegrid{grid-template-columns:1fr}.round-head{flex-wrap:wrap}.head-count{margin-left:auto}.timer{min-width:90px}.round-question strong{font-size:19px}.evidence-card blockquote{font-size:21px}.media-compare .evidence-grid{grid-template-columns:1fr 1fr}.evidence-avatar span{font-size:11px}.harm-choice-list .choice{min-height:80px!important}.round-question{padding:12px 15px}.teacher-tools{padding:14px}.teacher-tools .buttons>.btn{flex-grow:1}.inquiry p{font-size:18px!important}.heroart{min-height:0}.result-counts{gap:6px}.result-counts>span{padding:8px 10px;font-size:14px}}
 @media(max-width:430px){.media-compare .evidence-grid{grid-template-columns:1fr}.media-compare .evidence-avatar{flex-direction:row}.evidence-card{padding:13px}.evidence-grid{padding:14px}.head-count{gap:7px}.device-top{flex-wrap:wrap}.harm-choice-list .choice{font-size:17px!important}.inquiry{padding:15px}.teacher-tools .btn{font-size:14px}.appbar .brand{font-size:14px}.topright{max-width:180px}.topright .textbtn{font-size:11px;padding:5px}.panel{padding:18px}.ending .learning-card{padding:18px}.ending .learning-card blockquote{font-size:20px}}
+.click-sparkle.reduced .sparkle-star{animation:none;transform:translate(var(--dx),var(--dy)) scale(.65);opacity:.85}
 </style></head>
 <body><header class="appbar"><div class="brand"><span class="brandmark" aria-hidden="true">♧</span><span>윤리시티<small>AI 윤리 탐험대 · 침해금지</small></span></div><div id="topright" class="topright"></div></header>
 <main id="main" class="shell"></main><footer class="footer">모든 인물과 자료는 가상입니다. · 우리 반의 한 표씩, 함께 만드는 이야기
@@ -1235,6 +1237,132 @@ function paintArt(){
 
 'use strict';
 
+// 화면 갱신과 독립된 대사·클릭·음악 효과. 외부 파일이나 네트워크를 사용하지 않습니다.
+function createHarmExperience({read,write,notify}){
+  const motion=matchMedia('(prefers-reduced-motion: reduce)');
+  let typing=read('ethicity.harm.typing',true)!==false;
+  let sparkle=read('ethicity.harm.sparkle',true)!==false;
+  const speeches=new Map();
+  let bound=[],observer=null,timer=null;
+  const escapeText=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function paint(s){
+    if(!s.el?.isConnected)return;
+    const ink=s.el.querySelector('.speech-ink');
+    if(ink)ink.textContent=s.chars.slice(0,s.at).join('');
+    s.el.classList.toggle('is-typing',typing&&s.at<s.chars.length);
+    s.el.dataset.typingState=s.at===s.chars.length?'complete':s.visible?'typing':'waiting';
+  }
+  function tick(){
+    timer=null;
+    if(document.hidden)return;
+    for(const s of bound){if(typing&&s.visible&&s.at<s.chars.length){s.at++;paint(s);}}
+    if(bound.some(s=>typing&&s.visible&&s.at<s.chars.length))timer=setTimeout(tick,38);
+  }
+  function schedule(){if(timer===null&&bound.some(s=>typing&&s.visible&&s.at<s.chars.length))timer=setTimeout(tick,38);}
+  function sync(){
+    clearTimeout(timer);timer=null;observer?.disconnect();bound=[];
+    if(typeof IntersectionObserver!=='undefined')observer=new IntersectionObserver(entries=>{
+      for(const e of entries){const s=bound.find(s=>s.el===e.target);if(s){s.visible=e.isIntersecting;paint(s);}}
+      schedule();
+    },{threshold:0.1});
+    for(const el of document.querySelectorAll('[data-speech]')){
+      const full=el.dataset.fullSpeech||el.textContent,key=el.dataset.speech+'\n'+full;
+      let s=speeches.get(key);
+      if(!s){s={chars:[...full],at:0,visible:false};speeches.set(key,s);}
+      s.el=el;s.visible=!observer;if(!typing)s.at=s.chars.length;
+      el.dataset.fullSpeech=full;
+      el.setAttribute('aria-label',full+' (누르면 한 번에 봅니다)');
+      el.innerHTML=`<span class="speech-reserve" aria-hidden="true">${escapeText(full)}</span><span class="speech-ink" aria-hidden="true"></span>`;
+      bound.push(s);paint(s);observer?.observe(el);
+    }
+    // 지난 수업의 대사를 무한히 보관하지 않습니다.
+    if(speeches.size>180)for(const [key,s] of speeches){if(!bound.includes(s))speeches.delete(key);if(speeches.size<=120)break;}
+    schedule();
+  }
+  function finish(el=null){for(const s of bound){if(!el||s.el===el){s.at=s.chars.length;paint(s);}}}
+  function toggleTyping(){typing=!typing;write('ethicity.harm.typing',typing);for(const s of bound){s.at=typing?0:s.chars.length;paint(s);}schedule();updateControls();}
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){clearTimeout(timer);timer=null;}else schedule();});
+
+  const layer=document.createElement('div');layer.className='sparkle-layer';layer.setAttribute('aria-hidden','true');document.body.append(layer);
+  function burst(x,y){
+    if(!sparkle)return;
+    while(layer.children.length>=8)layer.firstElementChild.remove();
+    const mark=document.createElement('span');mark.className='click-sparkle'+(motion.matches?' reduced':'');mark.style.left=x+'px';mark.style.top=y+'px';
+    const ring=document.createElement('i');ring.className='sparkle-ring';mark.append(ring);
+    for(let i=0;i<8;i++){
+      const star=document.createElement('i'),angle=i*Math.PI/4,distance=i%2?34:46;
+      star.className='sparkle-star';star.textContent=i%2?'✦':'✧';
+      star.style.setProperty('--dx',Math.cos(angle)*distance+'px');star.style.setProperty('--dy',Math.sin(angle)*distance+'px');
+      star.style.setProperty('--turn',(i%2?35:-35)+'deg');mark.append(star);
+    }
+    layer.append(mark);setTimeout(()=>mark.remove(),720);
+  }
+  document.addEventListener('pointerdown',e=>{if(e.isPrimary&&e.button===0)burst(e.clientX,e.clientY);},true);
+  document.addEventListener('click',e=>{if(e.detail===0){const target=e.target.closest('button,summary,[role="button"]');if(target){const r=target.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2);}}},true);
+
+  // 오리지널 16마디: C장조, 76 BPM. 부드러운 종소리와 낮은 화음으로 반복합니다.
+  const melody=[
+    [72,null,76,79,76,null,74,null],[72,null,69,72,76,null,72,null],
+    [69,null,72,77,76,null,72,null],[71,null,74,79,74,null,71,null],
+    [72,76,79,null,81,null,79,76],[76,null,72,69,72,null,76,null],
+    [77,null,76,72,69,null,72,null],[74,null,71,null,67,null,null,null],
+    [76,null,79,84,79,null,76,null],[76,72,69,null,72,null,76,null],
+    [77,null,81,79,77,null,76,null],[74,null,79,77,74,null,71,null],
+    [72,null,76,79,76,null,72,null],[69,null,72,76,72,null,69,null],
+    [69,null,72,77,74,null,71,null],[72,null,null,null,67,null,null,null]
+  ];
+  const chords=[[48,60,64,67],[45,57,60,64],[41,57,60,65],[43,55,59,62]];
+  let context=null,master=null,musicOn=false,musicBusy=false,audioTimer=null,step=0,nextNote=0;
+  let volume=Number(read('ethicity.harm.volume',25));if(!Number.isFinite(volume))volume=25;volume=Math.max(0,Math.min(60,volume));
+  const notes=new Set(),beat=60/76/2;
+  function note(midi,when,length,level,type='sine'){
+    const osc=context.createOscillator(),gain=context.createGain();osc.type=type;osc.frequency.value=440*2**((midi-69)/12);
+    gain.gain.setValueAtTime(0,when);gain.gain.linearRampToValueAtTime(level,when+0.025);gain.gain.exponentialRampToValueAtTime(0.0001,when+length);
+    osc.connect(gain);gain.connect(master);osc.start(when);osc.stop(when+length+0.05);notes.add(osc);
+    osc.onended=()=>{notes.delete(osc);osc.disconnect();gain.disconnect();};
+  }
+  function scheduleMusic(){
+    if(!musicOn||document.hidden||context.state!=='running')return;
+    if(nextNote<context.currentTime)nextNote=context.currentTime+0.04;
+    while(nextNote<context.currentTime+0.18){
+      const bar=Math.floor(step/8)%16,slot=step%8,pitch=melody[bar][slot],chord=chords[bar%4];
+      if(pitch!==null){note(pitch,nextNote,1.25,0.13);note(pitch+12,nextNote,0.55,0.012);}
+      if(slot===0){note(chord[0],nextNote,2.8,0.12);for(const p of chord.slice(1))note(p,nextNote,2.7,0.035,'triangle');}
+      if(slot===4)note(chord[2],nextNote,1.4,0.04);
+      nextNote+=beat;step=(step+1)%128;
+    }
+  }
+  function stopNotes(){clearInterval(audioTimer);audioTimer=null;for(const osc of notes){try{osc.stop();}catch{}}notes.clear();}
+  function startScheduler(){clearInterval(audioTimer);nextNote=context.currentTime+0.06;scheduleMusic();audioTimer=setInterval(scheduleMusic,80);}
+  async function toggleMusic(){
+    if(musicBusy)return;musicBusy=true;
+    try{
+      if(musicOn){musicOn=false;stopNotes();await context.suspend();}
+      else{
+        const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)throw Error('unavailable');
+        if(!context){context=new Audio();master=context.createGain();master.gain.value=volume/100;master.connect(context.destination);context.addEventListener('statechange',updateControls);}
+        await context.resume();if(context.state!=='running')throw Error('not running');musicOn=true;startScheduler();
+      }
+    }catch{musicOn=false;stopNotes();notify('이 기기에서는 음악을 시작하지 못했습니다. 음악 켜기를 다시 누릅니다. 게임은 계속할 수 있습니다.');}
+    finally{musicBusy=false;updateControls();}
+  }
+  function changeVolume(value){volume=Math.max(0,Math.min(60,Number(value)||0));write('ethicity.harm.volume',volume);if(master)master.gain.setTargetAtTime(volume/100,context.currentTime,0.08);updateControls();}
+  document.addEventListener('visibilitychange',async()=>{
+    if(!context||!musicOn)return;
+    try{if(document.hidden){stopNotes();await context.suspend();}else{await context.resume();if(musicOn)startScheduler();}}
+    catch{musicOn=false;stopNotes();}updateControls();
+  });
+  window.addEventListener('pagehide',()=>{musicOn=false;stopNotes();context?.suspend().catch(()=>{});});
+  function controls(){return `<details class="experience-settings"><summary>♪ 화면·소리</summary><div class="experience-popover"><strong>탐험 화면·소리</strong><button type="button" class="effect-control" data-action="typing"></button><button type="button" class="effect-control" data-action="sparkle"></button><button type="button" class="effect-control music-control" data-action="music"></button><label class="music-volume">음악 크기 <output id="music-volume-value">${volume}%</output><input type="range" id="music-volume" aria-label="배경음악 크기" min="0" max="60" step="5" value="${volume}"></label><p>윤리시티의 작은 약속 · 잔잔한 오르골풍<br>음악은 듣고 싶은 기기에서 켭니다.</p></div></details>`;}
+  function updateControls(){
+    for(const [action,label,on] of [['typing',`대사 효과 ${typing?'켜짐':'꺼짐'}`,typing],['sparkle',`클릭 반짝임 ${sparkle?'켜짐':'꺼짐'}`,sparkle],['music',musicOn?'♫ 음악 끄기':'♪ 음악 켜기',musicOn]]){
+      const el=document.querySelector(`[data-action="${action}"]`);if(el){el.textContent=label;el.setAttribute('aria-pressed',String(on));if(action==='music')el.dataset.audioState=context?.state||'off';}
+    }
+    const output=document.getElementById('music-volume-value');if(output)output.textContent=volume+'%';
+  }
+  return {sync,finish,controls,updateControls,toggleTyping,toggleMusic,changeVolume,toggleSparkle(){sparkle=!sparkle;write('ethicity.harm.sparkle',sparkle);updateControls();}};
+}
+
 'use strict';
 // 시나리오는 #game-data 한곳에 있습니다. 이 파일은 화면·수업 진행만 담당합니다.
 const STORY=JSON.parse(document.getElementById('game-data').textContent);
@@ -1283,16 +1411,17 @@ window.HarmRules=Object.freeze({summarize,resultOf,tally,transition,newRoom,rema
 const params=new URLSearchParams(location.search),requestedRoom=params.get('room');
 let S={role:'home',view:'home',player:readStore(PLAYER_KEY),character:null,nickname:'',room:null,roomId:null,control:null,decisions:{},outcome:null,recap:0,ownVotes:{},selected:null,selectionKey:'',rooms:[],cloud:null,uid:null,connected:false,offset:0,busy:false,sending:false,error:'',saveOK:null,saveKey:'',cloudSaved:'',storageWarning:false,focusKey:'',generation:0,recapPending:false};
 if(!validPlayer(S.player))S.player=null;
-let subscriptions=[],modulesPromise=null,cloudInstances={},toastTimer=null,typingTimer=null,typingKey='',typingFull='',typingElement=null,reconnectPause=false;
+let subscriptions=[],modulesPromise=null,cloudInstances={},toastTimer=null,reconnectPause=false;
 const main=document.getElementById('main');
+const experience=createHarmExperience({read:readStore,write:writeStore,notify:showToast});
 const now=()=>Date.now()+S.offset;
 function showToast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.add('hidden'),4500);}
 function stopLive(){S.generation++;subscriptions.forEach(f=>{try{f();}catch{}});subscriptions=[];S.cloud=null;S.connected=false;S.offset=0;reconnectPause=false;}
 function currentKey(){const c=S.control;return c?`${S.roomId}:${c.round}:${c.phase}:${c.ballot}`:S.view;}
-function speak(text,key=''){return `<div class="conversation"><div class="dialogue-turn">${canvasChar('friend',64)}<div class="dialogue-bubble"><strong class="dialogue-speaker">다온</strong><p class="dialogue-text" data-speech="${esc(key)}">${esc(text)}</p></div></div></div>`;}
-function typeDialogue(){clearTimeout(typingTimer);const el=document.querySelector('[data-speech]');if(!el)return;const key=el.dataset.speech;if(key===typingKey||readStore('ethicity.harm.typing',true)===false||matchMedia('(prefers-reduced-motion: reduce)').matches)return;typingKey=key;typingFull=el.textContent;typingElement=el;const chars=[...typingFull];el.innerHTML=`<span class="speech-reserve" aria-hidden="true">${esc(typingFull)}</span><span class="speech-ink"></span>`;el.setAttribute('aria-label',typingFull);let p=0;const tick=()=>{if(!el.isConnected)return;el.querySelector('.speech-ink').textContent=chars.slice(0,++p).join('');if(p<chars.length)typingTimer=setTimeout(tick,25);};tick();}
-function finishTyping(){clearTimeout(typingTimer);if(typingElement?.isConnected)typingElement.textContent=typingFull;}
-function topbar(){document.getElementById('topright').innerHTML=`${S.player?`<span class="pill">${esc(S.player.nickname)}</span>`:''}${['teacher','student'].includes(S.role)?`<span class="conn ${S.connected?'':'off'}" id="connection-status">${S.connected?'연결됨':'연결 확인 중'}</span>`:''}<button class="textbtn" data-action="typing">${readStore('ethicity.harm.typing',true)===false?'글자 효과 켜기':'글자 한 번에 보기'}</button><button class="textbtn" data-action="home">처음으로</button>`;}
+function speak(text,key=''){return `<div class="conversation"><div class="dialogue-turn">${canvasChar('friend',64)}<div class="dialogue-bubble"><strong class="dialogue-speaker">다온</strong><p class="dialogue-text" data-speech="${esc(key)}" role="button" tabindex="0">${esc(text)}</p><small class="speech-hint">대사를 누르면 한 번에 봅니다</small></div></div></div>`;}
+function typeDialogue(){experience.sync();}
+function finishTyping(el=null){experience.finish(el);}
+function topbar(){const open=document.querySelector('.experience-settings')?.open;document.getElementById('topright').innerHTML=`${S.player?`<span class="pill">${esc(S.player.nickname)}</span>`:''}${['teacher','student'].includes(S.role)?`<span class="conn ${S.connected?'':'off'}" id="connection-status">${S.connected?'연결됨':'연결 확인 중'}</span>`:''}${experience.controls()}<button class="textbtn" data-action="home">처음으로</button>`;document.querySelector('.experience-settings').open=!!open;experience.updateControls();}
 function render(focus=false){
   const oldFocus=document.activeElement?.dataset,oldScroll=window.scrollY;topbar();
   let html=S.view==='setup'?renderSetup():S.view==='intro-ready'?renderIntroReady():S.view==='loading'?`<section class="panel loading"><span class="spinner"></span>${heading('수업을 연결하고 있습니다',2)}<p>잠시 기다려 주시기 바랍니다.</p></section>`:S.role==='teacher'&&!S.room?renderTeacherList():S.control?renderSession():renderHome();
@@ -1382,10 +1511,11 @@ document.addEventListener('click',async event=>{const el=event.target.closest('[
   else if(action==='create-room')await createRoom();else if(action==='open-room')await openRoom(el.dataset.room);else if(action==='refresh-rooms'){await loadRooms();render();}else if(action==='teacher-list')await enterTeacher();
   else if(action==='start-vote')await advance(S.control?.phase==='empty'?'retry':'next',i);else if(['start','next','pause','extend','retry'].includes(action))await advance(action);else if(action==='resolve')await advance('resolve',i);else if(action==='choice'){if(canVote()){S.selected=i;render();}}else if(action==='submit')await submitVote();
   else if(action==='recap')await toggleRecap(i);else if(action==='copy-invite')await copyInvite();else if(action==='csv')exportCSV();else if(action==='card')await downloadCard();else if(action==='review')document.getElementById('review-list')?.classList.toggle('hidden');
-  else if(action==='fullscreen'){if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}else if(action==='clear-error'){S.error='';render();}else if(action==='typing'){writeStore('ethicity.harm.typing',readStore('ethicity.harm.typing',true)===false);finishTyping();render();}
+  else if(action==='fullscreen'){if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}else if(action==='clear-error'){S.error='';render();}else if(action==='typing')experience.toggleTyping();else if(action==='sparkle')experience.toggleSparkle();else if(action==='music')await experience.toggleMusic();
  }catch(e){S.error=friendlyError(e);S.busy=false;render();}});
 document.addEventListener('submit',event=>{if(event.target.id!=='player-form')return;event.preventDefault();const nickname=document.getElementById('nickname').value.normalize('NFC');S.nickname=nickname;const error=S.character===null||S.character<0?'함께할 캐릭터를 먼저 고릅니다.':nicknameError(nickname);if(error){S.error=error;render();return;}S.player={character:CONFIG.characters[S.character].id,nickname};S.storageWarning=!writeStore(PLAYER_KEY,S.player);S.error='';S.view='intro-ready';render(true);});
-document.addEventListener('click',event=>{if(event.target.closest('[data-speech]'))finishTyping();});
-document.addEventListener('keydown',event=>{if(event.target.closest('input,textarea,button'))return;if(event.key==='Enter'||event.key===' '){finishTyping();if(event.key===' ')event.preventDefault();}if(['1','2','3'].includes(event.key)&&canVote()){S.selected=Number(event.key)-1;render();}});
+document.addEventListener('input',event=>{if(event.target.id==='music-volume')experience.changeVolume(event.target.value);});
+document.addEventListener('click',event=>{const speech=event.target.closest('[data-speech]');if(speech)finishTyping(speech);if(!event.target.closest('.experience-settings'))document.querySelector('.experience-settings')?.removeAttribute('open');});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')document.querySelector('.experience-settings')?.removeAttribute('open');if(event.target.closest('input,textarea,button,summary'))return;if(event.key==='Enter'||event.key===' '){finishTyping(event.target.closest('[data-speech]'));if(event.key===' ')event.preventDefault();}if(['1','2','3'].includes(event.key)&&canVote()){S.selected=Number(event.key)-1;render();}});
 if(requestedRoom){if(/^[a-f0-9]{32}$/.test(requestedRoom)){S.roomId=requestedRoom;preparePlayer('student');}else{S.error='입장 링크가 올바르지 않습니다. 선생님에게 새 링크를 받습니다.';render();}}else if(params.get('mode')==='teacher'){enterTeacher();}else render();
 </script></body></html>
