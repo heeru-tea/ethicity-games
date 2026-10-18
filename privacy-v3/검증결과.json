@@ -83,7 +83,7 @@
           "passed": true
         },
         {
-          "name": "Every choice exposes learning numbers with meanings and feedback explains each element",
+          "name": "Choices hide learning tags while result feedback explains each element",
           "passed": true
         }
       ]
@@ -434,20 +434,36 @@
   "deployedRulesMatch": true,
   "files": {
     "privacy": {
+      "onlineMatches": true,
       "bytes": 12505650,
       "sha256": "94beb750cecc15c30c46978267825faedebbe9221ac78f3e2b43ab107d9a7f45",
-      "onlineMatches": true
+      "cacheControl": "max-age=3600"
     },
     "privacy-v2": {
+      "onlineMatches": true,
       "bytes": 12520150,
       "sha256": "874a233d0e8f3bc543e297a8f358f1e9443754b3ddf85895ed2c7ef5671754be",
-      "onlineMatches": true
+      "cacheControl": "max-age=3600"
     },
     "privacy-v3": {
-      "bytes": 12528747,
-      "sha256": "c29247256ed6a08b749de32639802ad6064c3b8affcea7117e2bb2d403c7a314",
-      "onlineMatches": true
+      "onlineMatches": true,
+      "bytes": 12528497,
+      "sha256": "b72a9ac93a8f31a703b71fd6b1467ecd6f2a7b48ea3315271a064f2b1b0b4c6b",
+      "cacheControl": "max-age=3600"
     }
   },
-  "browserTestRoomCleaned": true
+  "browserTestRoomCleaned": true,
+  "revision": {
+    "changes": [
+      "Player dialogue speaker uses the configured nickname",
+      "Learning tags hidden before selection; retained in result feedback and end review"
+    ],
+    "targetedChecksPassed": 28,
+    "browserVerified": true,
+    "browserChecks": [
+      "Nickname shown in intro and case player speech bubbles",
+      "No learning elements in the protection choice screen",
+      "Learning element meanings shown after submitting a choice"
+    ]
+  }
 }
