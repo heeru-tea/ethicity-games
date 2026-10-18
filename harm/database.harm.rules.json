@@ -22,7 +22,7 @@
           ".validate": "newData.hasChildren([\"version\",\"round\",\"phase\",\"revision\",\"accepting\",\"paused\",\"remaining\",\"startedAt\",\"duration\",\"ballot\"]) && ((newData.child('phase').val() == 'lobby' || newData.child('phase').val() == 'intro') ? newData.child('round').val() == -1 : newData.child('round').val() >= 0) && (newData.child('phase').val() != 'ended' || (newData.child('round').val() == 7 && newData.parent().child('outcome').exists()))",
           ".read": "((auth != null && root.child('roomsHarm').child($room).child('owner').val() == auth.uid) || (auth != null && root.child('roomsHarm').child($room).child('members').child(auth.uid).exists())) || (auth != null && data.child('accepting').val() == true)",
           "version": {
-            ".validate": "newData.val() == \"harm-2026-10-18-v1\""
+            ".validate": "newData.val() == \"harm-2026-10-18-v2\" || (data.exists() && newData.val() == data.val())"
           },
           "round": {
             ".validate": "newData.isNumber() && newData.val() >= -1 && newData.val() <= 7 && newData.val() % 1 == 0"

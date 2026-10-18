@@ -47,11 +47,13 @@ out='''<!DOCTYPE html>
 e=html.escape
 parts=[f'<h1>핵심 탐구 질문</h1><p class="question">{e(story["question"])}</p><table><tr><th>요소</th><th>내용</th><th>탐구 질문</th></tr>']
 for n,v in story['elements'].items(): parts.append(f'<tr><td>{n}</td><td>{e(v["text"])}</td><td>{e(v["question"])}</td></tr>')
-parts+=['</table>',f'<h1>{e(story["title"])}</h1><p>게임 코드: harm · 도입 1분 + 8×100초 + 정리 1분 = 약 15분 20초</p>',f'<h2>도입</h2><p>{e(story["intro"]["text"])}</p><blockquote>다온: {e(story["intro"]["dialogue"])}</blockquote>']
+parts+=['</table>',f'<h1>{e(story["title"])}</h1><p>게임 코드: harm · 8라운드 · 도입·이야기·결과·정리는 시간 제한 없이 교사가 진행합니다. 투표만 교사가 20·40·60·90초 중 골라 시작하고 조정합니다.</p><p>각 라운드의 줄거리와 그림은 투표와 결과를 읽을 때도 계속 표시됩니다.</p>',f'<h2>도입</h2><p>{e(story["intro"]["text"])}</p><blockquote>다온: {e(story["intro"]["dialogue"])}</blockquote>']
 for r in story['rounds']:
     scene=scenes[str(r['id'])]
     parts.append(f'<figure style="margin:32px 0 0"><img src="{scene["src"]}" alt="{e(scene["alt"])}" width="{scene["width"]}" height="{scene["height"]}" style="display:block;width:100%;height:auto;border-radius:12px" loading="lazy"><figcaption>{e(scene["caption"])}</figcaption></figure>')
-    parts += [f'<h2>{r["id"]}. {e(r["title"])}</h2><p class="question">{e(r["question"])}</p><p>{e(r["situation"])}</p><blockquote>다온: {e(r["dialogue"])}</blockquote><h3>화면 속 자료</h3>']
+    parts += [f'<h2>{r["id"]}. {e(r["title"])}</h2><p class="question">{e(r["question"])}</p><h3>학습자에게 소개하는 이야기</h3>']
+    parts += [f'<p>{e(p)}</p>' for p in r.get('narrative',[r['situation']])]
+    parts += [f'<blockquote>다온: {e(r["dialogue"])}</blockquote><h3>화면 속 자료</h3>']
     for m in r['media']: parts.append(f'<p><b>{e(m["label"])}</b> — {e(m["text"])}</p>')
     parts.append('<h3>위험 신호</h3><ul>'+''.join(f'<li>{e(t)}</li>' for t in r['clues'])+'</ul><table><tr><th>선택</th><th>내용</th><th>결과·피드백</th><th>다온의 반응</th><th>학습 요소</th></tr>')
     for i,c in enumerate(r['choices']): parts.append(f'<tr><td>{"ABC"[i]}</td><td>당신은 {e(c["text"])}</td><td>{e(c["change"])}<br>{e(c["feedback"])}</td><td>{e(c["reply"])}</td><td>{", ".join(map(str,c["tags"]))}</td></tr>')

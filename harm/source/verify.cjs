@@ -21,20 +21,20 @@ test('All 6,561 class decision sequences produce exactly the specified ending',(
  }assert(Object.values(counts).every(n=>n>0));
  assert.equal(R.resultOf({0:{choice:0}}),null);
 });
-test('Eight rounds follow the same order; one classroom outcome and 60 second recap',()=>{
+test('Eight teacher-paced rounds; reading, feedback and recap have no deadline',()=>{
  let t=1000000,room=R.newRoom('teacher',t);room.members={s1:{},s2:{},s3:{}};
- room=R.transition(room,'start',t);assert.equal(room.control.duration,60000);assert.equal(room.control.accepting,false);
+ room=R.transition(room,'start',t);assert.equal(room.control.duration,0);assert.equal(room.control.accepting,false);assert(!R.shouldAutoAdvance(room.control,t+3600000));
  room=R.transition(room,'next',t+=60000);
  for(let i=0;i<8;i++){
-  assert.equal(room.control.round,i);assert.equal(room.control.phase,'observe');assert.equal(room.control.duration,20000);
+  assert.equal(room.control.round,i);assert.equal(room.control.phase,'observe');assert.equal(room.control.duration,0);assert(!R.shouldAutoAdvance(room.control,t+3600000));
   room=R.transition(room,'next',t+=20000);assert.equal(room.control.duration,40000);
   const choice=story.rounds[i].choices.findIndex(c=>c.protect),b=room.control.ballot;
   room.votes??={};room.votes[i]={s1:{choice,ballot:b},s2:{choice,ballot:b},s3:{choice:(choice+1)%3,ballot:b},outsider:{choice:2,ballot:b}};
   const snapshot=JSON.stringify(room);const next=R.transition(room,'next',t+=40000);assert.equal(JSON.stringify(room),snapshot,'Original state must remain unchanged');room=next;
-  assert.equal(room.control.phase,'feedback');assert.equal(room.decisions[i].total,3);assert.equal(room.decisions[i].choice,choice);
+  assert.equal(room.control.phase,'feedback');assert.equal(room.control.duration,0);assert(!R.shouldAutoAdvance(room.control,t+3600000));assert.equal(room.decisions[i].total,3);assert.equal(room.decisions[i].choice,choice);
   room=R.transition(room,'next',t+=40000);
  }
- assert.equal(room.control.phase,'ended');assert.equal(room.control.duration,60000);assert.equal(room.outcome.ending,'A');assert.equal(t-1000000+60000,920000);assert.equal(R.transition(room,'next',t),undefined);
+ assert.equal(room.control.phase,'ended');assert.equal(room.control.duration,0);assert(!R.shouldAutoAdvance(room.control,t+3600000));assert.equal(room.outcome.ending,'A');assert.equal(R.transition(room,'next',t),undefined);
 });
 test('No vote never selects an arbitrary answer; retry ignores older ballot',()=>{
  let room=R.newRoom('t',0);room.members={a:{}};room=R.transition(R.transition(R.transition(room,'start',0),'next',60000),'next',80000);
@@ -46,9 +46,17 @@ test('Only tied leaders can be chosen by teacher',()=>{
  room=R.transition(room,'next',10);assert.equal(room.control.phase,'tie');assert.equal(R.transition(room,'resolve',11,2),undefined);
  room=R.transition(room,'resolve',12,1);assert.equal(room.decisions[0].choice,1);assert.equal(room.decisions[0].tie,true);assert.equal(R.transition(room,'resolve',13,0),undefined);
 });
-test('Pause preserves time; extension and resume work',()=>{
- let room=R.transition(R.newRoom('t',0),'start',0);room=R.transition(room,'pause',10000);assert.equal(R.remaining(room.control,99999),50000);assert.equal(R.transition(room,'next',99999),undefined);
- room=R.transition(room,'extend',100000);assert.equal(R.remaining(room.control,100000),65000);room=R.transition(room,'pause',110000);assert.equal(R.remaining(room.control,120000),55000);
+test('Only voting is timed: teacher chooses duration, pauses, extends and closes',()=>{
+ const intro=R.transition(R.newRoom('t',0),'start',0),observe=R.transition(intro,'next',60000);
+ for(const state of [intro,observe]){assert.equal(R.transition(state,'pause',10000),undefined);assert.equal(R.transition(state,'extend',10000),undefined);}
+ for(const seconds of [20,40,60,90]){
+  let room=R.transition(observe,'next',100000,seconds);assert.equal(room.control.duration,seconds*1000);assert(!R.shouldAutoAdvance(room.control,100001));assert(R.shouldAutoAdvance(room.control,100000+seconds*1000));
+  room=R.transition(room,'pause',110000);assert.equal(R.remaining(room.control,999999),seconds*1000-10000);assert(!R.shouldAutoAdvance(room.control,999999));
+  room=R.transition(room,'extend',120000);assert.equal(R.remaining(room.control,999999),seconds*1000+5000);
+  const closed=R.transition(room,'next',120000);assert.equal(closed.control.phase,'empty');
+  room=R.transition(room,'pause',130000);assert.equal(R.remaining(room.control,135000),seconds*1000);
+  assert.equal(R.transition(closed,'retry',140000,60).control.duration,60000);
+ }
 });
 test('Common saved character accepted; nickname validation; blocked and malformed storage safe',()=>{
  assert(P.validPlayer({character:'char_03',nickname:'반짝이는 고래'}));assert(P.validPlayer({character:'char_04',nickname:'별빛'}));assert(!P.validPlayer({character:'unknown',nickname:'별빛'}));assert.equal(P.nicknameError('별빛'),'');assert(P.nicknameError('<img>'));assert(P.nicknameError('학교123'));
