@@ -1,0 +1,3 @@
+privacy = 기존 v1
+privacy-v2 = 기존 v2
+privacy-v3 = 이번 ver3 (자연스러운 친구 대화 / 실시간 닉네임 / 교사 확대 창)
