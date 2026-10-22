@@ -1,0 +1,17 @@
+{
+  "passed": 11,
+  "decisionCombinations": 6561,
+  "checks": [
+    "8 rounds, 3 endings, all choices tagged 1–5, all elements covered",
+    "Every card is at most 40 characters and uses 합니다 style",
+    "All 6,561 class decision sequences produce exactly the specified ending",
+    "Eight teacher-paced rounds; reading, feedback and recap have no deadline",
+    "No vote never selects an arbitrary answer; retry ignores older ballot",
+    "Only tied leaders can be chosen by teacher",
+    "Only voting is timed: teacher chooses duration, pauses, extends and closes",
+    "Common saved character accepted; nickname validation; blocked and malformed storage safe",
+    "Built game includes exact story, common characters and only reference Firebase modules",
+    "Common assets retain exact original bytes and existing scene images",
+    "Scenario, storage and realtime contract remain compatible with v1"
+  ]
+}

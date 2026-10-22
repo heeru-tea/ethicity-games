@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-22T14:18:55.769Z",
+  "passed": 3,
+  "checks": [
+    "Teacher opens an isolated room; two independent student devices join with legacy character IDs",
+    "Live pause/resume, extension, private ballots and teacher tiebreak work",
+    "All eight live rounds share one ending; both students store completion and receive teacher recap"
+  ],
+  "testDataCleaned": true,
+  "errors": []
+}

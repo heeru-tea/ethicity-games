@@ -1,0 +1,34 @@
+{
+  "uiVersion": "harm-common-v2-2026-10-21",
+  "commonPackVersion": "1.0.0",
+  "scenarioVersion": "harm-2026-10-18-v2",
+  "bytes": 13050584,
+  "sha256": "149fd6ecdcade25a4cfdcd092f041cb546c0d919917b10d76ee3096d34288c24",
+  "used": {
+    "characters": [
+      "haneul",
+      "jiho",
+      "daon",
+      "robot"
+    ],
+    "backgrounds": [
+      "courtyard",
+      "classroom"
+    ]
+  },
+  "commonSourceSha256": {
+    "manifest.json": "bffc1f17b927aa1ae9ea932e7a8a070c61559a5b79186255f6a4160a831306b5",
+    "runtime/common.css": "26dc96062fb90a4d55e2814ea96bf8fb80bbfb51e33df06263bbe12224534c7a",
+    "runtime/common.js": "e17f5011c7e8bb7fb3ff86d6cf02ef414b129ce1fdc01ed048a349e7bb0a49c9"
+  },
+  "sceneSha256": {
+    "round-01-fake-video.webp": "49f68bbfe6123511bd419d88b7a4e2ed7e63ce4c09fd177953fce7e4c29519f9",
+    "round-02-compare.webp": "50f42fa36846b34970ddec5711e778182c420021ee00efd8d5b056dc10de57be",
+    "round-03-fake-call.webp": "8273bcdcbb2f9f20eafcb69c1324b54ab339da6c49e72cd0adc98cd10286c461",
+    "round-04-ai-dubbing.webp": "7f953d9ed7fa871749a98ff84d4d626971eefbd82c53af4f3b56d2a7a85a74a3",
+    "round-05-spread.webp": "cee5415d4b9fd55e31c71ee9651f2ffc2b51076874aa6f19f9639b8605674fda",
+    "round-06-explain.webp": "f146e3727f7058559ea097c044237d2a2ece9c2ad2e9e267ee56fd12b41c2482",
+    "round-07-listen.webp": "a01645a93b8c09fe92e16973126d1d0d119bb01155cfeafb4a48ab1b3818b3d1",
+    "round-08-new-video.webp": "86d70516017d6551e774090f6db223b6fc3e5c39a6ab66e84f6625114492d4ca"
+  }
+}
