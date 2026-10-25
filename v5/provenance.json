@@ -1,0 +1,383 @@
+{
+  "repository": "heeru-tea/ethicity-games",
+  "targetBranch": "privacy",
+  "targetFolder": "v5",
+  "commonSourceCommit": "e913b3795b249b03f84b17b86ab079928e46691d",
+  "commonSourcePath": "shared/ethicity-elementary-common-v1",
+  "commonTreeSha": "2dfcf6c4051ed3a8938c5207deb05eb2b0234603",
+  "scenarioSourceCommit": "69954935c4122981786b6d5009209a2e2845d201",
+  "scenarioSourcePath": "privacy-v4/scenario.json",
+  "scenarioBlobSha": "495bdbef1f3e7b7b909d5d1a6b02b9373b067091",
+  "commonFiles": [
+    {
+      "path": "README.md",
+      "sha": "2b1df84e41e48da4adcabc1c8700db7d018c86a7"
+    },
+    {
+      "path": "START_HERE.md",
+      "sha": "250463a115236a63cf7ca19e05f6848c8c147875"
+    },
+    {
+      "path": "backgrounds/ai_lab.png",
+      "sha": "f4e89a0c2dd76ec1cdfde712f0905c23dc82debf"
+    },
+    {
+      "path": "backgrounds/cafeteria.png",
+      "sha": "14555955ac5f7881ce3cdcec142c565f2a399c77"
+    },
+    {
+      "path": "backgrounds/classroom.png",
+      "sha": "79d78a1bd2e6a089fb04eb8c8af4a0f7bae7160e"
+    },
+    {
+      "path": "backgrounds/courtyard.png",
+      "sha": "97d2a6bcd603ce5cbdd04b45257fd736dac532ae"
+    },
+    {
+      "path": "backgrounds/library.png",
+      "sha": "9632eef3b9e8d002d9fa7bb701603921c156e460"
+    },
+    {
+      "path": "backgrounds/nurse.png",
+      "sha": "48b4875e9fe09d99235cf1e28cffbfc2399960e1"
+    },
+    {
+      "path": "backgrounds/props-source.png",
+      "sha": "f09f96a8d14bfee95ee588b982d8d9825bf7d6ea"
+    },
+    {
+      "path": "backgrounds/props.png",
+      "sha": "e3c0d53b0d06d747ecbba5aa3e19d34b8384273d"
+    },
+    {
+      "path": "characters/daon-portraits.png",
+      "sha": "c3f395074dd896e9b093dafa293bce1e490c753e"
+    },
+    {
+      "path": "characters/daon-source.png",
+      "sha": "4d7fd2c43db67a2e9854841cf52cf32846dbd3d9"
+    },
+    {
+      "path": "characters/daon-walk.png",
+      "sha": "830bccd44a6bcb3f635398cec23d1fd9f746bd21"
+    },
+    {
+      "path": "characters/haneul-portraits.png",
+      "sha": "c2183e89bb47ac188ae373ad136d93a53d634780"
+    },
+    {
+      "path": "characters/haneul-source.png",
+      "sha": "834d597f578717dba5ffdf92afa42190be8a4932"
+    },
+    {
+      "path": "characters/haneul-walk.png",
+      "sha": "3d48558363875dca28a67c5c290cf2e3a5936aa3"
+    },
+    {
+      "path": "characters/jiho-portraits.png",
+      "sha": "4be4263355ecac76fcca4af0694fc05f0a3d79fc"
+    },
+    {
+      "path": "characters/jiho-source.png",
+      "sha": "aa66b76af3a7862d3272c5ff3dfe2bf4bf05b41c"
+    },
+    {
+      "path": "characters/jiho-walk.png",
+      "sha": "06f10b69c00b7ceac342da3794bf3bc60d346e64"
+    },
+    {
+      "path": "characters/librarian-portraits.png",
+      "sha": "c74bc7679a812a4fa6f5536ac6ec99c3dd8d4ffe"
+    },
+    {
+      "path": "characters/librarian-source.png",
+      "sha": "d6f9ccfb1009d6a70f566e9293cf5607c3dde8d7"
+    },
+    {
+      "path": "characters/librarian-walk.png",
+      "sha": "f120ea41bc938f7b7924add09e350ea7adc40c78"
+    },
+    {
+      "path": "characters/onyu-portraits.png",
+      "sha": "46f7c4ea24106ebbbde625a5bd8701557f03bd5d"
+    },
+    {
+      "path": "characters/onyu-source.png",
+      "sha": "460699ab9d7a3c690dfcb06117c333b77fc80811"
+    },
+    {
+      "path": "characters/onyu-walk.png",
+      "sha": "1e0a5a0310bceb02538596d1e63f92c23bc4e350"
+    },
+    {
+      "path": "characters/robot-portraits.png",
+      "sha": "bd84ce2c379ae2ac72fd71b012ca8547a1d1b659"
+    },
+    {
+      "path": "characters/robot-source.png",
+      "sha": "5dc6122e3617d3eea7fe9069cb13c41284f1b8dc"
+    },
+    {
+      "path": "characters/robot-walk.png",
+      "sha": "f344d6f1d6d351f3c61cc2a98c2fa19f1565ed64"
+    },
+    {
+      "path": "characters/saebom-portraits.png",
+      "sha": "1c5754359452a7527f9f1529923346a2a0e6657d"
+    },
+    {
+      "path": "characters/saebom-source.png",
+      "sha": "a1168482697f296a00829c32e68e15d19d8272c9"
+    },
+    {
+      "path": "characters/saebom-walk.png",
+      "sha": "f1de1ba5a0dbdc6511eae16773c2cc3bbef7ec15"
+    },
+    {
+      "path": "characters/teacher-portraits.png",
+      "sha": "e02f78ffd8c2f9640244676c90b572a93f87676e"
+    },
+    {
+      "path": "characters/teacher-source.png",
+      "sha": "e985bb7ea04df3506230acf2de1a2b8beb0349c1"
+    },
+    {
+      "path": "characters/teacher-walk.png",
+      "sha": "30dc2dd4e11bd6c88a361ac9759fc88757f315f0"
+    },
+    {
+      "path": "docs/ASSET_INDEX.csv",
+      "sha": "1761b2470fe90fcdfa84a63cf03ab5d1140e7e0b"
+    },
+    {
+      "path": "docs/CHANGELOG.md",
+      "sha": "1874b6cd9598d78aced889dab5a8f05675ed297c"
+    },
+    {
+      "path": "docs/STYLE_GUIDE.md",
+      "sha": "02614692f7cde083453ba0038c2f9b21a62dca8a"
+    },
+    {
+      "path": "docs/TEAM_INTEGRATION.md",
+      "sha": "70ab7631359e49ee1c97441121f3c5c4ae2cbba2"
+    },
+    {
+      "path": "docs/TEAM_LLM_PROMPT_GUIDE_v1.3.docx",
+      "sha": "b456640d5b768d4749d747e832deee095aa4c8e5"
+    },
+    {
+      "path": "docs/generation-prompts.json",
+      "sha": "2df596f013ab9df03937f648af4db594bc83cb8a"
+    },
+    {
+      "path": "docs/style-reference-saebom.png",
+      "sha": "8dae41823744c8c0c558543b4545bfa431bd3264"
+    },
+    {
+      "path": "effects/audio/collect.wav",
+      "sha": "1d83779ad34c444f0e3dfe076bdd8e98b3e184c0"
+    },
+    {
+      "path": "effects/audio/door.wav",
+      "sha": "5a6c425d61f5283f367105d6e88102d02e492a51"
+    },
+    {
+      "path": "effects/audio/miss.wav",
+      "sha": "b2fbd22649dd9b93a29736c436fe77bfae6dcf91"
+    },
+    {
+      "path": "effects/audio/paper.wav",
+      "sha": "f69140f407d4ed9ee630e4142bfa83445c30c141"
+    },
+    {
+      "path": "effects/audio/retry.wav",
+      "sha": "58626db77886b044b13efdb7107c9c4ba808a982"
+    },
+    {
+      "path": "effects/audio/tap.wav",
+      "sha": "70e10a60ed9068ec1971a567f2bdb1e55a68c371"
+    },
+    {
+      "path": "effects/audio/win.wav",
+      "sha": "85da14aabcae851429819b3c209c67ec57005229"
+    },
+    {
+      "path": "effects/feedback.json",
+      "sha": "5543f0efc9005a6382e454cdf1e918c1c1040c30"
+    },
+    {
+      "path": "effects/feedback.png",
+      "sha": "a4722c671e2a2baf8af008e517cfeabb504fd814"
+    },
+    {
+      "path": "manifest.json",
+      "sha": "f1cc83ec39272426592104b686f5e4cba56523c9"
+    },
+    {
+      "path": "package.json",
+      "sha": "b5e5d8849f25094fa428e4289a736cba8c8b3c6b"
+    },
+    {
+      "path": "preview/index.html",
+      "sha": "0a1696d4b737d7a0ced08ce11b3e9c0199e7e2f3"
+    },
+    {
+      "path": "preview/overview.png",
+      "sha": "fead06eede068d3846302235878edf2dba5a676c"
+    },
+    {
+      "path": "preview/preview.js",
+      "sha": "66f4e858531b8597000089b311fcbeea0c86c0a1"
+    },
+    {
+      "path": "qa/build-manifest.cjs",
+      "sha": "a10fa1cd02295fbca4fa27399f4dc500326241c2"
+    },
+    {
+      "path": "qa/build-ui.cjs",
+      "sha": "ea4a92717bf122f7bccb62099f76b96fef6839b7"
+    },
+    {
+      "path": "qa/character-contact.png",
+      "sha": "1c96b874eb43669c74644bae7b85321a23787c7c"
+    },
+    {
+      "path": "qa/characters-data.json",
+      "sha": "0be303d0d05619fd88714cc3f6e160c4cda832c7"
+    },
+    {
+      "path": "qa/pack-characters.cjs",
+      "sha": "bb162fe6e11c3b66234a9cdd93293e86681d3950"
+    },
+    {
+      "path": "qa/stage-ai_lab.png",
+      "sha": "1b5275fb29abe25f0c318283383d90c8d29864ef"
+    },
+    {
+      "path": "qa/stage-cafeteria.png",
+      "sha": "0ec56c33921072e19fa5cebf095d939fee57662f"
+    },
+    {
+      "path": "qa/stage-classroom.png",
+      "sha": "a6bf7ff8ae2ccf5677809b8ebe11957795fb30da"
+    },
+    {
+      "path": "qa/stage-courtyard.png",
+      "sha": "c915b9a00391ed2e2e60687d9c309ff76656d153"
+    },
+    {
+      "path": "qa/stage-library.png",
+      "sha": "79ee2bf1848412eb42beba1e09354ffcd7b569c6"
+    },
+    {
+      "path": "qa/stage-nurse.png",
+      "sha": "2baf7e086a882ef250d7e5d4965331c2fe0255d9"
+    },
+    {
+      "path": "qa/verification.json",
+      "sha": "0b3a7814bac1cb8fd3a436c008dc59a795739fbf"
+    },
+    {
+      "path": "qa/verification.log",
+      "sha": "908228b34718c125a5f8e75ed894eaf76eaae872"
+    },
+    {
+      "path": "qa/verify.cjs",
+      "sha": "d484093f20c6eaafa460a40f1ff77f3bd918ecda"
+    },
+    {
+      "path": "references/README.md",
+      "sha": "843dc66e4dd5f7d8303f3c519356654238b1f8d4"
+    },
+    {
+      "path": "references/REF_A_character_sheet.png",
+      "sha": "01774a32d58bebdbb817ec99f05c02502ff6ccef"
+    },
+    {
+      "path": "references/REF_B_world_concept.png",
+      "sha": "5705863e87aac2afff6cdb947fad5cdf5591eb71"
+    },
+    {
+      "path": "references/REF_EXPLORE_game.html",
+      "sha": "7f3e3d72fb7757cad52d0a043c60fc982a539712"
+    },
+    {
+      "path": "references/REF_UI_game.html",
+      "sha": "8eff353ebdfb20c8e76c8adcdb9620482f50eada"
+    },
+    {
+      "path": "runtime/common.css",
+      "sha": "0f8512cdec2daf3b022af10deedc5d4f93efddbb"
+    },
+    {
+      "path": "runtime/common.js",
+      "sha": "977be0a65c7d0cec2356b3369ea94b23daa91054"
+    },
+    {
+      "path": "runtime/manifest.js",
+      "sha": "844d0817591dfc78348da1a488998f4ba3a9148c"
+    },
+    {
+      "path": "ui/disabled.png",
+      "sha": "16652df9349c11d54e66d6088fb241f3c6771ac7"
+    },
+    {
+      "path": "ui/fonts/Galmuri11-Bold.woff2",
+      "sha": "afe96509e863de57ed2f2a7d82feda33f933e274"
+    },
+    {
+      "path": "ui/fonts/Galmuri11.ttf",
+      "sha": "838b431b201bb80569c5f43a6836cf08627ca7a6"
+    },
+    {
+      "path": "ui/fonts/Galmuri11.woff2",
+      "sha": "659863b5bf18f3970ee94b3f64b1cca068d11cf5"
+    },
+    {
+      "path": "ui/fonts/LICENSE.txt",
+      "sha": "ae34182f091c835710bef170e50059794377e3c4"
+    },
+    {
+      "path": "ui/hover.png",
+      "sha": "b8fac646492b7f6881ddf898a4e83b21a7dd12a7"
+    },
+    {
+      "path": "ui/icons.json",
+      "sha": "94fc07e457a9f17702703770ba2794c69565e808"
+    },
+    {
+      "path": "ui/icons.png",
+      "sha": "15a34a17322b7830816be0295a516da769c555c1"
+    },
+    {
+      "path": "ui/notice.png",
+      "sha": "dd5506adeb7258653e4564add09bcac79cff7a9a"
+    },
+    {
+      "path": "ui/panel.png",
+      "sha": "e8d688ac4f241806a005fadd6aaf5c983eac75bb"
+    },
+    {
+      "path": "ui/pressed.png",
+      "sha": "bef68e6464f5f6915c5192137bc18c920b975f9f"
+    },
+    {
+      "path": "ui/primary.png",
+      "sha": "565127ed7598212e9409f9b26b66019f340c816e"
+    },
+    {
+      "path": "ui/speech.png",
+      "sha": "e8d688ac4f241806a005fadd6aaf5c983eac75bb"
+    },
+    {
+      "path": "ui/success.png",
+      "sha": "7b7a6ad08a767e24ba4f117e93e938ec0b2417ab"
+    }
+  ],
+  "storageMapping": {
+    "char_03": "haneul",
+    "char_04": "jiho"
+  },
+  "friendArt": "saebom",
+  "guideArt": "robot"
+}

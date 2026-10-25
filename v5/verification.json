@@ -1,0 +1,26 @@
+{
+  "testedAt": "2026-10-25T04:50:25.231Z",
+  "scenarioEmbeddedUnchanged": true,
+  "rounds": 8,
+  "choicesPerRound": 4,
+  "learningElements": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "endingsAcross65536ChoicePaths": {
+    "A": 526,
+    "B": 31945,
+    "C": 33065
+  },
+  "allThreeEndingsReachable": true,
+  "storageFailureContinues": true,
+  "hubResultSchemaPreserved": true,
+  "nicknameValidation": true,
+  "learningTagsOnlyAfterChoice": true,
+  "caseScreens": 8,
+  "commonAssetIdsValid": true,
+  "sourceSyntax": "checked with node --check"
+}

@@ -1,0 +1,23 @@
+{
+  "characters": [
+    {
+      "id": "char_03",
+      "type": "boy",
+      "label": "하늘 모습의 탐험가"
+    },
+    {
+      "id": "char_04",
+      "type": "pony",
+      "label": "지호 모습의 탐험가"
+    }
+  ],
+  "provisionalCharacters": true,
+  "firebase": {
+    "apiKey": "AIzaSyAezD7BaL1x8objUj7xhsx2oCJNwVXYXns",
+    "authDomain": "ethicity-privacy-20261011.firebaseapp.com",
+    "projectId": "ethicity-privacy-20261011",
+    "appId": "1:291154822239:web:3101360f31f288a87bc7ea",
+    "databaseURL": "https://ethicity-privacy-20261011-default-rtdb.asia-southeast1.firebasedatabase.app"
+  },
+  "edition": "v5 · 공통 자산 적용"
+}
