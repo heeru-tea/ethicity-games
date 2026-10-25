@@ -62,8 +62,12 @@ test('Common saved character accepted; nickname validation; blocked and malforme
  assert(P.validPlayer({character:'char_03',nickname:'반짝이는 고래'}));assert(P.validPlayer({character:'char_04',nickname:'별빛'}));assert(!P.validPlayer({character:'unknown',nickname:'별빛'}));assert.equal(P.nicknameError('별빛'),'');assert(P.nicknameError('<img>'));assert(P.nicknameError('학교123'));
  const result={game:'harm',completed:true,ending:'C',card:story.endings.C.card};assert(P.writeStore('ethicity.result.harm',result));assert.equal(P.readStore('ethicity.result.harm').ending,'C');stored.set('bad','not json');assert.equal(P.readStore('bad'),null);blocked=true;assert.equal(P.writeStore('ethicity.result.harm',result),false);assert.equal(P.readStore('ethicity.player'),null);blocked=false;
 });
-test('Built game includes exact story, common characters and only reference Firebase modules',()=>{
- assert.deepEqual(JSON.parse(html.match(/<script id="game-data"[^>]*>([\s\S]*?)<\/script>/)[1]),story);
+test('Built game preserves story except the explicit Daon outfit correction',()=>{
+ const expected=structuredClone(story);
+ expected.rounds[0].narrative[0]=expected.rounds[0].narrative[0].replace('초록 모자를 쓴 다온','보라색 후드를 입은 다온');
+ const builtStory=JSON.parse(html.match(/<script id="game-data"[^>]*>([\s\S]*?)<\/script>/)[1]);
+ assert.deepEqual(builtStory,expected);
+ assert(builtStory.rounds[0].narrative[0].includes('보라색 후드를 입은 다온'));
  assert.deepEqual(config.characters.map(c=>c.id),['char_03','char_04']);
  const imports=[...source.matchAll(/import\('([^']+)'\)/g)].map(m=>m[1]);assert.equal(imports.length,3);assert(imports.every(u=>u.startsWith('https://www.gstatic.com/firebasejs/12.19.0/')));
  assert(!/private_key|service_account|BEGIN PRIVATE KEY/.test(html));
@@ -72,14 +76,21 @@ test('Built game includes exact story, common characters and only reference Fire
 });
 
 
-test('Common assets retain exact original bytes and existing scene images',()=>{
+test('Common assets retain exact original bytes; all eight corrected Daon scenes are embedded',()=>{
  const crypto=require('node:crypto'),pack=path.resolve(base,'../../shared/ethicity-elementary-common-v1');
  const block=id=>JSON.parse(html.match(new RegExp('<script id="'+id+'"[^>]*>([\\s\\S]*?)</script>'))[1]);
  const manifest=block('common-manifest'),files=block('common-files'),scenes=block('scene-assets');
  assert.deepEqual(manifest,JSON.parse(fs.readFileSync(path.join(pack,'manifest.json'),'utf8')));
  for(const [name,uri] of Object.entries(files))assert(Buffer.from(uri.split(',')[1],'base64').equals(fs.readFileSync(path.join(pack,name))),name);
- const sourceScenes=JSON.parse(fs.readFileSync(path.resolve(base,'../source/scene-images.json'),'utf8'));
- for(const scene of sourceScenes.scenes)assert(Buffer.from(scenes[scene.id].src.split(',')[1],'base64').equals(fs.readFileSync(path.resolve(base,'../assets/scenes',scene.file))),scene.file);
+ const sourceScenes=JSON.parse(fs.readFileSync(path.join(__dirname,'scene-images.json'),'utf8'));
+ assert.equal(sourceScenes.scenes.length,8);assert.equal(sourceScenes.mode,'edit');
+ for(const scene of sourceScenes.scenes){
+  const corrected=fs.readFileSync(path.resolve(base,'assets/scenes',scene.file));
+  assert(Buffer.from(scenes[scene.id].src.split(',')[1],'base64').equals(corrected),scene.file);
+  assert(!corrected.equals(fs.readFileSync(path.resolve(base,'../assets/scenes',scene.file))),'Must use the corrected illustration');
+  assert(scene.prompt&&scene.identityReference.endsWith('/characters/daon-source.png'));
+  assert.equal(scenes[scene.id].width,scene.width);assert.equal(scenes[scene.id].height,scene.height);
+ }
  const runtime=html.match(/<script id="common-runtime">([\s\S]*?)<\/script>/)[1];
  assert.equal(runtime,fs.readFileSync(path.join(pack,'runtime/common.js'),'utf8').replace(/\r\n/g,'\n'));
  const css=fs.readFileSync(path.join(pack,'runtime/common.css'),'utf8').replace(/\r\n/g,'\n');

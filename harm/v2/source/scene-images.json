@@ -1,0 +1,112 @@
+{
+  "generator": "Built-in image_gen",
+  "mode": "edit",
+  "date": "2026-10-25",
+  "identity": "공통 팩 daon: 여자 캐릭터, 갈색 낮은 양 갈래 머리, 주황 머리핀, 보라색 후드와 가방, 크림색 상의, 남색 바지",
+  "export": "Generated PNG to WebP, quality 90; no crop, resize or compositional edit",
+  "textCorrections": [
+    {
+      "round": 1,
+      "from": "초록 모자를 쓴 다온",
+      "to": "보라색 후드를 입은 다온"
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "file": "round-01-fake-video.webp",
+      "alt": "보라색 후드를 입은 다온의 모습이 담긴 영상을 친구들이 보고, 곁에 있는 다온은 당황한 표정으로 화면을 바라봅니다.",
+      "caption": "다온의 얼굴이 보여도, 정말 다온이 한 말일까요?",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 1 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is the green-capped child standing at the LEFT and the child depicted inside the TABLET video. Change BOTH depictions. Preserve the yellow-cardigan girl in the center and blue-hoodie boy on the right exactly.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, classroom/park, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-01-fake-video.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-5907b55d-655a-4b55-b82b-cb5e80d171b7.png"
+    },
+    {
+      "id": 2,
+      "file": "round-02-compare.webp",
+      "alt": "다온과 선생님이 두 화면에 나온 같은 얼굴의 영상을 나란히 살펴봅니다. 한쪽은 촬영 전후 장면도 함께 보입니다.",
+      "caption": "비슷한 두 영상, 원본과 앞뒤 상황을 함께 살펴봅니다.",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 2 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is the green-capped child at LEFT, both big laptop video portraits and EVERY small filmstrip thumbnail along the left laptop. Change ALL of these depictions. Preserve the adult teacher with glasses exactly.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, classroom/park, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-02-compare.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-695c55c4-0803-4b6b-8d10-1de34f62c4c0.png"
+    },
+    {
+      "id": 3,
+      "file": "round-03-fake-call.webp",
+      "alt": "모아는 다온과 닮은 목소리의 전화를 듣고 망설입니다. 화면 오른쪽에서는 실제 다온이 공원 약속 장소에서 기다립니다.",
+      "caption": "“오늘 약속 취소하자.” 하지만 다온은 기다리고 있습니다.",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 3 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is ONLY the green-capped child sitting on the park bench in the RIGHT half. Replace this character with the canonical girl, in the same waiting pose. Leave the yellow-cardigan girl receiving the call on the LEFT unchanged, and preserve the split-scene layout and ball.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, classroom/park, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-03-fake-call.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-ed61c9b2-9ebd-4d8c-bfe3-920e14b51efd.png"
+    },
+    {
+      "id": 4,
+      "file": "round-04-ai-dubbing.webp",
+      "alt": "태블릿에는 다온과 모아가 함께 공놀이하는 영상이 보이고, 그 아래에는 나중에 더해진 목소리 트랙이 있습니다.",
+      "caption": "함께 놀던 영상 위에, 하지 않은 해설이 붙었습니다.",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 4 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is the green-capped child leaning at LEFT outside the tablet and the green-capped child running on the LEFT inside the tablet video. Change BOTH. Preserve the yellow-cardigan girl in the foreground and inside the tablet, and preserve the microphone/audio strip and all background objects.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, classroom/park, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-04-ai-dubbing.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-c67a0fcd-bac3-4540-a130-155eb3e52bf0.png"
+    },
+    {
+      "id": 5,
+      "file": "round-05-spread.webp",
+      "alt": "서로 다른 세 기기의 게시판에 같은 다온 영상의 작은 화면이 반복해서 나타나고, 친구들이 퍼진 위치를 살펴봅니다.",
+      "caption": "같은 영상이 다른 게시판에서도 보입니다.",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 5 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is the green-capped child in the CENTER, plus the recurring video thumbnail on EACH of the THREE devices: laptop, tablet and phone. Change the central child and ALL three screen thumbnails. Preserve the blue-hoodie boy at LEFT and yellow-cardigan girl at RIGHT exactly.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, environment, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen or in-photo image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-05-spread.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-b555b59a-eee1-4613-a44b-6c5fdbf90170.png"
+    },
+    {
+      "id": 6,
+      "file": "round-06-explain.webp",
+      "alt": "다온과 모아가 선생님 곁에서 원본 영상과 실제 약속을 정리한 자료를 함께 보며 이야기를 나누려고 합니다.",
+      "caption": "확인한 사실을, 모아에게 어떻게 전할까요?",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 6 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is the green-capped child seated at LEFT, the green-capped running child in the LEFT photo on the table, and the green-capped waiting child in the RIGHT photo. Change ALL THREE depictions to the same canonical girl. Preserve the adult teacher in the middle and yellow-cardigan girl at right exactly.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, environment, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen or in-photo image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-06-explain.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-acb2b1ba-2733-471e-91f7-049e037b99e6.png"
+    },
+    {
+      "id": 7,
+      "file": "round-07-listen.webp",
+      "alt": "다온과 모아가 잠시 거리를 두고 앉아 있고, 친구 한 명이 두 사람의 이야기를 차분히 들으려 합니다.",
+      "caption": "사실을 알아도, 마음을 회복하는 시간은 필요합니다.",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 7 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is ONLY the green-capped child seated at the LEFT of the bench. Change this child to the canonical girl in the same attentive, slightly worried pose. Preserve the yellow-cardigan girl in the center and blue-hoodie boy on the right exactly.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, environment, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen or in-photo image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-07-listen.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-25b87d11-2502-4871-986a-fecdee8c0be7.png"
+    },
+    {
+      "id": 8,
+      "file": "round-08-new-video.webp",
+      "alt": "새 동아리 친구들이 소개 영상 계획을 살펴봅니다. 도담을 닮은 목소리와 가상의 로봇 목소리 아이디어가 아직 제작 전인 화면에 나란히 보입니다.",
+      "caption": "새 소개 영상, 만들기 전부터 피해를 생각합니다.",
+      "width": 1672,
+      "height": 941,
+      "prompt": "Use case: precise-object-edit. Asset: round 8 illustration for a Korean elementary AI ethics game.\nImage 1 is the EDIT TARGET. Image 2 is the canonical DAON identity reference sheet; use its character design, do not redraw or output a reference sheet.\nPrimary request: correct every depiction of DAON from the old green-cap boy to the canonical girl. Daon is ONLY the green-capped child in the CENTER of the three children. Change this child to the canonical girl, keeping the planning/leaning pose. The orange-hoodie child with purple glasses at left is DODAM, NOT DAON, and must remain unchanged, including Dodam's portrait on the laptop. Keep the blue-hoodie boy at right, laptop robot, storyboard, cameras and lights unchanged.\nCanonical identity: elementary-school GIRL with dark chestnut brown hair in TWO LOW PIGTAILS, small ORANGE hair clip, purple zip hoodie over a cream shirt, navy trousers, cream sneakers, purple backpack if a backpack is visible. Match the face and outfit in image 2. NO baseball cap. This is the already established same character, not a newly designed character.\nInvariants: preserve the target scene's composition, characters' poses/emotions, camera framing, environment, furniture, props, other people, lighting and warm pixel-art style. Only Daon's identity/outfit should change. Every in-screen or in-photo image of her must match the corrected foreground Daon. Preserve original wide 16:9 framing. Friendly age-appropriate expressions. No text, no labels, no watermark, no extra people. Return ONE corrected scene, not a collage or comparison.",
+      "editTarget": "harm/assets/scenes/round-08-new-video.webp",
+      "identityReference": "shared/ethicity-elementary-common-v1/characters/daon-source.png",
+      "generatedFile": "exec-c1260773-16a0-4781-97ec-82b67c740b37.png"
+    }
+  ]
+}

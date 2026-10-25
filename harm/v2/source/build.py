@@ -50,10 +50,15 @@ runtime_paths.update(manifest[k]['image'] for k in ('icons','effects','props'))
 runtime_paths.update(manifest['sounds'].values())
 runtime_files = {p:files[p] for p in sorted(runtime_paths)}
 
-scene_data = json.loads((HARM/'source'/'scene-images.json').read_text(encoding='utf-8'))
+scene_data = json.loads((HERE/'scene-images.json').read_text(encoding='utf-8'))
+# v1 시나리오는 보존하고 v2 삽화와 관련된 외형 설명만 맞춥니다.
+for correction in scene_data.get('textCorrections', []):
+    round_data = next(r for r in story['rounds'] if r['id'] == correction['round'])
+    assert any(correction['from'] in text for text in round_data['narrative'])
+    round_data['narrative'] = [text.replace(correction['from'], correction['to']) for text in round_data['narrative']]
 scenes = {}
 for scene in scene_data['scenes']:
-    data = (HARM/'assets'/'scenes'/scene['file']).read_bytes()
+    data = (OUT/'assets'/'scenes'/scene['file']).read_bytes()
     scenes[str(scene['id'])] = {k:scene[k] for k in ('alt','caption','width','height')}
     scenes[str(scene['id'])]['src'] = 'data:image/webp;base64,' + base64.b64encode(data).decode('ascii')
 
@@ -80,10 +85,10 @@ output = '''<!doctype html>
     ('common-manifest',manifest),('common-files',runtime_files),('common-used',used))) + \
     '<script id="common-runtime">' + runtime + '</script>\n<script id="game-code">' + code + '</script></body></html>\n'
 (OUT/'index.html').write_text(output, encoding='utf-8', newline='\n')
-report = {'uiVersion':'harm-common-v2-2026-10-21','commonPackVersion':manifest['version'],
+report = {'uiVersion':'harm-common-v2-2026-10-25','commonPackVersion':manifest['version'],
           'scenarioVersion':story['version'], 'bytes':len(output.encode()),
           'sha256':hashlib.sha256(output.encode()).hexdigest(), 'used':used,
           'commonSourceSha256':{p:hashlib.sha256((PACK/p).read_bytes()).hexdigest() for p in ['manifest.json','runtime/common.css','runtime/common.js']},
-          'sceneSha256':{s['file']:hashlib.sha256((HARM/'assets'/'scenes'/s['file']).read_bytes()).hexdigest() for s in scene_data['scenes']}}
+          'sceneSha256':{s['file']:hashlib.sha256((OUT/'assets'/'scenes'/s['file']).read_bytes()).hexdigest() for s in scene_data['scenes']}}
 (OUT/'build-info.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({k:report[k] for k in ['uiVersion','bytes','sha256']},ensure_ascii=False))

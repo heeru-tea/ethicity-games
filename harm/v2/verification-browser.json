@@ -2,7 +2,7 @@
   "passed": 6,
   "checks": [
     "Common courtyard, portraits, icons, font and buttons load without external asset requests",
-    "Legacy character ID saves with common Jiho portrait; typing, music and SFX controls work",
+    "Legacy character ID saves with common Jiho portrait; typing and SFX work, with no background music controls",
     "All eight rounds, persistent stories, voting pause/extend, class ending, recap, completion and card download pass",
     "Saved ethicity.player skips character selection",
     "390px mobile home and round layouts have no horizontal overflow",

@@ -40,12 +40,10 @@ async function capture(page,name){
   await page.locator('.experience-settings>summary').click();
   await page.locator('[data-action="sfx"]').click();
   assert.equal(await page.locator('[data-action="sfx"]').getAttribute('aria-pressed'),'true');
-  await page.locator('[data-action="music"]').click();
-  assert.equal(await page.locator('[data-action="music"]').getAttribute('aria-pressed'),'true');
-  await page.locator('[data-action="music"]').click();
+  assert.equal(await page.locator('[data-action="music"],#music-volume').count(),0);
   await page.locator('[data-action="sfx"]').click();
   await page.locator('.experience-settings>summary').click();
-  checks.push('Legacy character ID saves with common Jiho portrait; typing, music and SFX controls work');
+  checks.push('Legacy character ID saves with common Jiho portrait; typing and SFX work, with no background music controls');
   await page.locator('[data-action="join"]').click();
   await page.locator('[data-action="next"]').click();
   for(let i=0;i<8;i++){
@@ -54,7 +52,7 @@ async function capture(page,name){
    assert.equal(await page.locator('[role="timer"]').count(),0);
    await page.locator('.round-scene img').evaluate(image=>image.decode());
    if(i===0){await capture(page,'harm-v2-round1.png');}
-   if(i===3){assert.equal((await page.locator('.voice-track').innerText()).replace(/\s+/g,' ').trim(),'추가된 AI 해설 AI로 만든 목소리를 놀이 영상에 덧붙였습니다.');}
+   if(i===3){assert.equal((await page.locator('.voice-track').innerText()).replace(/\s+/g,' ').trim(),'추가된 AI 해설 AI로 만든 목소리를 놀이 영상에 덧붙였습니다.');await capture(page,'harm-v2-round4.png');}
    await page.locator('[data-action="start-vote"][data-index="90"]').click();
    assert(await page.locator('.story-chapter').isVisible());
    assert.equal(await page.locator('.choice-screen [data-common-icon="clue"]').count(),0);

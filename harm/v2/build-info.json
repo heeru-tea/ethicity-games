@@ -1,9 +1,9 @@
 {
-  "uiVersion": "harm-common-v2-2026-10-21",
+  "uiVersion": "harm-common-v2-2026-10-25",
   "commonPackVersion": "1.0.0",
   "scenarioVersion": "harm-2026-10-18-v2",
-  "bytes": 13050584,
-  "sha256": "149fd6ecdcade25a4cfdcd092f041cb546c0d919917b10d76ee3096d34288c24",
+  "bytes": 14022823,
+  "sha256": "50ef836761678487d9810957d8e070c0fc5952a389897a231de9ff7309affcb4",
   "used": {
     "characters": [
       "haneul",
@@ -22,13 +22,13 @@
     "runtime/common.js": "e17f5011c7e8bb7fb3ff86d6cf02ef414b129ce1fdc01ed048a349e7bb0a49c9"
   },
   "sceneSha256": {
-    "round-01-fake-video.webp": "49f68bbfe6123511bd419d88b7a4e2ed7e63ce4c09fd177953fce7e4c29519f9",
-    "round-02-compare.webp": "50f42fa36846b34970ddec5711e778182c420021ee00efd8d5b056dc10de57be",
-    "round-03-fake-call.webp": "8273bcdcbb2f9f20eafcb69c1324b54ab339da6c49e72cd0adc98cd10286c461",
-    "round-04-ai-dubbing.webp": "7f953d9ed7fa871749a98ff84d4d626971eefbd82c53af4f3b56d2a7a85a74a3",
-    "round-05-spread.webp": "cee5415d4b9fd55e31c71ee9651f2ffc2b51076874aa6f19f9639b8605674fda",
-    "round-06-explain.webp": "f146e3727f7058559ea097c044237d2a2ece9c2ad2e9e267ee56fd12b41c2482",
-    "round-07-listen.webp": "a01645a93b8c09fe92e16973126d1d0d119bb01155cfeafb4a48ab1b3818b3d1",
-    "round-08-new-video.webp": "86d70516017d6551e774090f6db223b6fc3e5c39a6ab66e84f6625114492d4ca"
+    "round-01-fake-video.webp": "f4b3cdd67fe41be8e443ff035b3c2be7c9d7312c0c80665fc030695419974201",
+    "round-02-compare.webp": "953cb064e0cbb8cf43aa31feb6e3dc24928ff97ee1552aaf29592a807fc5805e",
+    "round-03-fake-call.webp": "355041b25d4ad9d9046131ee96b81f7c1dd00354309a45b315a60f5bf5a59815",
+    "round-04-ai-dubbing.webp": "78bbc7367ec795df87eb9e1ede94f1c246775d6e2c16ab888c201dce9433d3a8",
+    "round-05-spread.webp": "150f9eb8037db0b16d64a749058d3004be971a2663c7475ab48fa03b6633c27d",
+    "round-06-explain.webp": "04255d1f445770708f0e0394d267f21adac22f55c6db1b3d3b6487c347ae6b87",
+    "round-07-listen.webp": "cf606444636d93a6bd3f394a6a81fd9e93fd8a43ea35b48190bbdc9939644ff4",
+    "round-08-new-video.webp": "1c74ee89ef8f1058f8581f6160cc55f4717a3e55f37727f13454fc16486a9312"
   }
 }

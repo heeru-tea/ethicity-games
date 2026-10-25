@@ -1,4 +1,4 @@
-// 대사 갱신 회귀와 음악 시작/정지를 실제 효과 코드로 검사합니다.
+// 대사 갱신과 배경음악 제거를 실제 효과 코드로 검사합니다.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const source=fs.readFileSync(__dirname+'/experience.js','utf8');
 function setup({reduced=false,audio=true}={}){
@@ -45,13 +45,12 @@ function setup({reduced=false,audio=true}={}){
  checks.push('Instant reading and re-enabling the effect work without replacing the page');
  const reduced=setup({reduced:true});const plain=reduced.mount([['x',text]]);reduced.visible(plain);reduced.tick(2);assert.equal([...plain[0].ink.textContent].length,2);reduced.fx.toggleTyping();assert.equal(plain[0].ink.textContent,text);
  checks.push('Dialogue effect remains available on devices with OS animations off; the reading toggle still shows full text');
- assert.equal(s.audios.length,0);await s.fx.toggleMusic();assert.equal(s.audios.length,1);assert.equal(s.audios[0].state,'running');assert(s.audios[0].created.length>0);assert.equal(s.intervals.size,1);
- const first=s.audios[0].created;s.fx.changeVolume(200);assert.equal(s.store.get('ethicity.harm.volume'),60);
- s.document.hidden=true;await s.event('visibilitychange');assert.equal(s.audios[0].state,'suspended');assert.equal(s.intervals.size,0);assert(first.every(n=>n.stopped));
- s.document.hidden=false;await s.event('visibilitychange');assert.equal(s.audios[0].state,'running');assert.equal(s.intervals.size,1);
- await s.fx.toggleMusic();assert.equal(s.audios[0].state,'suspended');assert.equal(s.intervals.size,0);await s.fx.toggleMusic();assert.equal(s.audios.length,1);assert.equal(s.intervals.size,1);await s.fx.toggleMusic();
- checks.push('Music starts only on request; volume is bounded; hide, resume and repeated toggles do not stack loops');
- const unsupported=setup({audio:false});await unsupported.fx.toggleMusic();assert.equal(unsupported.warnings.length,1);assert.equal(unsupported.intervals.size,0);assert.equal(unsupported.controls.get('music').attributes['aria-pressed'],'false');
- checks.push('Unavailable audio leaves the game usable and the music switch off');
+ assert.equal(s.audios.length,0);
+ assert(!s.fx.controls().includes('data-action="music"'));
+ assert(!s.fx.controls().includes('music-volume'));
+ assert(s.fx.controls().includes('data-action="sfx"'));
+ s.document.hidden=true;await s.event('visibilitychange');s.document.hidden=false;await s.event('visibilitychange');
+ assert.equal(s.audios.length,0);assert.equal(s.intervals.size,0);
+ checks.push('Music controls and playback are absent; visibility changes never create background audio');
  console.log(JSON.stringify({passed:checks.length,checks},null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;});

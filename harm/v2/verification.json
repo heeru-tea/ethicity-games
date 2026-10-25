@@ -10,8 +10,8 @@
     "Only tied leaders can be chosen by teacher",
     "Only voting is timed: teacher chooses duration, pauses, extends and closes",
     "Common saved character accepted; nickname validation; blocked and malformed storage safe",
-    "Built game includes exact story, common characters and only reference Firebase modules",
-    "Common assets retain exact original bytes and existing scene images",
+    "Built game preserves story except the explicit Daon outfit correction",
+    "Common assets retain exact original bytes; all eight corrected Daon scenes are embedded",
     "Scenario, storage and realtime contract remain compatible with v1"
   ]
 }
