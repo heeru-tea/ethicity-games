@@ -1,0 +1,254 @@
+/* 윤리시티 · 투명성 「루미튜브로 발표 준비하기」 — 게임 전용 배치 CSS.
+   색·글꼴·버튼·패널·말풍선은 공통 runtime/common.css 의 --ee-* 토큰과 .ee-* 컴포넌트를 그대로 사용합니다. */
+
+.game-transparency{margin:0;background:var(--ee-paper);min-height:100vh;color:var(--ee-ink)}
+.game-transparency .tp-app{max-width:1240px;margin:0 auto;padding:12px 16px 32px}
+.game-transparency h1,.game-transparency h2,.game-transparency h3,.game-transparency p{margin:0}
+.game-transparency [hidden]{display:none!important}
+
+/* 상단 HUD */
+.game-transparency .tp-hud{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--ee-cream)}
+.game-transparency .tp-hud-title{display:flex;align-items:center;gap:10px}
+.game-transparency .tp-hud-title h1{font-size:20px;font-weight:700}
+.game-transparency .tp-hud-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.game-transparency .tp-status{min-height:20px;font-size:14px;padding:4px 8px;color:var(--ee-green)}
+
+/* 본문 격자: 장면 / 폰 / 패널 */
+.game-transparency .tp-main{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+.game-transparency .tp-left{display:contents}
+/* 픽셀 그림을 비정수 배율로 늘리거나 줄이면 픽셀 크기가 들쭉날쭉해 깨져 보여서, 이 게임에서는 부드럽게 축소합니다(원본은 2~4배 크게 그려 둠). */
+.game-transparency .ee-pixel,.game-transparency .ee-icon,.game-transparency .tp-scene>canvas{image-rendering:auto}
+.game-transparency .tp-main.has-side{grid-template-columns:minmax(0,1fr) 380px;grid-template-areas:"scene side" "panel side"}
+.game-transparency .tp-main.has-side .tp-scene{grid-area:scene}
+.game-transparency .tp-main.has-side .tp-side{grid-area:side}
+.game-transparency .tp-main.has-side .tp-panel{grid-area:panel}
+
+/* 1280×720 논리 화면, 비율 유지 축소 */
+.game-transparency .tp-scene{position:relative;aspect-ratio:16/9;width:100%;container-type:inline-size;border:4px solid var(--ee-ink);border-radius:6px;overflow:hidden;background:#2f4a3f}
+.game-transparency .tp-scene>canvas{display:block;width:100%;height:100%}
+.game-transparency .tp-scene .tp-caption{position:absolute;left:8px;bottom:8px;font-size:14px;padding:4px 10px;background:rgba(255,249,231,.92);border:2px solid var(--ee-ink);border-radius:4px}
+
+/* 대화·선택 패널 */
+.game-transparency .tp-panel{background:var(--ee-cream);display:flex;flex-direction:column;gap:14px}
+.game-transparency .tp-panel.tp-fade{animation:tpFade .22s ease-out}
+@keyframes tpFade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}
+.game-transparency .tp-dialog{display:flex;gap:18px;align-items:flex-start}
+.game-transparency .tp-portrait{flex:0 0 96px;width:96px;height:96px;border:3px solid var(--ee-ink);border-radius:8px;background:var(--ee-paper)}
+.game-transparency .tp-dialog .ee-speech{flex:1 1 auto;min-width:0;background:var(--ee-cream)}
+.game-transparency .tp-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.game-transparency .tp-actions .tp-spacer{flex:1 1 auto}
+.game-transparency .tp-heading{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700}
+.game-transparency .tp-heading .ee-icon{width:28px;height:28px}
+.game-transparency .tp-lead{font-size:18px;line-height:1.7}
+.game-transparency .tp-small{font-size:14px;line-height:1.6;color:#4d6457}
+.game-transparency .tp-choices{display:grid;gap:10px}
+.game-transparency .tp-choice-row{display:flex;gap:10px;align-items:center}
+.game-transparency .tp-choice-row .tp-num{flex:0 0 28px;font-weight:700}
+.game-transparency .ee-choice{display:flex;align-items:center;gap:10px}
+.game-transparency .ee-choice .ee-icon{flex:0 0 24px;width:24px;height:24px}
+.game-transparency .tp-rules{display:grid;gap:12px}
+.game-transparency .tp-rule{display:flex;align-items:center;gap:14px;font-size:18px;line-height:1.6}
+.game-transparency .tp-rule .ee-icon{flex:0 0 40px;width:40px;height:40px}
+
+/* 시작 화면 */
+.game-transparency .tp-start{display:grid;gap:16px}
+.game-transparency .tp-charpick{display:flex;gap:12px;flex-wrap:wrap}
+.game-transparency .tp-charpick .ee-choice{width:auto;flex:1 1 180px;flex-direction:column;align-items:center;gap:6px}
+.game-transparency .tp-charpick canvas{width:112px;height:112px;border:3px solid var(--ee-ink);border-radius:8px;background:var(--ee-paper)}
+.game-transparency .tp-subjpick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game-transparency .tp-subjpick .ee-choice{align-items:flex-start}
+.game-transparency .tp-subjpick .ee-choice>span{display:grid;gap:2px;min-width:0}
+.game-transparency .tp-subjpick strong{font-size:18px}
+.game-transparency .tp-subjpick small{font-size:13px;line-height:1.4}
+/* 탐험 보고서 카드(report-card.js) */
+.game-transparency .ee-report{display:grid;gap:10px}
+.game-transparency .ee-report-img{display:block;width:100%;height:auto;border:3px solid var(--ee-ink);border-radius:6px;background:var(--ee-cream)}
+.game-transparency .ee-report-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.game-transparency .ee-report-hint{margin:0;font-size:14px;color:#4d6457}
+.game-transparency .tp-field{display:grid;gap:6px;max-width:360px}
+.game-transparency .tp-field label{font-weight:700}
+.game-transparency .tp-field input{font:inherit;font-size:20px;padding:8px 12px;min-height:48px;border:3px solid #9fae87;border-radius:4px;background:var(--ee-cream);color:var(--ee-ink)}
+.game-transparency .tp-field input:focus-visible{outline:3px solid #b47f35;outline-offset:3px}
+
+/* 폰 피드 */
+.game-transparency .tp-side{display:flex;justify-content:center}
+.game-transparency .tp-phone{width:100%;max-width:380px;background:var(--ee-ink);border-radius:26px;padding:14px 10px 18px;box-shadow:0 6px 0 #1b3328}
+.game-transparency .tp-phone.has-frame{position:relative;aspect-ratio:1/2;padding:0;background:url('assets/tp_phone_frame.png') no-repeat center/100% 100%;border-radius:0;box-shadow:none}
+.game-transparency .tp-phone.has-frame .tp-screen{position:absolute;left:9.4%;top:5.9%;width:81.2%;height:89.4%;border-radius:10px;min-height:0;overflow-y:auto;overflow-x:hidden;padding:8px;gap:8px}
+.game-transparency .tp-phone.has-frame .tp-hint{display:none}
+.game-transparency .tp-badge-img{width:24px;height:24px;flex:0 0 24px;vertical-align:middle}
+.game-transparency .tp-thumb-badge .tp-badge-img{width:22px;height:22px}
+.game-transparency .tp-phone-top{display:flex;align-items:center;justify-content:space-between;color:var(--ee-cream);font-size:13px;padding:0 8px 8px}
+.game-transparency .has-frame .tp-phone-top,.game-transparency .tp-screen .tp-phone-top{background:var(--ee-ink);border-radius:8px;padding:6px 10px;margin:0}
+.game-transparency .tp-phone-top .tp-logo{display:flex;align-items:center;gap:6px;font-weight:700;font-size:15px}
+.game-transparency .tp-phone-top .ee-icon{width:20px;height:20px}
+.game-transparency .tp-screen{background:var(--ee-cream);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:460px;touch-action:pan-x;user-select:none}
+.game-transparency .tp-video{display:flex;flex-direction:column;gap:8px}
+.game-transparency .tp-thumbwrap{position:relative;border:3px solid var(--ee-ink);border-radius:8px;overflow:hidden;background:var(--ee-paper)}
+.game-transparency .tp-thumb{display:block;width:100%;height:auto;aspect-ratio:4/3}
+.game-transparency .tp-thumb-badge{position:absolute;left:8px;top:8px;display:inline-flex;align-items:center;gap:4px;padding:3px 8px;background:var(--ee-cream);border:2px solid var(--ee-ink);border-radius:4px;font-size:13px;font-weight:700}
+.game-transparency .tp-thumb-badge .ee-icon{width:18px;height:18px}
+.game-transparency .tp-video-title{font-size:17px;font-weight:700;line-height:1.4}
+.game-transparency .tp-video-meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:#4d6457;flex-wrap:wrap}
+.game-transparency .tp-why{display:flex;flex-direction:column;gap:6px}
+.game-transparency .tp-why .ee-button{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:15px;padding:0 10px}
+.game-transparency .tp-why .ee-button .ee-icon{width:22px;height:22px}
+.game-transparency .tp-why .ee-notice{font-size:14px}
+.game-transparency .tp-phone-actions{display:grid;grid-template-columns:1fr;gap:6px;margin-top:auto}
+.game-transparency .tp-phone-actions .ee-button{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:3px 6px;font-size:15px;white-space:nowrap}
+.game-transparency .tp-phone-actions .ee-button .ee-icon{width:20px;height:20px}
+.game-transparency .tp-slots{display:flex;gap:6px;justify-content:center}
+.game-transparency .tp-slot{width:40px;height:40px;border:2px dashed #9fae87;border-radius:6px;display:flex;align-items:center;justify-content:center;background:var(--ee-paper);position:relative}
+.game-transparency .tp-slot.has-card{width:40px;height:56px;border:0;background:transparent;border-radius:0}
+.game-transparency .tp-slot-bg{position:absolute;inset:0;width:100%;height:100%;opacity:.8}
+.game-transparency .tp-slot.filled .tp-slot-bg{opacity:1}
+.game-transparency .tp-slot-thumb{position:relative;width:30px;height:23px;margin-top:6px;border:1px solid var(--ee-ink)}
+.game-transparency .tp-slot.filled:not(.has-card){border-style:solid;border-color:var(--ee-ink);background:#e8f0d9}
+.game-transparency .tp-slot.filled{border-style:solid;border-color:var(--ee-ink);background:#e8f0d9}
+.game-transparency .tp-slot .ee-icon{width:24px;height:24px}
+.game-transparency .tp-timer{height:10px;border:2px solid var(--ee-ink);border-radius:5px;overflow:hidden;background:var(--ee-paper)}
+.game-transparency .tp-timer span{display:block;height:100%;background:var(--ee-blue);transition:width .9s linear}
+.game-transparency .tp-timer-row{display:flex;align-items:center;gap:8px;font-size:13px}
+.game-transparency .tp-timer-row .ee-icon{width:18px;height:18px}
+.game-transparency .tp-confirm{display:flex;flex-direction:column;gap:8px}
+.game-transparency .tp-confirm .ee-button{width:100%}
+
+/* 발표 카드 */
+.game-transparency .tp-slide{width:100%;border:4px solid var(--ee-ink);border-radius:8px;background:var(--ee-cream);padding:14px 16px;display:flex;gap:16px;align-items:flex-start;position:relative;overflow:hidden}
+.game-transparency .tp-slide-body{flex:1 1 auto;min-width:0;display:grid;gap:8px}
+.game-transparency .tp-factcard{flex:0 0 150px;width:150px;height:210px;position:relative;display:flex;flex-direction:column;align-items:center;border:3px solid var(--ee-ink);border-radius:6px;background:var(--ee-cream)}
+.game-transparency .tp-factcard.has-card{border:0;background:transparent}
+.game-transparency .tp-factcard-bg{position:absolute;inset:0;width:100%;height:100%}
+.game-transparency .tp-factcard-thumb{position:relative;width:124px;height:93px;margin-top:22px;border:2px solid var(--ee-ink)}
+.game-transparency .tp-factcard-no{position:relative;margin-top:8px;font-size:15px;font-weight:700}
+.game-transparency .tp-slide-note{display:flex;align-items:center;gap:6px;font-size:15px;color:#4d6457}
+.game-transparency .tp-slide.flipped{background:var(--ee-paper);animation:tpFlip .5s ease-out}
+@keyframes tpFlip{0%{transform:scaleX(1)}50%{transform:scaleX(.05)}100%{transform:scaleX(1)}}
+.game-transparency .tp-slide-no{font-size:15px;color:#4d6457}
+.game-transparency .tp-slide-title{font-size:20px;font-weight:700}
+.game-transparency .tp-slide-fact{font-size:18px;line-height:1.6}
+.game-transparency .tp-slide-reveal{display:flex;gap:8px;align-items:flex-start;font-size:18px;line-height:1.6;font-weight:700}
+.game-transparency .tp-slide-reveal .ee-icon{flex:0 0 24px;width:24px;height:24px}
+
+/* 장면 위 반응 말풍선 */
+.game-transparency .tp-bubbles{position:absolute;inset:0;pointer-events:none}
+.game-transparency .tp-bubble{position:absolute;display:flex;align-items:flex-end;gap:4px;max-width:24%;transform:translateY(-100%);animation:tpPop .25s ease-out both;animation-delay:var(--delay,0s)}
+@keyframes tpPop{from{opacity:0;transform:translateY(-100%) scale(.9)}to{opacity:1;transform:translateY(-100%) scale(1)}}
+.game-transparency .tp-bubble-portrait{flex:0 0 auto;width:clamp(26px,5.2cqw,48px);height:clamp(26px,5.2cqw,48px);border:2px solid var(--ee-ink);border-radius:6px;background:var(--ee-paper)}
+.game-transparency .tp-bubble .ee-speech{font-size:clamp(10px,1.75cqw,18px);line-height:1.3;padding:clamp(2px,.6cqw,6px) clamp(5px,.9cqw,10px);min-width:0;border-width:clamp(6px,1cqw,10px)}
+.game-transparency .tp-bubble .ee-speech:before{left:clamp(-21px,-1.9cqw,-12px);top:auto;bottom:clamp(6px,1.2cqw,14px);width:clamp(9px,1.5cqw,18px);height:clamp(9px,1.5cqw,18px);transform:rotate(45deg)}
+.game-transparency .tp-bubble.below{transform:none;align-items:flex-start;animation-name:tpPopDown}
+.game-transparency .tp-bubble.hang{transform:none;animation-name:tpPopDown}
+@keyframes tpPopDown{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+.game-transparency .tp-bubble.below .ee-speech:before{bottom:auto;top:clamp(6px,1.2cqw,14px)}
+.game-transparency .tp-bubble .ee-speaker{display:block;font-size:clamp(9px,1.3cqw,14px);margin:0 0 1px}
+.game-transparency .tp-viewmap{width:96px;height:96px}
+/* 비교 표 */
+.game-transparency .tp-table{width:100%;border-collapse:collapse;font-size:16px}
+.game-transparency .tp-table th,.game-transparency .tp-table td{border:2px solid #b3c19c;padding:8px 10px;text-align:center}
+.game-transparency .tp-table th{background:#e6edda}
+.game-transparency .tp-table td:first-child{text-align:left;font-weight:700}
+.game-transparency .tp-found{display:grid;gap:8px;font-size:17px;line-height:1.6}
+.game-transparency .tp-found li{display:flex;gap:8px;align-items:flex-start}
+.game-transparency .tp-found .ee-icon{flex:0 0 24px;width:24px;height:24px;margin-top:4px}
+.game-transparency ol.tp-found{list-style:none;padding:0;margin:0}
+.game-transparency .tp-remember{font-size:19px;font-weight:700;line-height:1.7}
+.game-transparency .tp-makeopts{display:grid;gap:10px}
+.game-transparency .tp-makeopts .ee-choice small{display:block;font-size:13px;color:#4d6457}
+.game-transparency .tp-inline-icon{display:inline-block;vertical-align:middle;width:22px;height:22px}
+
+/* 좁은 화면 */
+@media(max-width:1199px){
+  .game-transparency .tp-main.has-side{grid-template-columns:minmax(0,1fr) 332px}
+  .game-transparency .tp-phone{max-width:332px}
+}
+@media(max-width:899px){
+  .game-transparency .tp-main.has-side{grid-template-columns:minmax(0,1fr);grid-template-areas:"scene" "side" "panel"}
+  .game-transparency .tp-main.has-side .tp-scene{max-width:560px;margin:0 auto}
+}
+@media(max-width:1100px){
+  .game-transparency .tp-bubble{max-width:30%}
+  .game-transparency .tp-bubble .ee-speech{font-size:15px;padding:4px 8px}
+  .game-transparency .tp-bubble-portrait{flex-basis:40px;width:40px;height:40px}
+}
+@media(max-width:650px){
+  .game-transparency .tp-app{padding:8px 16px 24px}
+  .game-transparency .tp-scene{overflow:visible}
+  .game-transparency .tp-bubbles{position:static;display:flex;flex-wrap:wrap;gap:8px;padding:8px 0 0;pointer-events:auto}
+  .game-transparency .tp-bubble{position:static;transform:none;max-width:100%;animation-name:tpFadeIn}
+  @keyframes tpFadeIn{from{opacity:0}to{opacity:1}}
+  .game-transparency .tp-bubble .ee-speech{font-size:15px}
+  .game-transparency .tp-slide{flex-direction:column;align-items:center}
+  .game-transparency .tp-slide-body{width:100%}
+  .game-transparency .tp-viewmap{width:56px;height:56px}
+  .game-transparency .tp-table th,.game-transparency .tp-table td{padding:4px 6px}
+  .game-transparency .tp-heading{font-size:17px}
+  .game-transparency .ee-notice,.game-transparency .ee-success{line-height:1.5}
+  .game-transparency .tp-hud-title h1{font-size:17px}
+  .game-transparency .tp-dialog{flex-direction:column;gap:12px}
+  .game-transparency .tp-portrait{flex-basis:72px;width:72px;height:72px}
+  .game-transparency .tp-lead{font-size:16px}
+  .game-transparency .tp-rule{font-size:16px}
+  .game-transparency .tp-slide-title{font-size:18px}
+  .game-transparency .tp-slide-fact{font-size:16px}
+  .game-transparency .tp-table{font-size:14px}
+  .game-transparency .tp-remember{font-size:17px}
+  .game-transparency .tp-screen{min-height:420px}
+  .game-transparency .tp-subjpick{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .game-transparency .tp-panel.tp-fade,.game-transparency .tp-slide.flipped,.game-transparency .tp-bubble{animation:none}
+  .game-transparency .tp-timer span{transition:none}
+}
+
+/* 태블릿 가로·노트북: 한 화면에 모두 들어가는 배치(스크롤 없음). 크기는 game.js fitLayout()이 맞춥니다. */
+@media(min-width:860px) and (orientation:landscape){
+  .game-transparency{height:100dvh;min-height:0;overflow:hidden}
+  .game-transparency .tp-app{height:100dvh;max-width:none;display:flex;flex-direction:column;gap:6px;padding:8px 14px 10px}
+  .game-transparency .tp-hud{flex:0 0 auto;padding:4px 14px}
+  .game-transparency .tp-hud-title h1{font-size:18px}
+  .game-transparency .tp-status{flex:0 0 auto;min-height:18px;padding:0 8px;font-size:13px}
+  .game-transparency .tp-main,.game-transparency .tp-main.has-side{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(310px,32%);grid-template-rows:minmax(0,1fr);grid-template-areas:none;gap:12px;align-items:stretch}
+  .game-transparency .tp-main.has-side{grid-template-columns:minmax(0,1fr) auto}
+  .game-transparency .tp-main.has-side .tp-scene,.game-transparency .tp-main.has-side .tp-side,.game-transparency .tp-main.has-side .tp-panel,.game-transparency .tp-main .tp-left{grid-area:auto}
+  /* 폰 없는 단계: 장면(왼쪽)·패널(오른쪽) 나란히 */
+  .game-transparency .tp-main:not(.has-side) .tp-left{display:contents}
+  .game-transparency .tp-main:not(.has-side) .tp-scene{grid-column:1;grid-row:1;align-self:center;justify-self:center}
+  .game-transparency .tp-main:not(.has-side) .tp-panel{grid-column:2;grid-row:1}
+  .game-transparency .tp-main.no-scene{grid-template-columns:minmax(0,1fr)}
+  .game-transparency .tp-main.no-scene .tp-panel{grid-column:1;justify-self:center;width:min(100%,960px)}
+  /* 폰 있는 단계: 왼쪽 = 장면 위 + 패널 아래, 오른쪽 = 폰 */
+  .game-transparency .tp-main.has-side .tp-left{display:flex;flex-direction:column;gap:10px;min-height:0;min-width:0;align-items:center;grid-column:1;grid-row:1}
+  .game-transparency .tp-scene{flex:0 0 auto;width:auto;max-width:100%}
+  .game-transparency .tp-panel{min-height:0;overflow:auto;align-self:stretch;width:100%}
+  .game-transparency .tp-main.has-side .tp-panel{flex:1 1 auto;gap:10px}
+  .game-transparency .tp-main.has-side .tp-side{grid-area:auto;grid-column:2;grid-row:1;min-height:0;height:100%;align-items:stretch;justify-content:center}
+  .game-transparency .tp-phone{height:100%;max-width:none}
+  .game-transparency .tp-phone.has-frame{aspect-ratio:1/2}
+  .game-transparency .ee-speech{font-size:17px;line-height:1.6;padding:10px 16px}
+  .game-transparency .tp-lead{font-size:16px;line-height:1.6}
+  .game-transparency .tp-rule{font-size:16px}
+  .game-transparency .tp-portrait{flex-basis:72px;width:72px;height:72px}
+  .game-transparency .tp-dialog{gap:14px}
+  .game-transparency .tp-slide{padding:10px 12px;gap:12px}
+  .game-transparency .tp-factcard{flex-basis:110px;width:110px;height:154px}
+  .game-transparency .tp-factcard-thumb{width:90px;height:68px;margin-top:16px}
+  .game-transparency .tp-factcard-no{font-size:13px;margin-top:5px}
+  .game-transparency .tp-slide-title{font-size:17px}
+  .game-transparency .tp-slide-fact,.game-transparency .tp-slide-reveal{font-size:15px}
+  .game-transparency .tp-remember{font-size:17px}
+  .game-transparency .tp-table{font-size:14px}
+  .game-transparency .tp-viewmap{width:56px;height:56px}
+  .game-transparency .tp-table th,.game-transparency .tp-table td{padding:4px 6px}
+  .game-transparency .tp-heading{font-size:17px}
+  .game-transparency .ee-notice,.game-transparency .ee-success{line-height:1.5}
+  .game-transparency .tp-found{font-size:15px}
+  .game-transparency .tp-charpick canvas{width:88px;height:88px}
+  .game-transparency .tp-charpick .ee-choice{flex-basis:120px}
+  .game-transparency .ee-choice{font-size:16px;padding:10px 12px}
+  .game-transparency .tp-screen{min-height:0}
+  .game-transparency .tp-video-title{font-size:15px}
+  .game-transparency .tp-phone-actions .ee-button{font-size:14px;min-height:44px}
+}
+/* 한글 줄바꿈: 단어 중간에서 끊지 않는다(공통 .ee-speech 의 overflow-wrap:anywhere 를 게임 안에서만 완화). */
+.game-transparency, .game-transparency .ee-speech, .game-transparency button, .game-transparency .ee-choice, .game-transparency .ee-notice, .game-transparency .ee-success{word-break:keep-all;overflow-wrap:break-word}
