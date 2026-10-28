@@ -1,0 +1,68 @@
+{
+  "id": "solidarity-assets",
+  "version": "1.0.0",
+  "source": "ethicity-extra-v1 1.1.0 (codex 납품, 의뢰서 v2) solidarity/ 12종. 글자 없는 그림이며 이름·요금·점수는 게임이 겹쳐 쓴다.",
+  "note": "file 이 null 이면 게임이 그리는 임시 픽셀 그림을 쓴다. 캐릭터·배경·아이콘·효과·효과음은 공통 팩(../shared/ethicity-elementary-common-v1)을 그대로 쓴다.",
+  "images": {
+    "sd_plan_free": {
+      "file": "assets/sd_plan_free.png",
+      "size": "240x336",
+      "use": "요금제 카드 · 무료(별 0)"
+    },
+    "sd_plan_lite": {
+      "file": "assets/sd_plan_lite.png",
+      "size": "240x336",
+      "use": "요금제 카드 · 라이트(별 1)"
+    },
+    "sd_plan_plus": {
+      "file": "assets/sd_plan_plus.png",
+      "size": "240x336",
+      "use": "요금제 카드 · 플러스(별 2)"
+    },
+    "sd_plan_pro": {
+      "file": "assets/sd_plan_pro.png",
+      "size": "240x336",
+      "use": "요금제 카드 · 프로(별 3)"
+    },
+    "sd_plan_promax": {
+      "file": "assets/sd_plan_promax.png",
+      "size": "240x336",
+      "use": "요금제 카드 · 프로맥스(별 4·왕관)"
+    },
+    "sd_exam_sheet": {
+      "file": "assets/sd_exam_sheet.png",
+      "size": "240x336",
+      "use": "시험지(빈 답란)"
+    },
+    "sd_report_sheet": {
+      "file": "assets/sd_report_sheet.png",
+      "size": "240x336",
+      "use": "성적표 종이(빈 점수 칸)"
+    },
+    "sd_ticket": {
+      "file": "assets/sd_ticket.png",
+      "size": "256x256",
+      "use": "이용권 배달 · 이용권"
+    },
+    "sd_helpdesk": {
+      "file": "assets/sd_helpdesk.png",
+      "size": "256x256",
+      "use": "이용권 배달 · 도움 창구 책상(소품, 발 기준점 아래 중앙)"
+    },
+    "sd_rule_board": {
+      "file": "assets/sd_rule_board.png",
+      "size": "256x256",
+      "use": "학급 회의 · 규칙 게시판(소품)"
+    },
+    "sd_vote_hand": {
+      "file": "assets/sd_vote_hand.png",
+      "size": "96x96",
+      "use": "투표 손 아이콘"
+    },
+    "sd_future_card": {
+      "file": "assets/sd_future_card.png",
+      "size": "240x336",
+      "use": "다음 학년에게 남기는 편지 카드"
+    }
+  }
+}

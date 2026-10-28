@@ -1,0 +1,1301 @@
+/* ============================================================
+   윤리시티 · 연대성 「성적표의 비밀」 — 게임 전용 배치 스타일
+   색·글꼴·버튼·패널·말풍선은 공통 팩 runtime/common.css(--ee-*, .ee-*)가 기준이다.
+   이 파일은 .game-solidarity 아래에서 배치·반응형·게임 전용 부품만 담당한다.
+   ============================================================ */
+
+.game-solidarity {
+  margin: 0;
+  background: var(--ee-paper);
+  color: var(--ee-ink);
+  font-family: var(--ee-font);
+  font-size: 17px;
+  line-height: 1.65;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+.game-solidarity *,
+.game-solidarity *::before,
+.game-solidarity *::after {
+  box-sizing: border-box;
+}
+.game-solidarity button,
+.game-solidarity input {
+  font: inherit;
+}
+.game-solidarity input {
+  color: inherit;
+}
+.game-solidarity button {
+  touch-action: manipulation;
+}
+/* 공통 .ee-button 의 글자색(크림/잉크)은 common.css 를 그대로 따른다. */
+.game-solidarity :focus-visible {
+  outline: 3px solid #b47f35;
+  outline-offset: 3px;
+}
+.game-solidarity h1,
+.game-solidarity h2,
+.game-solidarity h3,
+.game-solidarity p {
+  margin: 0;
+}
+.game-solidarity p + p {
+  margin-top: 8px;
+}
+
+/* ── 배치 ──────────────────────────────────────────────── */
+.sd-wrap {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 24px 16px 96px;
+}
+.sd-wrap--wide {
+  max-width: 1024px;
+}
+.sd-stack {
+  display: grid;
+  gap: 12px;
+}
+.sd-stack--tight {
+  gap: 8px;
+}
+.sd-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.sd-between {
+  justify-content: space-between;
+}
+.sd-center {
+  text-align: center;
+}
+.sd-mt {
+  margin-top: 12px;
+}
+.sd-mt-lg {
+  margin-top: 20px;
+}
+.sd-wide {
+  width: 100%;
+}
+.sd-big {
+  min-height: 56px;
+  font-size: 19px;
+}
+.sd-muted {
+  color: #5f7366;
+}
+.sd-small {
+  font-size: 14px;
+}
+.sd-strong {
+  font-weight: 700;
+}
+.sd-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 제목 */
+.sd-kicker {
+  color: var(--ee-green);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.sd-title {
+  font-size: clamp(24px, 5.5vw, 32px);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 4px;
+}
+.sd-sub {
+  margin-top: 8px;
+  color: #4b5f52;
+  font-size: 16px;
+}
+.sd-h2 {
+  font-size: 19px;
+  font-weight: 700;
+}
+.sd-h3 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* 공통 패널 안 기본 간격 */
+.game-solidarity .ee-panel {
+  background: var(--ee-cream);
+}
+.game-solidarity .ee-panel > * + * {
+  margin-top: 10px;
+}
+.game-solidarity .ee-notice,
+.game-solidarity .ee-success {
+  background: var(--ee-cream);
+}
+
+/* 버튼 보조 — 공통 .ee-button 의 크기·모양은 그대로, 폭 옵션만 */
+.game-solidarity .ee-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+.game-solidarity .ee-button.secondary {
+  background: var(--ee-cream);
+}
+
+/* 선택지 — 공통 .ee-choice + 보조 설명 줄 */
+.sd-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4b5f52;
+}
+.sd-choices {
+  display: grid;
+  gap: 8px;
+}
+.sd-choices--inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sd-choices--inline .ee-choice {
+  width: auto;
+  min-width: 0;
+}
+
+/* 입력 */
+.sd-input {
+  width: 100%;
+  min-height: 48px;
+  border: 3px solid #9fae87;
+  border-radius: 4px;
+  background: var(--ee-cream);
+  padding: 8px 12px;
+  font-size: 18px;
+}
+.sd-input--code {
+  font-size: 26px;
+  letter-spacing: 0.22em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.sd-label {
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+/* 스프라이트 */
+.sd-sprite {
+  display: inline-block;
+  flex: 0 0 auto;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+.sd-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid var(--ee-ink);
+  border-radius: 4px;
+  background: var(--ee-sage);
+}
+.sd-effect {
+  pointer-events: none;
+  display: block;
+}
+.sd-effect--float {
+  position: absolute;
+  right: 8px;
+  top: -8px;
+}
+
+/* 장면 띠 + HTML 겹층 */
+.sd-scenebox {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+.sd-scenebox .sd-scene {
+  width: 100%;
+}
+.sd-scenelayer {
+  position: absolute;
+  inset: 0;
+  line-height: 1.4;
+  pointer-events: none;
+}
+.sd-scenelayer > * {
+  pointer-events: auto;
+}
+.sd-at {
+  position: absolute;
+  transform: translate(-50%, -100%);
+}
+
+/* 요금제 카드가 선생님 책상에서 내 앞으로 미끄러진다 */
+.sd-cardfly {
+  position: absolute;
+  width: 13%;
+  left: 24%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  animation: sd-cardfly 0.9s ease-in-out forwards;
+}
+@keyframes sd-cardfly {
+  0% {
+    left: 24%;
+    top: 44%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+  }
+  100% {
+    left: 47%;
+    top: 56%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+.sd-cardfly--still {
+  animation: none;
+  left: 47%;
+  top: 56%;
+}
+.sd-cardfly .sd-plancard {
+  width: 100%;
+  height: auto;
+}
+
+/* 이용권 배달 — 장면 속 친구 */
+.sd-kid {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  width: 11%;
+  aspect-ratio: 1 / 1.6;
+  background: transparent;
+  border: 3px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0;
+}
+.sd-kid:focus-visible {
+  outline: 3px solid #b47f35;
+  outline-offset: 2px;
+}
+.sd-kid--hi {
+  border-color: var(--ee-gold);
+  box-shadow: 0 0 0 3px rgba(243, 207, 114, 0.6);
+}
+.sd-kid--hurry {
+  border-color: var(--ee-red);
+}
+.sd-kid--poor {
+  border-style: dashed;
+  border-color: #9fae87;
+}
+.sd-kid__tag {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 2px;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 1.3;
+  background: var(--ee-cream);
+  border: 2px solid var(--ee-ink);
+  padding: 1px 6px;
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+}
+.sd-kid__tag b {
+  font-size: 13px;
+}
+.sd-kid__need {
+  color: var(--ee-green);
+  font-size: 12px;
+}
+.sd-kid__lack {
+  color: var(--ee-red);
+  font-size: 12px;
+}
+.sd-kid__bar {
+  display: block;
+  width: 56px;
+  height: 6px;
+  border: 2px solid var(--ee-ink);
+  background: var(--ee-cream);
+  overflow: hidden;
+}
+.sd-kid__bar > i {
+  display: block;
+  height: 100%;
+  background: var(--ee-sage);
+}
+.sd-kid__bar--hurry > i {
+  background: var(--ee-red);
+}
+.sd-kidface {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+.sd-kidsay {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  width: 15%;
+  min-width: 96px;
+  pointer-events: none;
+}
+.sd-kidsay .ee-speech {
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 4px 8px;
+  border-width: 8px;
+  text-align: center;
+  background: var(--ee-cream);
+}
+.sd-kidsay .ee-speech:before {
+  left: 50%;
+  top: auto;
+  bottom: -16px;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%) rotate(-45deg);
+}
+.sd-counter {
+  position: absolute;
+  transform: translate(-50%, 0);
+  font-size: 13px;
+  background: var(--ee-cream);
+  border: 2px solid var(--ee-ink);
+  padding: 1px 8px;
+  pointer-events: none;
+}
+.sd-empty {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+  background: rgba(255, 249, 231, 0.9);
+  border: 2px solid var(--ee-ink);
+  padding: 4px 12px;
+}
+
+/* 납품 카드 위 글자 겹치기 */
+.sd-plancard--img {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  line-height: 1;
+}
+.sd-plancard--img img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sd-plancard__name,
+.sd-plancard__price {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(255, 249, 231, 0.92);
+  border: 2px solid var(--ee-ink);
+  padding: 1px 8px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.sd-plancard__name {
+  top: 7%;
+  font-size: 15px;
+}
+.sd-plancard__price {
+  top: 67%;
+  font-size: 12px;
+  font-weight: 400;
+}
+.sd-paper {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  line-height: 1.2;
+}
+.sd-paper img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sd-paper__text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10% 14%;
+  gap: 4px;
+}
+.sd-paper--fallback .sd-paper__text {
+  position: static;
+}
+.sd-paper--report .sd-paper__text {
+  justify-content: flex-start;
+  padding-top: 44%;
+}
+.sd-paper--exam .sd-paper__text {
+  padding-top: 20%;
+  justify-content: flex-start;
+}
+.sd-paper__big {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+}
+.sd-paper__big small {
+  font-size: 14px;
+  font-weight: 400;
+}
+.sd-paper--exam .sd-paper__big {
+  font-size: 18px;
+  background: rgba(255, 249, 231, 0.94);
+  border: 2px solid var(--ee-ink);
+  padding: 2px 6px;
+}
+.sd-paper--exam .sd-paper__big small {
+  font-size: 11px;
+}
+.sd-paper__sub {
+  font-size: 12px;
+  color: #4b5f52;
+}
+.sd-paper__kicker {
+  font-size: 12px;
+  color: var(--ee-green);
+  font-weight: 700;
+}
+.sd-paper__body {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.sd-report-grid {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.sd-voteicon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 교사 화면 교실 띠 */
+.sd-band {
+  margin-top: 12px;
+}
+.sd-plancard {
+  display: block;
+  margin: 0 auto;
+}
+
+/* 대화 — 얼굴 + 공통 말풍선 */
+.sd-say {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+.sd-say .ee-speech {
+  font-size: 18px;
+}
+.sd-say--compact .ee-speech {
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 8px 14px;
+}
+.sd-say--compact .ee-speech:before {
+  top: 28px;
+}
+.sd-say--compact .ee-speaker {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.game-solidarity .ee-speaker {
+  margin-bottom: 6px;
+}
+
+/* 상태 바 */
+.sd-statusbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.sd-plandot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--ee-ink);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* 소리 토글 */
+.sd-sound {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 70;
+  min-width: 48px;
+  padding: 3px 10px;
+  font-size: 15px;
+}
+
+/* 모달 */
+.sd-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(41, 75, 64, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 60;
+  overflow-y: auto;
+}
+.sd-modal {
+  width: min(520px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  margin: auto;
+}
+
+/* 표 */
+.sd-table-wrap {
+  overflow-x: auto;
+}
+.sd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.sd-table th,
+.sd-table td {
+  border-bottom: 2px solid #d9d2b8;
+  padding: 8px 8px;
+  text-align: left;
+}
+.sd-table th {
+  color: var(--ee-green);
+  font-size: 14px;
+}
+.sd-table tr.sd-me {
+  background: #e8f0d9;
+  font-weight: 700;
+}
+
+/* 막대 */
+.sd-bar {
+  height: 14px;
+  border: 2px solid var(--ee-ink);
+  background: var(--ee-cream);
+  overflow: hidden;
+}
+.sd-bar > i {
+  display: block;
+  height: 100%;
+  background: var(--ee-sage);
+  transition: width 0.4s ease;
+}
+.sd-bar--gold > i {
+  background: var(--ee-gold);
+}
+.sd-bar--green > i {
+  background: var(--ee-green);
+}
+.sd-bar--blue > i {
+  background: var(--ee-blue);
+}
+.sd-bar--red > i {
+  background: var(--ee-red);
+}
+
+/* 성적표(격차를 보여 주는 자료) */
+.sd-report {
+  border: 3px solid var(--ee-ink);
+  background: var(--ee-cream);
+  padding: 18px 16px;
+}
+.sd-report__title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  border-bottom: 3px solid var(--ee-ink);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+.sd-stamp {
+  display: inline-block;
+  border: 3px solid var(--ee-red);
+  color: var(--ee-red);
+  padding: 2px 12px;
+  font-weight: 700;
+  font-size: 18px;
+  transform: rotate(-5deg);
+  animation: sd-stamp 0.4s ease;
+}
+@keyframes sd-stamp {
+  from {
+    transform: rotate(-5deg) scale(1.6);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(-5deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 뽑기 */
+.sd-cardback {
+  width: 168px;
+  height: 232px;
+  margin: 0 auto;
+  border: 4px solid var(--ee-ink);
+  background: repeating-linear-gradient(-45deg, #f2e7c7, #f2e7c7 12px, #e6edda 12px, #e6edda 24px);
+  animation: sd-wobble 0.9s ease infinite alternate;
+}
+@keyframes sd-wobble {
+  from {
+    transform: rotate(-2deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+.sd-reveal {
+  animation: sd-reveal 0.4s ease;
+}
+@keyframes sd-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 요약 노트 */
+.sd-note summary {
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sd-note summary::-webkit-details-marker {
+  display: none;
+}
+.sd-note summary::after {
+  content: "펼치기";
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 400;
+  border: 2px solid var(--ee-ink);
+  padding: 0 8px;
+}
+.sd-note[open] summary::after {
+  content: "접기";
+}
+.sd-note ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  font-size: 15px;
+}
+
+/* 단계 제어(교사) */
+.sd-stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.sd-stages .ee-choice {
+  width: auto;
+  padding: 8px 12px;
+  font-size: 15px;
+}
+.sd-players {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+.sd-qr {
+  display: block;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+  border: 4px solid var(--ee-ink);
+  background: #fff;
+}
+.sd-code {
+  font-size: 40px;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+
+/* 광고 카운트 */
+.sd-count {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ── 이용권 배달 ─────────────────────────────────────────── */
+.sd-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: sticky;
+  top: 8px;
+  z-index: 20;
+}
+.sd-tickets {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.sd-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border: 3px solid var(--ee-ink);
+  background: var(--ee-cream);
+}
+.sd-timer--hot {
+  border-color: var(--ee-red);
+  color: var(--ee-red);
+}
+.sd-progress {
+  height: 8px;
+  border: 2px solid var(--ee-ink);
+  background: var(--ee-cream);
+  margin-top: 8px;
+  overflow: hidden;
+}
+.sd-progress > i {
+  display: block;
+  height: 100%;
+  background: var(--ee-blue);
+}
+.sd-tally {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.sd-tally figure {
+  margin: 0;
+  text-align: center;
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+.sd-tally figcaption b {
+  display: block;
+  font-size: 22px;
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 650px) {
+  .sd-wrap {
+    padding: 46px 12px 88px; /* 맨 위 작은 소리 토글 자리 */
+  }
+  /* 폰에서는 소리 토글이 화면에 계속 떠 있지 않고 맨 위에 작게 붙어 같이 스크롤된다 */
+  .sd-app {
+    position: relative;
+  }
+  .sd-sound {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    min-height: 0;
+    height: 32px;
+    min-width: 0;
+    padding: 0 10px;
+    font-size: 13px;
+    line-height: 1;
+    border-width: 6px;
+    gap: 4px;
+  }
+  .sd-sound .ee-icon {
+    display: none;
+  }
+  .sd-say {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .sd-say--compact {
+    gap: 24px;
+  }
+  .sd-say--compact .ee-speech:before {
+    top: -23px;
+  }
+  .sd-tally {
+    grid-template-columns: 1fr;
+  }
+  .sd-report-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .sd-kidsay:not(.sd-kidsay--front) {
+    display: none;
+  }
+  .sd-kid__tag {
+    font-size: 11px;
+  }
+  .sd-kid__bar {
+    width: 40px;
+  }
+  .sd-kidsay .ee-speech {
+    font-size: 12px;
+  }
+  .sd-kidsay--front {
+    min-width: 150px;
+    transform: translate(-72%, -100%);
+  }
+  .sd-kidsay--front .ee-speech:before {
+    left: 72%;
+  }
+  .sd-kid__tag {
+    top: auto;
+    bottom: -6px;
+  }
+  .sd-counter {
+    display: none;
+  }
+  .sd-code {
+    font-size: 30px;
+  }
+  .sd-qr {
+    width: 200px;
+    height: 200px;
+  }
+}
+@media (max-width: 430px) {
+  .game-solidarity {
+    font-size: 16px;
+  }
+  .sd-stages .ee-choice {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-cardfly {
+    animation: none;
+    left: 47%;
+    top: 56%;
+  }
+  .game-solidarity *,
+  .game-solidarity *::before,
+  .game-solidarity *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+}
+
+/* 장면 속 카드는 장면 폭 기준으로 크기를 맞춘다 */
+.sd-cardfly .sd-plancard {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* ── 단계 배치 틀(StageLayout) — 기본은 위에서 아래로 쌓기 ─────────── */
+.sd-pagehead {
+  margin-bottom: 16px;
+}
+.sd-main {
+  display: grid;
+  gap: 12px;
+}
+.sd-scenecol,
+.sd-leftcol,
+.sd-under {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  align-content: start;
+}
+.sd-scenefit {
+  width: 100%;
+  min-width: 0;
+}
+.sd-panel {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+.sd-qrpanel__text {
+  text-align: center;
+}
+/* 정수 배가 아닌 배율로 보이는 픽셀 그림은 부드럽게 줄인다(태블릿 DPR 2 에서 깨짐 방지) */
+.game-solidarity .sd-smooth {
+  image-rendering: auto;
+}
+
+/* ── 가로 태블릿(860px 이상·landscape): 한 화면에 맞추고 문서 스크롤 없음 ── */
+@media (min-width: 860px) and (orientation: landscape) {
+  .game-solidarity {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .game-solidarity #root,
+  .game-solidarity .sd-app {
+    height: 100dvh;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .sd-wrap,
+  .sd-wrap--wide {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 14px 10px;
+  }
+  /* 고정 소리 토글 자리 */
+  .sd-statusbar,
+  .sd-tophud {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+    padding-right: 140px;
+  }
+  .sd-tophud .sd-h2 {
+    font-size: 20px !important;
+  }
+  .sd-stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sd-head {
+    flex: 0 0 auto;
+    padding-right: 140px;
+  }
+  .sd-statusbar + .sd-stage .sd-head {
+    padding-right: 0;
+  }
+  .sd-pagehead {
+    margin-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 12px;
+    row-gap: 0;
+  }
+  .sd-pagehead .sd-kicker {
+    font-size: 13px;
+  }
+  .sd-pagehead .sd-title {
+    font-size: 22px;
+    margin-top: 0;
+    line-height: 1.25;
+  }
+  .sd-pagehead .sd-sub {
+    flex-basis: 100%;
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .sd-main {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(330px, 40%);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 12px;
+    align-items: stretch;
+  }
+  .sd-main--wide {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 27%);
+  }
+  .sd-main--noscene,
+  .sd-main--nopanel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sd-portrait-only {
+    display: none !important;
+  }
+  .sd-main--noscene .sd-panel {
+    justify-self: center;
+    width: min(100%, 960px);
+  }
+  .sd-scenecol,
+  .sd-leftcol {
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .sd-scenefit {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+  }
+  /* 장면 아래 보조 내용 — 길면 여기서만 스크롤 */
+  .sd-under {
+    flex: 0 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: 960px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding-right: 2px;
+  }
+  .sd-leftcol > * {
+    width: 100%;
+  }
+  .sd-leftcol > .sd-report--main {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .sd-report--main .sd-report-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+  .sd-report__table {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .sd-table-wrap--sticky {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+  }
+  .sd-table-wrap--sticky thead th {
+    position: sticky;
+    top: 0;
+    background: var(--ee-cream);
+    z-index: 1;
+  }
+  .sd-examdone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: left;
+  }
+  .sd-examdone > * + * {
+    margin-top: 0;
+  }
+  .sd-panel {
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding-right: 4px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .sd-panel > * {
+    flex: 0 0 auto;
+  }
+  /* 남는 높이를 채우는 패널(선생님 참가자 현황 등) — 길어지면 안에서만 스크롤 */
+  .sd-panel > .sd-panel__grow {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  /* 글자·부품을 조금 줄인다 (버튼은 44px 이상 유지) */
+  .game-solidarity .ee-speech {
+    font-size: 17px;
+    line-height: 1.6;
+    padding: 10px 16px;
+  }
+  .sd-say--compact .ee-speech {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .sd-say {
+    gap: 20px;
+  }
+  .sd-sub {
+    font-size: 15px;
+  }
+  .game-solidarity .ee-choice {
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  .game-solidarity .ee-button {
+    min-height: 44px;
+  }
+  .sd-big {
+    min-height: 48px;
+    font-size: 17px;
+  }
+  .sd-h2 {
+    font-size: 18px;
+  }
+  .sd-h3 {
+    font-size: 16px;
+  }
+  .game-solidarity .ee-panel {
+    padding: 10px 14px;
+  }
+  .game-solidarity .ee-panel > * + * {
+    margin-top: 8px;
+  }
+  .sd-table {
+    font-size: 14px;
+  }
+  .sd-table th,
+  .sd-table td {
+    padding: 5px 6px;
+  }
+  .sd-report {
+    padding: 12px 12px;
+  }
+  .sd-report__title {
+    font-size: 18px;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .sd-tabs .ee-choice {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+  .sd-hud {
+    position: static;
+    flex-wrap: wrap;
+  }
+  .sd-cardback {
+    width: 120px;
+    height: 166px;
+  }
+  .sd-count {
+    font-size: 40px;
+  }
+  /* 선생님 QR: 장면 아래 가로 배치 */
+  .sd-qrpanel {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-align: left;
+  }
+  .sd-qrpanel > * + * {
+    margin-top: 0;
+  }
+  .sd-qrpanel .sd-qr {
+    width: 180px;
+    height: 180px;
+    margin: 0;
+    flex: 0 0 auto;
+  }
+  .sd-qrpanel__text {
+    text-align: left;
+    min-width: 0;
+  }
+  .sd-qrpanel .sd-code {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+  .sd-stages .ee-choice {
+    font-size: 14px;
+    padding: 6px 10px;
+    min-height: 44px;
+  }
+  /* 입장 양식: 두 칸 */
+  .sd-joinform {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    align-items: start;
+  }
+  .sd-joinform > * + * {
+    margin-top: 0;
+  }
+  .sd-joinform > :nth-child(3) {
+    grid-column: 1 / -1;
+  }
+  .sd-joinactions {
+    grid-template-columns: 1fr auto;
+  }
+  .sd-joinactions .sd-wide {
+    width: auto;
+    min-width: 200px;
+  }
+  .sd-joinactions .sd-big {
+    width: 100%;
+  }
+}
+
+/* 탐험 보고서 카드(ReportCardView) */
+.ee-report {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 0;
+}
+.ee-report-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid var(--ee-ink);
+  border-radius: 6px;
+  background: var(--ee-cream);
+}
+.ee-report-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ee-report-hint {
+  margin: 0;
+  font-size: 14px;
+  color: #4d6457;
+}
