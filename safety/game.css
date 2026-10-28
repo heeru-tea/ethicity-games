@@ -1,0 +1,234 @@
+/* 닥터루미 창구 · 윤리시티 안전성 — 게임 전용 스타일
+   공통 토큰(--ee-*)과 공통 컴포넌트(.ee-*)는 runtime/common.css 를 그대로 쓰고,
+   여기서는 .game-safety 아래 배치·게임 전용 요소만 정의한다. 공통 클래스는 재정의하지 않는다. */
+.game-safety{margin:0;min-height:100vh;background:var(--ee-paper);-webkit-text-size-adjust:100%}
+.game-safety [hidden]{display:none!important}
+.game-safety .sf-app{max-width:1040px;margin:0 auto;padding:8px 16px 24px;display:flex;flex-direction:column;gap:8px}
+.game-safety .sf-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* HUD */
+.game-safety .sf-hud{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:6px 12px}
+.game-safety .sf-hud-title{font-weight:700;font-size:19px;line-height:1.2;min-width:0;white-space:nowrap}
+.game-safety .sf-hud-title small{display:block;font-weight:400;font-size:14px;color:var(--ee-green);margin-top:4px}
+.game-safety .sf-timer{display:flex;align-items:center;gap:6px;flex:1 1 110px;min-width:110px}
+.game-safety .sf-timer .sf-sec{min-width:44px;text-align:right;font-weight:700;font-size:17px}
+.game-safety .sf-bar{flex:1;height:14px;border:2px solid var(--ee-ink);background:var(--ee-cream);border-radius:3px;overflow:hidden}
+.game-safety .sf-bar i{display:block;height:100%;width:100%;background:var(--ee-blue)}
+.game-safety .sf-bar.is-urgent i{background:var(--ee-red)}
+.game-safety .sf-stats{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.game-safety .sf-stats li{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;font-size:13px}
+.game-safety .sf-stats li .ee-icon{width:20px;height:20px}
+.game-safety .sf-stats b{font-size:16px}
+.game-safety .sf-hud .ee-button{min-height:48px;display:inline-flex;align-items:center;gap:4px;padding:0 4px;font-size:14px;margin-left:auto}
+.game-safety .sf-hud .ee-button .ee-icon{width:22px;height:22px}
+
+/* 무대(1280×720 논리 화면, 비율 유지 축소) */
+.game-safety .sf-stage-wrap{position:relative;width:min(100%,max(280px,calc((100vh - 460px) * 16 / 9)));margin:0 auto;aspect-ratio:16/9;touch-action:none;border:3px solid var(--ee-ink);border-radius:4px;overflow:hidden;background:var(--ee-ink);user-select:none;-webkit-user-select:none}
+/* 1280×720 논리 화면을 비정수 배율로 줄여 보이므로 부드럽게 축소합니다(픽셀 고정 렌더링은 태블릿에서 깨져 보임). */
+.game-safety .sf-stage{display:block;width:100%;height:100%;image-rendering:auto}
+.game-safety .sf-stage:focus-visible{outline:3px solid #b47f35;outline-offset:-3px}
+.game-safety .sf-title-card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(41,75,64,.72);color:var(--ee-cream);text-align:center;padding:16px}
+.game-safety .sf-title-card b{font-size:clamp(22px,5vw,40px)}
+.game-safety .sf-title-card span{font-size:clamp(14px,2.6vw,20px)}
+.game-safety .sf-stage-note{position:absolute;left:8px;right:8px;bottom:8px;display:flex;justify-content:center;gap:8px;pointer-events:none}
+.game-safety .sf-stage-note>*{pointer-events:auto}
+
+/* 창구 데크: 말풍선·증거 카드·버튼 2개 */
+.game-safety .sf-deck{display:flex;flex-direction:column;gap:8px}
+.game-safety .sf-deck-main,.game-safety .sf-deck-side{display:flex;flex-direction:column;gap:8px;min-width:0}
+.game-safety .sf-tray-title{margin:0;font-size:15px;font-weight:700;color:var(--ee-green)}
+.game-safety .sf-tray-title small{font-weight:400;color:#4d6457;margin-left:6px;font-size:13px}
+@media (min-width:900px) and (orientation:portrait){
+  .game-safety .sf-deck.is-window{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 16px;align-items:start}
+  .game-safety .sf-deck.is-window .sf-tray{max-width:none}
+  .game-safety .sf-deck.is-window .sf-actions{grid-column:1/-1}
+}
+/* 가로 화면: 「보건쌤께·침대로」가 무대 안 아래 가운데에 떠 있다(game.js placeActions) */
+.game-safety .sf-stage-wrap .sf-actions.is-on-stage{position:absolute;left:50%;bottom:3.5%;transform:translateX(-50%);width:min(68%,640px);z-index:4;gap:12px}
+.game-safety .sf-actions.is-on-stage .ee-button{min-height:60px;font-size:18px;filter:drop-shadow(0 4px 0 rgba(41,75,64,.45))}
+/* 탐험 보고서 카드(report-card.js) */
+.game-safety .ee-report{display:grid;gap:10px;margin:8px 0}
+.game-safety .ee-report-img{display:block;width:100%;height:auto;border:3px solid var(--ee-ink);border-radius:6px;background:var(--ee-cream)}
+.game-safety .ee-report-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.game-safety .ee-report-hint{margin:0;font-size:14px;color:#4d6457}
+.game-safety .sf-say{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:start}
+.game-safety .sf-face{width:96px;height:96px;image-rendering:auto;border:3px solid var(--ee-ink);border-radius:6px;background:var(--ee-cream)}
+.game-safety .sf-say .ee-speech{min-height:96px}
+.game-safety .sf-say .ee-speaker{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px}
+.game-safety .sf-say .ee-speaker .ee-icon{width:22px;height:22px}
+.game-safety .sf-line{margin:0;font-size:21px;line-height:1.5}
+.game-safety .sf-line.is-human{display:flex;align-items:center;gap:8px}
+.game-safety .sf-sub{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--ee-green)}
+.game-safety .sf-kidline{display:flex;align-items:center;gap:10px;font-size:16px}
+.game-safety .sf-kidline .sf-face{width:40px;height:40px;border-width:2px}
+.game-safety .sf-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.game-safety .sf-row.is-end{justify-content:flex-end}
+
+/* 증거 카드(실제 button) */
+.game-safety .sf-tray{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:540px}
+.game-safety .sf-card{position:relative;font:inherit;color:var(--ee-ink);display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px 6px;min-height:48px;background:var(--ee-cream);border:3px solid #9fae87;border-radius:6px;cursor:pointer;text-align:center;line-height:1.3;touch-action:manipulation}
+.game-safety .sf-card:focus-visible{outline:3px solid #b47f35;outline-offset:3px}
+.game-safety .sf-card[aria-pressed=true]{background:#e8f0d9;border-color:var(--ee-ink)}
+.game-safety .sf-card .sf-card-img{display:block;width:100%;max-width:96px;aspect-ratio:5/7;image-rendering:auto;border:0;border-radius:3px;background:var(--ee-cream);transition:transform .18s}
+.game-safety .sf-card.is-flipping .sf-card-img{transform:scaleX(0)}
+.game-safety .sf-card-pic{position:relative;display:block;width:100%;max-width:96px}
+.game-safety .sf-card-num{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);padding:2px 6px;background:var(--ee-cream);border:2px solid var(--ee-ink);border-radius:4px;font-weight:700;font-size:15px;line-height:1.2;white-space:nowrap}
+.game-safety .sf-card-label{font-size:14px;color:var(--ee-green);font-weight:700}
+.game-safety .sf-card-value{font-size:16px;font-weight:700;min-height:1.3em}
+.game-safety .sf-card-value.is-danger{color:var(--ee-red)}
+.game-safety .sf-card-eye{position:absolute;top:4px;left:4px;display:inline-flex;align-items:center;gap:2px;padding:2px 4px;background:var(--ee-cream);border:2px solid var(--ee-ink);border-radius:4px;font-size:12px;line-height:1}
+.game-safety .sf-card-eye .ee-icon{width:16px;height:16px}
+.game-safety .sf-card.is-unseen .sf-card-eye{background:var(--ee-gold)}
+.game-safety .sf-card.is-key-hint{border-color:var(--ee-gold);box-shadow:0 0 0 4px var(--ee-gold);animation:sf-pulse 1s infinite alternate}
+.game-safety .sf-card.is-key-hint .sf-card-label::after{content:' · 탭!'}
+@keyframes sf-pulse{from{box-shadow:0 0 0 2px var(--ee-gold)}to{box-shadow:0 0 0 6px var(--ee-gold)}}
+
+/* 밀기 버튼 2개 */
+.game-safety .sf-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game-safety .sf-actions .ee-button{min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:18px;width:100%}
+.game-safety .sf-actions .ee-button small{display:block;font-size:13px;font-weight:400;line-height:1.3}
+.game-safety .sf-actions .ee-button .sf-btn-main{display:inline-flex;align-items:center;gap:6px}
+.game-safety .sf-actions .ee-button .ee-icon{width:22px;height:22px}
+.game-safety .sf-actions .ee-button.is-locked{filter:saturate(.5)}
+.game-safety .sf-actions .ee-button.is-hint{animation:sf-nudge .6s infinite alternate}
+@keyframes sf-nudge{from{transform:translateX(0)}to{transform:translateX(4px)}}
+.game-safety .sf-actions .ee-button.is-hint.is-left{animation-name:sf-nudge-l}
+@keyframes sf-nudge-l{from{transform:translateX(0)}to{transform:translateX(-4px)}}
+
+/* 피드백·안내 */
+.game-safety .sf-feedback{display:flex;align-items:center;gap:10px;font-size:17px}
+.game-safety .sf-feedback .ee-icon{width:28px;height:28px;flex:none}
+.game-safety .sf-feedback .sf-face{width:48px;height:48px;border-width:2px;flex:none}
+.game-safety .sf-tip{display:flex;align-items:center;gap:8px;font-size:16px}
+.game-safety .sf-tip .ee-icon{flex:none}
+
+/* 전체 화면(시작·생각 카드·보고서·완료) */
+.game-safety .sf-screen{position:fixed;inset:0;z-index:20;background:rgba(41,75,64,.62);overflow:auto;padding:16px;display:flex;align-items:flex-start;justify-content:center}
+.game-safety .sf-panel{width:100%;max-width:680px;margin:auto}
+.game-safety .sf-kicker{display:inline-block;font-size:14px;color:var(--ee-green);font-weight:700;margin-bottom:4px}
+.game-safety .sf-h1{font-size:clamp(22px,4vw,30px);font-weight:700;margin:0 0 8px;line-height:1.3}
+.game-safety .sf-h2{font-size:19px;font-weight:700;margin:16px 0 8px}
+.game-safety .sf-p{font-size:17px;line-height:1.7;margin:0 0 8px}
+.game-safety .sf-pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}
+.game-safety .sf-pick .ee-choice{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.game-safety .sf-pick .sf-face{width:88px;height:88px}
+.game-safety .sf-field{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.game-safety .sf-field label{font-size:16px;font-weight:700}
+.game-safety .sf-input{font:inherit;font-size:20px;padding:8px 12px;min-height:48px;border:3px solid #9fae87;border-radius:4px;background:var(--ee-cream);color:var(--ee-ink);max-width:240px}
+.game-safety .sf-input:focus-visible{outline:3px solid #b47f35;outline-offset:3px}
+.game-safety .sf-choices{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.game-safety .sf-choices .ee-choice{display:flex;align-items:center;gap:10px}
+.game-safety .sf-choices .ee-choice .sf-num{flex:none;width:28px;height:28px;border:2px solid var(--ee-ink);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.game-safety .sf-list{margin:0;padding-left:20px;font-size:16px;line-height:1.7}
+.game-safety .sf-list .ee-icon{width:20px;height:20px;vertical-align:-4px;margin-right:4px}
+
+/* 3일 보고서 막대 */
+.game-safety .sf-chart{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:center;margin:8px 0;font-size:15px}
+.game-safety .sf-chart .sf-bars{display:flex;flex-direction:column;gap:4px}
+.game-safety .sf-chart .sf-cbar{display:flex;align-items:center;gap:8px}
+.game-safety .sf-chart .sf-cbar i{display:block;height:16px;border:2px solid var(--ee-ink);border-radius:3px;min-width:4px;background:var(--ee-sage)}
+.game-safety .sf-chart .sf-cbar.is-acc i{background:var(--ee-red)}
+.game-safety .sf-chart .sf-cbar.is-report i{background:var(--ee-green)}
+.game-safety .sf-chart .sf-cbar.is-queue i{background:var(--ee-blue)}
+.game-safety .sf-chart .sf-cbar b{min-width:2.2em}
+.game-safety .sf-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;margin:4px 0 8px}
+.game-safety .sf-legend i{display:inline-block;width:14px;height:14px;border:2px solid var(--ee-ink);border-radius:3px;vertical-align:-2px;margin-right:4px;background:var(--ee-sage)}
+.game-safety .sf-legend .is-acc i{background:var(--ee-red)}
+.game-safety .sf-legend .is-report i{background:var(--ee-green)}
+.game-safety .sf-legend .is-queue i{background:var(--ee-blue)}
+.game-safety .sf-endcard{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;margin:8px 0}
+.game-safety .sf-endcard p{margin:0;font-size:19px;line-height:1.6;font-weight:700}
+.game-safety .sf-endcard .sf-face{width:96px;height:96px}
+.game-safety .sf-think-bar{margin:8px 0}
+.game-safety .sf-think-bar .sf-bar i{background:var(--ee-gold)}
+
+@media (max-width:1100px){
+  .game-safety .sf-hud .ee-button span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .game-safety .sf-hud .ee-button{padding:0 2px;min-width:48px;justify-content:center}
+  .game-safety .sf-stats li{padding:3px 6px;gap:4px}
+}
+@media (max-width:650px){
+  .game-safety .sf-app{padding:8px 12px 20px}
+  .game-safety .sf-say{grid-template-columns:1fr;gap:28px}
+  .game-safety .sf-face{width:64px;height:64px}
+  .game-safety .sf-say .ee-speech{min-height:0}
+  .game-safety .sf-line{font-size:18px}
+  .game-safety .sf-kidline{font-size:15px}
+  .game-safety .sf-card .sf-card-img,.game-safety .sf-card-pic{max-width:76px}
+  .game-safety .sf-card-num{font-size:13px;padding:1px 4px}
+  .game-safety .sf-stage-wrap{width:100%}
+  .game-safety .sf-card-value{font-size:14px}
+  .game-safety .sf-actions{gap:8px}
+  .game-safety .sf-actions .ee-button{font-size:16px;min-height:60px}
+  .game-safety .sf-hud-title{min-width:0;font-size:18px;flex:1 1 auto}
+  .game-safety .sf-hud{padding:4px 8px;gap:6px 8px}
+  .game-safety .sf-hud .ee-button{order:1;min-height:44px}
+  .game-safety .sf-timer{order:2;flex:1 1 100%}
+  .game-safety .sf-stats{order:3}
+  .game-safety .sf-say{gap:20px}
+  .game-safety .sf-actions{position:sticky;bottom:0;z-index:5;background:var(--ee-paper);padding:6px 0 8px;margin-top:-2px}
+  .game-safety .sf-pick{grid-template-columns:1fr 1fr}
+  .game-safety .sf-endcard{grid-template-columns:72px 1fr}
+  .game-safety .sf-screen{padding:8px}
+}
+@media (max-height:760px) and (min-width:651px){
+  .game-safety .sf-card .sf-card-img,.game-safety .sf-card-pic{max-width:84px}
+  .game-safety .sf-say .ee-speech{min-height:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .game-safety .sf-card.is-key-hint,.game-safety .sf-actions .ee-button.is-hint{animation:none}
+  .game-safety .sf-card .sf-card-img{transition:none}
+}
+
+/* 태블릿 가로·노트북(860px 이상 가로): 스크롤 없이 한 화면을 꽉 채운다.
+   - 소개·걷기 단계: 무대를 가로 전체에 크게, 말풍선·버튼은 그 아래 한 줄.
+   - 창구 단계: 무대 왼쪽 위 + 증거 카드 왼쪽 아래, 말풍선 오른쪽 + 밀기 버튼 오른쪽 아래.
+   무대 크기는 칸(.sf-stage-cell)의 컨테이너 단위(cqw/cqh)로 16:9 를 지키며 칸을 가득 채운다. */
+@media (min-width:860px) and (orientation:landscape){
+  .game-safety{height:100dvh;min-height:0;overflow:hidden}
+  .game-safety .sf-app{max-width:none;height:100dvh;padding:8px 14px 10px;display:grid;grid-template-columns:minmax(0,1fr) clamp(340px,34vw,440px);grid-template-rows:auto minmax(0,1fr) auto;gap:8px 12px;align-items:stretch}
+  .game-safety #sf-loading{grid-column:1/-1}
+  .game-safety .sf-hud{grid-column:1/-1;grid-row:1;padding:4px 12px}
+  .game-safety .sf-stage-cell{grid-column:1/-1;grid-row:2;min-width:0;min-height:0;container-type:size;display:flex;align-items:center;justify-content:center}
+  .game-safety .sf-stage-wrap{width:min(100cqw,calc(100cqh * 16 / 9));max-width:none;margin:0;aspect-ratio:16/9}
+  /* 소개·걷기·생각 단계: 데크를 무대 아래 한 줄로 */
+  .game-safety .sf-deck{grid-column:1/-1;grid-row:3;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 12px;min-height:0;max-height:34dvh;overflow:auto;padding-right:2px}
+  .game-safety .sf-deck>.sf-say{flex:1 1 520px}
+  .game-safety .sf-deck>.ee-notice{flex:1 1 360px}
+  .game-safety .sf-deck>.sf-row{flex:0 0 auto;margin-left:auto}
+  /* 창구 단계: 왼쪽 = 무대(버튼은 무대 안 아래 가운데) + 그 아래 아이 말·닥터루미 답·안내, 오른쪽 = 증거 카드 선반 */
+  .game-safety .sf-app.is-window{grid-template-columns:minmax(0,1fr) clamp(300px,30vw,380px);grid-template-rows:auto minmax(0,1fr) auto}
+  .game-safety .sf-app.is-window .sf-stage-cell{grid-column:1;grid-row:2}
+  .game-safety .sf-deck.is-window{display:contents}
+  .game-safety .sf-deck.is-window .sf-deck-main{grid-column:1;grid-row:3;display:flex;flex-direction:column;gap:6px;min-height:0;max-height:38dvh;overflow:auto;padding-right:2px}
+  .game-safety .sf-deck.is-window .sf-deck-side{grid-column:2;grid-row:2/4;display:flex;flex-direction:column;gap:8px;min-height:0;overflow:auto;padding-right:2px}
+  .game-safety .sf-deck.is-window .sf-tray{display:grid;grid-template-columns:1fr;gap:10px;max-width:none;width:100%}
+  .game-safety .sf-deck.is-window .sf-card{display:grid;grid-template-columns:96px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:2px;align-items:center;align-content:center;text-align:left;padding:8px 10px;min-height:128px}
+  .game-safety .sf-deck.is-window .sf-card .sf-card-pic{grid-row:1/3;width:96px;max-width:96px}
+  .game-safety .sf-deck.is-window .sf-card .sf-card-img{max-width:96px}
+  .game-safety .sf-deck.is-window .sf-card-label{font-size:15px;align-self:end}
+  .game-safety .sf-deck.is-window .sf-card-value{font-size:20px;align-self:start;min-height:0}
+  .game-safety .sf-deck.is-window .sf-card-eye{top:auto;left:auto;right:8px;bottom:8px}
+  .game-safety .sf-actions .ee-button{min-height:60px;font-size:18px;padding:2px 4px}
+  .game-safety .sf-actions .ee-button small{font-size:12px;white-space:nowrap}
+  .game-safety .sf-line{font-size:19px}
+  .game-safety .sf-sub{font-size:14px}
+  .game-safety .sf-say{grid-template-columns:72px minmax(0,1fr);gap:12px}
+  .game-safety .sf-face{width:72px;height:72px}
+  .game-safety .sf-say .ee-speech{min-height:72px;padding:10px 14px}
+  .game-safety .sf-kidline{font-size:15px}
+  .game-safety .sf-deck .ee-notice:not(.sf-kidline){font-size:14px;line-height:1.45;padding:6px 10px}
+  .game-safety .sf-deck .ee-notice:not(.sf-kidline) .ee-icon{width:22px;height:22px}
+  .game-safety .sf-card{padding:6px 6px 6px;gap:3px}
+  .game-safety .sf-card .sf-card-img,.game-safety .sf-card-pic{max-width:104px}
+  .game-safety .sf-card-label{font-size:13px}
+  .game-safety .sf-card-value{font-size:15px}
+}
+/* 4:3 에 가까운 태블릿(화면이 상대적으로 높음): 무대 아래 공간이 남으므로 증거 카드를 키운다 */
+@media (min-width:860px) and (orientation:landscape) and (max-aspect-ratio:3/2){
+  .game-safety .sf-card .sf-card-img,.game-safety .sf-card-pic{max-width:132px}
+  .game-safety .sf-card-label{font-size:14px}
+  .game-safety .sf-card-value{font-size:16px}
+}
+/* 한글 줄바꿈: 단어 중간에서 끊지 않는다(공통 .ee-speech 의 overflow-wrap:anywhere 를 게임 안에서만 완화). */
+.game-safety, .game-safety .ee-speech, .game-safety button, .game-safety .ee-choice, .game-safety .ee-notice, .game-safety .ee-success{word-break:keep-all;overflow-wrap:break-word}
