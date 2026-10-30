@@ -1,0 +1,220 @@
+{
+  "verifiedOn": "2026-10-30",
+  "gameId": "data",
+  "commonPackage": {
+    "id": "ethicity-elementary-common",
+    "version": "1.0.0",
+    "sourceCommit": "e913b3795b249b03f84b17b86ab079928e46691d",
+    "tree": "2dfcf6c4051ed3a8938c5207deb05eb2b0234603",
+    "unchangedFiles": 91,
+    "verifiedAssetPaths": 50
+  },
+  "model": {
+    "passed": true,
+    "stateCombinations": 2880,
+    "outcomes": [
+      "ready",
+      "review",
+      "rebuild"
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "results": [
+      {
+        "name": "desktop",
+        "width": 1280,
+        "height": 900,
+        "result": "모두가 맛있는 급식",
+        "events": [
+          {
+            "type": "ethicity:ready",
+            "gameId": "data"
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 1,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 2,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 3,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 4,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 5,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 6,
+            "total": 6
+          },
+          {
+            "type": "ethicity:complete",
+            "gameId": "data",
+            "result": {
+              "completed": true
+            }
+          }
+        ],
+        "writes": 0,
+        "overflow": false,
+        "broken": [],
+        "motion": false,
+        "errors": [],
+        "externalRequests": 0
+      },
+      {
+        "name": "tablet",
+        "width": 760,
+        "height": 900,
+        "result": "조금 더 살펴볼 급식",
+        "events": [
+          {
+            "type": "ethicity:ready",
+            "gameId": "data"
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 1,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 2,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 3,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 4,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 5,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 6,
+            "total": 6
+          },
+          {
+            "type": "ethicity:complete",
+            "gameId": "data",
+            "result": {
+              "completed": true
+            }
+          }
+        ],
+        "writes": 0,
+        "overflow": false,
+        "broken": [],
+        "motion": true,
+        "errors": [],
+        "externalRequests": 0
+      },
+      {
+        "name": "mobile",
+        "width": 430,
+        "height": 932,
+        "result": "다시 짜 볼 급식",
+        "events": [
+          {
+            "type": "ethicity:ready",
+            "gameId": "data"
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 1,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 2,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 3,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 4,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 5,
+            "total": 6
+          },
+          {
+            "type": "ethicity:progress",
+            "gameId": "data",
+            "current": 6,
+            "total": 6
+          },
+          {
+            "type": "ethicity:complete",
+            "gameId": "data",
+            "result": {
+              "completed": true
+            }
+          }
+        ],
+        "writes": 0,
+        "overflow": false,
+        "broken": [],
+        "motion": false,
+        "errors": [],
+        "externalRequests": 0
+      }
+    ]
+  },
+  "limits": [
+    "Headless Edge on Windows; physical phone and speaker not tested.",
+    "Estimated play time has not been tested with students.",
+    "Integration host must handle ethicity:exit to show its game list."
+  ],
+  "productionSha256": {
+    "index.html": "e89f0ef6bd42e840061e8412b8453bf8ee12e5e5c4927cee093b69f3c4061cbe",
+    "game.js": "774b4b8a4d0aa8478ab2486d094d9794001a946fe9a911d5db2c271b6a751950",
+    "story.js": "18b726f190bd039c5af8aac2b816075f1c7bd0ee93385fd08362237c45c03a3c",
+    "styles.css": "636efd4b2844335f833fa89eb2fc9cdb02c0c5667528e613b85e715b6e0c6207"
+  }
+}

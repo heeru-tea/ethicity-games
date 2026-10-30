@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff9e7">
+  <meta name="description" content="친구들의 의견을 모아 급식 메뉴 AI 냠냠봇을 도와요. 초등 3~4학년을 위한 데이터 관리 대화형 탐험.">
+  <title>급식 메뉴 AI ‘냠냠봇’ · 윤리시티</title>
+  <link rel="stylesheet" href="../shared/ethicity-elementary-common-v1/runtime/common.css">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="../shared/ethicity-elementary-common-v1/runtime/manifest.js"></script>
+  <script defer src="../shared/ethicity-elementary-common-v1/runtime/common.js"></script>
+  <script defer src="story.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body class="ee-theme game-data">
+  <a class="skip-link" href="#main">게임으로 바로 가기</a>
+  <header class="app-header">
+    <a class="brand" href="#" id="brand-home" aria-label="윤리시티 게임 처음 화면">
+      <canvas class="ee-icon" width="64" height="64" data-icon="notebook" aria-hidden="true"></canvas>
+      <span><strong>윤리시티</strong><small>AI 윤리 탐험대</small></span>
+    </a>
+    <div class="header-actions"><span class="series-label">데이터 관리</span><button class="ee-button secondary settings-trigger" id="open-settings" aria-haspopup="dialog">설정</button></div>
+  </header>
+  <main id="main" tabindex="-1"><div class="loading ee-panel" role="status">냠냠봇이 친구들을 기다리고 있어요.<br>공통 자료를 불러오는 중이에요…</div></main>
+  <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+  <canvas id="feedback-effect" width="128" height="128" aria-hidden="true" hidden></canvas>
+  <dialog id="settings-dialog" class="ee-panel settings-dialog" aria-labelledby="settings-title">
+    <h2 id="settings-title">내 속도로 탐험해요</h2>
+    <label class="setting-row"><input type="checkbox" id="sound-setting"> 효과음 켜기</label>
+    <label class="setting-row"><input type="checkbox" id="motion-setting"> 움직임 줄이기</label>
+    <p class="muted">대사는 ‘다음’을 누를 때 한 줄씩 나와요.<br>위로 올리면 지난 대사를 다시 읽을 수 있어요.</p>
+    <p class="muted">이 게임은 이름을 묻지 않아요. 진행과 직접 쓴 글은 저장하거나 보내지 않아요.</p>
+    <button class="ee-button" id="close-settings">게임으로 돌아가기</button>
+  </dialog>
+  <dialog id="restart-dialog" class="ee-panel settings-dialog" aria-labelledby="restart-title">
+    <h2 id="restart-title">처음부터 다시 할까요?</h2><p>지금까지의 대화와 선택은 지워져요.</p>
+    <div class="button-row"><button class="ee-button secondary" id="cancel-restart">계속 탐험하기</button><button class="ee-button" id="confirm-restart">처음으로</button></div>
+  </dialog>
+  <noscript><p class="ee-notice">이 게임은 브라우저에서 JavaScript를 켜야 할 수 있어요. 인터넷 연결이나 AI 서비스는 필요하지 않아요.</p></noscript>
+</body>
+</html>
