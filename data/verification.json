@@ -212,7 +212,7 @@
     "Integration host must handle ethicity:exit to show its game list."
   ],
   "productionSha256": {
-    "index.html": "e89f0ef6bd42e840061e8412b8453bf8ee12e5e5c4927cee093b69f3c4061cbe",
+    "index.html": "109a2377909b19700b957edc6a4dad0d869fb9f61f731d8be999a8e2f7e22472",
     "game.js": "774b4b8a4d0aa8478ab2486d094d9794001a946fe9a911d5db2c271b6a751950",
     "story.js": "18b726f190bd039c5af8aac2b816075f1c7bd0ee93385fd08362237c45c03a3c",
     "styles.css": "636efd4b2844335f833fa89eb2fc9cdb02c0c5667528e613b85e715b6e0c6207"
