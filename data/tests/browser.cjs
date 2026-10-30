@@ -5,6 +5,27 @@ const url=pathToFileURL(path.resolve(__dirname,'../index.html')).href;
 (async()=>{
  const browser=await chromium.launch({headless:true,executablePath:process.env.ETHICITY_EDGE_PATH||'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'});
  const results=[];
+ async function checkTyping(){
+  const context=await browser.newContext({viewport:{width:430,height:740},hasTouch:true,reducedMotion:'no-preference'}),page=await context.newPage(),errors=[];
+  page.on('pageerror',e=>errors.push(e.message));await page.goto(url);await page.locator('#start-game').click();
+  const first='안녕! 나는 급식 메뉴 AI, 냠냠봇이야. 다음 주 급식 메뉴를 정하려고 해!';
+  await page.locator('.is-typing').waitFor();const length=(await page.locator('.message-bubble').last().innerText()).length;
+  assert.ok(length<first.length,'The line begins partially revealed');
+  await page.waitForFunction(n=>document.querySelector('.message-bubble').textContent.length>n,length);
+  assert.equal(await page.locator('#scene-speaker').getAttribute('data-speaker'),'robot');
+  await page.locator('#next-line').tap();assert.equal(await page.locator('.message').count(),1,'First tap completes this line only');assert.equal(await page.locator('.message-bubble').innerText(),first);
+  await page.keyboard.press('Space');await page.locator('.is-typing').waitFor();assert.equal(await page.locator('.message').count(),2);assert.equal(await page.locator('#scene-speaker').getAttribute('data-speaker'),'teacher');
+  await page.locator('.message-bubble').last().tap();assert.equal(await page.locator('.is-typing').count(),0,'Tapping the chat completes the sentence');assert.equal(await page.locator('.message').count(),2);
+  await page.locator('#next-line').tap();await page.locator('.is-typing').waitFor();await page.waitForFunction(()=>!document.querySelector('.is-typing'),null,{timeout:7000});assert.equal(await page.locator('.message').count(),3,'Natural completion does not advance automatically');
+  await page.locator('#open-settings').tap();await page.locator('#typing-setting').check();await page.locator('#close-settings').tap();await page.locator('#next-line').tap();assert.equal(await page.locator('.is-typing').count(),0,'Instant text setting bypasses typing');
+  await page.locator('#brand-home').tap();await page.locator('#confirm-restart').tap();await page.locator('#open-settings').tap();await page.locator('#typing-setting').uncheck();await page.locator('#close-settings').tap();await page.locator('#start-game').tap();
+  await page.locator('.is-typing').waitFor();await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>!document.querySelector('.is-typing'));assert.equal(await page.locator('.message-bubble').innerText(),first);
+  await page.locator('#next-line').tap();assert.equal(await page.locator('.is-typing').count(),0);assert.equal(await page.locator('.message').count(),2);
+  await page.emulateMedia({reducedMotion:'no-preference'});await page.locator('#next-line').tap();await page.locator('.is-typing').waitFor();await page.locator('#brand-home').tap();await page.locator('#confirm-restart').tap();await page.locator('#start-game').tap();assert.equal(await page.locator('.message').count(),1,'Restart cancels the old typing timer');
+  await page.locator('#next-line').tap();const rect=await page.locator('#action-area').boundingBox();assert.ok(rect.y+rect.height<=742);assert.deepEqual(errors,[]);
+  await page.screenshot({path:path.join(output,'mobile-typing.png'),fullPage:true});await context.close();
+  return {passed:true,checks:['gradual reveal','tap completes before advancing','Space advances','chat tap completes','natural completion waits','instant text setting','live reduced motion','restart cancels timer','430×740 controls visible']};
+ }
  async function run(name,width,height,options){
   const context=await browser.newContext({viewport:{width,height},reducedMotion:options.reduced?'reduce':'no-preference',hasTouch:width<=760});
   const host=await context.newPage(),errors=[],external=[];let page=host;
@@ -19,9 +40,10 @@ const url=pathToFileURL(path.resolve(__dirname,'../index.html')).href;
   await flush();await page.locator('#begin-scenes').click();await flush();
   if(options.quizRetry){await pick('오늘 날씨');assert.ok((await page.locator('#conversation-log').innerText()).includes('날씨도 데이터가 될 수 있어'));}
   await host.keyboard.press('1');await flush();
-  async function visit(index){await page.locator(`[data-choice="${index}"]`).click();await flush();}
+  async function visit(index){await page.locator(`[data-choice="${index}"]`).click();assert.equal(await page.locator('#scene-image').getAttribute('data-scene'),['box','jiho','saebom','haneul'][index]);if(index===0)await host.screenshot({path:path.join(output,name+'-opinion-box.png'),fullPage:true});await flush();}
   await visit(0);await visit(1);
   if(options.all){await pick('아직 못 만난 친구가 있어, 더 모을래');await visit(2);await pick('아직 못 만난 친구가 있어, 더 모을래');await visit(3);}else await pick('그만 모으기');
+  assert.equal(await page.locator('#scene-image').getAttribute('data-scene'),'sort');await host.screenshot({path:path.join(output,name+'-sorting.png'),fullPage:true});
   for(let i=0;i<3;i++){
    const correct=i===2?'넣기':'빼기';
    if(options.dirty&&i===0){await pick('넣기');await page.locator('[data-choice="1"]').click();await flush();}
@@ -40,8 +62,10 @@ const url=pathToFileURL(path.resolve(__dirname,'../index.html')).href;
   await page.locator(`[data-choice="${options.question?0:1}"]`).click();await page.locator('[data-choice="3"]').click();
   await host.screenshot({path:path.join(output,name+'-methods.png'),fullPage:true});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  const methodRect=await page.locator('#action-area').boundingBox();assert.ok(methodRect.y+methodRect.height<=height+2,'Method choices stay in viewport');
   await page.locator('#confirm-methods').click();await flush();
   await pick(options.protect?'안 돼! 꼭 필요한 선생님만 볼 수 있어':'보여 준다');
+  assert.equal(await page.locator('#scene-image').getAttribute('data-scene'),'protect');await host.screenshot({path:path.join(output,name+'-protect.png'),fullPage:true});
   await pick(options.protect?'필요한 동안 잘 보관하고, 다 쓰면 안전하게 버린다':'교실 게시판에 붙여 둔다');
   assert.equal(await page.locator('#result-title').innerText(),options.expected);
   assert.equal(await page.locator('.word-card.earned').count(),5);
@@ -58,9 +82,10 @@ const url=pathToFileURL(path.resolve(__dirname,'../index.html')).href;
   results.push({name,width,height,result:options.expected,...audit,errors,externalRequests:external.length});await context.close();
  }
  try{
+  const typing=await checkTyping();
   await run('desktop',1280,900,{embedded:true,all:true,protect:true,question:true,quizRetry:true,sortRetry:true,trap:true,input:true,expected:'모두가 맛있는 급식'});
   await run('tablet',760,900,{all:false,protect:true,question:true,reduced:true,expected:'조금 더 살펴볼 급식'});
   await run('mobile',430,932,{all:false,dirty:true,protect:false,question:false,input:true,trap:true,expected:'다시 짜 볼 급식'});
-  fs.writeFileSync(path.join(output,'browser-results.json'),JSON.stringify({passed:true,results},null,2));console.log(JSON.stringify({passed:true,results:results.map(({name,width,height,result,errors,externalRequests})=>({name,width,height,result,errors,externalRequests}))},null,2));
+  fs.writeFileSync(path.join(output,'browser-results.json'),JSON.stringify({passed:true,typing,results},null,2));console.log(JSON.stringify({passed:true,typing,results:results.map(({name,width,height,result,errors,externalRequests})=>({name,width,height,result,errors,externalRequests}))},null,2));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

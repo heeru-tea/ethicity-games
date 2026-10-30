@@ -20,6 +20,20 @@
   },
   "browser": {
     "passed": true,
+    "typing": {
+      "passed": true,
+      "checks": [
+        "gradual reveal",
+        "tap completes before advancing",
+        "Space advances",
+        "chat tap completes",
+        "natural completion waits",
+        "instant text setting",
+        "live reduced motion",
+        "restart cancels timer",
+        "430×740 controls visible"
+      ]
+    },
     "results": [
       {
         "name": "desktop",
@@ -212,9 +226,18 @@
     "Integration host must handle ethicity:exit to show its game list."
   ],
   "productionSha256": {
-    "index.html": "109a2377909b19700b957edc6a4dad0d869fb9f61f731d8be999a8e2f7e22472",
-    "game.js": "774b4b8a4d0aa8478ab2486d094d9794001a946fe9a911d5db2c271b6a751950",
+    "index.html": "00455dd36e99af33af43ac11bf93c320a37d0c8ac8520794eb84622a0ce21d80",
+    "game.js": "13eeebd367be406e63fe0868614d9414df497b7ad0d46dc150f18d4569dca7bf",
     "story.js": "18b726f190bd039c5af8aac2b816075f1c7bd0ee93385fd08362237c45c03a3c",
-    "styles.css": "636efd4b2844335f833fa89eb2fc9cdb02c0c5667528e613b85e715b6e0c6207"
-  }
+    "styles.css": "937f79ada535d8aca78b76069368d74ced291b1f23d916c287ef2279bc1a0525",
+    "assets/opinion-box.png": "24773c2917b717dce06953c6a10d5593a16da2c503edceb570adb84d03036e26",
+    "assets/sorting-cards.png": "c46a157a4eb7104944337a03247ae4d6069c49bfb6e14a0e86574ddc9552f16e",
+    "assets/protected-surveys.png": "92aee3463444deab1e8447f3c111f56c57d65ce2e559676b7c3e6cab081adb3e"
+  },
+  "gameAssets": [
+    "assets/opinion-box.png",
+    "assets/sorting-cards.png",
+    "assets/protected-surveys.png"
+  ],
+  "hashEncoding": "UTF-8 with LF for source; original PNG bytes for images"
 }

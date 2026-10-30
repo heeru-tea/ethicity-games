@@ -26,4 +26,41 @@
 @media(max-width:760px){.game-data .app-header{height:76px;padding:12px 16px}.game-data #main{padding:16px}.game-data .series-label{display:none}.game-data .header-actions{gap:8px}.game-data .game-layout{display:flex;flex-direction:column;gap:8px;height:calc(100dvh - 178px);min-height:430px}.game-data .scene-sidebar{flex-direction:row;align-items:center;gap:12px;flex:none}.game-data .scene-image{width:60px;height:40px}.game-data .scene-sidebar .scene-goal,.game-data .scene-note{display:none}.game-data .scene-title{font-size:15px;margin:0}.game-data .scene-tag{font-size:10px}.game-data .messenger{flex:1;min-height:0}.game-data .word-strip{gap:4px;margin-bottom:8px}.game-data .word-card{padding:5px 3px;min-height:54px;font-size:11px;gap:4px}.game-data .word-card .word-check{font-size:12px}.game-data .word-card small{font-size:9px}.game-data .word-card:last-child{min-width:0}.game-data .chat-header{padding-bottom:8px;font-size:12px}.game-data .conversation-log{padding:12px 0}.game-data .message-bubble{font-size:15px;padding:10px 12px}.game-data .message{gap:8px;margin-bottom:16px}.game-data .portrait{width:44px;height:44px}.game-data .message-content{max-width:calc(100% - 52px)}.game-data .speaker-label{font-size:11px}.game-data .action-area{padding-top:8px;max-height:62%}.game-data .action-prompt{font-size:12px;margin-bottom:8px}.game-data .choice-control{font-size:13px;padding:8px;gap:5px}.game-data .choice-control small{font-size:10px}.game-data .choice-control .key-hint{display:none}.game-data .next-row .muted{font-size:10px}.game-data .material-card{max-width:100%;padding:12px}.game-data .material-card p{font-size:13px}.game-data .landing{grid-template-columns:1fr;gap:16px;min-height:0}.game-data .landing-copy{padding:8px 0;gap:16px}.game-data .landing-copy h1{font-size:32px}.game-data .landing-art{min-height:270px;grid-row:2}.game-data .hero-robot{width:168px}.game-data .hero-callout{bottom:146px;font-size:14px;padding:12px;left:16px;right:16px}.game-data .art-label{top:12px;left:12px;font-size:11px}.game-data .landing-bottom{font-size:11px;gap:12px}.game-data .result-grid{grid-template-columns:1fr;gap:16px}.game-data .result-top{gap:8px;align-items:flex-start}.game-data .result-top h1{font-size:24px}.game-data .portrait.medium{width:64px;height:64px}.game-data .pledge-grid{grid-template-columns:1fr}.game-data .rules-card{margin:8px auto}.game-data .rules-card h1{font-size:23px}.game-data .memory-line{font-size:17px}.game-data .complete{margin:8px auto}.game-data .game-layout.intro-layout{height:calc(100dvh - 112px)}.game-data .result-section{margin-top:16px}}
 @media(max-width:430px){.game-data .brand strong{font-size:20px}.game-data .brand small{font-size:10px}.game-data .brand{gap:8px}.game-data #main{padding:12px}.game-data .game-layout{height:calc(100dvh - 170px)}.game-data .game-layout.intro-layout{height:calc(100dvh - 100px)}.game-data .word-card{font-size:10px}.game-data .word-check{display:none}.game-data .result-portraits .portrait.medium{width:48px;height:48px}.game-data .next-row .muted{max-width:110px}.game-data .scene-title{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.game-data *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Story illustrations use original shared characters and game-specific event close-ups. */
+.game-data .game-layout{grid-template-columns:360px minmax(0,1fr)}
+.game-data .scene-sidebar{gap:16px}
+.game-data .scene-art{margin:0;min-width:0;background:var(--ee-cream);border:2px solid var(--ee-ink);border-radius:4px;overflow:hidden}
+.game-data .scene-view{position:relative;aspect-ratio:16/9;overflow:hidden}
+.game-data .scene-view .scene-image{display:block;width:100%;height:100%;object-fit:cover;border:0;border-radius:0}
+.game-data #scene-cast{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;pointer-events:none}
+.game-data #scene-caption{padding:10px 12px;font-size:13px;line-height:1.7;border-top:2px solid var(--ee-sage)}
+.game-data .scene-speaker{display:flex;align-items:center;gap:12px;margin-top:20px}
+.game-data .scene-speaker small{display:block;font-size:11px;color:var(--ee-green)}
+.game-data .scene-speaker strong{display:block;font-size:17px}
+.game-data .scene-paper{position:absolute;top:12px;right:12px;width:66%;padding:8px;font-size:12px;line-height:1.65}
+.game-data .scene-paper strong{display:block;font-size:13px;margin-bottom:8px}
+.game-data .scene-paper .paper-line{display:block;border-bottom:2px dashed var(--ee-sage);height:24px}
+.game-data .scene-menu{top:8px;right:8px;width:72%;font-size:10px;padding:4px 6px}
+.game-data .scene-menu strong{font-size:12px;margin-bottom:4px}
+.game-data .scene-menu p{display:flex;gap:6px;padding:3px 0;border-top:1px solid var(--ee-sage)}
+.game-data .scene-menu b{flex:none}
+.game-data .scene-card-label{position:absolute;bottom:12px;left:12px;right:12px;font-size:12px}
+.game-data .message-bubble.is-typing::after{content:'';display:inline-block;width:7px;height:1em;margin-left:4px;background:var(--ee-green);vertical-align:-.12em;opacity:.7}
+.game-data .next-row .ee-button{flex-shrink:0}
+@media(min-width:761px) and (max-width:1050px){.game-data .game-layout{grid-template-columns:280px minmax(0,1fr);gap:16px}.game-data .scene-menu{font-size:9px;padding:0}.game-data .scene-menu p{padding:1px 0}}
+@media(max-width:760px){
+ .game-data .scene-sidebar{gap:12px;align-items:center}
+ .game-data .scene-art{width:160px;flex:0 0 160px}
+ .game-data #scene-caption,.game-data #scene-material{display:none}
+ .game-data .scene-info{min-width:0;flex:1}
+ .game-data .scene-title{font-size:14px;letter-spacing:-.5px}
+ .game-data .scene-speaker{margin-top:4px;gap:6px}
+ .game-data .scene-speaker .portrait{width:32px;height:32px}
+ .game-data .scene-speaker small{font-size:9px}
+ .game-data .scene-speaker strong{font-size:12px}
+ .game-data .next-row{gap:8px}
+ .game-data .next-row .ee-button{font-size:13px;padding-left:4px;padding-right:4px}
+}
+@media(max-width:460px){.game-data .scene-art{width:132px;flex-basis:132px}}
 @media(max-width:760px){.game-data .word-card{position:relative}.game-data .word-card .word-check{display:block;position:absolute;top:1px;left:3px;font-size:9px}.game-data .word-card>span:last-child{padding:3px 0}}
