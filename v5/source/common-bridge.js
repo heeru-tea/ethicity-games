@@ -44,6 +44,7 @@ function drawScenePhotoCast(canvas){
  people.forEach((id,i)=>commonAssets.drawCharacter(x,id,points[i][0],points[i][1],'down',1,points[i][2]));
 }
 function paintArt(){
+ mountMusicControls();
  applyCommonUI();
  if(!commonAssets){loadOriginalArt().then(paintArt).catch(()=>{const e=document.getElementById('asset-status');if(e){e.hidden=false;e.textContent='공통 그림을 불러오지 못했습니다. common 폴더와 함께 게임을 열어 주시기 바랍니다. 글과 선택으로 탐험을 계속할 수 있습니다.';}});return;}
  document.querySelectorAll('[data-character]').forEach(c=>drawCharacter(c,c.dataset.character,c.dataset.mood));
