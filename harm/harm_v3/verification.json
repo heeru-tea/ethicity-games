@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-31T13:32:22.439Z",
+  "passed": 9,
+  "paths": 6561,
+  "endings": {
+    "A": 213,
+    "B": 3926,
+    "C": 2422
+  },
+  "checks": [
+    "Approved 8 rounds, 24 choices, five hidden learning tags, two safe voice choices and formal cards",
+    "All 6561 class paths match approved thresholds; popularity does not decide endings",
+    "Photo/voice prevention branches and repair histories never invent prior harm",
+    "R7 technical-only versus support and R8 promise preserve meaningful differences",
+    "Full transition lifecycle: only teacher voting is timed and decisions counted once",
+    "No-vote retry, tied leaders, stale ballots, pause and 15-second extension",
+    "Existing player and result contracts, invalid or blocked storage, nickname restrictions",
+    "Server and client ending validation agree for every path and every result letter",
+    "Single-file build retains original common bytes, CSS and runtime; all eight new scenes embedded"
+  ]
+}

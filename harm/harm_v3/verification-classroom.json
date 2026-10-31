@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-31T13:09:57.213Z",
+  "passed": 5,
+  "checks": [
+    "Teacher opens an isolated room; two independent student devices join with legacy character IDs",
+    "Server rejects student control edits, full-room reads and fabricated completion",
+    "Live pause/resume, extension, private ballots and teacher tiebreak work",
+    "Returning student reconnects after lesson closes with unchanged scores, branch state and completion",
+    "All eight live rounds share one ending; both students store completion and receive teacher recap"
+  ],
+  "testDataCleaned": true,
+  "errors": []
+}

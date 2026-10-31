@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-31T12:50:52.945Z",
+  "passed": 3,
+  "checks": [
+    "18 common source assets retain their registered original bytes",
+    "Three approved NPC sheets are preserved; standing sprites and four-expression portrait atlases have transparent margins",
+    "Eight 1280×720 scene files match metadata and use branch-neutral imagery with Korean captions/alt text"
+  ],
+  "commonSourceCount": 18,
+  "sceneCount": 8,
+  "npcCount": 3,
+  "sceneBytes": 1517210,
+  "mode": "Existing asset composition; approved NPC packing; no new image generation"
+}

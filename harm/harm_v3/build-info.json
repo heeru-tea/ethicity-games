@@ -1,0 +1,42 @@
+{
+  "uiVersion": "harm-common-v3-2026-10-31",
+  "commonPackVersion": "1.0.0",
+  "musicSha256": "e83dc21d6644dfc1b07f2025bd1e699499e68d3a9eac560c85267426f75d2d77",
+  "scenarioVersion": "harm-2026-10-31-v3",
+  "bytes": 24871726,
+  "sha256": "c55c921a256914a4c8a6dc0bf3790227709bb6ae6b79d96801427625d60770b8",
+  "used": {
+    "characters": [
+      "haneul",
+      "jiho",
+      "daon",
+      "robot",
+      "onyu",
+      "saebom",
+      "teacher",
+      "grandmother",
+      "photographer",
+      "company_staff"
+    ],
+    "backgrounds": [
+      "courtyard",
+      "classroom",
+      "ai_lab"
+    ]
+  },
+  "commonSourceSha256": {
+    "manifest.json": "bffc1f17b927aa1ae9ea932e7a8a070c61559a5b79186255f6a4160a831306b5",
+    "runtime/common.css": "26dc96062fb90a4d55e2814ea96bf8fb80bbfb51e33df06263bbe12224534c7a",
+    "runtime/common.js": "e17f5011c7e8bb7fb3ff86d6cf02ef414b129ce1fdc01ed048a349e7bb0a49c9"
+  },
+  "sceneSha256": {
+    "01-face-rules.webp": "60258776ba931a0489c0f16268c4d859b1af710a7d789ecf2442b89a45e3bef1",
+    "02-voice-rules.webp": "c2171c652b39e07dc9dc29d452c46807eae605b39558c21f432008d09a30f1fc",
+    "03-daon-photo.webp": "25678acc8877a19a17de6c7e4fcb1a8831532992c70d520ff391a8eee17f4c9a",
+    "04-grandmother-call.webp": "3aeafc6a19de98ecb164094d8079ab0787efa4bf24a3032debcdae0f617d7a10",
+    "05-company-proposal.webp": "5aee90e5e1c0ad5ab8cec7ec2c37bb12bd1b2317f80fe45443901b99a1499f30",
+    "06-photo-shop.webp": "7761c94cf6b34ea9f4cce0b5c179ecde8c684aaa66a58a53b7424bcbbc4747bc",
+    "07-follow-through.webp": "a94ba0348e322483a87dafc8a5bca2393b59cd97fc50fb0fe57a156b672f2b90",
+    "08-next-festival.webp": "b81da551ccff21d6539167e95bfa7d901c18c8f306c5c44ec5542b194540767a"
+  }
+}
