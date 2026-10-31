@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-31T15:25:05.281Z",
+  "passed": 5,
+  "checks": [
+    "Photo branches explain uploader, subject, consent and actual publication; choice meaning survives overlays",
+    "Voice followups distinguish disabled, unrestricted and robot-only history",
+    "All 729 histories give the correct R7 dialogue and six concrete support actions",
+    "Labels, all speakers and three future-action cards match the approved revision",
+    "Server accepts only each room version’s matching ending card; existing versions are immutable"
+  ]
+}

@@ -77,7 +77,7 @@
       "animation": "static only; drawCharacter uses down/frame 0 only; no generated walk cycle"
     },
     "photographer": {
-      "name": "반짝사진관 주인",
+      "name": "반짝사진관 사장님",
       "source": "assets/characters/photographer-source.png",
       "sourceSha256": "c6a194a480970e470fec22071bf237d68cb394e6ee410713a590175b098f9668",
       "standing": "assets/characters/photographer-standing.png",
@@ -147,7 +147,7 @@
       "animation": "static only; drawCharacter uses down/frame 0 only; no generated walk cycle"
     },
     "company_staff": {
-      "name": "두빛기술 직원",
+      "name": "A기업",
       "source": "assets/characters/company_staff-source.png",
       "sourceSha256": "092d168551ed3f714f661f23bdf1f71efceda8a1de5065da80d90a12b00ea5d2",
       "standing": "assets/characters/company_staff-standing.png",

@@ -7,7 +7,9 @@ story=json.loads((OUT/'scenario.json').read_text(encoding='utf-8'))
 prior=json.loads((OUT.parent/'database.harm.rules.json').read_text(encoding='utf-8'))
 rules=json.loads(json.dumps(prior).replace('roomsHarm','roomsHarmV3'))
 room=rules['rules']['roomsHarmV3']['$room']
-room['control']['version']['.validate']='newData.val() == '+json.dumps(story['version'])
+legacy=json.loads((OUT/'source/legacy-v3-cards.json').read_text(encoding='utf-8'))
+versions={story['version']:{k:e['card'] for k,e in story['endings'].items()},**legacy}
+room['control']['version']['.validate']='('+' || '.join('newData.val() == '+json.dumps(v) for v in versions)+') && (!data.exists() || newData.val() == data.val())'
 base="newData.parent().parent().child('decisions')"
 def selected(i):return f"{base}.child('{i}').child('choice').val()"
 trust='('+' + '.join(f"({selected(i)} == 0 ? {r['choices'][0]['trust']} : ({selected(i)} == 1 ? {r['choices'][1]['trust']} : {r['choices'][2]['trust']}))" for i,r in enumerate(story['rounds']))+')'
@@ -16,7 +18,7 @@ is_a=f"({trust} >= 12 && {selected(6)} == 1 && {selected(7)} == 2)"
 technical=f"({selected(6)} == 0 || {selected(6)} == 1 || ({selected(2)} == 0 && {selected(3)} == 2 && {selected(4)} == 1))"
 is_b=f"(!{is_a} && {trust} >= 6 && {technical})"
 room['outcome']['ending']['.validate']=f"(newData.val() == 'A' && {is_a}) || (newData.val() == 'B' && {is_b}) || (newData.val() == 'C' && !{is_a} && !{is_b})"
-room['outcome']['card']['.validate']=' || '.join(f"(newData.parent().child('ending').val() == '{k}' && newData.val() == {json.dumps(e['card'],ensure_ascii=False)})" for k,e in story['endings'].items())
+room['outcome']['card']['.validate']=' || '.join(f"(newData.parent().parent().child('control').child('version').val() == {json.dumps(version)} && newData.parent().child('ending').val() == '{k}' && newData.val() == {json.dumps(card,ensure_ascii=False)})" for version,cards in versions.items() for k,card in cards.items())
 # 정해진 집계는 재접속/중복 요청으로 바뀌지 않는다.
 d=room['decisions']['$round']
 d['.validate']+=" && newData.child('total').val() == newData.child('counts').child('0').val() + newData.child('counts').child('1').val() + newData.child('counts').child('2').val()"

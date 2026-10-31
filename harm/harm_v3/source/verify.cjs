@@ -37,9 +37,9 @@ test('Photo/voice prevention branches and repair histories never invent prior ha
   const d=decisions([face,voice,repair,2,1,2]);
   const r3=R.resolveRound(2,d),r4=R.resolveRound(3,d),r7=R.resolveRound(6,d),s=R.progress(d);
   assert.equal(s.photoSpread,face===0);assert.equal(s.voiceHarm,voice===1);assert.equal(s.photoRequested,face===0&&repair===0);assert(s.paused);
-  if(face!==0){assert(r3.narrative.join('').includes('퍼지지 않았다'));assert(r7.narrative.join('').includes('제작 전에 막았다'));}
-  else assert(r7.narrative.join('').includes(repair===0?'삭제·정정을 요청했다':'요청은 아직 하지 않았다'));
-  if(voice!==1){assert(!r4.narrative.join('').includes('돈을 보냈다'));assert(r7.narrative.join('').includes('흉내 목소리가 만들어지지 않았다'));}
+  if(face!==0){assert(r3.narrative.join('').includes('게시판에 올라가지 않았다') || r3.narrative.join('').includes('게시판에도 올리지 않았다'));assert(r7.narrative.join('').includes('만들기 전에 막았다'));}
+  else assert(r7.narrative.join('').includes(repair===0?'게시글을 내려 달라고 요청했다':'요청이 아직 필요하다'));
+  if(voice!==1){assert(!r4.narrative.join('').includes('돈을 보냈다'));assert(r7.narrative.join('').includes('새봄이 목소리를 따라 한 소리가 만들어지지 않았다'));}
   else assert(r4.narrative.join('').includes('돈을 보냈다'));
   assert(r7.narrative.join('').includes('잠시 쉬고 있다'));
  }
@@ -81,7 +81,7 @@ test('Existing player and result contracts, invalid or blocked storage, nickname
 test('Server and client ending validation agree for every path and every result letter',()=>{
  const rules=require('../database.harm-v3.rules.json');assert.deepEqual(Object.keys(rules.rules),['roomsHarmV3']);
  const r=rules.rules.roomsHarmV3.$room,exp=r.outcome.ending['.validate'];
- assert.equal(r.control.version['.validate'],`newData.val() == "${story.version}"`);
+ assert(r.control.version['.validate'].includes(story.version));
  const run=new Function('newData','return '+exp);
  for(let n=0;n<3**8;n++){let x=n;const a=Array.from({length:8},()=>{const c=x%3;x=Math.floor(x/3);return c;});
   for(const letter of ['A','B','C']){const top={child:name=>name==='decisions'?{child:i=>({child:()=>({val:()=>a[Number(i)]})})}:null},nd={val:()=>letter,parent:()=>({parent:()=>top})};assert.equal(run(nd),expected(a)===letter);}

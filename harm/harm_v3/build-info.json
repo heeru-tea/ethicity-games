@@ -2,9 +2,9 @@
   "uiVersion": "harm-common-v3-2026-10-31",
   "commonPackVersion": "1.0.0",
   "musicSha256": "e83dc21d6644dfc1b07f2025bd1e699499e68d3a9eac560c85267426f75d2d77",
-  "scenarioVersion": "harm-2026-10-31-v3",
-  "bytes": 24871726,
-  "sha256": "c55c921a256914a4c8a6dc0bf3790227709bb6ae6b79d96801427625d60770b8",
+  "scenarioVersion": "harm-2026-11-01-v3.1",
+  "bytes": 24888424,
+  "sha256": "68e3553c511b8cdfe8038d452869298711f760023a88af5a03e488ae1b014d2b",
   "used": {
     "characters": [
       "haneul",

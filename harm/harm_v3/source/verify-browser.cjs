@@ -33,8 +33,8 @@ const checks=[],errors=[];
   for(let i=0;i<8;i++){
    await page.locator(`.round-scene[data-scene="${i+1}"]`).waitFor();assert.equal(await page.locator('[role="timer"]').count(),0);assert(await page.locator('.story-chapter').isVisible());
    const topic={2:'photo',3:'voice',4:'tracking',5:'shop'}[i];if(topic)assert.equal(await page.locator(`[data-risk="${topic}"]`).getAttribute('data-state'),'needed');
-   if(i===2)assert((await page.locator('.narrative-text').innerText()).includes('퍼지지 않았다'));
-   if(i===3)assert((await page.locator('.narrative-text').innerText()).includes('만들어지지 않았다'));
+   if(i===2)assert((await page.locator('.narrative-text').innerText()).includes('게시판에 올라가지 않았다'));
+   if(i===3)assert((await page.locator('.narrative-text').innerText()).includes('만들 수 없었다'));
    if(i===0||i===3||i===6)await screenshot(page,'round-'+(i+1));
    await page.locator('[data-action="start-vote"][data-index="90"]').click();
    assert(await page.locator('.story-chapter').isVisible());assert.equal(await page.locator('.choice-screen .learning-details').count(),0);
@@ -45,14 +45,14 @@ const checks=[],errors=[];
    await page.locator('[data-action="next"]').click();
   }
   assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('ethicity.result.harm'))),{game:'harm',completed:true,ending:'A',card:story.endings.A.card});
-  assert.equal(await page.locator('[data-state="resolved"]').count(),4);await page.locator('[data-action="recap"]').first().click();assert((await page.locator('.class-answer').innerText()).includes('당사자가 원하지 않는다.'));
+  assert.equal(await page.locator('[data-state="resolved"]').count(),4);await page.locator('[data-action="recap"]').first().click();assert((await page.locator('.class-answer').innerText()).includes('사진 속 사람이 사진을 쓰지 말라고 해요.'));
   const downloadEvent=page.waitForEvent('download');await page.locator('[data-action="card"]').click();const download=await downloadEvent;await download.saveAs(path.join(out,'learning-card.png'));
   await screenshot(page,'ending-a');checks.push('Full A path: original UI/assets, 8 persistent stories, hidden tags, voting timer/pause, common player storage, shared recap and exported card');
   checks.push('Multiple speakers type correctly; user MP3 starts after a gesture, toggles, adjusts volume, pauses while hidden, resumes, and keeps separate SFX controls');assert.deepEqual(external,[]);
   // Exercise all branch scenes with the actual DOM, including repair, paused event and each ending.
   for(const picks of [[0,1,1,1,2,2,0,1],[0,1,2,0,0,1,2,2],[1,0,0,2,1,2,1,2]]){
    await page.evaluate(picks=>{const room=HarmRules.newRoom('demo',Date.now());room.members={demo:{nickname:'별고래',character:'char_04',joinedAt:Date.now()}};room.decisions=Object.fromEntries(picks.map((choice,i)=>[i,{choice,counts:{0:1,1:0,2:0},total:1,tie:false,at:Date.now()}]));S.role='demo';S.roomId='branch-'+picks.join('');S.uid='demo';room.control={...room.control,round:6,phase:'observe',accepting:false};setRoom(room,true);},picks);
-   const txt=await page.locator('.narrative-text').innerText();if(picks[0]===0){assert(txt.includes('写真')===false);assert(txt.includes('사진이 퍼졌지만'));}else assert(txt.includes('제작 전에 막았다'));
+   const txt=await page.locator('.narrative-text').innerText();if(picks[0]===0){assert(txt.includes('写真')===false);assert(txt.includes('게시판의 사진을 내려 달라는 요청이 아직 필요하다'));}else assert(txt.includes('만들기 전에 막았다'));
    if(picks[5]===2)assert(txt.includes('잠시 쉬고 있다'));
    await screenshot(page,'branch-r7-'+picks.join(''));
    const expected=await page.evaluate(()=>{const room=structuredClone(S.room);room.outcome=HarmRules.resultOf(room.decisions);room.control.phase='ended';room.control.round=7;setRoom(room,true);return room.outcome;});

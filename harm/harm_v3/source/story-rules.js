@@ -53,7 +53,15 @@ function createStoryRules(story) {
     let r=structuredClone(story.rounds[index]);
     const s=progress(decisions,index),t=story.stateText;
     // 이번 라운드의 결과는 원래 상황에 섞지 않아 결과 화면에서도 이야기를 다시 읽을 수 있다.
-    if(r.branch){const c=decisions?.[r.branch.round]?.choice;if(Number.isInteger(c)&&r.branch.variants[c])Object.assign(r,structuredClone(r.branch.variants[c]));}
+    if(r.branch){
+      const c=decisions?.[r.branch.round]?.choice;
+      if(Number.isInteger(c)&&r.branch.variants[c]){
+        const {choices,...variant}=structuredClone(r.branch.variants[c]);
+        Object.assign(r,variant);
+        // Branches change wording, never vote indices, scores or learning tags.
+        if(choices)r.choices=r.choices.map((choice,i)=>({...choice,...choices[i]}));
+      }
+    }
     if(index===6){
       const photo=s.photoSpread?(s.photoRequested?'requested':'notRequested'):'prevented';
       const voice=s.voiceHarm?'harmed':'prevented';
@@ -61,6 +69,11 @@ function createStoryRules(story) {
       r.dialogues.unshift({speaker:'daon',text:t.photoDialogue[photo],mood:s.photoSpread?'worried':'explaining'},
         {speaker:'grandmother',text:t.voiceDialogue[voice],mood:s.voiceHarm?'worried':'explaining'});
       r.media=technicalLines(s).map(row=>({label:t.labels[row.key],text:row.text}));
+      r.media.push({label:t.labels.shop,text:t.shopReview[s.choices[5]===0?'done':'pending']});
+      const steps=t.supportSteps;
+      r.choices[1].steps=[steps.start,steps[s.photoSpread?'photoSpread':'photoPrevented'],
+        steps[s.voiceHarm?'voiceHarmed':'voicePrevented'],steps[s.trackingMode==='open'?'trackingOpen':'trackingOff'],
+        steps[s.choices[5]===0?'shopDone':'shopPending'],steps.finish];
     }
     if(index===7)r.narrative.push(t[s.paused?'pausedPledge':'openPledge']);
     r.choices=r.choices.map(ch=>{
@@ -72,7 +85,7 @@ function createStoryRules(story) {
   }
   function technicalLines(s) {
     const t=story.stateText.technical;
-    return ['photo','voice','tracking'].map(key=>({key,text:t[s.technical[key]?'checked':key==='voice'&&s.voiceMode==='off'?'off':key==='voice'&&s.voiceMode==='robot'?'robot':key==='photo'&&s.photoMode==='onsite'?'onsite':'unchecked']}));
+    return ['photo','voice','tracking'].map(key=>({key,text:key==='tracking'?(s.choices[4]===1?story.stateText.trackingReview.off:s.technical.tracking?t.checked:story.stateText.trackingReview.open):t[s.technical[key]?'checked':key==='voice'&&s.voiceMode==='off'?'off':key==='voice'&&s.voiceMode==='robot'?'robot':key==='photo'&&s.photoMode==='onsite'?'onsite':'unchecked']}));
   }
   function pending(s) {
     const t=story.stateText,out=[];
