@@ -1,5 +1,5 @@
 'use strict';
-function casePhoto(scene){return `<div class="case-photo"><canvas width="1280" height="720" data-common-stage="courtyard" data-case-photo role="img" aria-label="공통 캐릭터로 구성한 가상의 사진 자료"></canvas><span class="ee-badge photo-caption">${scene==='class-photo'?'사진 속 여러 친구와 학교 표시':'공개할 사진과 이름·장소 표시'}</span></div>`;}
+function casePhoto(scene){return `<div class="case-photo"><canvas width="1280" height="720" data-common-stage="courtyard" data-case-photo="${scene}" role="img" aria-label="공통 캐릭터로 구성한 가상의 사진 자료"></canvas><span class="ee-badge photo-caption">${scene==='class-photo'?'소풍 단체사진 · 친구 5명 · 가상 학교 표시':'함께 찍은 사진 · 친구 2명 · 이름과 장소 표시'}</span></div>`;}
 function caseScreen(r,compact=false){
  const d=CASE_SCREENS[r.scene];if(!d)return '';
  const rows=d.rows.map(([label,value])=>`<div class="case-row"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('');
@@ -8,7 +8,7 @@ function caseScreen(r,compact=false){
  if(d.type==='photo'||d.type==='public-photo')content=casePhoto(r.scene);
  if(d.type==='signup')content=`<div class="case-banner ee-notice">${commonIcon('key',40)}<strong>${esc(d.banner)}</strong></div><div class="mock-fields"><span class="ee-badge">닉네임: 구름별</span><span class="ee-badge">비밀번호: ●●●●●●</span></div>`;
  if(d.type==='reward')content=`<div class="case-banner ee-notice">${commonIcon('key',56)}<strong>${esc(d.banner)}</strong><span class="mock-close">X</span></div>`;
- if(d.type==='account')content=`<div class="case-profile">${canvasChar('friend',80,'worried')}<p>“우리 계정 같이 쓰자!”<br><span class="small">이 계정에는 대화와 사진이 남아 있습니다.</span></p></div>`;
+ if(d.type==='account')content=`<div class="case-profile">${canvasChar('friend',80,'worried')}<p>“우리 계정 같이 쓰자!”<br><span class="small">앞으로 이 계정에 대화와 사진이 남을 수 있습니다.</span></p></div>`;
  if(d.type==='device')content=`<div class="mock-fields"><span class="ee-badge">로그인 상태: 접속 중</span><span class="ee-badge">그림 파일: 남아 있음</span></div>`;
  if(d.type==='delete')content=`<div class="deletion-pair"><div class="ee-panel">${commonIcon('close',40)}<b>기기의 앱</b></div><div class="ee-panel">${commonIcon('notebook',40)}<b>서비스의 기록</b></div></div>`;
  return `<article class="case-document ${compact?'compact':''}" aria-label="${esc(d.title)} 가상 자료"><header class="case-document-head">${commonIcon(d.icon,40)}<div><span class="small">가상의 앱 · 관찰 자료</span><h3>${esc(d.title)}</h3><p>${esc(d.subtitle)}</p></div></header>${content}<dl class="case-rows">${rows}</dl><div class="case-document-foot">${commonIcon('inspect',24)}${esc(d.footer)}</div></article>`;

@@ -8,7 +8,7 @@ function narrationPlan(){
   if(S.view==='ending')return {key:base,text:'.ending > p:first-of-type,.ending-conversation .dialogue-text,.learning-card blockquote',gate:'.ending > .notice,.ending > .buttons,.recap,.review-list'};
   if(S.view!=='round')return null;
   const stage=roundScreen();
-  if(stage==='feedback')return {key:base+':feedback:'+S.answers[S.round].choice,text:'.friend-reply .dialogue-text,.feedback p,.change,.feedback-note',gate:'.action-panel .tagrow,.action-panel .buttons,.action-panel details.guide'};
+  if(stage==='feedback')return {key:base+':feedback:'+S.answers[S.round].choice,text:'.friend-reply .dialogue-text,.feedback p,.change,.feedback-note,.bridge-context,.bridge-dialogue .dialogue-text',gate:'.action-panel .tagrow,.action-panel .buttons,.action-panel details.guide'};
   if(stage==='submitted')return null;
   if(stage==='choices')return {key:base+':choices',text:'.action-panel > h2,.action-panel > .action-note',gate:'.choice-list,.action-panel > .buttons'};
   if(stage==='observe')return {key:base+':observe',text:'.observe-narration',gate:'.observation-items,.stage-buttons'};

@@ -10,5 +10,6 @@ missing=[]
 for f in p['commonFiles']:
     if not matches(root/'common'/f['path'],f['sha']):missing.append(f['path'])
 assert not missing,missing
-assert matches(root/'scenario.json',p['scenarioBlobSha']),'Scenario differs from privacy-v4'
-print('PASS: all '+str(len(p['commonFiles']))+' common files match the GitHub source; v4 scenario is unchanged.')
+scenario=json.loads((root/'scenario.json').read_text(encoding='utf-8'))
+assert str(scenario['revision'])=='20261031','Unexpected scenario revision'
+print('PASS: all '+str(len(p['commonFiles']))+' common files match the GitHub source; approved scenario revision 20261031 is present.')

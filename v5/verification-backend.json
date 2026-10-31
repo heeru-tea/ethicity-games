@@ -1,0 +1,16 @@
+{
+  "testedAt": "2026-10-31T09:19:32.021Z",
+  "scenarioRevision": "20261031",
+  "method": "Authenticated REST against deployed Firebase rules using disposable synthetic participants",
+  "endingsAccepted": [
+    "A",
+    "B",
+    "C"
+  ],
+  "wrongEndingRejected": true,
+  "wrongCardRejected": true,
+  "prematureCompletionRejected": true,
+  "otherStudentReadRejected": true,
+  "studentControlWriteRejected": true,
+  "teacherCanReadResults": true
+}

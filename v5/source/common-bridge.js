@@ -20,9 +20,14 @@ function drawCommonStage(canvas){
  commonAssets.drawBackground(x,bg);
  const player=assetId(characterType(S.player?.character));
  const photo=canvas.hasAttribute('data-case-photo');
- commonAssets.drawCharacter(x,photo?'saebom':player,520,515,'down',1,.9);
- commonAssets.drawCharacter(x,photo?'onyu':'saebom',655,510,'down',1,.9);
- commonAssets.drawCharacter(x,photo?'daon':'robot',775,515,'down',1,photo?.9:.7);
+ if(photo){
+  const people=canvas.dataset.casePhoto==='class-photo'?['haneul','jiho','saebom','onyu','daon']:['saebom','onyu'];
+  people.forEach((id,i)=>commonAssets.drawCharacter(x,id,640+(i-(people.length-1)/2)*120,515,'down',1,.9));
+ }else{
+  commonAssets.drawCharacter(x,player,520,515,'down',1,.9);
+  commonAssets.drawCharacter(x,'saebom',655,510,'down',1,.9);
+  commonAssets.drawCharacter(x,'robot',775,515,'down',1,.7);
+ }
  if(!photo)commonAssets.drawProp(x,'notebook',915,545,80);
 }
 function applyCommonUI(root=document){

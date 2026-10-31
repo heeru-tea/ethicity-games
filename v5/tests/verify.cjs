@@ -28,7 +28,7 @@ run('S.answers=Object.fromEntries(STORY.rounds.map((r,i)=>[i,{choice:r.choices.f
  const app=read('source/app.js'),choices=app.slice(app.indexOf('function choicesHTML'),app.indexOf('function tagHTML'));assert(!choices.includes('tagHTML('));assert(read('source/round-screens.js').includes("S.player?.nickname||'탐험가'"));
  const manifest=JSON.parse(read('common/manifest.json'));vm.runInContext(read('source/case-data.js'),context);assert.equal(run('Object.keys(CASE_SCREENS).length'),8);for(const r of story.rounds){context.sceneTest=r.scene;assert(run('!!CASE_SCREENS[sceneTest]'));}
  const ids=run('Object.values(CASE_SCREENS).map(x=>x.icon)');for(const id of ids)assert(manifest.icons.icons[id]);
- for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const p=match[1];if(!/^https?:/.test(p))assert(fs.existsSync(path.join(root,p)),p);}
+ for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const p=match[1].split('?')[0];if(!/^https?:/.test(p))assert(fs.existsSync(path.join(root,p)),p);}
  const report={testedAt:new Date().toISOString(),scenarioEmbeddedUnchanged:true,rounds:8,choicesPerRound:4,learningElements:[1,2,3,4,5],endingsAcross65536ChoicePaths:counts,allThreeEndingsReachable:true,storageFailureContinues:true,hubResultSchemaPreserved:true,nicknameValidation:true,learningTagsOnlyAfterChoice:true,caseScreens:8,commonAssetIdsValid:true,sourceSyntax:'checked with node --check'};
  fs.writeFileSync(path.join(root,'verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
 })().catch(e=>{console.error(e);process.exitCode=1});

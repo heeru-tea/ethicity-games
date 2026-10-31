@@ -7,7 +7,6 @@
   "commonTreeSha": "2dfcf6c4051ed3a8938c5207deb05eb2b0234603",
   "scenarioSourceCommit": "69954935c4122981786b6d5009209a2e2845d201",
   "scenarioSourcePath": "privacy-v4/scenario.json",
-  "scenarioBlobSha": "495bdbef1f3e7b7b909d5d1a6b02b9373b067091",
   "commonFiles": [
     {
       "path": "README.md",
@@ -379,5 +378,12 @@
     "char_04": "jiho"
   },
   "friendArt": "saebom",
-  "guideArt": "robot"
+  "guideArt": "robot",
+  "scenarioRevision": {
+    "approvedAt": "2026-10-31",
+    "sourceDocument": "https://docs.google.com/document/d/11MZHOvHTwegnC8J5ESSj0oW1jTA4BqRzcwNJIMmFXNc/edit",
+    "approval": "User approved the eight-round revised scenario in this conversation.",
+    "previousScenarioBlob": "495bdbef1f3e7b7b909d5d1a6b02b9373b067091",
+    "namespace": "roomsPrivacyV5Story20261031"
+  }
 }

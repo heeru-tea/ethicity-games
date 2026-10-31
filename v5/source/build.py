@@ -7,7 +7,7 @@ def data(name):
 head='''<!DOCTYPE html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="초등학교 5~6학년을 위한 프라이버시 보호 게임. 기존 8개 사례와 윤리시티 공통 자산을 사용합니다.">
+<meta name="description" content="초등학교 5~6학년을 위한 프라이버시 보호 게임. 승인한 8개 연결 시나리오와 윤리시티 공통 자산을 사용합니다.">
 <meta name="theme-color" content="#294b40"><title>윤리시티 · 프라이버시 보호 v5</title>
 <link rel="stylesheet" href="common/runtime/common.css">
 <link rel="stylesheet" href="source/v5.css">
@@ -19,6 +19,6 @@ head='''<!DOCTYPE html>
 <div class="toast ee-notice hidden" id="toast" role="status"></div><div id="modal-host"></div>
 '''
 scripts=['common/runtime/manifest.js','common/runtime/common.js','source/app.js','source/case-data.js','source/round-screens.js','source/case-screens.js','source/typewriter.js','source/teacher-panels.js','source/common-bridge.js','source/live.js']
-out=head+'<script id="game-data" type="application/json">'+data('scenario.json')+'</script>\n'+'<script id="game-config" type="application/json">'+data('config.json')+'</script>\n'+'\n'.join('<script src="'+s+'"></script>' for s in scripts)+'\n</body></html>\n'
+out=head+'<script id="game-data" type="application/json">'+data('scenario.json')+'</script>\n'+'<script id="game-config" type="application/json">'+data('config.json')+'</script>\n'+'\n'.join('<script src="'+s+'?rev=20261031"></script>' for s in scripts)+'\n</body></html>\n'
 (root/'index.html').write_text(out,encoding='utf-8')
 print('Built v5/index.html; local assets remain in common/ and source/.')
