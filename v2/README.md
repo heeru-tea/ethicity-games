@@ -1,10 +1,20 @@
 # 급식 메뉴 AI ‘냠냠봇’ v2
 
+**[이 PC에서 v2 플레이](http://127.0.0.1:8765/v2/)** · [실행 파일](index.html) · [저장소 첫 README](../README.md)
+
+플레이 링크는 로컬 서버가 실행 중인 PC 전용입니다. 공개 배포 주소가 아니며, GitHub에서 `index.html`을 누르면 게임 대신 소스가 표시됩니다.
+
 확정한 [시나리오 수정용 통합본 2](https://docs.google.com/document/d/1f8AZDLyku36wqywkEHnFHbyU8zk4091lGATZP52Zzdo)의 질문 ①~⑨ 결정을 반영한 버전입니다. 기존 게임은 /data/, 새 버전은 /v2/입니다. Git 브랜치는 data입니다.
 
 ## 실행과 자산
 
 저장소 루트에서 정적 서버를 실행한 뒤 /v2/에 접속하거나 v2/index.html을 직접 엽니다. 공통 폴더 ../shared/ethicity-elementary-common-v1/가 함께 있어야 합니다. 실행 중 외부 API·CDN·AI 서비스는 필요 없습니다.
+
+Python이 설치되어 있다면 저장소 루트에서 다음 명령을 실행한 뒤 [v2 게임 열기](http://127.0.0.1:8765/v2/)를 누르세요.
+
+```sh
+python -m http.server 8765 --bind 127.0.0.1
+```
 
 common.css, manifest.js, common.js와 공식 캐릭터 7명(robot, teacher, jiho, saebom, haneul, daon, onyu)을 사용합니다. 사서는 등장하지 않습니다. 기존 /data/와 공통 패키지 91개 파일은 수정하지 않았습니다. 디지털 설문·응답·접근 권한은 실제 텍스트와 공통 UI로 표현합니다. food.js는 그림 응답 활동에만 사용하는 작은 SVG 음식 그림이며 공통 캐릭터·소품·아이콘을 대체하지 않습니다.
 
