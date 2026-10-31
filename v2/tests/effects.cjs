@@ -13,9 +13,10 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),path
   await page.locator('#start-game').click();
   await page.locator('.is-typing').waitFor();
   const partial=await page.locator('.message-bubble').innerText();
-  await page.waitForFunction(()=>!document.querySelector('audio').paused&&document.querySelector('audio').currentTime>0);
   await page.locator('#next-line').click();
   const full=await page.locator('.message-bubble').innerText();assert.ok(full.startsWith(partial)&&full.length>partial.length);
+  // Network buffering may outlast typing; verify it after completing this line.
+  await page.waitForFunction(()=>!document.querySelector('audio').paused&&document.querySelector('audio').currentTime>0);
   await page.locator('#next-line').click();await page.locator('.is-typing').waitFor();
   assert.equal(await page.locator('.message').count(),1);
   assert.ok(!(await page.locator('#conversation-log').innerText()).includes(full),'Old bubble was removed');
