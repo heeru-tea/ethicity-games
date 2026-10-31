@@ -18,7 +18,7 @@ page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(/^https?
 await page.addInitScript(()=>{window.auditEvents=[];for(const type of ['ready','progress','complete'])addEventListener('ethicity:'+type,e=>auditEvents.push(e.detail));Storage.prototype.setItem=()=>{throw Error('Storage must not be written');};});
 await host.goto(config.name==='desktop-repaired'?pathToFileURL(path.join(__dirname,'integration.html')).href:url);if(config.name==='desktop-repaired')page=await(await host.locator('iframe').elementHandle()).contentFrame();await page.locator('#start-game').waitFor();
 async function tap(locator){if(config.width<=760)await locator.tap();else await locator.click();}
-async function flush(){for(let i=0;i<90;i++){if(errors.length)throw Error(errors.join('\n'));const next=page.locator('#next-line');if(!await next.isVisible())return;await tap(next);}throw Error('Flow did not stop');}
+async function flush(){for(let i=0;i<90;i++){if(errors.length)throw Error(errors.join('\n'));assert.ok(await page.locator('#conversation-log .message').count()<=1,'Only the current bubble is shown');const next=page.locator('#next-line');if(!await next.isVisible())return;await tap(next);}throw Error('Flow did not stop');}
 async function pick(text){await tap(page.locator('#action-area button').filter({hasText:text}).first());await flush();}
 async function option(index){await tap(page.locator('[data-choice="'+index+'"]'));await flush();}
 async function screenshot(suffix){await host.screenshot({path:path.join(out,config.name+'-'+suffix+'.png'),fullPage:true});}
@@ -32,11 +32,11 @@ if(config.dirty)await pick('지금 선택으로 이어가기');
 }
 await pick(config.repair?'그냥 둔다':'응답 폴더에 비밀번호와 접근 권한을 설정한다');
 const firstText=await page.locator('#conversation-log').innerText();
-assert.match(firstText,config.dirty?/금요일에 땅콩 버터 피자/:/목요일 치킨에 땅콩 소스/);
+assert.match(firstText,config.dirty?/땅콩 버터 피자/:/땅콩 소스 치킨/);
 await screenshot('first-menu');await option(1);
 await page.locator('#reflection-input').fill('<script>개인정보 아님</script>');
 await host.keyboard.press('1');assert.ok(await page.locator('#reflection-input').isVisible());await page.locator('#reflection-next').click();await flush();
-await option(5);assert.match(await page.locator('#conversation-log').innerText(),/같이 못 먹는 거야/);
+await option(5);assert.match(await page.locator('#conversation-log').innerText(),/함께 먹을 수 있는 다른 방법/);
 await page.locator('[data-choice="'+config.methods[0]+'"]').click();await page.locator('[data-choice="'+config.methods[1]+'"]').click();
 assert.equal(await page.locator('[aria-pressed="true"]').count(),2);
 assert.ok(await page.locator('#action-area .ee-choice').evaluateAll(bs=>bs.every(b=>b.scrollHeight<=b.clientHeight+1)),'Choice text must not be clipped');const confirmBox=await page.locator('#confirm-methods').boundingBox();assert.ok(confirmBox.y+confirmBox.height<=config.height,'Confirm stays visible');await screenshot('methods');await page.locator('#confirm-methods').click();await flush();
@@ -79,7 +79,7 @@ await page.goto(url);await page.locator('#start-game').click();await page.locato
 const first=await page.locator('.message-bubble').innerText();assert.ok(first.length<50);await page.locator('#next-line').tap();assert.equal(await page.locator('.is-typing').count(),0);assert.equal(await page.locator('.message').count(),1);
 await page.keyboard.press('Tab');await page.keyboard.press('Space');await page.locator('#next-line').tap();
 await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.is-typing').count(),0);
-await page.locator('#open-settings').click();await page.locator('#typing-setting').check();await page.keyboard.press('Escape');
+await page.locator('#open-settings').click();await page.locator('#typing-setting').selectOption('instant');await page.keyboard.press('Escape');
 await page.screenshot({path:path.join(out,'typing-mobile.png')});await context.close();
 fs.writeFileSync(path.join(out,'browser-results.json'),JSON.stringify({passed:true,results,typing:true},null,2));console.log('ALL BROWSER CHECKS PASSED');
 }finally{await browser.close();}

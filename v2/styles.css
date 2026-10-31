@@ -61,6 +61,21 @@
 .game-data .scene-card-label{position:absolute;bottom:12px;left:12px;right:12px;font-size:12px}
 .game-data .message-bubble.is-typing::after{content:'';display:inline-block;width:7px;height:1em;margin-left:4px;background:var(--ee-green);vertical-align:-.12em;opacity:.7}
 .game-data .next-row .ee-button{flex-shrink:0}
+.game-data .conversation-log .message{margin:8px 0 12px}
+.game-data .conversation-log .message-content{flex:1}
+.game-data .conversation-log .message-bubble{min-height:96px}
+.game-data .conversation-log .material-card{margin-bottom:16px}
+.game-data .setting-row select{min-height:48px;min-width:0;flex:1;font:inherit;font-size:14px;color:var(--ee-ink);background:var(--ee-cream);border:2px solid var(--ee-sage);padding:8px}
+.game-data .setting-row.music-volume{flex-wrap:wrap;font-size:14px}
+.game-data .music-volume input{flex:1;min-width:80px;height:48px}
+.game-data .music-volume output{min-width:42px;text-align:right}
+.game-data select:focus-visible{outline:3px solid #b47f35;outline-offset:3px}
+/* A 24 px pointer drawn at 36 px (1.5x); touch input is unchanged. */
+@media(pointer:fine){
+ .game-data,.game-data *{cursor:url('assets/cursor-arrow.svg') 3 2,default}
+ .game-data :is(button,a,select,summary,label,input[type=checkbox],input[type=range]):not(:disabled),.game-data :is(button,a,label):not(:disabled) *{cursor:url('assets/cursor-pointer.svg') 15 3,pointer}
+ .game-data :is(textarea,input:not([type]),input[type=text]){cursor:url('assets/cursor-text.svg') 18 18,text}
+}
 @media(min-width:761px) and (max-width:1050px){.game-data .game-layout{grid-template-columns:280px minmax(0,1fr);gap:16px}.game-data .scene-menu{font-size:9px;padding:0}.game-data .scene-menu p{padding:1px 0}}
 @media(max-width:760px){
  .game-data .scene-sidebar{gap:12px;align-items:center}

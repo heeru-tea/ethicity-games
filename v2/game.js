@@ -1,8 +1,9 @@
 (function(){'use strict';
 const M=window.EthicityDataModel,COMMON='../shared/ethicity-elementary-common-v1',main=document.getElementById('main'),status=document.getElementById('live-status');
-let assets,state=M.initial(),chatHistory=[],queue=[],afterQueue=null,actionHandlers=[],mode='loading',busy=false,effectFrame=0,reported=0,reflection='',customPledge='',customPledgeIndex=null,restoreFocus=null;
+let assets,state=M.initial(),queue=[],afterQueue=null,actionHandlers=[],mode='loading',busy=false,effectFrame=0,reported=0,reflection='',customPledge='',customPledgeIndex=null,restoreFocus=null;
 const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');let reducedMotion=motionQuery.matches;
 let typing=null,typingTimer=0,instantText=false,sceneArt=null,sceneSpeaker=null;
+let musicStarted=false,musicAttempt=0;
 const scenePictures={};
 const sceneFrames={
  welcome:{background:'cafeteria',cast:['robot','teacher'],caption:'다음 주 급식, 함께 정해요'},
@@ -17,7 +18,7 @@ const sceneFrames={
  menu:{background:'cafeteria',cast:['robot'],caption:'아직 먹기 전! 함께 살펴볼 급식표'},
  repair:{background:'classroom',cast:['teacher','robot'],caption:'함께 먹을 수 있는 방법을 찾아요'},
  revised:{background:'cafeteria',cast:['daon','haneul','saebom'],caption:'친구들의 이야기를 듣고 바뀐 급식'},
- privacy:{background:'classroom',cast:['onyu','teacher'],caption:'온유가 디지털 설문를 궁금해해요'},
+ privacy:{background:'classroom',cast:['onyu','teacher'],caption:'온유가 디지털 설문을 궁금해해요'},
  protect:{background:'classroom',cast:['teacher'],digital:'protected',caption:'접근을 제한하고 안전하게 보관해요'}
 };
 const $=id=>document.getElementById(id);
@@ -29,9 +30,18 @@ function paintIcons(root=document){if(!assets)return;root.querySelectorAll('canv
 function portrait(id,expression='neutral',size=''){const c=ETHICITY_COMMON_MANIFEST.characters[id],index=Math.max(0,c.expressions.indexOf(expression));return `<span class="portrait ${size}" style="--portrait-index:${index}" aria-hidden="true"><img src="${COMMON}/${c.portraits}" alt="" draggable="false"></span>`;}
 function setMain(html){finishTyping(false);cancelAnimationFrame(effectFrame);document.getElementById('feedback-effect').hidden=true;main.innerHTML=html;paintIcons(main);main.focus({preventScroll:true});window.scrollTo(0,0);}
 function sound(id='tap'){if(assets)void assets.playSound(id);}
+async function updateMusic(){
+ const audio=$('background-music'),attempt=++musicAttempt;
+ if(!musicStarted||!$('bgm-setting').checked||document.hidden){audio.pause();return;}
+ try{await audio.play();}catch{
+  if(attempt!==musicAttempt)return;
+  $('bgm-setting').checked=false;
+  announce('배경음악을 재생하지 못했어요. 설정에서 다시 켤 수 있어요.');
+ }
+}
 function effect(id){cancelAnimationFrame(effectFrame);const canvas=$('feedback-effect'),ctx=canvas.getContext('2d');canvas.hidden=false;const anchor=document.getElementById('chat-place')?.getBoundingClientRect();canvas.style.left=Math.min(innerWidth-72,(anchor?.right||innerWidth-100)+8)+'px';canvas.style.top=Math.max(8,(anchor?.top||100)-16)+'px';const start=performance.now();function draw(now){ctx.clearRect(0,0,128,128);if(assets.drawEffect(ctx,id,64,64,now-start,96,reducedMotion))effectFrame=requestAnimationFrame(draw);else canvas.hidden=true;}draw(start);sound(id==='correct'?'win':'retry');}
-function reset(){state=M.initial();chatHistory=[];queue=[];afterQueue=null;actionHandlers=[];reflection='';customPledge='';customPledgeIndex=null;reported=0;cancelAnimationFrame(effectFrame);$('feedback-effect').hidden=true;showStart();}
-function showStart(){mode='start';setMain(`<section class="landing" aria-labelledby="game-title"><div class="landing-copy"><p class="eyebrow">데이터 관리 · 대화 탐험</p><h1 id="game-title">급식 메뉴 AI<br>‘냠냠봇’</h1><p class="lead">${esc(M.T('ST-03'))}</p><p>${esc(M.T('ST-04'))}</p><div class="button-row"><button class="ee-button" id="start-game">탐험 시작 ${icon('arrow_right',24)}</button></div><div class="landing-note">초등 3~4학년 · 약 8~10분<br>이름을 입력하지 않아요. 기록도 저장하지 않아요.</div></div><div class="landing-art" aria-label="공식 학교 급식실과 안내 로봇 냠냠봇"><img src="${COMMON}/backgrounds/cafeteria.png" alt="따뜻한 학교 급식실"><span class="art-label">우리가 함께 정하는 급식 · v2</span><p class="hero-callout">${esc(M.T('ST-07'))}</p><div class="hero-robot">${portrait('robot','happy','large')}</div></div></section><div class="landing-bottom"><p><strong>관찰하고</strong>친구들의 이야기를 들어요</p><p><strong>선택하고</strong>어떤 일이 생기는지 봐요</p><p><strong>함께 정리해요</strong>낱말 카드 5장을 모아요</p></div>`);$('start-game').onclick=()=>{sound();intro();};}
+function reset(){musicStarted=false;void updateMusic();$('background-music').currentTime=0;state=M.initial();queue=[];afterQueue=null;actionHandlers=[];reflection='';customPledge='';customPledgeIndex=null;reported=0;cancelAnimationFrame(effectFrame);$('feedback-effect').hidden=true;showStart();}
+function showStart(){mode='start';setMain(`<section class="landing" aria-labelledby="game-title"><div class="landing-copy"><p class="eyebrow">데이터 관리 · 대화 탐험</p><h1 id="game-title">급식 메뉴 AI<br>‘냠냠봇’</h1><p class="lead">${esc(M.T('ST-03'))}</p><p>${esc(M.T('ST-04'))}</p><div class="button-row"><button class="ee-button" id="start-game">탐험 시작 ${icon('arrow_right',24)}</button></div><div class="landing-note">초등 3~4학년 · 약 8~10분<br>이름을 입력하지 않아요. 기록도 저장하지 않아요.<br>설정에서 대화 표시와 배경음악을 바꿀 수 있어요.</div></div><div class="landing-art" aria-label="공식 학교 급식실과 안내 로봇 냠냠봇"><img src="${COMMON}/backgrounds/cafeteria.png" alt="따뜻한 학교 급식실"><span class="art-label">우리가 함께 정하는 급식 · v2</span><p class="hero-callout">${esc(M.T('ST-07'))}</p><div class="hero-robot">${portrait('robot','happy','large')}</div></div></section><div class="landing-bottom"><p><strong>관찰하고</strong>친구들의 이야기를 들어요</p><p><strong>선택하고</strong>어떤 일이 생기는지 봐요</p><p><strong>함께 정리해요</strong>낱말 카드 5장을 모아요</p></div>`);$('start-game').onclick=()=>{musicStarted=true;void updateMusic();sound();intro();};}
 function wordStrip(){return `<div class="word-strip" aria-label="모은 낱말 카드 ${state.words.length}장, 전체 5장">${M.words.map((w,i)=>`<div class="word-card ee-badge ${state.words.includes(w)?'earned':''}" aria-label="${esc(w)} ${state.words.includes(w)?'모았어요':'아직 모으지 않았어요'}"><span class="word-check" aria-hidden="true">${state.words.includes(w)?'✓':'·'}</span><span>${i===3?'한쪽으로<br>치우친 데이터':w}</span></div>`).join('')}</div>`;}
 function shell(scene,introMode=false){
  mode=introMode?'intro':'game';
@@ -42,20 +52,19 @@ function shell(scene,introMode=false){
  '<div class="scene-info"><p class="scene-tag">'+(introMode?'탐험 준비':'장면 '+scene+' / 5')+'</p><h1 class="scene-title">'+info.title+'</h1><p class="scene-goal">'+info.goal+'</p><div id="scene-speaker" class="scene-speaker"></div></div>'+
  '<p class="scene-note">우리의 선택이 냠냠봇의 급식을 바꿔요.<br>먹기 전에는 선생님이 확인해요.</p></aside>'+
  '<section class="messenger ee-panel" aria-label="냠냠봇과 대화"><div class="chat-header"><strong id="chat-place">'+info.place+'</strong><small id="chat-count">'+(introMode?'함께 시작해요':'의견을 들은 곳 '+state.visited.length+' / 4')+'</small></div>'+
- '<div class="conversation-log" id="conversation-log" tabindex="0" aria-label="지난 대화. 위로 스크롤해 다시 읽을 수 있어요"></div><button class="scroll-hint ee-button secondary" id="latest-message" hidden>새 대화 보기 ↓</button><div class="action-area" id="action-area"></div></section></div>');
+ '<div class="conversation-log" id="conversation-log" tabindex="0" aria-label="현재 말풍선과 살펴볼 자료"></div><div class="action-area" id="action-area"></div></section></div>');
  sceneSpeaker=null;setSceneArt(introMode?'welcome':['meet','collect','sort','menu','repair','privacy'][scene]);
- $('conversation-log').innerHTML=chatHistory.join('');paintIcons($('conversation-log'));scrollLog(true);system(introMode?'냠냠봇의 부탁':'장면 '+scene+' · '+info.title);
- $('latest-message').onclick=()=>scrollLog(true);
+ system(introMode?'냠냠봇의 부탁':'장면 '+scene+' · '+info.title);
  $('conversation-log').addEventListener('click',e=>{
   if(e.target.closest('button,a,input,textarea,select'))return;
   const selection=window.getSelection();if(selection&&!selection.isCollapsed)return;
   const log=$('conversation-log');
   if(log.scrollHeight-log.scrollTop-log.clientHeight<60)$('next-line')?.click();
  });
- $('conversation-log').addEventListener('scroll',()=>{const log=$('conversation-log');if(log.scrollHeight-log.scrollTop-log.clientHeight<30)$('latest-message').hidden=true;});
 }
 function setSceneArt(key,{caption,material}={}){
  if(!$('scene-image'))return;
+ finishTyping(false);$('conversation-log').replaceChildren();
  sceneArt={key,...sceneFrames[key]};
  const image=$('scene-image');
  image.src=sceneArt.picture?scenePictures[sceneArt.picture]:COMMON+'/backgrounds/'+sceneArt.background+'.png';
@@ -91,12 +100,19 @@ function setSceneSpeaker(id,expression){
  if(sceneArt.key==='menu'&&id==='teacher')$('scene-caption').textContent='먹기 전에 멈추고, 메뉴를 안전하게 바꿔요';
 }
 function pinAfterLayout(){const log=document.getElementById('conversation-log');const near=log&&log.scrollHeight-log.scrollTop-log.clientHeight<80;if(near)requestAnimationFrame(()=>scrollLog(true));}
-function scrollLog(force=false){const log=$('conversation-log');if(!log)return;if(force){log.scrollTop=log.scrollHeight;$('latest-message').hidden=true;}}
-function append(html,label=''){chatHistory.push(html);const log=$('conversation-log');if(!log)return;const near=log.scrollHeight-log.scrollTop-log.clientHeight<70;log.insertAdjacentHTML('beforeend',html);paintIcons(log);if(near)scrollLog(true);else $('latest-message').hidden=false;if(label)announce(label);}
+function scrollLog(force=false){const log=$('conversation-log');if(log&&force)log.scrollTop=log.scrollHeight;}
+function append(html,label=''){
+ const log=$('conversation-log');if(!log)return;
+ const template=document.createElement('template');template.innerHTML=html;
+ const node=template.content.firstElementChild;
+ // Keep the current activity beside one current bubble, without a transcript.
+ log.querySelectorAll(node.matches('.material-card')?'.material-card,.system-message':'.message,.system-message').forEach(previous=>previous.remove());
+ log.append(node);paintIcons(log);scrollLog(true);if(label)announce(label);
+}
 function say(id,text,expression='neutral',frame){
  finishTyping(false);if(frame)setSceneArt(frame);setSceneSpeaker(id,expression);
  const name=id==='me'?'나':M.people[id],label=`${name}. ${text}`;
- // History always keeps the complete, escaped sentence. Only the current DOM line types.
+ // Only the current bubble types; advancing replaces it completely.
  append(`<div class="message ${id==='me'?'player':''}">${id==='me'?'':portrait(id,expression)}<div class="message-content"><p class="speaker-label">${name}</p><p class="message-bubble">${esc(text)}</p></div></div>`,id==='me'||reducedMotion||instantText?label:'');
  if(id==='me'||reducedMotion||instantText)return;
  const bubble=$('conversation-log').lastElementChild.querySelector('.message-bubble');
@@ -115,7 +131,7 @@ function typeCharacter(){
  if(!typing)return;
  const current=typing,log=$('conversation-log'),near=log&&log.scrollHeight-log.scrollTop-log.clientHeight<70;
  current.bubble.textContent=current.characters.slice(0,++current.index).join('');
- if(near)scrollLog(true);else if($('latest-message'))$('latest-message').hidden=false;
+ if(near)scrollLog(true);
  if(current.index===current.characters.length){finishTyping();return;}
  typingTimer=setTimeout(typeCharacter,/[.!?…。]/.test(current.characters[current.index-1])?140:30);
 }
@@ -142,7 +158,7 @@ function sceneTwo(){run([L('S2-01')],()=>sortCard(0));}
 function material(card){append('<article class="material-card ee-panel"><div class="material-top"><h3>'+esc(card.title)+'</h3>'+icon('notebook',32)+'</div><p class="material-count">'+esc(card.count)+'</p><p style="white-space:pre-line">'+esc(card.text)+'</p></article>',card.title+'. '+card.text);}
 function sortCard(index,repeat=false,done=null){
 const card=M.sorting[index];setSceneArt('sort',{caption:card.title+' · '+card.count});
-if(!repeat)material(card);
+material(card);
 const prompt=()=>choices(T('S2-Q1'),[{text:T('S2-C1'),onSelect:()=>sortAnswer(index,'keep',done)},{text:T('S2-C2'),onSelect:()=>sortAnswer(index,'remove',done)}]);
 if(index===1&&!repeat)run([L('S2-K2A')],prompt);else prompt();
 }
@@ -256,7 +272,13 @@ $('brand-home').onclick=e=>{e.preventDefault();if(['start','loading'].includes(m
 $('open-settings').onclick=()=>openDialog('settings-dialog');$('close-settings').onclick=()=>closeDialog('settings-dialog');$('cancel-restart').onclick=()=>closeDialog('restart-dialog');$('confirm-restart').onclick=()=>{$('restart-dialog').close();reset();};
 $('sound-setting').onchange=async e=>{assets?.setSound(e.target.checked);if(e.target.checked&&!await assets?.playSound('tap'))announce('소리를 재생하지 못했어요. 게임은 계속할 수 있어요.');};
 function setMotion(value){reducedMotion=value;if(value)finishTyping();document.body.classList.toggle('reduced-motion',value);$('motion-setting').checked=value;}
-$('typing-setting').onchange=e=>{instantText=e.target.checked;if(instantText)finishTyping();};
+$('typing-setting').onchange=e=>{instantText=e.target.value==='instant';if(instantText)finishTyping();};
+$('background-music').volume=.25;
+$('bgm-setting').onchange=()=>void updateMusic();
+$('bgm-volume').oninput=e=>{const volume=Number(e.target.value);$('background-music').volume=volume/100;$('bgm-volume-value').value=volume+'%';};
+document.addEventListener('visibilitychange',()=>void updateMusic());
+window.addEventListener('pagehide',()=>{++musicAttempt;$('background-music').pause();});
+window.addEventListener('pageshow',()=>void updateMusic());
 setMotion(reducedMotion);$('motion-setting').onchange=e=>setMotion(e.target.checked);motionQuery.addEventListener('change',e=>setMotion(e.matches));
 document.addEventListener('keydown',e=>{if(e.repeat||e.ctrlKey||e.altKey||e.metaKey||document.querySelector('dialog[open]'))return;const tag=e.target.tagName;if(['INPUT','TEXTAREA','SELECT'].includes(tag)||e.target.isContentEditable)return;if(/^[1-4]$/.test(e.key)&&actionHandlers[Number(e.key)-1]){e.preventDefault();actionHandlers[Number(e.key)-1]();return;}if(e.code==='Space'&&!e.target.closest('button,a')){const next=$('next-line');if(next){e.preventDefault();next.click();}}});
 async function boot(){try{if(!window.ETHICITY_COMMON_MANIFEST||!window.EthicityAssets)throw Error('공통 패키지를 찾지 못했어요.');assets=await EthicityAssets.load(ETHICITY_COMMON_MANIFEST,COMMON);await Promise.all(Object.values(scenePictures).map(src=>new Promise((resolve,reject)=>{const image=new Image();image.onload=resolve;image.onerror=()=>reject(Error('장면 그림을 찾지 못했어요: '+src));image.src=src;})));paintIcons();showStart();emit('ready');}catch(error){setMain('<div class="ee-panel loading"><h1>공통 자료를 불러오지 못했어요</h1><p class="small-gap">게임 폴더와 shared 폴더를 함께 열어 주세요.</p><p class="muted small-gap" id="load-error"></p><button class="ee-button spaced" id="reload-game">다시 불러오기</button></div>');$('load-error').textContent=error.message;$('reload-game').onclick=()=>location.reload();}}

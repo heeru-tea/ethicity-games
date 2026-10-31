@@ -28,12 +28,15 @@
   <main id="main" tabindex="-1"><div class="loading ee-panel" role="status">냠냠봇이 친구들을 기다리고 있어요.<br>공통 자료를 불러오는 중이에요…</div></main>
   <p id="live-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
   <canvas id="feedback-effect" width="128" height="128" aria-hidden="true" hidden></canvas>
+  <audio id="background-music" src="assets/pixel-adventure.mp3" preload="none" loop></audio>
   <dialog id="settings-dialog" class="ee-panel settings-dialog" aria-labelledby="settings-title">
     <h2 id="settings-title">내 속도로 탐험해요</h2>
     <label class="setting-row"><input type="checkbox" id="sound-setting"> 효과음 켜기</label>
+    <label class="setting-row"><input type="checkbox" id="bgm-setting" checked> 배경음악 켜기</label>
+    <label class="setting-row music-volume" for="bgm-volume">배경음악 크기 <input type="range" id="bgm-volume" min="0" max="100" value="25"><output id="bgm-volume-value" for="bgm-volume">25%</output></label>
+    <label class="setting-row" for="typing-setting">대화 표시 <select id="typing-setting"><option value="typing">한 글자씩 나타나기</option><option value="instant">한 번에 나타나기</option></select></label>
     <label class="setting-row"><input type="checkbox" id="motion-setting"> 움직임 줄이기</label>
-    <label class="setting-row"><input type="checkbox" id="typing-setting"> 문장을 한 번에 보여 주기</label>
-    <p class="muted">대사가 타자 치듯 나와요. 도중에 누르면 문장이 완성되고, 한 번 더 누르면 다음 대사로 넘어가요.<br>움직임을 줄이면 문장을 한 번에 보여 줘요.<br>위로 올리면 지난 대사를 다시 읽을 수 있어요.</p>
+    <p class="muted">글자가 나오는 중에 누르면 문장이 완성돼요. 한 번 더 누르면 다음 말풍선으로 바뀌어요.<br>움직임을 줄이면 대화를 한 번에 보여 줘요.<br>배경음악은 탐험을 시작하면 나와요.</p>
     <p class="muted">이 게임은 이름을 묻지 않아요. 진행과 직접 쓴 글은 저장하거나 보내지 않아요.</p>
     <button class="ee-button" id="close-settings">게임으로 돌아가기</button>
   </dialog>
