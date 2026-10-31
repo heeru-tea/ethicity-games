@@ -385,5 +385,13 @@
     "approval": "User approved the eight-round revised scenario in this conversation.",
     "previousScenarioBlob": "495bdbef1f3e7b7b909d5d1a6b02b9373b067091",
     "namespace": "roomsPrivacyV5Story20261031"
+  },
+  "sceneIllustrations": {
+    "addedAt": "2026-10-31",
+    "generator": "built-in image_gen",
+    "images": "assets/scenes/images.json",
+    "prompts": "assets/scenes/prompts.json",
+    "commonFilesUnchanged": true,
+    "characters": "Original common sprites overlaid in photo scenes"
   }
 }

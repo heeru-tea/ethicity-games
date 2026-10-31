@@ -1,0 +1,18 @@
+{
+  "testedAt": "2026-10-31",
+  "change": "Eight generated situation illustrations and simplified brand text",
+  "illustrations": 8,
+  "introAndResultImagesLoaded": true,
+  "soloRoundsCompleted": 8,
+  "soloEnding": "B",
+  "localCompletionAcknowledged": true,
+  "learningTagsHiddenUntilResult": true,
+  "headerText": ["윤리시티", "프라이버시 보호"],
+  "photoSceneOriginalCharacters": {"class-photo": 5, "public-photo": 2},
+  "mobileRequested": {"width": 390, "height": 844},
+  "mobileDocumentWidth": 375,
+  "mobileScrollWidth": 375,
+  "commonFilesUnchanged": 91,
+  "scenarioAndRealtimeLogicUnchanged": true,
+  "consoleErrors": []
+}

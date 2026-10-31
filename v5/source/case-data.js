@@ -11,3 +11,14 @@ const CASE_SCREENS = {
  'shared-tablet':{type:'device',icon:'settings',title:'학교 AI 활동 · 공용 태블릿',subtitle:'수업이 끝났습니다. 반납할 시간입니다',rows:[['로그인 유지','켜져 있음'],['내려받은 파일','보정한 그림이 기기에 남아 있음'],['비밀번호 저장','이 기기에 저장됨'],['반납 전 정리','로그아웃 · 파일 · 저장된 비밀번호']],footer:'화면을 끄면 어떤 정보가 남을까?'},
  'delete-account':{type:'delete',icon:'close',title:'헬피AI · 사용을 마칠 때',subtitle:'한 달 뒤, 더 이상 쓰지 않는 앱 정리',rows:[['내 기기','앱 아이콘 삭제'],['서비스에 남은 자료 확인','계정 정보 · 대화와 사진이 남아 있는지 확인'],['탈퇴 안내','이 가상 앱은 탈퇴 후 일부 정보를 30일간 보관한다고 안내합니다'],['삭제 확인','삭제 대상 · 보관 기간 · 완료 안내']],footer:'30일은 이 가상 앱의 사례 설정입니다'}
 };
+// 상황 이해를 돕는 삽화만 별도 파일로 관리합니다. 선택·평가 데이터는 바꾸지 않습니다.
+const ROUND_ILLUSTRATIONS = {
+ 'signup':{file:'01-signup.webp',alt:'도서관 책상 위 태블릿에 가입 항목과 이모티콘 쿠폰 안내가 함께 보입니다.',caption:'새 AI 비서에 가입하려는 순간입니다.'},
+ 'account':{file:'02-account.webp',alt:'컴퓨터와 태블릿에 같은 계정과 비밀번호 입력 화면이 보입니다.',caption:'단짝이 계정을 함께 쓰자고 합니다.'},
+ 'group-chat':{file:'03-chat.webp',alt:'태블릿에 친구들의 단체 대화와 AI 상담에 첨부하려는 대화 화면이 나란히 보입니다.',caption:'친구들과 나눈 대화를 AI에게 보내려 합니다.'},
+ 'class-photo':{file:'04-photo.webp',alt:'노트북의 사진 편집 화면에 친구 다섯 명의 소풍 사진과 여러 배경이 보입니다.',caption:'함께 찍은 소풍 사진을 꾸미려 합니다.',cast:['haneul','jiho','saebom','onyu','daon']},
+ 'reward':{file:'05-consent.webp',alt:'태블릿에 이모티콘 선물과 새로운 동의 안내가 나타나 있습니다.',caption:'앱을 쓰던 중 새로운 동의 안내가 나타납니다.'},
+ 'public-photo':{file:'06-sharing.webp',alt:'학교 앞 벤치의 태블릿에 친구 두 명의 사진과 위치·공개 범위 설정이 보입니다.',caption:'사진을 게시하기 전에 공개 범위를 살펴봅니다.',cast:['saebom','onyu']},
+ 'shared-tablet':{file:'07-tablet.webp',alt:'반납대 옆 공용 태블릿에 로그인한 계정과 내려받은 그림이 남아 있습니다.',caption:'수업이 끝나 공용 태블릿을 반납할 시간입니다.'},
+ 'delete-account':{file:'08-delete.webp',alt:'휴대전화의 앱 삭제 화면과 노트북의 계정·저장 자료 화면이 나란히 보입니다.',caption:'앱 사용을 마치며 남아 있는 정보를 확인합니다.'}
+};

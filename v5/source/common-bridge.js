@@ -36,11 +36,19 @@ function applyCommonUI(root=document){
  root.querySelectorAll('button.btn,button.textbtn,[data-reveal-story]').forEach(b=>{b.classList.add('ee-button');if(!b.classList.contains('primary')&&!b.hasAttribute('data-reveal-story'))b.classList.add('secondary');});
  root.querySelectorAll('.dialogue-player .dialogue-speaker').forEach(e=>{e.textContent=S.player?.nickname||'탐험가';});
 }
+function drawScenePhotoCast(canvas){
+ // 새 삽화의 사진 안에 공통 캐릭터 원본만 겹쳐 표시합니다.
+ canvas.width=1672;canvas.height=941;const x=canvas.getContext('2d');
+ const scene=canvas.dataset.scenePhotoCast,people=ROUND_ILLUSTRATIONS[scene]?.cast||[];
+ const points=scene==='class-photo'?people.map((_,i)=>[685+i*88,573,.8]):[[855,510,.64],[955,510,.64]];
+ people.forEach((id,i)=>commonAssets.drawCharacter(x,id,points[i][0],points[i][1],'down',1,points[i][2]));
+}
 function paintArt(){
  applyCommonUI();
  if(!commonAssets){loadOriginalArt().then(paintArt).catch(()=>{const e=document.getElementById('asset-status');if(e){e.hidden=false;e.textContent='공통 그림을 불러오지 못했습니다. common 폴더와 함께 게임을 열어 주시기 바랍니다. 글과 선택으로 탐험을 계속할 수 있습니다.';}});return;}
  document.querySelectorAll('[data-character]').forEach(c=>drawCharacter(c,c.dataset.character,c.dataset.mood));
  document.querySelectorAll('[data-common-stage],[data-village]').forEach(drawCommonStage);
+ document.querySelectorAll('[data-scene-photo-cast]').forEach(drawScenePhotoCast);
  document.querySelectorAll('[data-common-icon]').forEach(c=>{c.width=64;c.height=64;commonAssets.drawIcon(c.getContext('2d'),c.dataset.commonIcon,0,0,64);});
  const stage=S.view==='ending'?'ending':S.view==='round'?roundScreen():'';
  const key=[S.mode,S.roomId,S.round,stage,S.answers[S.round]?.choice].join(':');

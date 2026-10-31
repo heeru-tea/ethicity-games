@@ -1,0 +1,62 @@
+{
+  "generator": "built-in image_gen",
+  "encoding": "WebP quality 90; original dimensions; no crop or retouch",
+  "images": [
+    {
+      "file": "01-signup.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 206906,
+      "sha256": "26e75ffd91abad8445d3aa162a76b76fe35526a548c20547f24e54f933b39304"
+    },
+    {
+      "file": "02-account.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 194006,
+      "sha256": "28cf6b9249e0e4fba68b547cc5e81280791dfe6be4c3a1dcf1600f168ded62f7"
+    },
+    {
+      "file": "03-chat.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 168322,
+      "sha256": "95f2e07b5fc4f775fe0fe3fdebc0d627a35915394c6615e00c5c0fc4d6e7313e"
+    },
+    {
+      "file": "04-photo.webp",
+      "width": 1671,
+      "height": 941,
+      "bytes": 334248,
+      "sha256": "bc392a3e559f9e5a96466b55403cf8380da3f5fafe46e500bd96020feee19107"
+    },
+    {
+      "file": "05-consent.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 217968,
+      "sha256": "3e890f9ecea86565f5e621aeef0f22a75aae6b390c32ecf5424d6cff82b38c89"
+    },
+    {
+      "file": "06-sharing.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 309246,
+      "sha256": "cac4e4e6bbf70d5b6d18736a9116e53df6d714dc63a4ccde83ede5c223d6faa0"
+    },
+    {
+      "file": "07-tablet.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 168596,
+      "sha256": "eb049474f6bb8bfa04c8d2ab0dd67dfb0cdd1d7baad686eccb874e387c1a8b20"
+    },
+    {
+      "file": "08-delete.webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 249678,
+      "sha256": "c3f7ce3007e81e73ea3d146064eb8960035d0136a57af7b926f62764fb95d2d9"
+    }
+  ]
+}
