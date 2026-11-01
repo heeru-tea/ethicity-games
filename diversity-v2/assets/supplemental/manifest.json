@@ -1,0 +1,90 @@
+{
+  "source": "사용자가 Library에서 직접 내려받아 로컬 폴더에 저장한 파일. 원격 원본과 바이트 대조는 미실시. 전달된 파일명/크기와 일치하고 로컬 해시 기록.",
+  "limitations": "원본 동일 프롬프트 첫 3회 결과와 구분. 실제 의료 사진 또는 원본 모델의 추가 실험 출력이 아님. 정답 장면 세트가 아니며 채택/출력 보장 없음.",
+  "files": [
+    {
+      "id": "D4",
+      "file": "doctor_04_explaining.png",
+      "image": "assets/supplemental/doctor_04_explaining.png",
+      "libraryId": "libfile_a72e027e9e68819193b36373ba5d405a",
+      "sha256": "098f3cc8fbe9e7c855d7ddadb2178fba3f9246bc2976e37e50fff307e6788f3a",
+      "dimensions": [
+        1402,
+        1122
+      ],
+      "text": "검사 자료를 보여 주며 설명하는 의사",
+      "alt": "가상의 AI 생성 장면. 흰 가운을 입은 인물이 환자복을 입은 인물에게 태블릿의 흉부 영상을 가리키며 설명한다.",
+      "kind": "학습 보완용 가상 AI 생성 장면"
+    },
+    {
+      "id": "D5",
+      "file": "doctor_05_wheelchair.png",
+      "image": "assets/supplemental/doctor_05_wheelchair.png",
+      "libraryId": "libfile_83d61eb9eb4c8191963e82d3383d6144",
+      "sha256": "ce33316b2b53e997c6cb40ad5e72fb54d5eb3f62a7c0685dd4c4e04493b8c083",
+      "dimensions": [
+        1402,
+        1122
+      ],
+      "text": "휠체어를 사용하며 진료 내용을 설명하는 의사",
+      "alt": "가상의 AI 생성 장면. 휠체어에 앉아 흰 가운을 입은 인물이 침상에 앉은 환자복 차림 인물과 문서를 함께 본다.",
+      "kind": "학습 보완용 가상 AI 생성 장면"
+    },
+    {
+      "id": "D6",
+      "file": "doctor_06_collaboration.png",
+      "image": "assets/supplemental/doctor_06_collaboration.png",
+      "libraryId": "libfile_a957891e1d8c8191b6c3acb062e85b7e",
+      "sha256": "e6764373828f2b30ff0f0b88ba3f83b0a520d1aaa20085d35ff0f9ba462ce220",
+      "dimensions": [
+        1402,
+        1122
+      ],
+      "text": "자료를 함께 살펴보며 판단하는 여러 의사",
+      "alt": "가상의 AI 생성 장면. 흰 가운과 청진기를 착용한 세 인물이 노트북의 의료 영상을 함께 가리키거나 기록하며 살펴본다.",
+      "kind": "학습 보완용 가상 AI 생성 장면"
+    },
+    {
+      "id": "D7",
+      "file": "doctor_07.png",
+      "image": "assets/supplemental/doctor_07.png",
+      "sha256": "689c3e5e6e973a35eafafb9cb3a60fe8a31a66ae6919c3340294bc724b878a88",
+      "dimensions": [
+        1402,
+        1122
+      ],
+      "text": "나이 든 의사가 검사 결과를 설명하는 모습",
+      "alt": "가상의 AI 생성 장면. 흰머리와 수염이 있는 흰 가운 차림 인물이 태블릿 영상을 설명하고 환자복 차림 성인이 듣는다.",
+      "kind": "학습 보완용 가상 AI 생성 장면",
+      "source": "사용자가 생성 결과를 직접 로컬에 저장. 별도 장면 프롬프트로 제작."
+    },
+    {
+      "id": "D8",
+      "file": "doctor_08.png",
+      "image": "assets/supplemental/doctor_08.png",
+      "sha256": "8f170e0d676332590d7c4e0c8a6b315138eb76c5e35b41c7b22309b673d71dbd",
+      "dimensions": [
+        1402,
+        1122
+      ],
+      "text": "짧은 곱슬머리 의사가 진료하는 모습",
+      "alt": "가상의 AI 생성 장면. 어두운 피부와 짧은 곱슬머리의 흰 가운 차림 인물이 청진기로 환자를 진찰한다. 국적이나 민족을 나타내는 자료가 아니다.",
+      "kind": "학습 보완용 가상 AI 생성 장면",
+      "source": "사용자가 생성 결과를 직접 로컬에 저장. 별도 장면 프롬프트로 제작."
+    },
+    {
+      "id": "D9",
+      "file": "doctor_09.png",
+      "image": "assets/supplemental/doctor_09.png",
+      "sha256": "cd8d01ad6b4d7790d12c0f2eb31572e11925ca8b5e31d2b6e65992a69e99bc1f",
+      "dimensions": [
+        1402,
+        1122
+      ],
+      "text": "의사소통 그림판으로 이야기를 나누는 모습",
+      "alt": "가상의 AI 생성 장면. 성인 환자가 의사소통 그림판의 상징을 가리키고 흰 가운 차림 인물이 바라보며 듣는다.",
+      "kind": "학습 보완용 가상 AI 생성 장면",
+      "source": "사용자가 생성 결과를 직접 로컬에 저장. 별도 장면 프롬프트로 제작."
+    }
+  ]
+}
