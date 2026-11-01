@@ -1,0 +1,51 @@
+// Small headless smoke check without external browser dependencies.
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),path=require('path');
+const root=__dirname,html=fs.readFileSync(path.join(root,'index.html'),'utf8'),code=fs.readFileSync(path.join(root,'game.js'),'utf8');
+const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]));
+const used=[...code.matchAll(/\$\('([^']+)'\)/g)].map(x=>x[1]);
+const dynamic=new Set(['dialogCard','dialogTitle','dialogClose','introNext','collectBtn','reportBtn','criteriaList','toBuild']);
+const missing=[...new Set(used)].filter(x=>!ids.has(x)&&!dynamic.has(x));
+assert.deepStrictEqual(missing,[],'Missing document ids: '+missing.join(','));
+for(const source of [...html.matchAll(/(?:src|href)="(assets\/[^"#]+)"/g)].map(x=>x[1]))assert(fs.existsSync(path.join(root,source)),'Missing asset '+source);
+const assets=['park-map.png','park-cover.png','ai-lab.png','parkbot.png','town-officer.png','onyu.png','grandmother.png','harin.png','haneul-walk.png','jiho-walk.png','saebom-walk.png'];
+for(const f of assets)assert(fs.statSync(path.join(root,'assets',f)).size>0,'Missing image '+f);
+class E {constructor(id){this.id=id;this.hidden=false;this.value='초록별';this.textContent='';this.innerHTML='';this.disabled=false;this.listeners={};this.dataset={};this.classList={toggle:()=>{},contains:()=>false};}addEventListener(name,fn){this.listeners[name]=fn;}setAttribute(){}click(){this.listeners.click?.({target:this});}focus(){}setPointerCapture(){}getBoundingClientRect(){return {left:0,top:0,width:960,height:540};}getContext(){return ctx;}}
+const ctx={clearRect(){},fillRect(){},strokeRect(){},drawImage(){},save(){},restore(){},translate(){},fillText(){},strokeText(){},beginPath(){},arc(){},stroke(){}};
+const nodes=new Map();const get=id=>{if(!nodes.has(id))nodes.set(id,new E(id));return nodes.get(id);};
+const avatars=['haneul','jiho'].map(a=>{const e=new E('avatar-'+a);e.dataset.avatar=a;e.classList={contains:()=>a==='haneul',toggle:()=>{}};return e;});
+const document={getElementById:get,querySelectorAll(selector){return selector==='[data-avatar]'?avatars:[];},querySelector(selector){return selector==='.avatar.selected'?avatars[0]:null;},activeElement:get('world'),createElement(){return new E('temp');}};
+const window={listeners:{},addEventListener(name,fn){(this.listeners[name]??=[]).push(fn);},scrollTo(){}};
+const dispatch=(name,event)=>{for(const fn of window.listeners[name]||[])fn(event);};
+const data=new Map(),localStorage={getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};
+class Image {constructor(){this.complete=false;this.naturalWidth=0;this.src='';}}
+let frame,now=10000;const context={document,window,Image,localStorage,performance:{now:()=>now},requestAnimationFrame:fn=>{frame=fn;},setTimeout:()=>0,clearTimeout(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},Blob,console,Math};
+vm.runInNewContext(code,context,{filename:'game.js'});
+assert(!get('startScreen').hidden,'Opening screen must be visible');
+assert(get('gameScreen').hidden,'Game screen must be hidden on load');
+get('startBtn').click();
+assert(get('startScreen').hidden,'Starting game should hide title screen');
+assert(!get('dialogOverlay').hidden,'Starting game should show the prologue');
+assert(get('dialogCard').innerHTML.includes('1/4'),'Prologue must begin with page 1/4');
+assert(frame,'Animation loop should be installed');
+for(let i=0;i<3;i++){get('introNext').click();assert(get('dialogCard').innerHTML.includes(`${i+2}/4`),'Prologue page order');}
+get('introNext').click();
+assert(get('dialogOverlay').hidden,'Prologue should close on fourth page');
+const run=(key,count)=>{dispatch('keydown',{key,preventDefault(){}});for(let i=0;i<count;i++){now+=50;frame(now);}dispatch('keyup',{key});};
+run('ArrowLeft',24);run('ArrowUp',7);
+assert(!get('dialogOverlay').hidden,'Approaching a resident should automatically open dialogue');
+assert(get('dialogCard').innerHTML.includes('정순 할머니'),'Nearby resident dialogue must match NPC');
+let spacePrevented=false;
+dispatch('keydown',{key:' ',code:'Space',repeat:false,preventDefault(){spacePrevented=true;}});
+assert(spacePrevented,'Space should prevent browser page scroll');
+assert(get('dialogOverlay').hidden,'Space should collect evidence and close the dialogue');
+assert(get('progressChip').textContent.includes('1/4'),'Space collection should increase evidence progress');
+frame(now+=50);
+assert(get('dialogOverlay').hidden,'Dialogue must not immediately reopen on the same spot');
+run('ArrowRight',12);run('ArrowUp',34);run('ArrowRight',13);
+assert(get('sceneLabel').textContent.includes('관리실'),'Entering park portal should change scene to lab');
+run('ArrowUp',25);
+assert(get('dialogCard').innerHTML.includes('파크봇'),'Approaching robot in lab should open its dialogue');
+get('dialogClose').click();
+get('homeBtn').click();
+assert(!get('startScreen').hidden,'Home button should restore title screen');
+console.log('PASS: assets, first screen, prologue, auto dialogue, Space to collect, anti-repeat, portal, lab NPC, home');
