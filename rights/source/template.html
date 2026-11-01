@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#294b40">
+  <meta name="description" content="윤리시티 인권보장 탐험 · 팀 공식 픽셀아트 1.0을 적용한 학교 탐험 게임.">
+  <title>AI의 판결 | 윤리시티 AI 인권보장 탐험</title>
+  <link rel="stylesheet" href="../shared/ethicity-elementary-common-v1/runtime/common.css">
+  <style>__INLINE_CSS__</style>
+</head>
+<body class="ee-theme">
+  <header class="masthead wrap">
+    <div class="brand"><div class="brand-mark" aria-hidden="true"><span class="brand-robo"></span></div><div><p class="eyebrow">ETHICITY · AI ETHICS GAME</p><h1>윤리시티 <span style="color:#8a7a39">인권보장 탐험</span></h1><p class="tagline">초등학교 5~6학년 · 공식 공통 에셋 v1.0 적용</p></div></div>
+    <div class="top-chip">⚖️ AI가 결정해도 괜찮을까?<br><b>권리 · 재검토 · 사람의 판단</b></div>
+  </header>
+  <main class="wrap">
+    <section id="intro" class="board introduction" aria-label="게임 시작">
+      <div class="intro-art" aria-hidden="true">
+        <div class="intro-speech">💬 “AI가 의심했다는 이유만으로 친구의 기회를 막아도 될까?”</div>
+      </div>
+      <div class="intro-content">
+        <span class="mission-star">✦ 미션: 두 사건을 조사하고 학교의 AI 원칙 정하기</span>
+        <h2>AI의 <br><em>판결</em>을 다시 살펴라!</h2>
+        <p>학교의 AI 글 탐지기와 얼굴인식 출입 시스템 때문에 친구들의 권리가 흔들리고 있어요. 단서를 모아 사건을 조사하고, <b>학생의 권리에 영향을 주는 AI를 학교에서 어떻게 써야 할지</b> 결정해 봅시다.</p>
+        <div class="intro-rule"><b>진행 방법</b> · 학교 탐험 → 사건 1(새봄) 조사 → 사건 2(온유) 조사 → 학교 AI 인권보장위원회에서 최종 결정. <b>정답보다 근거와 공정한 절차가 중요해요.</b></div>
+        <label for="nickname" style="font-size:13px;font-weight:900">가상 별명 (한글 1~5자, 실명 사용하지 않기)</label>
+        <input id="nickname" value="별고래" maxlength="5" autocomplete="off" spellcheck="false" style="min-height:44px;width:100%;border:3px solid #294b40;padding:8px 12px;margin:6px 0 12px;background:white" aria-label="가상 별명">
+        <label style="font-size:13px;font-weight:900">탐험할 캐릭터</label>
+        <div class="avatar-line"><button type="button" class="avatar-btn" data-avatar="haneul" aria-pressed="true"><span class="avatar-sprite haneul" aria-hidden="true"></span> 하늘</button><button type="button" class="avatar-btn" data-avatar="jiho" aria-pressed="false"><span class="avatar-sprite jiho" aria-hidden="true"></span> 지호</button></div>
+        <div class="start-actions"><button type="button" class="btn primary" id="startBtn">▶ 새 탐험 시작</button><button type="button" class="btn green" id="resumeBtn" hidden>↪ 이어서 탐험</button></div>
+        <p class="smallnote">※ 게임 속 AI 시스템과 사건은 모두 <b>학습용 가상 사례</b>입니다. 실제 개인정보를 입력하지 않고 플레이할 수 있어요.</p>
+      </div>
+    </section>
+    <section id="game" class="board game" hidden aria-label="AI 인권보장 게임">
+      <div class="hud"><div class="hud-title"><h2>⚖️ AI 인권 조사단 <small id="heroName" style="font-size:14px;font-weight:500"></small></h2><p id="sceneDescription">학교를 탐험하고 증거 파일을 모아요.</p></div>
+        <div class="hud-right"><span id="progressCount" class="count">사건 진행 0/2</span><button class="btn small" id="soundBtn" type="button">🔇 효과음 꺼짐</button><button class="btn small" id="homeBtn" type="button">⌂ 시작 화면</button></div></div>
+      <div class="game-layout">
+        <section class="map-shell" aria-label="학교 탐험 지도">
+          <nav class="map-tabs" aria-label="장소 빠른 이동(보조 수단)"><button type="button" class="scene-tab" data-scene="classroom" aria-current="true">🏫 교실</button><button type="button" class="scene-tab" data-scene="courtyard" aria-current="false">🌿 중앙마당</button><button type="button" class="scene-tab" data-scene="library" aria-current="false">📚 도서관</button><button type="button" class="scene-tab" data-scene="ai_lab" aria-current="false">🖥️ AI 실습실</button></nav>
+          <div class="canvas-wrap"><canvas id="mapCanvas" width="1280" height="720" tabindex="0" role="img" aria-label="학교 탐험 지도. 화면의 단서 표시를 누르거나 화살표 키로 이동하고 E 또는 조사하기 버튼으로 대화하세요."></canvas><div class="canvas-note">⭐ 인물에 다가가 조사하고, 초록색 포털을 밟아 맵을 이동해요.</div></div>
+          <div class="walk-help"><div><b>이동</b> 방향키·WASD / <b>조사</b> E·Enter<br>스마트폰도 방향 버튼으로 포털까지 걸어가세요</div>
+            <div class="dpad" aria-label="화면 이동 버튼"><button data-dir="ArrowLeft" type="button" aria-label="왼쪽">◀</button><button data-dir="ArrowUp" type="button" aria-label="위쪽">▲</button><button data-dir="ArrowDown" type="button" aria-label="아래쪽">▼</button><button data-dir="ArrowRight" type="button" aria-label="오른쪽">▶</button></div><button class="btn small primary" id="interactBtn" type="button">🔍 조사하기</button></div>
+        </section>
+        <aside class="sidepanel" aria-label="탐험 미션">
+          <p class="eyebrow">MISSION BOARD</p><h3 id="chapterTitle">📌 사건 조사</h3><p id="casePulse" class="case-pulse" aria-live="polite">🔎 조사 기록 0/4</p><button id="notebookBtn" type="button" class="btn notebook-btn">📓 조사 수첩 (0/4)</button><p id="missionCountHint">먼저 주변을 조사해 보세요.</p><div id="missionList" class="mission-list"></div>
+          <div class="chapter-box"><b id="chapterBadgeTitle">🗂️ 사건 정리</b><p id="chapterIntro">증거를 모은 뒤 사건을 정리해 보세요.</p><button id="caseBtn" type="button" class="btn green" disabled>🔒 증거 수집 필요</button></div>
+          <div class="final-box"><b>🏛️ 학교 AI 인권보장위원회</b><p>두 사건을 모두 조사하면 학교 AI의 사용 원칙을 결정할 수 있어요.</p><button id="finalBtn" type="button" class="btn primary" disabled>🔒 두 사건 해결 필요</button></div>
+          <p class="statusline" id="assetStatus">팀 공식 공통 팩 로딩 중…</p>
+        </aside>
+      </div>
+      <section class="cards-strip" aria-label="내가 획득한 증거 파일"><h3>🗃️ 나의 증거 파일</h3><div class="cards" id="cards"></div></section>
+      <div style="margin:18px 0 6px;display:flex;justify-content:flex-end"><button type="button" class="btn small ghost" id="resetBtn">↺ 이 게임만 초기화</button></div>
+    </section>
+  </main>
+  <div id="modal" class="overlay" role="presentation" hidden><section id="dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"></section></div>
+  <div id="notice" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);max-width:min(90vw,680px);background:#294b40;color:#fff9e7;border:3px solid #f3cf72;padding:12px 18px;z-index:100;box-shadow:5px 5px #789083;font-size:14px" role="status" aria-live="polite" hidden></div>
+  <footer class="wrap foot"><p>2026 AI융합교육연구회 윤리시티 · 인권보장(v0.7.2 · 팀 공통 팩 1.0) | 가상 사례 · 학생용 개인 탐험 | 교사 실시간 방·Firebase 미연결</p></footer>
+  <script src="../shared/ethicity-elementary-common-v1/runtime/manifest.js"></script>
+  <script src="../shared/ethicity-elementary-common-v1/runtime/common.js"></script>
+  <script id="scenario-data" type="application/json">__INLINE_SCENARIO__</script>
+  <script>__INLINE_SCRIPT__</script>
+</body>
+</html>
