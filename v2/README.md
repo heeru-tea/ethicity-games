@@ -1,6 +1,6 @@
 # 급식 메뉴 AI ‘냠냠봇’ v2
 
-**[냠냠봇 v2 공개 게임 바로 플레이](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site)** · [실행 파일](index.html) · [저장소 첫 README](../README.md)
+**[냠냠봇 v2 공개 게임 바로 플레이](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/v2/?v=20261101-bgm4)** · [실행 파일](index.html) · [저장소 첫 README](../README.md)
 
 설치나 로그인 없이 주소를 가진 누구나 플레이할 수 있습니다. PC·태블릿·휴대폰에서 위 링크를 열어 주세요. GitHub의 실행 파일 링크는 소스 보기용입니다.
 
@@ -41,7 +41,7 @@ START → INTRO → RULE → 장면 0~5 → RESULT → COMPLETE.
 - game.js: 대화, 타자 효과, 선택, 후속 활동, 추가 점검, 통합 이벤트.
 - styles.css: .game-data 아래의 게임 전용 화면. 공통 UI 토큰을 재정의하지 않습니다.
 - food.js: 그림 응답 활동의 음식 그림.
-- assets/pixel-adventure.mp3: 사용자가 제공한 `Pixel Adventure (1).mp3` 원본 BGM.
+- assets/bgm_4.mp3: 2026-11-01 사용자가 제공한 최신 BGM 원본. 파일을 변환하지 않고 그대로 재생합니다.
 - assets/cursor-*.svg: 게임 화면의 1.5배 커서(24px 기준 36px). 공통 자산은 변경하지 않습니다.
 
 ## 대화와 소리 설정
@@ -73,10 +73,12 @@ START → INTRO → RULE → 장면 0~5 → RESULT → COMPLETE.
 
 ### 공개 배포 기록
 
-- 공개 주소: https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site
+- 최신 실행 주소: https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/v2/?v=20261101-bgm4
 - Sites 프로젝트: `appgprj_6ae58c691a48819197277a12d3740c3c`
-- 공개 버전: 2 (2026-10-31), 대화 표시·확대 커서·BGM 개선
-- 배포 소스 커밋: `198ae094acd0b23cd7f57e61cc414cf18e5961ed`
+- 게임 버전: v2. 2026-11-01 `bgm_4.mp3`로 교체했으며 시나리오와 조작 방식은 동일합니다.
+- Sites 공개 배포: 버전 3 (2026-11-01), 소스 커밋 `7346e34b6e5e2637a099a485b3dc4fd1f710e431`.
+- 음원 SHA-256: `467db3fff3d170995b17bdc9cd71cf570f0531c1c11a7e473b9296037589afc9`.
+- 새 음원 경로를 사용하므로 이전 BGM 캐시와 구분됩니다. 이전 실행 주소로 접속해도 최신 게임을 플레이합니다.
 - `v2` 실행 파일·전용 BGM/커서와 원본 그대로의 공통 런타임 자산 49개를 포함합니다. 공개 범위는 `public`입니다.
 - GitHub에 코드를 올리는 것만으로 공개 사이트가 자동 갱신되지는 않습니다. 수정 배포 시 이 Sites 프로젝트를 재사용합니다.
 

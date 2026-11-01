@@ -3,7 +3,7 @@
 
 ## 데이터 관리 · 급식 메뉴 AI ‘냠냠봇’
 
-- **[냠냠봇 v2 바로 플레이](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site)**
+- **[냠냠봇 v2 바로 플레이 · 최신 BGM](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/v2/?v=20261101-bgm4)**
 - [냠냠봇 v2 안내 및 실행 방법](v2/README.md)
 - [냠냠봇 v2 실행 파일](v2/index.html)
 - [기존 v1 안내](data/README.md)
