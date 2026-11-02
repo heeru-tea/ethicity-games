@@ -305,3 +305,17 @@ document.title=L('윤리시티 · 책임 조사단','Ethicity · Accountability 
 @media(max-width:480px){.game-accountability #modal .dialogBody{padding:12px 12px 24px}.game-accountability #modal .dialogTop h2{font-size:18px}.game-accountability #modal .dialogActions{padding:8px 12px 12px}.game-accountability .mainNextAction>.primary{font-size:16px}}
 @media(max-height:420px){.game-accountability #modal .dialogTop{padding:4px 10px}.game-accountability #modal .dialogActions{max-height:42dvh}.game-accountability #modal .dialogActions>p{font-size:12px}.game-accountability .mainNextAction>.primary{min-height:44px}}
 `;document.head.appendChild(style);})();
+
+// Character selection updates only the two cards, not the entire embedded-art scene.
+(function(){
+ const previousStart=renderStart,previousAction=act;
+ function selectionFeedback(){
+  const buttons=[...document.querySelectorAll('.avatars [data-action^="avatar:"]')];
+  for(const button of buttons){const index=Number(button.dataset.action.split(':')[1]),selected=player.character===['char_03','char_04'][index];button.setAttribute('aria-pressed',String(selected));let label=button.querySelector('.avatar-selection-label');if(!label){label=document.createElement('span');label.className='avatar-selection-label';button.append(label);}label.textContent=selected?L('선택했어요 ✓','Selected ✓'):L('선택하기','Choose');}
+  let status=$('avatar-status');if(!status&&buttons.length){status=document.createElement('p');status.id='avatar-status';status.setAttribute('role','status');buttons[0].parentElement.after(status);}
+  if(status)status.textContent=L('조사원 '+(player.character==='char_04'?2:1)+'과 함께해요.','Investigator '+(player.character==='char_04'?2:1)+' is selected.');
+ }
+ renderStart=function(){const result=previousStart.apply(this,arguments);selectionFeedback();return result;};
+ act=function(action){if(/^avatar:[01]$/.test(action)&&state.screen==='start'){const index=Number(action.split(':')[1]);player.character=['char_03','char_04'][index];if($('nickname'))player.nickname=$('nickname').value;selectionFeedback();persist();artImage('avatar'+index,REFERENCE_SPRITES[index]);drawWorld();return;}return previousAction.apply(this,arguments);};
+ const style=document.createElement('style');style.textContent='.game-accountability .avatars .ee-button{border:12px solid transparent;border-image:none;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}.game-accountability .avatars .ee-button[aria-pressed="true"]{border:12px solid transparent;border-image:none;box-shadow:inset 0 0 0 3px var(--green);background:#e4efdf}.game-accountability .avatars .avatar-selection-label{display:block;font-size:14px;margin-top:4px}.game-accountability .avatars button:focus-visible{outline:3px solid #ba7833;outline-offset:3px}';document.head.appendChild(style);if(state.screen==='start')selectionFeedback();
+})();
