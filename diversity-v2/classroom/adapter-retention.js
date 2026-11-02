@@ -1,0 +1,17 @@
+(function(root){'use strict';
+const Parent=root.DiversityLocalAdapter.LocalAdapter,DAY=86400000;
+function parse(room){const m=/^(\d{13})_([A-Za-z0-9_-]{1,60})$/.exec(room);if(!m)throw Error('교실 참여 링크를 확인해 주세요. 기존 교실은 원래 화면에서 열어 주세요.');return {bucket:m[1],id:m[2]};}
+function roomId(raw,now=Date.now()){const suffix=String(raw).replace(/^\d{13}_/,'');if(!/^[A-Za-z0-9_-]{1,60}$/.test(suffix))throw Error('새 교실 식별값 오류');return (now-now%3600000)+'_'+suffix;}
+function format(ms){return new Date(ms).toLocaleString('ko-KR',{timeZoneName:'short'});}
+function notice(control,role){if(!control?.expiresAt)return '';const access=control.expiresAt,purge=access+6*DAY;return '<aside id="retention-notice" class="retention-notice"><p>이용 마감: '+format(access)+'</p><details><summary>보관·내보내기 안내</summary><p>'+(role==='teacher'?'교사도 개설 24시간 뒤에는 기록을 열거나 XLSX를 받을 수 없습니다. 이용 마감 전에 내려받아 주세요.':'개설 24시간 뒤에는 이 교실을 이용할 수 없어요.')+'</p><p>삭제 대상 시각: '+format(purge)+' · 개설 7일 이후 삭제 대상 건수를 매일 확인합니다. 실제 삭제는 운영자가 대상을 확인하고 별도 승인 후 처리하며, 확인·승인이 늦으면 더 보관될 수 있습니다.</p><p>자료·접속 정보·수업과 UID의 연결은 삭제 대상입니다. 인증 계정과 이미 내려받은 파일은 남습니다.</p></details></aside>';}
+class RetentionAdapter extends Parent{
+ bind(room,session){const v=parse(room);super.bind(room,session);this.classPath='classroomsV2/retentionV1/'+v.bucket+'/'+v.id;this.indexPath='classroomsV2RetentionIndex/'+v.bucket+'/'+v.id;this.base=this.classPath+'/sessions/'+session+'/';this.noticeKey='ethicity.diversity.retentionProduction.deadline.'+room+'.'+session;this.deadline=null;try{const saved=Number(root.sessionStorage?.getItem(this.noticeKey));if(Number.isSafeInteger(saved)&&saved>0)this.deadline=saved;}catch{}}
+ async get(path){if(this.deadline&&Date.now()>=this.deadline)throw Error('이 교실의 24시간 이용 기간이 끝났습니다. 교사도 기록 열람·XLSX 내보내기를 할 수 없습니다. 7일 이후 확인 후 삭제 대상이며 바로 삭제된 것은 아닙니다.');const value=await super.get(path);if(path===this.base+'control'&&value?.expiresAt){this.deadline=value.expiresAt;try{root.sessionStorage?.setItem(this.noticeKey,String(this.deadline));}catch{}}return value;}
+ logout(){try{root.sessionStorage?.removeItem(this.noticeKey);}catch{}super.logout();}
+ async create(room,session,prepared){this.bind(room,session);if(!prepared?.token||!Number.isSafeInteger(prepared.expiresAt))throw Error('새 수업 준비 정보 오류');const createdAt=prepared.expiresAt-DAY,meta={owner:this.uid,createdAt,accessUntil:prepared.expiresAt,purgeAfter:createdAt+7*DAY,policyVersion:1},index={createdAt,accessUntil:meta.accessUntil,purgeAfter:meta.purgeAfter,policyVersion:1};
+ try{await this.db.ref().update({[this.classPath+'/meta']:meta,[this.indexPath]:index});}catch(e){const existing=await super.get(this.classPath+'/meta').catch(()=>null);if(!existing||JSON.stringify(existing,Object.keys(existing).sort())!==JSON.stringify(meta,Object.keys(meta).sort()))throw Error('교실 개설을 확인하지 못했습니다. 시각·연결을 확인해 주세요. 기존 교실은 덮어쓰지 않았습니다.');}
+ this.deadline=meta.accessUntil;const c={epoch:1,phase:'issue',open:true,accepting:true,expiresAt:meta.accessUntil,maxChoices:1,activeRound:'',roundNumber:0};const existing=await this.get(this.base+'control');if(existing){if(!root.DiversityLocalAdapter.same(existing,c))throw Error('이미 진행 중인 교실입니다. 이전 수업 이어하기를 이용하세요.');}else await this.confirmed(this.base+'control',c);await this.immutable(this.base+'invites/'+prepared.token,{enabled:true,expiresAt:meta.accessUntil});return prepared.token;
+ }
+}
+root.RetentionClassroom={roomId,parse,notice};root.DiversityLocalAdapter={...root.DiversityLocalAdapter,LocalAdapter:RetentionAdapter};
+})(globalThis);
