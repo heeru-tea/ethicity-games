@@ -291,3 +291,5 @@ to{opacity:1;transform:none}
 @media(max-width:650px){.game-diversity[data-role=student] .scene-dialogue{grid-template-columns:minmax(0,1fr);}}
 
 .game-diversity[data-role=student] .student-mission-stage{max-width:none;width:100%;box-sizing:border-box;}
+
+.game-diversity[data-role="teacher"] .classroom-brand{display:flex;align-items:center;gap:7px;color:var(--ee-ink,#294b40);text-decoration:none;flex:none;font-size:17px;font-weight:800;letter-spacing:.12em;line-height:1.3}.game-diversity[data-role="teacher"] .classroom-brand canvas{width:32px;height:32px;image-rendering:pixelated;flex:none}.game-diversity[data-role="teacher"] .classroom-brand small{display:block;font-size:11px;letter-spacing:.1em}.game-diversity[data-role="teacher"] .brand-spark{color:#a8bb8c;font-size:15px}
