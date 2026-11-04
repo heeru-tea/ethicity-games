@@ -1,0 +1,12 @@
+{
+  "testedAt": "2026-11-04T13:18:28.698Z",
+  "choiceScoresAndReasons": 32,
+  "signalExplanations": 32,
+  "allDialogueObservationFeedbackPagesRender": true,
+  "scoreRevealGating": true,
+  "independentDenominators": true,
+  "reportEscapesNames": true,
+  "reportPreservesSignalRevision": true,
+  "localQrSvg": true,
+  "intermediateChoicesHideElements": true
+}

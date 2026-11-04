@@ -1,0 +1,34 @@
+{
+  "testedAt": "2026-11-04",
+  "method": "Actual browser UI clicks via CUA; 8 solo rounds completed, HTML report downloaded; teacher and separate student tab verified live join, submit, reveal",
+  "tabletViewports": [
+    [
+      1024,
+      768
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      1280,
+      800
+    ],
+    [
+      800,
+      1280
+    ]
+  ],
+  "mobileViewports": [
+    [
+      390,
+      844
+    ]
+  ],
+  "sampledScreens": 119,
+  "tabletPageOverflow": 0,
+  "mobileHorizontalOverflow": 0,
+  "mobileVerticalScroll": "enabled for readable text",
+  "typedTextReveal": "screen click or Enter/Space; reduced motion and manual toggle supported",
+  "notes": "공통 화면 구현 검사를 완료한 뒤 privacy_v6로 독립 경로·저장 키를 분리했습니다. 세로 장면 겹침을 수정했습니다."
+}

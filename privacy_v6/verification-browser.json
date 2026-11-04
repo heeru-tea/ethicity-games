@@ -1,0 +1,44 @@
+{
+  "testedAt": "2026-10-31",
+  "scenarioRevision": "20261031",
+  "method": "Codex in-app browser over local HTTP",
+  "solo": {
+    "roundsCompleted": 8,
+    "ending": "A",
+    "localCompletionNotice": true
+  },
+  "live": {
+    "backend": "existing Firebase Realtime Database",
+    "testNickname": "검증학생",
+    "teacherWithoutGoogleLogin": true,
+    "rosterUpdates": true,
+    "answerCountsUpdate": true,
+    "waitUntilTeacherReveal": true,
+    "roundsCompleted": 8,
+    "ending": "C",
+    "serverCompletionAcknowledged": true,
+    "expandedRosterReflectsEightAnswersAndCompletion": true
+  },
+  "ui": {
+    "commonSkinsObserved": true,
+    "storyBridgeAfterEveryRound": true,
+    "separateCaseObservationSignalsChoicesScreens": true,
+    "mobileViewportRequested": {
+      "width": 390,
+      "height": 844
+    },
+    "mobileContentWidth": 375,
+    "mobileDocumentWidth": 375,
+    "horizontalOverflowDetected": false,
+    "nicknameInSpeech": true,
+    "typewriterAndClickReveal": true,
+    "learningElementsHiddenBeforeChoice": true,
+    "teacherChoicesExpanded": true,
+    "teacherRosterExpanded": true,
+    "consoleErrors": []
+  },
+  "limits": [
+    "file:// 직접 열기는 이번 실행 검증에 포함하지 않았습니다. HTTP 실행과 로컬 자산 경로 검사를 통과했습니다.",
+    "교사 확대는 현재 화면 확대 방식으로 확인했습니다. 별도 팝업 창은 이번 재검증에 포함하지 않았습니다."
+  ]
+}
