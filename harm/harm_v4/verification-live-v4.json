@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-11-05T07:45:47.676Z",
+  "url": "https://ethicity-privacy-20261011.web.app/harm/harm_v4/",
+  "checks": [
+    "Create room immediately shows QR and URL, without a room-list query",
+    "Live rules reject student whole-room reads, teacher-control writes, another student vote reads, and forged outcomes",
+    "Student reload restores identity and vote; teacher URL restores active control screen",
+    "Live rules reject vote updates after teacher closes voting",
+    "Both student completion records accepted by production rules",
+    "Three independent devices complete all eight rounds, with tied votes, class ending, individual votes, and locally retained learning selections",
+    "Production personal report PNG downloaded, width 1400, height 5642"
+  ],
+  "transport": "Production Firebase Authentication, Realtime Database and Hosting; no transport mock",
+  "errors": []
+}

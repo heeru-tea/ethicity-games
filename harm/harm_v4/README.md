@@ -2,6 +2,15 @@
 
 `harm` 브랜치의 `harm/harm_v3`를 바탕으로 만든 초등 AI 윤리 수업 게임입니다. 기존 v3 파일은 변경하지 않습니다.
 
+## 실행 링크 · 운영 배포 완료
+
+- [교사 컨트롤타워 실행](https://ethicity-privacy-20261011.web.app/harm/harm_v4/?mode=teacher)
+- [게임 시작 · 수업 미리보기](https://ethicity-privacy-20261011.web.app/harm/harm_v4/)
+
+**교사는 위 교사 링크에서 새 수업을 만듭니다. 학생에게는 생성된 수업별 QR·입장 링크를 공유합니다.** 게임 시작 주소만 공유하면 특정 실시간 수업에 바로 입장하지 않습니다.
+
+2026-11-05: Firebase Hosting과 Realtime Database 규칙을 운영 프로젝트에 배포했습니다. 기존 Hosting 파일 332개, 호스팅 설정, 다른 게임의 규칙은 유지했습니다. 배포 버전·파일 해시는 [deployment.json](deployment.json), 실제 서버 검사 기록은 [verification-live-v4.json](verification-live-v4.json)에 있습니다.
+
 ## 사용
 
 `index.html`을 열고 **수업 미리보기**로 기기 한 대에서 실행할 수 있습니다. 그림, 글꼴, 음악, QR 생성 코드까지 내장하므로 미리보기에는 인터넷이 필요하지 않습니다.
@@ -33,13 +42,13 @@
 
 같은 기기·브라우저·웹 주소로 다시 입장하면 기존 선택을 이어받습니다. 다른 기기·시크릿 창·삭제된 브라우저 저장소에서는 새 참가자로 입장하며, 이전 기기의 선택을 자동 복구하지는 않습니다.
 
-## 실시간 배포에 필요한 작업
+## 운영 구성과 재배포
 
-**이 변경은 GitHub 소스 및 로컬 검증 결과입니다. 운영 Firebase Hosting과 Realtime Database에는 아직 배포하지 않았습니다.** 기존 v3 주소가 자동으로 v4로 바뀌지는 않습니다.
+프로젝트는 `ethicity-privacy-20261011`, Hosting 경로는 `/harm/harm_v4/`, Realtime Database 인스턴스는 `ethicity-privacy-20261011-default-rtdb`(asia-southeast1)입니다. 학생·교사는 익명 인증으로 연결됩니다.
 
-1. 기존 Firebase 전체 규칙을 읽고 `database.harm-v4.rules.json`의 `rules.roomsHarmV4`만 병합합니다. 이 파일만으로 전체 서버 규칙을 덮어쓰면 안 됩니다.
-2. 병합한 규칙을 기존 게임 Firebase 프로젝트의 해당 Realtime Database에 적용합니다.
-3. 웹 호스팅의 `harm/harm_v4/index.html` 경로에 빌드 결과를 배포합니다. 이후 해당 웹 주소에서 실제 교사·학생 기기로 확인합니다.
+공유 프로젝트의 전체 규칙을 읽어 `database.harm-v4.rules.json`의 `rules.roomsHarmV4`만 병합한 뒤 서버 문법 검증과 배포를 완료했습니다. Hosting은 기존 운영 버전을 복제하고 v4 파일 하나를 추가한 뒤, 기존 파일 332개의 해시와 설정이 그대로인지 확인하여 라이브에 공개했습니다.
+
+재배포할 때도 기존 전체 규칙과 Hosting 파일을 보존해야 합니다. **v4 규칙 조각만으로 전체 규칙을 덮어쓰거나 v4 폴더만을 기존 사이트 전체로 배포하지 마세요.**
 
 내보낸 기존 규칙 파일이 있으면 다음 명령으로 다른 분기를 유지한 병합 파일을 만듭니다.
 
@@ -61,14 +70,17 @@ node harm/harm_v4/source/verify-v4.cjs
 node harm/harm_v4/source/verify-classroom-v4.cjs
 ```
 
+운영 서버 검사는 `HARM_V4_LIVE_TEST=1` 환경 변수를 설정한 뒤 `node harm/harm_v4/source/verify-live-v4.cjs`로 실행합니다. 실제 서비스에 임시 수업과 익명 계정을 만들고, 검사 후 해당 테스트 데이터만 삭제합니다.
+
 | 점검 | 범위 |
 |---|---|
 | 시나리오·엔딩 | 6,561가지 학급 선택과 서버 엔딩 검증식 |
 | 수동 진행 | 모든 단계·대사, 미응답, 재투표, 동률, 오래된 투표, 결과 중복 방지 |
 | 화면 | 1180×820, 1024×768, 1280×800, 1366×768, 1280×650, 768×1024에서 교사·학생·미리보기 576개 라운드 화면 |
 | QR·리포트 | QR 생성, 링크 일치, 선택별 해설, 실제 PNG 다운로드와 이미지 확인 |
+| 운영 Firebase | 실제 익명 인증·수업 생성·8라운드·재입장·완료 기록·PNG·권한 거부 |
 | 여러 기기 흐름 | 분리된 브라우저의 교사 1·학생 2, 8라운드, 교사·학생 새로고침, 투표·배움 복구 |
 
-여러 기기 검사는 Firebase SDK 전송 부분을 대체한 테스트 연결입니다. 규칙 검사는 표현식 검사이며 Firebase 에뮬레이터·운영 서버에서의 검증은 아닙니다. 실제 iPadOS·Android 기기 검사는 수행하지 않았습니다. 작은 휴대폰·확대 글꼴에서는 내용 접근을 위해 스크롤을 허용합니다. 긴 교사 해설·리포트 미리보기는 팝업 안에서 스크롤됩니다.
+기존 `verify-classroom-v4.cjs`는 Firebase 전송 부분을 대체한 테스트이고, 추가된 `verify-live-v4.cjs`는 운영 Firebase에 직접 연결합니다. 실제 서버에서 교사 1·학생 2의 8라운드 진행, 동률 결정, 교사·학생 재접속, 완료 기록, PNG 다운로드와 학생의 잘못된 읽기·쓰기 거부를 확인했습니다. 테스트 수업과 익명 계정은 검사 후 삭제합니다. 실제 iPadOS·Android 기기 검사는 수행하지 않았습니다. 작은 휴대폰·확대 글꼴에서는 내용 접근을 위해 스크롤을 허용합니다. 긴 교사 해설·리포트 미리보기는 팝업 안에서 스크롤됩니다.
 
 검증 기록은 `verification-*.json`, 빌드 해시는 `build-info.json`, 캡처와 샘플 PNG는 Git에서 제외한 `qa/`에 있습니다. QR 라이브러리는 [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator)의 MIT 라이선스 코드를 내장합니다. 공통 팩과 기존 사용자 제공 음악은 v3와 동일하게 유지합니다.

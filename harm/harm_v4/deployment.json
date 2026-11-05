@@ -1,0 +1,16 @@
+{
+  "project": "ethicity-privacy-20261011",
+  "database": "https://ethicity-privacy-20261011-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "roomRoot": "roomsHarmV4",
+  "url": "https://ethicity-privacy-20261011.web.app/harm/harm_v4/",
+  "teacherUrl": "https://ethicity-privacy-20261011.web.app/harm/harm_v4/?mode=teacher",
+  "deployedAt": "2026-11-05T07:40:56.239Z",
+  "verifiedAt": "2026-11-05T07:41:30.846Z",
+  "previousVersion": "projects/ethicity-privacy-20261011/sites/ethicity-privacy-20261011/versions/03f8fe47f3814ea5",
+  "version": "projects/ethicity-privacy-20261011/sites/ethicity-privacy-20261011/versions/91d6224278e6fcf6",
+  "release": "projects/ethicity-privacy-20261011/sites/ethicity-privacy-20261011/channels/live/releases/1793864456239000",
+  "sha256": "e642f52b70198f661d3caf4a0ad74d88474ea3ff56d64ad7c54917f620923144",
+  "existingFilesPreserved": 332,
+  "hostingConfigPreserved": true,
+  "existingRuleBranchesPreserved": true
+}
