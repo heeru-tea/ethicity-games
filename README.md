@@ -3,12 +3,11 @@
 
 ## 데이터 관리 · 급식 메뉴 AI ‘냠냠봇’
 
-- **[냠냠봇 v2 바로 플레이 · 최신 BGM](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/v2/?v=20261101-bgm4)**
-- [냠냠봇 v2 안내 및 실행 방법](v2/README.md)
-- [냠냠봇 v2 실행 파일](v2/index.html)
-- [기존 v1 안내](data/README.md)
+- **[냠냠봇 바로 플레이](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/data/data_v3/)**
+- [게임 안내 및 실행 방법](data/data_v3/README.md)
+- [게임 실행 파일](data/data_v3/index.html)
 
-위 공개 플레이 링크는 설치나 로그인 없이 다른 PC·태블릿·휴대폰에서도 열 수 있습니다. 학생에게 이 주소를 공유해 주세요. 소스는 `data` 브랜치의 `v2/` 폴더에 있으며, 내려받아 실행하는 방법은 [v2 안내](v2/README.md#실행과-자산)에 있습니다.
+위 공개 플레이 링크는 설치나 로그인 없이 다른 PC·태블릿·휴대폰에서도 열 수 있습니다. 소스는 `data` 브랜치의 `data/data_v3/` 폴더에 있습니다. 중앙 장면과 하단 말풍선, 선택에 따른 메뉴 변화, 메뉴별 미확인 항목, 개인 리포트 PNG 다운로드를 제공합니다. [실행 및 조작 안내](data/data_v3/README.md)를 참고해 주세요.
 
 ## 프라이버시 보호
 
