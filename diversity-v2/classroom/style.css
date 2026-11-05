@@ -176,7 +176,7 @@ to{opacity:1;transform:none}
 .game-diversity .portrait-window canvas{width:100%;height:100%;image-rendering:pixelated}
 
 
-.game-diversity .student-mission-stage {max-width:1000px;margin:auto;padding-bottom:110px}.game-diversity .student-mission-stage>section:not([hidden]){min-height:240px}.game-diversity .student-mission-stage section>button.ee-button:last-of-type{position:sticky;bottom:12px;z-index:3;box-shadow:0 3px 0 #294b40}.game-diversity .local-mission-tabs{display:flex;gap:12px}.game-diversity .local-mission-tabs button[aria-pressed=true]{outline:3px solid #294b40}.game-diversity .teacher-next{position:sticky;top:0;z-index:4;background:#fff9e7;border:3px solid #294b40;padding:12px;display:flex;gap:16px;flex-wrap:wrap}.game-diversity .result-envelope{min-height:240px;display:grid;place-items:center;background:#fff9e7;border:6px double #294b40}.game-diversity [hidden]{display:none!important}.game-diversity #presence-list{overflow:auto}@media(max-width:600px){.game-diversity .teacher-next{position:relative}.game-diversity .student-mission-stage{padding-bottom:90px}}
+.game-diversity .student-mission-stage {max-width:1000px;margin:auto;padding-bottom:32px}.game-diversity .student-mission-stage>section:not([hidden]){min-height:240px}.game-diversity .student-mission-stage section>button.ee-button:last-of-type{position:static;box-shadow:0 3px 0 #294b40}.game-diversity .local-mission-tabs{display:flex;gap:12px}.game-diversity .local-mission-tabs button[aria-pressed=true]{outline:3px solid #294b40}.game-diversity .teacher-next{position:sticky;top:0;z-index:4;background:#fff9e7;border:3px solid #294b40;padding:12px;display:flex;gap:16px;flex-wrap:wrap}.game-diversity .result-envelope{min-height:240px;display:grid;place-items:center;background:#fff9e7;border:6px double #294b40}.game-diversity [hidden]{display:none!important}.game-diversity #presence-list{overflow:auto}@media(max-width:600px){.game-diversity .teacher-next{position:relative}.game-diversity .student-mission-stage{padding-bottom:32px}}
 
 .game-diversity .teacher-lobby{margin:1rem auto;padding:1rem;max-width:1100px;border:4px solid var(--ink,#294b40);background:#fff9e7;}
 .game-diversity .teacher-lobby #join-share{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;}
@@ -293,3 +293,28 @@ to{opacity:1;transform:none}
 .game-diversity[data-role=student] .student-mission-stage{max-width:none;width:100%;box-sizing:border-box;}
 
 .game-diversity[data-role="teacher"] .classroom-brand{display:flex;align-items:center;gap:7px;color:var(--ee-ink,#294b40);text-decoration:none;flex:none;font-size:17px;font-weight:800;letter-spacing:.12em;line-height:1.3}.game-diversity[data-role="teacher"] .classroom-brand canvas{width:32px;height:32px;image-rendering:pixelated;flex:none}.game-diversity[data-role="teacher"] .classroom-brand small{display:block;font-size:11px;letter-spacing:.1em}.game-diversity[data-role="teacher"] .brand-spark{color:#a8bb8c;font-size:15px}
+
+.game-diversity[data-role="student"] .mission-heading{border:3px solid #294b40;background:#fff0b4;padding:18px;margin:12px 0}.game-diversity[data-role="student"] .mission-heading h2{font-size:clamp(22px,3vw,30px);line-height:1.4}.game-diversity[data-role="student"] #save-observation,.game-diversity[data-role="student"] #save-proposal,.game-diversity[data-role="student"] #vote,.game-diversity[data-role="student"] #save-reflection{display:block;min-height:52px;margin:16px 0;font-size:18px}.game-diversity[data-role="student"] .previous-record{font-size:14px}.game-diversity[data-role="student"] #class-opinions{border-top:2px solid #a8bb8c;margin-top:24px;padding-top:16px}.game-diversity[data-role="student"] #class-opinions textarea{width:100%;min-height:90px}
+/* 학생 화면 좁은 폭: 단어 중간에서 끊지 않고, 근거 그림 3장을 한 줄에 놓아 첫 입력 칸까지의 스크롤을 줄인다. 그림 설명은 이미지 alt와 보조기기 텍스트로 유지한다. */
+@media(max-width:650px){
+.game-diversity[data-role=student] #main,.game-diversity[data-role=student] .mission-heading h2{word-break:keep-all;overflow-wrap:break-word}
+.game-diversity[data-role=student] .student-mission-stage fieldset .pictures{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.game-diversity[data-role=student] .student-mission-stage .evidence-card{position:relative;padding:6px}
+.game-diversity[data-role=student] .student-mission-stage .evidence-card span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.game-diversity[data-role=student] .student-mission-stage .evidence-card strong{font-size:13px;line-height:1.3}
+}
+/* 관찰: 원본 3장은 비교용(크게 보기), 근거 선택은 두 답을 쓴 뒤 글씨 없는 작은 썸네일로 */
+.game-diversity[data-role=student] .student-mission-stage .obs-ref{background:#fffdf4;border:2px solid #52695c;padding:6px;text-align:center;cursor:zoom-in}
+.game-diversity[data-role=student] .student-mission-stage .obs-ref img{width:100%;display:block}
+.game-diversity[data-role=student] .student-mission-stage .obs-ref span{display:block;font-size:14px;margin-top:4px}
+.game-diversity[data-role=student] .student-mission-stage .evidence-choices{display:flex;gap:8px;flex-wrap:wrap}
+.game-diversity[data-role=student] .student-mission-stage .evidence-choices .evidence-card{position:relative;flex:1 1 140px;max-width:200px;padding:6px}
+.game-diversity[data-role=student] .student-mission-stage .evidence-choices .evidence-card img{width:100%;max-height:110px;object-fit:cover}
+.game-diversity[data-role=student] .student-mission-stage .evidence-choices .evidence-card span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.game-diversity[data-role=student] .student-mission-stage .evidence-choices .evidence-card strong{font-size:14px;line-height:1.3}
+@media(max-width:650px){
+.game-diversity[data-role=student] .student-mission-stage .obs-reference{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.game-diversity[data-role=student] .student-mission-stage .obs-ref span{font-size:12px}
+.game-diversity[data-role=student] .student-mission-stage .evidence-choices .evidence-card{flex:1 1 90px;max-width:none}
+.game-diversity[data-role=student] .student-mission-stage .evidence-choices .evidence-card strong{font-size:12px}
+}

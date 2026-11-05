@@ -1,15 +1,16 @@
 (function(root){'use strict';
 let phase='',step='observe',opened=new Set(),context='';
 function selectContext(key){if(context!==key){context=key;phase='';step='observe';opened=new Set();}}
-function decorate(doc,c,hasObservation,hasProposal){
+function decorate(doc,c,hasObservation,hasProposal,info){
  const main=doc.getElementById('main');if(!main)return;
  if(phase!==c.phase){phase=c.phase;step=c.phase==='proposal'&&hasObservation?'propose':'observe';}
- main.classList.add('student-mission-stage');
+ main.classList.add('student-mission-stage');const st=info||{};const reviewTasks={none:['아직 제안을 제출하지 않았어요','이번 단계는 마감됐어요. 선생님이 다시 열면 제안을 낼 수 있어요.'],review:['제안을 저장했어요. 선생님 확인을 기다려요','수정 요청이 있으면 교사 의견을 확인해 고쳐 주세요.'],approved:['제안이 승인됐어요',st.candidateRegistered?'선택 후보에 포함됐어요. 선생님이 학급 선택을 열 때까지 기다려요.':'선생님이 선택 후보를 준비하고 있어요. 학급 선택을 열면 이어가요.'],hold:['선생님이 제안을 보류했어요','교사 의견을 확인해요. 선생님이 다시 열면 고쳐서 낼 수 있어요.'],revise:['수정할 곳이 있어요','교사 의견을 확인하고 제안을 고쳐 다시 제출해요.']};
  const obs=doc.getElementById('observation')?.closest('section'),proposal=doc.getElementById('proposal')?.closest('section');
  if(c.phase==='proposal'&&obs&&proposal){
   const bar=doc.createElement('nav');bar.className='local-mission-tabs';bar.setAttribute('aria-label','내 조사 순서');
   for(const [key,label]of [['observe','그림 조사'],['propose','보완 생각']]){const b=doc.createElement('button');b.textContent=label;b.type='button';b.setAttribute('aria-pressed',String(step===key));b.onclick=()=>{step=key;obs.hidden=key!=='observe';proposal.hidden=key!=='propose';bar.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));};bar.append(b);}main.prepend(bar);obs.hidden=step!=='observe';proposal.hidden=step!=='propose';
  }
+ const heading=main.querySelector('.mission-heading');if(heading){const sync=()=>{const current=doc.getElementById('observation')?.closest('section')?.hidden?'propose':'observe';const h=heading.querySelector('h2'),p=heading.querySelector('p:last-child');heading.querySelector('.eyebrow').textContent='지금 할 일';const tasks={issue:hasObservation?[st.observationLegacy?'이전 관찰 기록이 보관돼 있어요':'관찰을 저장했어요. 선생님이 다음 활동을 열면 이어가요','고치고 싶으면 답을 고쳐 다시 저장해요.']:['같은 점과 다른 점을 적고 저장해요','세 그림을 비교해 근거 그림을 고르고, 두 질문에 답한 뒤 관찰 저장을 눌러요.'],proposal:current==='propose'?(hasProposal?['제안을 제출했어요. 고치려면 다시 제출해요','선생님이 검토를 시작하기 전까지 고칠 수 있어요.']:['더 보여주고 싶은 의사의 모습을 제안해요','모습과 이유를 쓰고, 대응하는 그림을 고른 뒤 제안 제출을 눌러요.']):['같은 점과 다른 점을 적고 저장해요','관찰을 저장한 뒤 다음 버튼으로 보완 생각을 써요.'],review:reviewTasks[st.proposal||(hasProposal?'review':'none')]||reviewTasks.review,vote:st.voted?['제출했어요. 선생님이 우리 반 선택을 모으고 있어요','선택을 바꾸려면 다른 그림을 골라 다시 제출해요.']:['우리 반 자료에 더할 그림 한 장을 골라요','그림을 고른 뒤 자료함에 더하기 버튼을 눌러야 제출돼요.'],pool:['우리 반 자료가 준비됐어요','그림별 수량을 살펴보며 선생님의 결과 공개를 기다려요.'],draw:['도착한 그림 결과를 열어 봐요','처음 자료와 우리가 더한 자료의 결과를 비교해요.'],reflection:st.reflected?['두 답변을 저장했어요','마무리 장면을 보거나 답변을 고칠 수 있어요.']:['두 질문에 답하고 마무리해요','답변 두 개를 적고 두 답변 저장을 눌러요.'],ended:['수업을 마쳤어요','저장한 기록과 마무리 장면을 다시 볼 수 있어요.']};const t=tasks[c.phase]||tasks.issue;if(h)h.textContent=t[0];if(p)p.textContent=c.open||['pool','draw','ended'].includes(c.phase)?t[1]:'지금은 제출이 마감됐어요. 작성한 글은 유지되고, 선생님이 다시 열면 제출할 수 있어요.';};sync();for(const b of main.querySelectorAll('.local-mission-tabs button'))b.addEventListener('click',sync);}
  const results=doc.getElementById('results');if(results){const key=context+'/'+c.activeRound;const actual=results.querySelector('.result');if(actual&&!opened.has(key)){
   const box=doc.createElement('section');box.className='result-envelope';const b=doc.createElement('button');b.textContent='도착한 그림 결과 열어보기';b.className='ee-button';box.append(b);
   const saved=Array.from(results.children);saved.forEach(el=>el.hidden=true);results.prepend(box);
