@@ -1,0 +1,8 @@
+{
+  "checks": [
+    "8-round manual lifecycle, one shared story cursor, late join, stale ballots, empty retry, tied leaders, immutable decisions",
+    "RTDB expressions: owner-only control, no room list reads, own-vote privacy, no vote deadline, closed voting rejects writes",
+    "RTDB ending expression matches client for all 6561 class paths and all three ending claims"
+  ],
+  "limit": "Expression tests; not an emulator or a live Firebase deployment."
+}

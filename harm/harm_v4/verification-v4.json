@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "allPaths": 6561,
+      "endings": {
+        "A": 213,
+        "B": 3926,
+        "C": 2422
+      }
+    },
+    {
+      "layouts": [
+        {
+          "viewport": {
+            "width": 1180,
+            "height": 820
+          },
+          "checked": 96
+        },
+        {
+          "viewport": {
+            "width": 1024,
+            "height": 768
+          },
+          "checked": 96
+        },
+        {
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "checked": 96
+        },
+        {
+          "viewport": {
+            "width": 1366,
+            "height": 768
+          },
+          "checked": 96
+        },
+        {
+          "viewport": {
+            "width": 1280,
+            "height": 650
+          },
+          "checked": 96
+        },
+        {
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "checked": 96
+        }
+      ]
+    },
+    {
+      "png": "harm-v4-A버전탐험가-배움리포트.png"
+    },
+    {
+      "qr": true,
+      "teacherExplanation": 3
+    },
+    {
+      "noAuto": true,
+      "empty": true,
+      "feedback": true,
+      "decisionStable": true,
+      "initialPhase": "vote",
+      "oldPauseIgnored": true
+    },
+    {
+      "browserErrors": []
+    }
+  ],
+  "failures": []
+}

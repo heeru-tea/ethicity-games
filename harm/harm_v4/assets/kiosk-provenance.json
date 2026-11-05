@@ -1,0 +1,8 @@
+{
+  "file": "magicmaker-kiosk-portrait.png",
+  "created": "2026-11-05",
+  "method": "OpenAI built-in image generation, followed by a portrait-screen edit requested by the user",
+  "description": "Front-facing pixel-art kiosk with cream and sage body, dark forest-green outlines, robot emblem, tall blank teal display, and transparent background.",
+  "revision": "The user requested a vertical screen; the landscape draft is not used in the game.",
+  "integration": "HTML content overlays the portrait display. The original PNG transparency is preserved."
+}

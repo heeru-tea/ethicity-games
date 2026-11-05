@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "Create room immediately shows QR and URL, without a room-list query",
+    "Student reload restores identity and vote; teacher URL restores active control screen",
+    "Three independent devices complete all eight rounds, with tied votes, class ending, individual votes, and locally retained learning selections"
+  ],
+  "transport": "Mock Firebase SDK transport. Production Firebase not deployed or exercised.",
+  "errors": []
+}

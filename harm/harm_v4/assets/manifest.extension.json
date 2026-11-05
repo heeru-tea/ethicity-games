@@ -1,0 +1,356 @@
+{
+  "id": "harm-v3-approved-npcs",
+  "version": "1.0.0",
+  "commonPackVersion": "1.0.0",
+  "scope": "harm/harm_v3 only; common pack originals unchanged",
+  "created": "2026-10-31",
+  "sourceMode": "Approved built-in image_gen concept sheets; deterministic alpha sprite packing only",
+  "characters": {
+    "grandmother": {
+      "name": "새봄 할머니",
+      "source": "assets/characters/grandmother-source.png",
+      "sourceSha256": "0659994dce2d85e4ebc49d7e113369da22b03cf9873fcf018856e3036c3d6ac3",
+      "standing": "assets/characters/grandmother-standing.png",
+      "walk": "assets/characters/grandmother-standing.png",
+      "directions": [
+        "down"
+      ],
+      "frames": {
+        "down_0": {
+          "x": 0,
+          "y": 0,
+          "w": 96,
+          "h": 128
+        }
+      },
+      "portraits": "assets/characters/grandmother-portraits.png",
+      "frameWidth": 96,
+      "frameHeight": 128,
+      "feetAnchor": {
+        "x": 48,
+        "y": 120
+      },
+      "expressions": [
+        "neutral",
+        "happy",
+        "worried",
+        "explaining"
+      ],
+      "portraitFrame": {
+        "w": 256,
+        "h": 256
+      },
+      "sourceRects": {
+        "standing": {
+          "x": 103,
+          "y": 85,
+          "w": 403,
+          "h": 916
+        },
+        "portraits": [
+          {
+            "x": 586,
+            "y": 65,
+            "w": 397,
+            "h": 446
+          },
+          {
+            "x": 1038,
+            "y": 69,
+            "w": 407,
+            "h": 442
+          },
+          {
+            "x": 586,
+            "y": 514,
+            "w": 399,
+            "h": 456
+          },
+          {
+            "x": 1038,
+            "y": 514,
+            "w": 475,
+            "h": 456
+          }
+        ]
+      },
+      "animation": "static only; drawCharacter uses down/frame 0 only; no generated walk cycle"
+    },
+    "photographer": {
+      "name": "반짝사진관 사장님",
+      "source": "assets/characters/photographer-source.png",
+      "sourceSha256": "c6a194a480970e470fec22071bf237d68cb394e6ee410713a590175b098f9668",
+      "standing": "assets/characters/photographer-standing.png",
+      "walk": "assets/characters/photographer-standing.png",
+      "directions": [
+        "down"
+      ],
+      "frames": {
+        "down_0": {
+          "x": 0,
+          "y": 0,
+          "w": 96,
+          "h": 128
+        }
+      },
+      "portraits": "assets/characters/photographer-portraits.png",
+      "frameWidth": 96,
+      "frameHeight": 128,
+      "feetAnchor": {
+        "x": 48,
+        "y": 120
+      },
+      "expressions": [
+        "neutral",
+        "happy",
+        "worried",
+        "explaining"
+      ],
+      "portraitFrame": {
+        "w": 256,
+        "h": 256
+      },
+      "sourceRects": {
+        "standing": {
+          "x": 92,
+          "y": 52,
+          "w": 394,
+          "h": 944
+        },
+        "portraits": [
+          {
+            "x": 587,
+            "y": 72,
+            "w": 381,
+            "h": 453
+          },
+          {
+            "x": 1043,
+            "y": 68,
+            "w": 391,
+            "h": 457
+          },
+          {
+            "x": 567,
+            "y": 533,
+            "w": 407,
+            "h": 444
+          },
+          {
+            "x": 1027,
+            "y": 533,
+            "w": 472,
+            "h": 444
+          }
+        ]
+      },
+      "animation": "static only; drawCharacter uses down/frame 0 only; no generated walk cycle"
+    },
+    "company_staff": {
+      "name": "A기업",
+      "source": "assets/characters/company_staff-source.png",
+      "sourceSha256": "092d168551ed3f714f661f23bdf1f71efceda8a1de5065da80d90a12b00ea5d2",
+      "standing": "assets/characters/company_staff-standing.png",
+      "walk": "assets/characters/company_staff-standing.png",
+      "directions": [
+        "down"
+      ],
+      "frames": {
+        "down_0": {
+          "x": 0,
+          "y": 0,
+          "w": 96,
+          "h": 128
+        }
+      },
+      "portraits": "assets/characters/company_staff-portraits.png",
+      "frameWidth": 96,
+      "frameHeight": 128,
+      "feetAnchor": {
+        "x": 48,
+        "y": 120
+      },
+      "expressions": [
+        "neutral",
+        "happy",
+        "worried",
+        "explaining"
+      ],
+      "portraitFrame": {
+        "w": 256,
+        "h": 256
+      },
+      "sourceRects": {
+        "standing": {
+          "x": 33,
+          "y": 19,
+          "w": 442,
+          "h": 995
+        },
+        "portraits": [
+          {
+            "x": 549,
+            "y": 47,
+            "w": 432,
+            "h": 468
+          },
+          {
+            "x": 1017,
+            "y": 60,
+            "w": 438,
+            "h": 455
+          },
+          {
+            "x": 547,
+            "y": 511,
+            "w": 435,
+            "h": 486
+          },
+          {
+            "x": 1042,
+            "y": 513,
+            "w": 476,
+            "h": 484
+          }
+        ]
+      },
+      "animation": "static only; drawCharacter uses down/frame 0 only; no generated walk cycle"
+    }
+  },
+  "scenes": {
+    "harm_v3_round_1": {
+      "file": "assets/scenes/01-face-rules.webp",
+      "sha256": "60258776ba931a0489c0f16268c4d859b1af710a7d789ecf2442b89a45e3bef1",
+      "commonBackground": "ai_lab",
+      "commonCharacters": [
+        "onyu",
+        "daon",
+        "teacher"
+      ],
+      "additionalCharacters": [],
+      "branchNeutral": true
+    },
+    "harm_v3_round_2": {
+      "file": "assets/scenes/02-voice-rules.webp",
+      "sha256": "c2171c652b39e07dc9dc29d452c46807eae605b39558c21f432008d09a30f1fc",
+      "commonBackground": "ai_lab",
+      "commonCharacters": [
+        "onyu",
+        "saebom",
+        "robot"
+      ],
+      "additionalCharacters": [],
+      "branchNeutral": true
+    },
+    "harm_v3_round_3": {
+      "file": "assets/scenes/03-daon-photo.webp",
+      "sha256": "25678acc8877a19a17de6c7e4fcb1a8831532992c70d520ff391a8eee17f4c9a",
+      "commonBackground": "courtyard",
+      "commonCharacters": [
+        "daon",
+        "onyu",
+        "teacher"
+      ],
+      "additionalCharacters": [],
+      "branchNeutral": true
+    },
+    "harm_v3_round_4": {
+      "file": "assets/scenes/04-grandmother-call.webp",
+      "sha256": "3aeafc6a19de98ecb164094d8079ab0787efa4bf24a3032debcdae0f617d7a10",
+      "commonBackground": "classroom",
+      "commonCharacters": [
+        "saebom",
+        "teacher"
+      ],
+      "additionalCharacters": [
+        "grandmother"
+      ],
+      "branchNeutral": true
+    },
+    "harm_v3_round_5": {
+      "file": "assets/scenes/05-company-proposal.webp",
+      "sha256": "5aee90e5e1c0ad5ab8cec7ec2c37bb12bd1b2317f80fe45443901b99a1499f30",
+      "commonBackground": "ai_lab",
+      "commonCharacters": [
+        "onyu",
+        "teacher"
+      ],
+      "additionalCharacters": [
+        "company_staff"
+      ],
+      "branchNeutral": true
+    },
+    "harm_v3_round_6": {
+      "file": "assets/scenes/06-photo-shop.webp",
+      "sha256": "7761c94cf6b34ea9f4cce0b5c179ecde8c684aaa66a58a53b7424bcbbc4747bc",
+      "commonBackground": "classroom",
+      "commonCharacters": [
+        "saebom",
+        "onyu"
+      ],
+      "additionalCharacters": [
+        "photographer"
+      ],
+      "branchNeutral": true
+    },
+    "harm_v3_round_7": {
+      "file": "assets/scenes/07-follow-through.webp",
+      "sha256": "a94ba0348e322483a87dafc8a5bca2393b59cd97fc50fb0fe57a156b672f2b90",
+      "commonBackground": "classroom",
+      "commonCharacters": [
+        "daon",
+        "saebom",
+        "onyu",
+        "teacher"
+      ],
+      "additionalCharacters": [],
+      "branchNeutral": true
+    },
+    "harm_v3_round_8": {
+      "file": "assets/scenes/08-next-festival.webp",
+      "sha256": "b81da551ccff21d6539167e95bfa7d901c18c8f306c5c44ec5542b194540767a",
+      "commonBackground": "courtyard",
+      "commonCharacters": [
+        "onyu",
+        "saebom",
+        "daon",
+        "teacher"
+      ],
+      "additionalCharacters": [
+        "grandmother",
+        "photographer"
+      ],
+      "branchNeutral": true
+    }
+  },
+  "commonSources": {
+    "ui/icons.png": "ce4ae699fc2a9f87d3b0b354095a9f2750cc9933f51910ca5b71fa3bc6f4c8b5",
+    "effects/feedback.png": "ebc3df019d2ca65e9a6e67573c49fc1b6df250b00ef10218733e3230f9cb2048",
+    "backgrounds/props.png": "141393948a1e2fdb7dcade1a1245300967a583a68bd7f6eea0739ebb57e7c7d0",
+    "ui/panel.png": "896a6add19480fe1380b59e9e4ddbb1e22cac8291384f43c54d916f044b73d98",
+    "ui/speech.png": "896a6add19480fe1380b59e9e4ddbb1e22cac8291384f43c54d916f044b73d98",
+    "characters/onyu-walk.png": "3fdf6e1aebe744ea78024815fee829afada0be8a513e335ecb4f543e425e73f4",
+    "characters/onyu-portraits.png": "0a0a608e0d650b4c96d792b6a06b427469c4297eb76ee4725d7d3e41a050a0ff",
+    "characters/saebom-walk.png": "2c11163c411f3f1b69e9cb714461b935ec2023d1008739af3ab82e88ad746384",
+    "characters/saebom-portraits.png": "d311f62f05a5ba4bc7058f2c54ee87827a7f512458592f3e6243b50fed43d1ba",
+    "characters/daon-walk.png": "94d671e6ad44114ba25e5a965614390ebaa2bf56aefd433e4c9d3fc8ed803cbd",
+    "characters/daon-portraits.png": "b88d696cac6de5476e17d3caf0e23c40eaf6398ebefe42e1bdb313a795f653b6",
+    "characters/teacher-walk.png": "9b7fe292fafce17ad56e6e1c8ac18f9d8772808f8a41b64170be9a3488113374",
+    "characters/teacher-portraits.png": "6f9a65b2506d2ff004d10381bf2953128f91eda450388225d63aff3ea280ea85",
+    "characters/robot-walk.png": "4adbc64a6d804d4b971102d74a7df38031705c791cb12de773fe8daa8b354c00",
+    "characters/robot-portraits.png": "122e7a661470b9b8d6d0055ac411f3f42bba29de57af954a7110447a85f24aa3",
+    "backgrounds/ai_lab.png": "4e2bea579857735b4488ba1de1c8218123f47471c698fecb99374c49a82ce098",
+    "backgrounds/classroom.png": "e412c73d6810e0631d95f4bc39518885c14fb90a6df69654249518f5fe58e883",
+    "backgrounds/courtyard.png": "36b746f04e30665a597552c0e1df908f4056b0cf3e0d3e5c5384c0bab7a05c40"
+  },
+  "sounds": {
+    "background_pixel_adventure": {
+      "file": "assets/sounds/pixel-adventure.mp3",
+      "title": "Pixel Adventure",
+      "source": "User-provided Pixel Adventure (1).mp3",
+      "sha256": "e83dc21d6644dfc1b07f2025bd1e699499e68d3a9eac560c85267426f75d2d77",
+      "loop": true,
+      "defaultVolume": 0.18
+    }
+  }
+}

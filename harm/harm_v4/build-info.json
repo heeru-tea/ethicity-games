@@ -1,0 +1,33 @@
+{
+  "uiVersion": "harm-common-v4-2026-11-05",
+  "commonPackVersion": "1.0.0",
+  "musicSha256": "e83dc21d6644dfc1b07f2025bd1e699499e68d3a9eac560c85267426f75d2d77",
+  "scenarioVersion": "harm-2026-11-05-v4",
+  "bytes": 24139291,
+  "sha256": "e642f52b70198f661d3caf4a0ad74d88474ea3ff56d64ad7c54917f620923144",
+  "used": {
+    "characters": [
+      "haneul",
+      "jiho",
+      "daon",
+      "robot",
+      "onyu",
+      "saebom",
+      "teacher",
+      "grandmother",
+      "photographer",
+      "company_staff"
+    ],
+    "backgrounds": [
+      "courtyard",
+      "classroom",
+      "ai_lab"
+    ]
+  },
+  "commonSourceSha256": {
+    "manifest.json": "bffc1f17b927aa1ae9ea932e7a8a070c61559a5b79186255f6a4160a831306b5",
+    "runtime/common.css": "26dc96062fb90a4d55e2814ea96bf8fb80bbfb51e33df06263bbe12224534c7a",
+    "runtime/common.js": "e17f5011c7e8bb7fb3ff86d6cf02ef414b129ce1fdc01ed048a349e7bb0a49c9"
+  },
+  "kioskSha256": "0512f1c4bb456f88a114b4261a7a16c9431060e0fd4fe4a51118e4cda6e3e9ba"
+}
