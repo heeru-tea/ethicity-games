@@ -1,0 +1,43 @@
+{
+  "uiVersion": "harm-common-v5-2026-11-05",
+  "commonPackVersion": "1.0.0",
+  "musicSha256": "e83dc21d6644dfc1b07f2025bd1e699499e68d3a9eac560c85267426f75d2d77",
+  "scenarioVersion": "harm-2026-11-05-v5",
+  "bytes": 35096302,
+  "sha256": "6bfbfc88be979f6d0d4a4951983b17a63b514605917e8f60393a30059bb16a9c",
+  "used": {
+    "characters": [
+      "haneul",
+      "jiho",
+      "daon",
+      "robot",
+      "onyu",
+      "saebom",
+      "teacher",
+      "grandmother",
+      "photographer",
+      "company_staff"
+    ],
+    "backgrounds": [
+      "courtyard",
+      "classroom",
+      "ai_lab"
+    ]
+  },
+  "commonSourceSha256": {
+    "manifest.json": "bffc1f17b927aa1ae9ea932e7a8a070c61559a5b79186255f6a4160a831306b5",
+    "runtime/common.css": "26dc96062fb90a4d55e2814ea96bf8fb80bbfb51e33df06263bbe12224534c7a",
+    "runtime/common.js": "e17f5011c7e8bb7fb3ff86d6cf02ef414b129ce1fdc01ed048a349e7bb0a49c9"
+  },
+  "kioskSha256": "0512f1c4bb456f88a114b4261a7a16c9431060e0fd4fe4a51118e4cda6e3e9ba",
+  "choiceArtSha256": {
+    "01-photo-use": "a34e9d6124a9f410c3c4055652e1f26c64a7616a7e149e9e1cb9203ba261c36a",
+    "02-voice-play": "8d5ad4a9a91550b16c3ee2e42991a867a7af093659c2730fbb7726d0debc439d",
+    "03-photo-sharing": "a53f8497b8fe59d83f839192edf1be954bd2e7dd01dd7a9977848f8278dd261d",
+    "04-familiar-voice": "c02a22ad3888efecf0d9739adf0a70c12b6ce6d44485c275a4b0948608c29cbd",
+    "05-camera-path": "8cc1d736b6f7a8c8ed5464ba5489a8a4019c537cd0f51501f6ec84b4a034f054",
+    "06-photo-shop": "b39e88266941fbd1554bc150451e4a364bacd0ef29b556e540e34ce37a3c0d65",
+    "07-follow-up": "7cdb40b72dd24c221e6ceb6c009369e7529ee5947b057940966ce75b0db0d081",
+    "08-next-workshop": "94ec3e157cdd0d9b5fbf15c3eed11911ae94169ff2ea6131a862177e429ab143"
+  }
+}

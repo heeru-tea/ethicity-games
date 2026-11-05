@@ -1,0 +1,9 @@
+{
+  "verifiedAt": "2026-11-05T14:03:16.672Z",
+  "checks": [
+    "Named speakers, all photo/voice branches, narrative and reflection text restored; five learning tags preserved",
+    "All 6561 class paths keep v4 scores, incident history, endings and completion schema",
+    "Eight approved lossless illustrations embedded with conditional sharing caption and accessible alt text",
+    "Common manifest, embedded original character/background assets and runtime unchanged (line endings normalized by build)"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-11-05T14:10:00Z",
+  "namespace": "roomsHarmV5",
+  "status": "partial; final test assertion failed, not recorded as a complete pass",
+  "observed": [
+    "Three independent temporary anonymous identities joined the deployed classroom.",
+    "Student room-wide reads, other student data reads, and teacher control writes were denied.",
+    "Eight rounds accepted independent student votes, closed voting, and resolved ties through the teacher.",
+    "The classroom reached ending A.",
+    "The student outcome response contained the expected game, completed, ending, and card fields.",
+    "The finally block deleted the temporary classroom and all three test identities."
+  ],
+  "testToolIssue": "Node deepStrictEqual rejected matching objects from different VM realms. The comparison was normalized in the local test tool; rerun authorization was declined, so no successful rerun is claimed.",
+  "limits": "This was a live REST acceptance check using the shipped transition functions. It did not test browser storage or WebSocket reconnection."
+}

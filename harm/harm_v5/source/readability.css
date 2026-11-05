@@ -1,0 +1,55 @@
+/* Keep the common pack's fonts, borders and controls; give reading room to choices. */
+.beat-copy>b{font-size:16px}
+.phase-vote,.phase-tie,.phase-empty{grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr)}
+.vote-panel .choice-list,.vote-panel .teacher-choices{flex:0 0 auto;display:grid;grid-template-columns:1fr;gap:12px;align-content:start}
+.vote-panel .choice,.vote-panel .teacher-choices>button{font-size:22px;line-height:1.65;padding:14px 16px;min-height:76px;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;text-align:left}
+.vote-panel .choice>b,.vote-panel .teacher-choices>button>b{font-size:20px;line-height:1.5;min-width:30px;text-align:center}
+.vote-panel .choice>span,.vote-panel .teacher-choices>button>span{min-width:0}
+.vote-panel .teacher-choices>button{display:grid;grid-template-columns:30px minmax(0,1fr);gap:4px 10px}
+.vote-panel .teacher-choices small{grid-column:2;font-size:14px;line-height:1.5}
+.vote-panel>.btn{font-size:18px;min-height:52px;margin-top:auto}
+.vote-panel .statusline{font-size:15px!important;line-height:1.6}
+.wait .choice-list>.btn{font-size:22px;line-height:1.65;white-space:normal;text-align:left;padding:12px;justify-content:flex-start}
+.feedback-panel h2,.modal-body h3,.report-comparison h3{font-size:20px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
+.choice-visual{margin:0;flex:1;min-height:0;display:flex;flex-direction:column;overflow:auto;border:3px solid #294b40;background:#fff9e7}
+.choice-visual-picture{position:relative;flex:1;min-height:150px;display:grid;place-items:center;background:#fff9e7;overflow:hidden}
+.choice-visual-picture>img{display:block;width:100%;height:100%;min-height:0;position:absolute;inset:0;object-fit:contain;image-rendering:auto}
+.illustration-label{position:absolute;left:8px;top:8px;font-size:12px;background:#fff9e7ed;color:#294b40;padding:3px 7px;border:1px solid #a8bb8c}
+.choice-visual figcaption{padding:8px 12px;font-size:18px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere;border-top:1px solid #a8bb8c;flex:0 0 auto}
+.choice-cast{display:flex;flex-wrap:wrap;gap:4px 12px;padding:4px 10px;background:#e8eddb;flex:0 0 auto}
+.cast-person{display:flex;align-items:center;gap:5px;font-size:14px}
+.cast-person>canvas{flex:0 0 40px}
+.phase-vote .beat-box,.phase-tie .beat-box,.phase-empty .beat-box{flex:0 0 auto;min-height:108px;max-height:38%}
+@media(min-width:1440px){.vote-panel .choice,.vote-panel .teacher-choices>button,.wait .choice-list>.btn{font-size:24px}}
+@media(max-width:1100px){
+  .phase-vote,.phase-tie,.phase-empty{grid-template-columns:minmax(250px,.8fr) minmax(0,1.2fr)}
+  .vote-panel .choice,.vote-panel .teacher-choices>button,.wait .choice-list>.btn{font-size:20px;padding:12px;line-height:1.65}
+  .choice-visual figcaption{font-size:17px}
+}
+@media(min-width:1000px) and (max-height:750px){
+  .vote-panel .choice,.vote-panel .teacher-choices>button{font-size:22px;padding:10px 12px}
+  .choice-cast{gap:2px 8px}.cast-person{font-size:13px}.cast-person>canvas{width:32px!important;height:32px!important;flex-basis:32px}
+}
+@media(max-width:850px) and (min-height:850px){
+  .phase-vote,.phase-tie,.phase-empty{grid-template-columns:1fr;grid-template-rows:minmax(280px,.9fr) minmax(380px,1.1fr)}
+  .phase-vote .stage-column,.phase-tie .stage-column,.phase-empty .stage-column{min-height:280px}
+  .phase-vote .side-panel{max-height:none;min-height:0;overflow:auto}
+  .choice-visual-picture{min-height:120px}
+  .choice-visual figcaption{font-size:17px;padding:5px 10px}
+  .choice-cast{gap:2px 12px;padding-block:2px}
+  .cast-person>canvas{width:28px!important;height:28px!important;flex-basis:28px}
+  .phase-vote .beat-box,.phase-tie .beat-box,.phase-empty .beat-box{min-height:80px;padding:8px}
+  .phase-vote .beat-box>canvas,.phase-tie .beat-box>canvas,.phase-empty .beat-box>canvas{width:40px!important;height:40px!important;flex-basis:40px}
+  .vote-panel .choice,.vote-panel .teacher-choices>button{font-size:20px;padding:10px 12px;min-height:64px}
+  .vote-panel .teacher-choices{grid-template-columns:1fr}
+  .vote-panel .teacher-choices>button{display:grid;grid-template-columns:30px minmax(0,1fr)}
+}
+@media(max-width:650px){
+  .phase-vote .stage-column,.phase-tie .stage-column,.phase-empty .stage-column{min-height:0}
+  .choice-visual{flex:none;overflow:visible}
+  .choice-visual-picture{flex:none;height:auto;aspect-ratio:4/3;min-height:0}
+  .choice-visual figcaption{font-size:17px}
+  .vote-panel .choice,.vote-panel .teacher-choices>button,.wait .choice-list>.btn{font-size:18px;padding:12px;line-height:1.7}
+  .vote-panel .choice>b,.vote-panel .teacher-choices>button>b{font-size:18px}
+  .phase-vote .beat-box,.phase-tie .beat-box,.phase-empty .beat-box{max-height:none}
+}

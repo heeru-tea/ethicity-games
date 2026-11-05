@@ -1,0 +1,16 @@
+{
+  "verifiedAt": "2026-11-05T14:16:00Z",
+  "url": "https://ethicity-privacy-20261011.web.app/harm/harm_v5/",
+  "method": "Actual browser UI through CUA, separate teacher and student tabs",
+  "checks": [
+    "Teacher creates a new v5 classroom and sees QR plus student link.",
+    "Student joins that link; teacher sees one participant.",
+    "Teacher advances intro, round-one narrative and clues; student stays synchronized.",
+    "Round-one approved image, restored fictional names, and enlarged choices display correctly.",
+    "Student submits choice B; teacher receives one B vote.",
+    "Teacher closes voting; student receives class choice B, +2 popularity/trust, and Daon's named feedback."
+  ],
+  "teacherConsoleErrors": [],
+  "studentConsoleErrors": [],
+  "limits": "One live browser round. All eight live REST rounds are described separately in verification-live-service.json. Responsive sizes were checked in a desktop browser, not physical tablets."
+}

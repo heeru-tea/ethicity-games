@@ -1,0 +1,110 @@
+{
+  "tool": "built-in image_gen",
+  "approved": "2026-11-05 user approved images before implementation",
+  "assets": [
+    {
+      "id": "01-photo-use",
+      "round": 1,
+      "title": "사진을 넣기 전에",
+      "caption": "사진 속 사람은 이 사진을 꾸미고 보여 주어도 괜찮을까요?",
+      "path": "assets/choice-illustrations/01-photo-use.webp",
+      "alt": "사진을 넣기 전에 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: One large photo-print editing workspace, NOT an app screenshot. A plain cream photo print contains a SIMPLE neutral lavender outline cameo placeholder without facial features or gender. Beside it lie removable playful cat-ear costume stickers and a party hat, separated from the photo. The original photo frame and decoration pieces are equally emphasized. A large empty small caption strip in bottom margin for later HTML caption. No visible completed edit, no buttons. The scene poses the question of whose photo may be decorated.",
+      "editPrompt": null,
+      "approvedPngSha256": "933453e2cc4d85dddb3cac305f372b2e1f1ef0881d3c8beb790faaabd4edc22f",
+      "webpSha256": "a34e9d6124a9f410c3c4055652e1f26c64a7616a7e149e9e1cb9203ba261c36a",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    },
+    {
+      "id": "02-voice-play",
+      "round": 2,
+      "title": "두 가지 목소리 놀이",
+      "caption": "다른 사람의 목소리를 따라 하는 것과 내 목소리를 바꾸는 것은 어떻게 다를까요?",
+      "path": "assets/choice-illustrations/02-voice-play.webp",
+      "alt": "두 가지 목소리 놀이 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: A visually balanced two-path voice transformation explainer still-life. LEFT: a tiny generic audio recording cartridge with a simple waveform goes toward a second matching waveform, showing imitation. RIGHT: a microphone goes toward a friendly mechanical zigzag waveform and a small animal-paw motif, showing playful voice change. Use equal scale and neutral same colors both sides. Both paths drawn as thin dotted neutral connectors without directional UI arrow icons. No robot character, no faces, no checkmarks, no right/wrong coding, no actual controls.",
+      "editPrompt": null,
+      "approvedPngSha256": "1ebf85f1b053911ef282a27b9322f7447660dc7e00a805b897da3bfb10aacc93",
+      "webpSha256": "8d5ad4a9a91550b16c3ee2e42991a867a7af093659c2730fbb7726d0debc439d",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    },
+    {
+      "id": "03-photo-sharing",
+      "round": 3,
+      "title": "사진은 어디까지 갈까",
+      "caption": "사진을 다른 사람에게 보낸다면 어디까지 남을 수 있을까요?",
+      "path": "assets/choice-illustrations/03-photo-sharing.webp",
+      "alt": "사진은 어디까지 갈까 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: A conditional photo-sharing concept still-life, not a screenshot: a central large blank photo print carrying one lavender featureless cameo placeholder, flanked at different distances by three small neutral phone-shaped display cards showing the same abstract photo. Use loose unconnected paper trails between them with gaps, suggesting possible forwarding rather than a completed real event. No ridicule, no written comments, no ticks or crosses, no success or failure marks. Make clear through visual sameness that deleting one copy would not necessarily remove all copies, but do not show any actual deleting or completed harm.",
+      "editPrompt": null,
+      "approvedPngSha256": "0a8c93be91c7e632884a0cd5df45d66f1225d6de4841e77cf41d54330f5b3b47",
+      "webpSha256": "a53f8497b8fe59d83f839192edf1be954bd2e7dd01dd7a9977848f8278dd261d",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    },
+    {
+      "id": "04-familiar-voice",
+      "round": 4,
+      "title": "익숙한 목소리의 전화",
+      "caption": "익숙한 목소리라도 누구의 전화인지 어떻게 확인할까요?",
+      "path": "assets/choice-illustrations/04-familiar-voice.webp",
+      "alt": "익숙한 목소리의 전화 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: A close-up still-life for discussing a suspicious voice call: two vintage-future handheld phones sit apart on a warm cream surface. One phone shows a large anonymous audio waveform, three small urgent radiating sound lines, and an unnumbered unfamiliar caller tile. The other phone rests next to a small old paper address card with abstract horizontal line marks only, suggesting an already known contact. A tiny closed coin pouch lies midway as a subtle topic cue, with no money transfer or money movement. Same neutral colors for both phones, no scary criminal, no people, no checkmarks, no answer arrows, no dialable number, no realistic brand interfaces.",
+      "editPrompt": null,
+      "approvedPngSha256": "f17172f20ea954b362c24652cd3ea1ce3150fcef4eb6c35830a72fc020c59965",
+      "webpSha256": "c02a22ad3888efecf0d9739adf0a70c12b6ce6d44485c275a4b0948608c29cbd",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    },
+    {
+      "id": "05-camera-path",
+      "round": 5,
+      "title": "여러 장소의 기록을 연결하면",
+      "caption": "얼굴과 여러 장소의 기록을 연결하면 무엇을 알 수 있을까요?",
+      "path": "assets/choice-illustrations/05-camera-path.webp",
+      "alt": "여러 장소의 기록을 연결하면 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: A fictional town-map cutaway diagram on a single sheet: exactly three little architectural blocks (a small bakery storefront, a bus shelter, and an apartment doorway) connected by neutral dotted winding travel lines, with three tiny simple street camera lenses positioned above each location. One anonymous oval photo placeholder sits at the side, with three small matching thumbnail boxes linked to the three locations. No actual identity, numbers, place names, person, spy, police, crosshair, scary eyes, or location pin UI icons. The map is a proposed system schematic, not evidence someone was tracked. Friendly daylight educational tone.",
+      "editPrompt": null,
+      "approvedPngSha256": "2450da9c2ac09ee87ea2a84403d76efbd96aae887e60924a534e823fc53128bc",
+      "webpSha256": "8cc1d736b6f7a8c8ed5464ba5489a8a4019c537cd0f51501f6ec84b4a034f054",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    },
+    {
+      "id": "06-photo-shop",
+      "round": 6,
+      "title": "사진관에서 함께할 일",
+      "caption": "사진관 사장님과 어떤 일을 의논할 수 있을까요?",
+      "path": "assets/choice-illustrations/06-photo-shop.webp",
+      "alt": "사진관에서 함께할 일 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: An inviting close-up of a small neighborhood photography workshop's production materials: an original boxy photo printer ejecting a paper landscape print, two simple wooden empty picture frames, a neat strip of photographic test prints and a traditional unbranded camera with lens. Cropped still-life only, no existing classroom background or furniture design. Indicate the skills of taking, printing and framing pictures. No people, no currency, no rising graphs or guaranteed shop recovery, no written sign, no old common pack props or computer station.",
+      "editPrompt": null,
+      "approvedPngSha256": "47b3613badc5d10889521625b298d7ae2827eb54b052fa1bff848a5391c0eb97",
+      "webpSha256": "b39e88266941fbd1554bc150451e4a364bacd0ef29b556e540e34ce37a3c0d65",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    },
+    {
+      "id": "07-follow-up",
+      "round": 7,
+      "title": "고친 뒤에도 살펴볼 것",
+      "caption": "기능을 살핀 뒤에도 어떤 이야기를 듣고 도움을 이어갈까요?",
+      "path": "assets/choice-illustrations/07-follow-up.webp",
+      "alt": "고친 뒤에도 살펴볼 것 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: A balanced still-life of three follow-up topics: on the left an open unbranded audio/photo gadget with carefully placed small screwdriver beside it; center a pair of freestanding empty conversational paper forms facing each other, not game speech balloons, with abstract line marks only; right three unstamped paper task slips with empty square spaces and a plain unsealed reply envelope nearby. Show technical checking, listening to people, and continuing agreed work as equal topics still to be discussed. NO checkmarks, seals, gold stars, repair-success glow, finished status, people, common robot mascot, or solution ranking. No book/notebook prop.",
+      "editPrompt": "Use case: precise-object-edit. This is an educational picture about fixing an AI APP, NOT repairing broken hardware. Edit the provided illustration. Change ONLY the left-hand open camera/circuit device and yellow screwdriver: replace them with ONE intact small teal tablet viewed from the same angle, on its screen a simple cream photo tile with an abstract lavender photo placeholder and a blue audio waveform, plus two simple horizontal setting sliders below. No words, no new icons, no ticks or crosses, no hands, no red/green right-wrong coding. Absolutely remove all circuit boards, opened casing, tools, screwdriver, screws. Preserve exactly the remaining image: central two paper forms, right-hand empty task slips and envelope, overall three-group composition, scale, pixel edges, cream and sage palette, green outlines, tiny background foliage and sky. Make the tablet and photo/audio settings clearly readable as SOFTWARE features being checked; no result is already completed. This is a new supporting learning illustration, not a redesign of the game's actual UI.",
+      "approvedPngSha256": "5b315a9637e645f3a1ebdcf674afac3296ead3c5dfedc141d9d55e07d397dd76",
+      "webpSha256": "7cdb40b72dd24c221e6ceb6c009369e7529ee5947b057940966ce75b0db0d081",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    },
+    {
+      "id": "08-next-workshop",
+      "round": 8,
+      "title": "다음 공방을 준비하며",
+      "caption": "다음 공방을 열기 전에 어떤 약속을 정할까요?",
+      "path": "assets/choice-illustrations/08-next-workshop.webp",
+      "alt": "다음 공방을 준비하며 상황을 생각하는 설명 그림",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone situation-support illustration for a Korean elementary grades 3–4 AI ethics pixel adventure, to sit beside large selectable text. Generate ONE landscape image, approximately 4:3, not a sprite sheet, not a full game screen. The inspected game's design reference uses cozy 16-bit school adventure art. This specification follows its palette, material shading and pixel art density: do NOT copy or redesign any existing characters, robot, room backgrounds, common UI, buttons, speech bubbles or icons. Crisp cozy pixel-art with deliberately stepped edges, dark forest-green outlines, restrained two-to-four-tone shading, warm cream #fff9e7 ground, sage #a8bb8c, muted golden #f3cf72, soft skyblue #72b7c4, ink #294b40, subtle peach. Large readable objects, sparse composition, visible at about 360px wide. Soft daylight, calm curious mood. Use generous quiet negative space and a coherent single scene, no UI frame. Absolutely no text, lettering, numbers, labels, logos, watermark, gradients, photorealism, glossy 3D, characters, people, hands, or generic human silhouettes beyond the explicitly requested flat abstract featureless photo placeholders. Don't show which answer is right; no green checks or red X. No newly invented story events.\nScene to depict: A fresh festival-planning still-life: blank cream horizontal planning cards laid out under a small strand of three sage-and-gold triangular festival pennants. Beside the cards are an unbranded portable microphone, a blank photo-print sleeve and three simple unmarked pastel paper tabs. The blank planning cards visually dominate. The next workshop is being planned, nothing is approved or checked off. No stage characters, no mascot, no existing backgrounds, no handwriting, no trophy, no good ending, no victory effect. Leave the planning paper completely empty for later real HTML wording.",
+      "editPrompt": null,
+      "approvedPngSha256": "0c5a6fe23178291420d95b5b2a839aabc895f64832f67ee5181fb55b6b1c22a6",
+      "webpSha256": "94ec3e157cdd0d9b5fbf15c3eed11911ae94169ff2ea6131a862177e429ab143",
+      "conversion": "Lossless WebP, original dimensions; decoded RGBA equality verified"
+    }
+  ]
+}
