@@ -40,7 +40,7 @@ async function updateMusic(){
   announce('배경음악을 재생하지 못했어요. 설정에서 다시 켤 수 있어요.');
  }
 }
-function effect(id){cancelAnimationFrame(effectFrame);const canvas=$('feedback-effect'),ctx=canvas.getContext('2d');canvas.hidden=false;const anchor=document.getElementById('chat-place')?.getBoundingClientRect();canvas.style.left=Math.min(innerWidth-72,(anchor?.right||innerWidth-100)+8)+'px';canvas.style.top=Math.max(8,(anchor?.top||100)-16)+'px';const start=performance.now();function draw(now){ctx.clearRect(0,0,128,128);if(assets.drawEffect(ctx,id,64,64,now-start,96,reducedMotion))effectFrame=requestAnimationFrame(draw);else canvas.hidden=true;}draw(start);sound(id==='correct'?'win':'retry');}
+function effect(id){cancelAnimationFrame(effectFrame);const canvas=$('feedback-effect'),ctx=canvas.getContext('2d');canvas.hidden=false;const anchor=document.querySelector('.message-bubble')?.getBoundingClientRect();canvas.style.left=Math.min(innerWidth-72,(anchor?.right||innerWidth-100)+8)+'px';canvas.style.top=Math.max(8,(anchor?.top||100)-16)+'px';const start=performance.now();function draw(now){ctx.clearRect(0,0,128,128);if(assets.drawEffect(ctx,id,64,64,now-start,96,reducedMotion))effectFrame=requestAnimationFrame(draw);else canvas.hidden=true;}draw(start);sound(id==='correct'?'win':'retry');}
 function reset(){musicStarted=false;void updateMusic();$('background-music').currentTime=0;state=M.initial();queue=[];afterQueue=null;actionHandlers=[];reflection='';customPledge='';customPledgeIndex=null;reported=0;cancelAnimationFrame(effectFrame);$('feedback-effect').hidden=true;window.EthicityReport.clear();showStart();}
 function showStart(){
  mode='start';setMain(`<section class="ee-panel start-page" aria-labelledby="game-title"><p class="eyebrow">윤리시티 · 데이터 관리</p><h1 id="game-title">급식 메뉴 AI ‘냠냠봇’</h1><div class="start-scene"><img src="${COMMON}/backgrounds/cafeteria.png" alt="학교 급식실"><div>${portrait('robot','happy','medium')}</div></div><p class="start-question">모두가 함께 먹는 급식,<br>어떤 데이터를 수집해야 할까요?</p><button class="ee-button" id="start-game">탐험 시작 ${icon('arrow_right',24)}</button><p class="muted">초등 3~4학년 · 약 8~10분<br>이름을 입력하지 않아요. 마지막에 내 리포트를 저장할 수 있어요.</p></section>`);
@@ -52,9 +52,9 @@ function shell(scene,introMode=false){
  mode=introMode?'intro':'game';
  const info=introMode?{title:'냠냠봇의 부탁',goal:'모두가 함께 먹으려면 어떤 자료가 필요할까요?',place:'학교 급식실'}:M.scenes[scene];
  setMain((introMode?'':wordStrip())+`<div class="game-layout ${introMode?'intro-layout':''}">
- <section class="scene-sidebar" aria-label="현재 장면"><div class="stage-heading"><div><span class="scene-tag">${introMode?'탐험 준비':'이야기 '+(scene+1)+' / 6'}</span><h1 class="scene-title">${info.title}</h1></div><span class="ee-badge">${state.explorer}버전 탐험가</span></div>
+ <section class="scene-sidebar" aria-label="현재 장면"><div class="stage-heading"><div><span class="scene-tag">${introMode?'탐험 준비':'이야기 '+(scene+1)+' / 6'} · <span id="chat-place">${info.place}</span></span><h1 class="scene-title">${info.title}</h1></div><div class="stage-meta"><span class="ee-badge">${state.explorer}버전 탐험가</span><small id="chat-count">${introMode?'함께 시작해요':'의견을 들은 곳 '+state.visited.length+' / 4'}</small></div></div>
  <figure class="scene-art"><div class="scene-view"><img id="scene-image" class="scene-image" alt=""><canvas id="scene-cast" width="1280" height="720" aria-hidden="true"></canvas><div id="scene-material" tabindex="0" aria-label="장면의 현재 자료"></div><div id="scene-response" class="scene-response ee-badge" hidden></div></div><figcaption><span id="scene-caption"></span><nav id="material-nav" class="material-nav" aria-label="자료 페이지" hidden></nav></figcaption></figure><div id="scene-speaker" hidden></div></section>
- <section class="messenger ee-panel" aria-label="현재 대화"><div class="chat-header"><strong id="chat-place">${info.place}</strong><small id="chat-count">${introMode?'함께 시작해요':'의견을 들은 곳 '+state.visited.length+' / 4'}</small></div><div class="conversation-log" id="conversation-log" tabindex="0" aria-label="현재 말풍선"></div><div class="action-area" id="action-area"></div></section></div>`);
+ <section class="messenger ee-panel" aria-label="현재 대화"><div class="conversation-log" id="conversation-log" tabindex="0" aria-label="현재 말풍선"></div><div class="action-area" id="action-area"></div></section></div>`);
  sceneSpeaker=null;setSceneArt(introMode?'welcome':['meet','collect','sort','menu','repair','privacy'][scene]);
  system(info.goal);
  $('conversation-log').addEventListener('click',e=>{if(e.target.closest('button,a,input,textarea,select'))return;const selection=window.getSelection();if(selection&&!selection.isCollapsed)return;$('next-line')?.click();});
@@ -117,7 +117,7 @@ function say(id,text,expression='neutral',frame){
  finishTyping(false);if(frame)setSceneArt(frame);setSceneSpeaker(id,expression);
  const name=id==='me'?'나':M.people[id],label=`${name}. ${text}`;
  // Only the current bubble types; advancing replaces it completely.
- append(`<div class="message ${id==='me'?'player':''}">${id==='me'?'':portrait(id,expression)}<div class="message-content"><p class="speaker-label">${name}</p><p class="message-bubble">${esc(text)}</p></div></div>`,id==='me'||reducedMotion||instantText?label:'');
+ append(`<div class="message ${id==='me'?'player':''}"><div class="message-avatar">${id==='me'?'':portrait(id,expression)}<span class="speaker-label">${name}</span></div><div class="message-content"><p class="message-bubble">${esc(text)}</p></div></div>`,id==='me'||reducedMotion||instantText?label:'');
  if(id==='me'||reducedMotion||instantText)return;
  const bubble=$('conversation-log').lastElementChild.querySelector('.message-bubble');
  typing={bubble,text,label,characters:Array.from(text),index:0};bubble.textContent='';bubble.classList.add('is-typing');bubble.setAttribute('aria-busy','true');typeCharacter();
@@ -140,7 +140,7 @@ function typeCharacter(){
  typingTimer=setTimeout(typeCharacter,/[.!?…。]/.test(current.characters[current.index-1])?140:30);
 }
 function system(text){append(`<p class="system-message">${esc(text)}</p>`,text);}
-function run(lines,done){finishTyping(false);queue=lines.flatMap(line=>splitCopy(line[1],72).map((text,i)=>[line[0],text,line[2],i===0?line[3]:undefined]));afterQueue=done;nextLine();}
+function run(lines,done){finishTyping(false);queue=lines.flatMap(line=>splitCopy(line[1],innerWidth<=600?48:72).map((text,i)=>[line[0],text,line[2],i===0?line[3]:undefined]));afterQueue=done;nextLine();}
 function nextLine(){if(busy)return;if(finishTyping())return;if(queue.length){const line=queue.shift();say(...line);showNext();}else if(afterQueue){const fn=afterQueue;afterQueue=null;fn();}}
 function showNext(label='다음',fn=nextLine){pinAfterLayout();$('action-area').classList.remove('method-actions');actionHandlers=[];const area=$('action-area');area.innerHTML=`<div class="next-row"><span class="muted">대화창 탭 또는 Space<br>한 번 더 누르면 다음 대사</span><button class="ee-button" id="next-line" data-label="${esc(label)}"><span class="next-label">${label}</span> ${icon('arrow_right',20)}</button></div>`;paintIcons(area);updateNextLabel();fitStage();$('next-line').onclick=()=>{sound();if(!finishTyping())fn();};$('next-line').focus({preventScroll:true});}
 function choices(prompt,items,{multiple=false,selected=[],focus=true,pageKey=prompt}={}){
@@ -187,7 +187,7 @@ function material(card){
 function splitCopy(text,limit){const chars=Array.from(text),parts=[];while(chars.length){let n=Math.min(limit,chars.length);if(n<chars.length){const fragment=chars.slice(0,n).join(''),breakAt=Math.max(fragment.lastIndexOf('. '),fragment.lastIndexOf('。'),fragment.lastIndexOf('\n'));if(breakAt>limit/2)n=breakAt+1;}parts.push(chars.splice(0,n).join('').trim());}return parts.length?parts:[''];}
 function renderMaterial(){
  $('scene-material').innerHTML=stagePages[stagePage].html;paintIcons($('scene-material'));
- const nav=$('material-nav');nav.hidden=stagePages.length<2;nav.innerHTML=stagePages.length<2?'':`<button class="ee-button secondary" id="material-prev" ${stagePage===0?'disabled':''}>이전 자료</button><span>${stagePage+1} / ${stagePages.length}</span><button class="ee-button secondary" id="material-next" ${stagePage===stagePages.length-1?'disabled':''}>다음 자료</button>`;
+ const nav=$('material-nav');nav.hidden=stagePages.length<2;nav.innerHTML=stagePages.length<2?'':`<button class="ee-button secondary" id="material-prev" aria-label="이전 자료" ${stagePage===0?'disabled':''}>이전</button><span>${stagePage+1} / ${stagePages.length}</span><button class="ee-button secondary" id="material-next" aria-label="다음 자료" ${stagePage===stagePages.length-1?'disabled':''}>다음</button>`;
  if(stagePages.length>1){$('material-prev').onclick=()=>{stagePage--;renderMaterial();$(stagePage===0?'material-next':'material-prev').focus({preventScroll:true});};$('material-next').onclick=()=>{stagePage++;renderMaterial();$(stagePage===stagePages.length-1?'material-prev':'material-next').focus({preventScroll:true});};}fitStage();
 }
 function fitStage(){requestAnimationFrame(()=>{

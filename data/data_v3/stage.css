@@ -113,3 +113,40 @@
  .game-data #scene-material{inset:3% 2% 18% 24%}.game-data #scene-material .material-card h3{font-size:13px}.game-data #scene-material .material-card p{font-size:11px}.game-data #scene-material .material-card .eyebrow{font-size:9px}
  .game-data .material-nav{gap:8px}.game-data .material-nav .ee-button{font-size:10px}.game-data .conversation-log{max-height:none}
 }
+
+/* The scene owns the available height. Dialogue stays compact below it. */
+.game-data .stage-meta{display:flex;align-items:flex-end;flex-direction:column;gap:3px;flex:none}
+.game-data .stage-meta small{font-size:11px;line-height:1.4}
+.game-data .messenger{padding:4px 8px}
+.game-data .conversation-log{min-height:0;padding:4px 0;max-height:none;overflow:visible}
+.game-data .conversation-log .message{gap:8px;align-items:center}
+.game-data .message-avatar{display:flex;flex-direction:column;align-items:center;justify-content:center;width:48px;flex:none}
+.game-data .message-avatar .portrait{width:40px;height:40px}
+.game-data .message-avatar .speaker-label{font-size:10px;line-height:1.4;margin:2px 0 0;text-align:center}
+.game-data .conversation-log .message-content{max-width:calc(100% - 56px)}
+.game-data .conversation-log .message-bubble{min-height:0;font-size:15px;line-height:1.6;padding:6px 10px}
+.game-data .message.player .message-avatar{width:22px}
+.game-data .message.player .message-content{flex:0 1 auto;max-width:88%}
+.game-data .action-area{padding-top:4px}
+.game-data .action-prompt{font-size:13px;line-height:1.45;margin-bottom:5px}
+.game-data .choice-control{font-size:13px;line-height:1.5;padding:6px 8px;min-height:48px}
+.game-data .choice-control small{font-size:10px;margin-top:2px}
+.game-data .next-row .muted{display:none}
+.game-data .next-row button{min-height:48px}
+.game-data .scene-art{position:relative}
+.game-data .scene-art figcaption{height:0;border:0;padding:0}
+.game-data #scene-caption{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0)}
+.game-data .material-nav{position:absolute;left:8px;right:8px;bottom:8px;margin:0;justify-content:space-between;gap:8px}
+.game-data .material-nav .ee-button{width:64px;min-width:64px;font-size:12px}
+.game-data .material-nav>span{background:var(--ee-cream);border:2px solid var(--ee-sage);padding:3px 8px}
+.game-data #scene-material:has(.menu-card){inset:3% 2% 24% 18%}
+.game-data #scene-material .material-card h3{font-size:16px}
+.game-data #scene-material .material-card p{font-size:13px}
+@media(max-width:600px){
+ .game-data .stage-meta small{font-size:9px}.game-data .stage-meta .ee-badge{font-size:9px}
+ .game-data .conversation-log .message-bubble{font-size:14px}.game-data .choice-control{font-size:12px}
+ .game-data .action-prompt{font-size:12px}.game-data .message-avatar{width:40px}.game-data .message-avatar .portrait{width:34px;height:34px}
+ .game-data .conversation-log .message-content{max-width:calc(100% - 48px)}
+ .game-data #scene-material .material-card h3{font-size:13px}.game-data #scene-material .material-card p{font-size:12px}
+ .game-data .material-nav .ee-button{width:56px;min-width:56px;font-size:11px}
+}
