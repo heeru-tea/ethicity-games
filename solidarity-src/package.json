@@ -1,0 +1,28 @@
+{
+  "name": "ethicity-solidarity",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.worker.json"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260823.1",
+    "@playwright/test": "^1.56.1",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "jsdom": "^28.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.5"
+  }
+}
