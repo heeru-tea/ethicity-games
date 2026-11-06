@@ -115,3 +115,7 @@
   .ee-theme .character-card{padding:5px}
   .ee-theme .character-caption{font-size:10px}
 }
+
+/* v0.8 route guide: official pixel asset pack unchanged */
+.route-guide{background:#fff0b9;border:3px solid #294b40;padding:11px;margin:12px 0;font-weight:900;box-shadow:3px 3px #a8bb8c;line-height:1.6}
+.policy-grid .policy small{display:block;margin-top:4px}

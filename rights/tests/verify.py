@@ -11,3 +11,6 @@ for ch in scenario['chapters']:
 for st in scenario['stations']:
     assert len(st['choices']) == 3
 print('verify.py: basic scenario checks passed')
+
+assert len(scenario['final']['policies'])==4
+assert any(p['id']=='efficiency_first' for p in scenario['final']['policies'])
