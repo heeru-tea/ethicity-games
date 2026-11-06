@@ -1,6 +1,7 @@
 (function(root){'use strict';
 const Core=typeof module!=='undefined'?require('./core.js'):root.DiversityLocalCore;
 const Model=typeof module!=='undefined'?require('./model.js'):root.DiversityModel;const Extra=typeof module!=='undefined'?require('./assets.js'):root.DiversitySupplemental;const publicScene=id=>({text:[...Model.MATERIAL.cards,...Extra].find(x=>x.id===id)?.text||'그림',reason:'학급 자료 후보',assetId:id});
+function unreviewedCount(proposals){return Object.values(proposals||{}).filter(r=>r.current&&(!r.review||r.review.version!==r.current.version)).length;}
 const {clone,insist}=Core;const id=()=> 'x_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,10);
 class LocalAdapter{
  constructor(db,uid,role){this.db=db;this.uid=uid;this.role=role;this.base=null;this.pending=new Map();this.offline=false;this.loseNext=false;this.generation=0;}
@@ -70,5 +71,5 @@ class LocalAdapter{
 }
 function canonical(v){if(Array.isArray(v))return v.map(canonical);if(v&&typeof v==='object')return Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])]));return v;}
 function same(a,b){return JSON.stringify(canonical(a))===JSON.stringify(canonical(b));}
-const api={LocalAdapter,same};if(typeof module!=='undefined')module.exports=api;else root.DiversityLocalAdapter=api;
+const api={LocalAdapter,same,unreviewedCount,id,publicScene};if(typeof module!=='undefined')module.exports=api;else root.DiversityLocalAdapter=api;
 })(globalThis);

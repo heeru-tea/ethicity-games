@@ -1,12 +1,12 @@
 (function(root){'use strict';
 // User-approved defaults; saved explicit choice wins. Never autoplay on page load.
-const DEFAULT_ENABLED_BY_GAME=Object.freeze({accountability:true,diversity:false});
+// diversity splits by role (teacher ON, student OFF); accountability has no role split.
+const DEFAULT_ENABLED_BY_GAME=Object.freeze({accountability:true});
 const VOLUME = 0.6;
-const script=document.currentScript,game=script.dataset.game;
+const script=document.currentScript,game=script.dataset.game,role=document.body.dataset.role;
 if(!['accountability','diversity'].includes(game)||root.EthicityMusic)return;
-if(game==='diversity'&&document.body.dataset.role!=='student')return;
-const DEFAULT_ENABLED=DEFAULT_ENABLED_BY_GAME[game];
-const key='ethicity.'+game+'.audio.enabled';let saved=null;
+const DEFAULT_ENABLED=game==='diversity'?role==='teacher':DEFAULT_ENABLED_BY_GAME[game];
+const key='ethicity.'+game+(game==='diversity'?'.'+role:'')+'.audio.enabled';let saved=null;
 try{const v=localStorage.getItem(key);if(v==='true'||v==='false')saved=v==='true';}catch{}
 let enabled=saved===null?DEFAULT_ENABLED:saved,active=false,preview=false,player=null,token=0,previewTimer=null,state='idle',failed=false;
 const en=()=>document.documentElement.lang==='en';
@@ -22,7 +22,8 @@ function start(){active=true;stopPreview();play();render();}
 function stop(){active=false;stopPreview();pause();}
 toggle.onclick=()=>{stopPreview();enabled=enabled!==true;try{localStorage.setItem(key,String(enabled));}catch{}if(enabled){active=true;play();}else pause();render();};
 test.onclick=()=>{stopPreview();preview=true;play();render();previewTimer=setTimeout(()=>{stopPreview();if(active&&enabled===true)play();else pause();},5000);};
-document.addEventListener('click',e=>{const target=e.target.closest?.(game==='accountability'?'[data-action="start"]':'#join');if(target)start();if(game==='diversity'&&e.target.closest?.('#leave-keep,#leave-discard'))stop();},true);
+const startSelector=game==='accountability'?'[data-action="start"]':(role==='teacher'?'#create,#connect':'#join');
+document.addEventListener('click',e=>{const target=e.target.closest?.(startSelector);if(target)start();if(game==='diversity'&&e.target.closest?.('#leave-keep,#leave-discard'))stop();},true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopPreview();pause();}else play();});root.addEventListener('pagehide',stop);
 if(typeof MutationObserver==='function')new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 root.EthicityMusic={start,stop,get enabled(){return enabled;},get status(){return state;},get defaultEnabled(){return DEFAULT_ENABLED;},get source(){return player?.src||null;}};render();
