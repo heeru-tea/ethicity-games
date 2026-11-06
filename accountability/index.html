@@ -207,4 +207,4 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');
 $('modal').addEventListener('cancel',e=>{e.preventDefault();closePanel()});$('notebook').onclick=()=>openPanel('book');$('help').onclick=()=>openPanel('help');$('brand').onclick=e=>e.preventDefault();$('lang').onclick=switchLanguage;function switchLanguage(){if($('memo'))storeDraft();if($('reflection'))note().reflection=$('reflection').value;lang=lang==='ko'?'en':'ko';state.notes.forEach(n=>{if(!n.edits.length){n.text=tr(DEFAULT_QUESTIONS[n.round]);if(n.initialText)n.initialText=n.text}});writeStore('ethicity.settings.accountability',{language:lang});render()}
 render();requestAnimationFrame(worldFrame);
 
-</script><script src="accountability-revision.js?v=69e04c2167a98c8f"></script><script src="music-controller.js?v=1c10054f113d8c1a" data-game="accountability"></script></body></html>
+</script><script src="accountability-revision.js?v=82bc05dd0779907b"></script><script src="music-controller.js?v=1c10054f113d8c1a" data-game="accountability"></script></body></html>
