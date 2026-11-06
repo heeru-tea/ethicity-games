@@ -411,14 +411,26 @@ function walkToTarget(){
    const quote=tr(c.text[lang==='en'?1:0][0]);
    const think=tr(c.simple);
    const unknown=tr(STILL_UNKNOWN[c.id]||c.unknown||WARNINGS[state.round]);
-   dialog(tr(c.label),inquiryContext()+'<div class="speaker">'+portrait(c.id)+'<div><strong>'+escape(tr(c.label))+'</strong></div></div>'+'<dl class="statementParts"><dt>'+L('인물의 말','What they said')+'</dt><dd class="statement">'+escape(quote)+'</dd><dt>'+L('이 말에서 생각해 볼 점','Something to think about')+'</dt><dd>'+escape(think)+'</dd><dt>'+L('이 말만으로 알 수 없는 점','What this alone cannot tell us')+'</dt><dd>'+escape(unknown)+'</dd></dl>',btn(L('들은 내용을 수첩에 기록','Record this account'),'record','primary'));
+   const name=escape(tr(c.label)),said=L(name+'의 말',name+' says');
+   dialog(tr(c.label),inquiryContext()+'<section class="personDialogue"><div class="dialogueQuote"><div class="dialogueBar"><span class="dialogueLights" aria-hidden="true"><i></i><i></i><i></i></span><strong>'+said+'</strong></div><blockquote>'+escape(quote)+'</blockquote></div><figure class="dialoguePerson">'+portrait(c.id)+'<figcaption>'+name+'</figcaption></figure></section><dl class="statementParts"><dt>'+L('생각해 볼 점','Something to think about')+'</dt><dd>'+escape(think)+'</dd><dt>'+L('아직 모르는 점','What we do not know yet')+'</dt><dd>'+escape(unknown)+'</dd></dl>',btn(L('들은 내용을 수첩에 기록','Record this account'),'record','primary'));
    if(!viewed.includes(c.id))viewed.push(c.id);
    persist();
    return;
   }
   return priorActivity.apply(this,arguments);
  };
- const style=document.createElement('style');style.textContent='.game-accountability .statementParts{display:grid;grid-template-columns:minmax(90px,1fr) 3fr;gap:8px;margin-top:12px}.game-accountability .statementParts dt{font-weight:bold}.game-accountability .statementParts dd{margin:0}@media(max-width:480px){.game-accountability .statementParts{display:block}.game-accountability .statementParts dd{margin:4px 0 16px}}';document.head.appendChild(style);
+ const style=document.createElement('style');style.textContent=`
+.game-accountability .personDialogue{display:grid;grid-template-columns:minmax(0,1fr) 136px;gap:20px;align-items:start;margin:20px 0 24px}
+.game-accountability .dialogueQuote{min-width:0;border:2px solid #405e50;background:#fffef8}
+.game-accountability .dialogueBar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#e0e9df;border-bottom:2px solid #405e50;word-break:keep-all;overflow-wrap:anywhere}
+.game-accountability .dialogueLights{display:flex;gap:4px;flex:none}.game-accountability .dialogueLights i{display:block;width:9px;height:9px;background:#c58370}.game-accountability .dialogueLights i:nth-child(2){background:#e8ca76}.game-accountability .dialogueLights i:nth-child(3){background:#a5b98f}
+.game-accountability .dialogueQuote blockquote{margin:0;padding:18px;font:18px/1.7 'Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;color:#294e41;word-break:keep-all;overflow-wrap:anywhere}
+.game-accountability .dialoguePerson{margin:0;padding:12px;background:#e4ebd7;border:2px solid #99ad90;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.game-accountability .dialoguePerson .portrait{display:block;width:88px;height:112px;max-width:100%;object-fit:contain;border:0;background:transparent;border-radius:0;image-rendering:pixelated}
+.game-accountability .dialoguePerson figcaption{font-weight:bold;word-break:keep-all;overflow-wrap:anywhere;text-align:center}
+.game-accountability .statementParts{display:block;margin:0}.game-accountability .statementParts dt{font-weight:bold;margin:20px 0 6px;word-break:keep-all;overflow-wrap:anywhere}.game-accountability .statementParts dd{margin:0;font:17px/1.65 'Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;word-break:keep-all;overflow-wrap:anywhere}.game-accountability .statementParts dt:not(:first-child){padding-top:16px;border-top:1px solid #cbd8ca}
+@media(max-width:540px){.game-accountability .personDialogue{display:flex;flex-direction:column;gap:12px;margin:16px 0 20px}.game-accountability .dialoguePerson{order:-1;flex-direction:row;border:0;background:transparent;padding:0;gap:12px}.game-accountability .dialoguePerson .portrait{width:48px;height:60px}.game-accountability .dialogueQuote{width:100%}.game-accountability .dialogueQuote blockquote{font-size:17px;padding:14px}.game-accountability .dialogueBar{padding:8px 12px}.game-accountability .statementParts dd{font-size:16px}}
+`;document.head.appendChild(style);
 })();
 
 // 2026-11-06 recheck: judgment is reachable while a source is open, without recording first.
