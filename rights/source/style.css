@@ -119,3 +119,23 @@
 /* v0.8 route guide: official pixel asset pack unchanged */
 .route-guide{background:#fff0b9;border:3px solid #294b40;padding:11px;margin:12px 0;font-weight:900;box-shadow:3px 3px #a8bb8c;line-height:1.6}
 .policy-grid .policy small{display:block;margin-top:4px}
+
+/* v0.8.1: Korean word-safe wrapping in evidence and dialogue cards. */
+.ee-theme .dialog .dialog-content,
+.ee-theme .dialog .costcard,
+.ee-theme .dialog .costcard p,
+.ee-theme .dialog .costcard .tip,
+.ee-theme .dialog .story,
+.ee-theme .dialog .reveal p,
+.ee-theme .dialog .question,
+.ee-theme .dialog .choice span,
+.ee-theme .dialog .trail p,
+.ee-theme .dialog .policy small {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+@media(min-width:721px) {
+  .ee-theme .dialog { width: min(820px, 96vw); }
+  .ee-theme .dialog-layout { grid-template-columns:minmax(0,1fr) 165px; gap:16px; }
+  .ee-theme .dialog-character .dialog-portrait {width:140px;height:158px;}
+}
