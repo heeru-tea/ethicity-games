@@ -615,7 +615,7 @@
     ctx.fillRect(x-width/2,y-35,width,45);ctx.strokeRect(x-width/2,y-35,width,45);
     ctx.fillStyle='#294b40';ctx.fillText('➤ '+label,x,y-5);ctx.restore();
   }
-  function drawScene(){ctx.clearRect(0,0,CW,CH); if(assetEngine){try{assetEngine.drawBackground(ctx,state.scene,CW,CH)}catch{drawFallback()}} else drawFallback(); drawPortals(); drawActors();drawRouteHint()}
+  function drawScene(){ctx.clearRect(0,0,CW,CH); if(assetEngine){try{assetEngine.drawBackground(ctx,state.scene,CW,CH)}catch{drawFallback()}} else drawFallback(); drawPortals(); drawActors()}
 
   function loop(ts){const dt=Math.min(50,ts-(lastTs||ts)); lastTs=ts;
     if(state.started&&!$('game').hidden&&!modal){let dx=0,dy=0;
