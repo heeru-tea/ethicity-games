@@ -27,7 +27,7 @@ for(const plan of [A,B]){
   assert(plan.ids.includes('path'),'Accessible path should be mandatory');
   assert(plan.cost<=10,'AI proposal must fit budget');
 }
-assert(evaluatePark(['path','square'],users).raw.efficiency!==evaluatePark(['path','square','garden'],users).raw.efficiency,
+assert(evaluatePark(['path','play'],users).raw.efficiency!==evaluatePark(['path','shade','square'],users).raw.efficiency,
   'Efficiency must consider cost and usage, not simply facility count');
 assert(code.includes("good:chosen('shade')"),'Only shade should resolve strong sunlight problem');
 assert(code.includes("walkingDirection")&&code.includes("walkingFrame"),'4-way walking animation expected');
