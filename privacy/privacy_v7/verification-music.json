@@ -1,0 +1,20 @@
+{
+  "testedAt": "2026-10-31",
+  "source": "User-provided Pixel Adventure (1).mp3",
+  "file": "assets/audio/pixel-adventure.mp3",
+  "sha256": "7d2bfdbd8913f9be8b0ecabf1796329e8273f975b59532c2b742d857ddc24900",
+  "bytes": 4019147,
+  "browserDurationSeconds": 171.2535,
+  "pausedBeforeFirstInteraction": true,
+  "playsAfterCharacterClick": true,
+  "loopAttributeEnabled": true,
+  "playbackContinuesAcrossScreenRender": true,
+  "offStaysOffAfterRoundNavigation": true,
+  "toggleResumesAtPreviousTime": true,
+  "keyboardVolumeControl": "20% to 25%",
+  "offAndVolumePersistAfterReload": true,
+  "teacherDefaultOffAfterOtherButtonClick": true,
+  "teacherExplicitPlayWorks": true,
+  "mobileControlsWithinViewport": true,
+  "browserConsoleErrors": []
+}

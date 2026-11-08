@@ -1,0 +1,15 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const manifest=JSON.parse(read('common/manifest.json'));
+const source=read('source/landing-v7.js');
+for(const m of source.matchAll(/commonIcon\('([^']+)'/g))assert(manifest.icons.icons[m[1]],'Unknown icon '+m[1]);
+const c=vm.createContext({S:{mode:'teacher',teacherAllowed:true,network:true,busy:false},esc:s=>s,heading:s=>'<h1>'+s+'</h1>',btn:(text,a,cls,extra)=>`<button data-action="${a}" ${extra}>${text}</button>`,commonIcon:()=>''});
+vm.runInContext(source,c);
+const html=vm.runInContext('renderTeacherStartV7()',c);
+assert(html.includes('우리 반의 프라이버시 탐험'));assert(html.includes('새 수업 만들기'));assert(html.includes('연결 다시 확인'));assert(html.includes('mode=solo&amp;preview=1'));assert(html.includes('data-common-stage="ai_lab"'));
+vm.runInContext('S.network=false',c);assert(vm.runInContext('renderTeacherStartV7()',c).includes('data-action="create-room" disabled'));
+vm.runInContext('S.network=true;S.returnRoom="test"',c);assert(vm.runInContext('renderTeacherStartV7()',c).includes('진행 중인 수업으로 돌아가기'));
+assert(read('source/live.js').includes("(!requestedRoom&&params.get('mode')!=='solo')"));
+assert(!read('source/live.js').includes('roomsPrivacyV6'));
+assert.equal(require('node:crypto').createHash('sha256').update(read('scenario.json')).digest('hex'),'fcc5f2e04f6594bb9c7f080ff618a6879bf8e643ce9399835e8e1a0bfa1208f1','Approved v6 scenario changed');
+console.log(JSON.stringify({landingControls:true,offlineCreateDisabled:true,previewInSeparateTab:true,currentRoomReturn:true,commonIconIds:true,v6ScenarioUnchanged:true,v7RoomIsolation:true}));

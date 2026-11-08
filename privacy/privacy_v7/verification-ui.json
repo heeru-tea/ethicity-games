@@ -1,0 +1,26 @@
+{
+  "verifiedAt": "2026-11-08",
+  "referenceLanding": true,
+  "teacherConnected": true,
+  "newRoomQrAndLink": true,
+  "expandedQr": true,
+  "homePreservesCurrentRoom": true,
+  "resumeCurrentRoom": true,
+  "displayAndSoundDialog": true,
+  "tabletLandscape": {
+    "width": 1024,
+    "height": 768,
+    "noPageOverflow": true
+  },
+  "tabletPortrait": {
+    "width": 768,
+    "height": 1024,
+    "noPageOverflow": true
+  },
+  "mobile": {
+    "width": 390,
+    "height": 844,
+    "noHorizontalOverflow": true,
+    "verticalScrolling": true
+  }
+}
