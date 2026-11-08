@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#294b40">
+  <title>사라진 우리들의 공원 | 윤리시티 공공성</title>
+  <link rel="stylesheet" href="../publicness/style.css">
+</head>
+<body>
+  <header class="masthead"><div><p class="eyebrow">ETHICITY · 공공성 탐험</p><h1>🌳 사라진 우리들의 공원</h1></div><div class="mast-actions"><div class="audio-controls"><button type="button" id="soundToggle" class="sound-toggle" aria-pressed="true" aria-label="배경음악과 효과음 켜고 끄기">🔊 사운드 켜짐</button><button type="button" id="soundTest" class="sound-toggle test" aria-label="효과음이 실제로 재생되는지 테스트">🔔 소리 테스트</button><span id="soundStatus" class="sound-status" role="status" aria-live="polite">게임 시작 후 음악 재생</span></div><span class="mast-badge">공공성을 찾아서 · 초등 5~6학년</span></div></header>
+  <main class="shell">
+    <section id="startScreen" class="start-board">
+      <div class="cover"><img src="../publicness/assets/park-cover.png" alt="텅 빈 그네와 현대식 시설 사이에서 수첩을 든 학생과 파크봇이 공원을 살피는 픽셀아트"><div class="cover-heading"><span>NEW MISSION · ETHICITY</span><h2>사라진<br>우리들의 공원</h2><p>AI가 만든 완벽한 공원에는<br>왜 아무도 없을까?</p></div></div>
+      <div class="start-details"><div class="start-story"><p class="eyebrow">사라진 별빛공원의 비밀</p><h2>효율적이라는 공원,<br>정말 모두를 위한 걸까?</h2><p>윤리시티의 AI 파크봇이 오래된 공원을 새롭게 꾸몄어요. 하지만 개장식에 주민들이 보이지 않아요. 직접 조사하고, AI의 판단을 고치고, 모두의 공원을 설계해 보세요.</p><div class="story-pills"><span>🔎 현장 조사</span><span>🤖 AI 기준 분석</span><span>🌿 공원 설계</span></div></div><div class="start-form"><label for="nickname">탐험가 별명 <small>한글 1~6글자 · 실명 입력하지 않기</small></label><input id="nickname" maxlength="6" autocomplete="off" value="초록별"><span class="field-label">캐릭터 선택</span><div class="avatars"><button type="button" class="avatar selected" data-avatar="haneul"><span class="walk-avatar haneul"></span>하늘</button><button type="button" class="avatar" data-avatar="jiho"><span class="walk-avatar jiho"></span>지호</button></div><div class="actions"><button id="startBtn" class="btn primary">▶ 새 게임 시작</button><button id="resumeBtn" class="btn" hidden>↪ 이어하기</button></div><p class="privacy">진행 상태는 이 브라우저에만 저장됩니다. 실제 개인정보를 입력하지 마세요.</p></div></div>
+    </section>
+
+    <section id="gameScreen" hidden>
+      <div class="hud"><div><p class="eyebrow" id="stageNumber">CHAPTER 01</p><h2 id="stageTitle">별빛공원 탐험</h2><p id="stageHint">주민의 목소리를 들어 보세요.</p></div><div class="hud-right"><span class="chip" id="progressChip">단서 0/4</span><button class="btn small" id="homeBtn">⌂ 첫 화면</button></div></div>
+      <section id="exploreStage" class="explore-grid">
+          <div class="scene-panel"><div class="scene-top"><strong id="sceneLabel">🌳 별빛공원</strong><span id="sceneHelp">방향키 / WASD 이동 · 접근 시 자동 대화 · 스페이스로 단서 수집</span></div><div class="viewport"><canvas id="world" width="960" height="540" tabindex="0" aria-label="아바타를 움직여 공원과 관리실을 탐험하는 지도"></canvas><div class="viewport-toast" id="mapHint">지도가 아바타를 따라 움직여요. 청록색 포털에 닿으면 맵이 바뀝니다.</div></div><div class="controls"><div class="dpad"><button type="button" data-dir="left" aria-label="왼쪽 이동">◀</button><button type="button" data-dir="up" aria-label="위 이동">▲</button><button type="button" data-dir="down" aria-label="아래 이동">▼</button><button type="button" data-dir="right" aria-label="오른쪽 이동">▶</button></div><button class="btn small" id="talkBtn">💬 가까운 대상 조사</button></div></div>
+        <aside class="journal"><p class="eyebrow">탐험 수첩</p><h3>📒 사라진 것의 흔적</h3><p id="journalText">놀이터·쉼터·정원·광장을 조사해 보세요. 주민에게 직접 다가가면 이야기가 열려요.</p><div id="clueList" class="clue-list"></div><div class="help-box"><b>🔮 이동 포털</b><p>공원 위쪽 관리실 문에 다가가면 자동으로 들어가요. 관리실 아래쪽 문으로 돌아올 수 있어요.</p></div><button id="labActionBtn" class="btn primary block" disabled>🔒 단서 4개 조사 필요</button></aside>
+      </section>
+
+      <section id="analysisStage" class="page-section" hidden><div class="chapter-banner"><p class="eyebrow">CHAPTER 02 · 파크봇의 비밀 계산서</p><h3>파크봇은 무엇을 계산하지 않았을까?</h3><p>파크봇의 계산은 틀리지 않았어요. 다만 공원에 필요한 일부 정보가 빠졌어요. 빠진 기준을 찾아 AI에 추가해 주세요.</p></div><div class="analysis-grid"><div class="panel"><h3>🤖 파크봇의 원래 기준</h3><div class="data-row">하루 평균 이용객 수 <strong>45%</strong></div><div class="data-row">유지·관리비 <strong>35%</strong></div><div class="data-row">상업시설 예상 수익 <strong>20%</strong></div><div class="bot-note">"계산 효율은 높지만, 주민들의 생활 정보는 분석하지 못했습니다."</div></div><div class="panel"><h3>🧩 AI에 추가할 기준을 고르세요</h3><p class="small-note">필수적인 공공성 기준 3개를 찾아 선택해 보세요.</p><div id="criteriaList" class="criteria-list"></div><p id="criteriaFeedback" class="feedback">선택한 기준을 확인해 보세요.</p><button id="criteriaCheckBtn" class="btn primary block">✓ AI 판단 기준 수정하기</button></div></div></section>
+
+      <section id="buildStage" class="page-section" hidden><div class="chapter-banner"><p class="eyebrow">CHAPTER 03 · 모두의 공원 설계</p><h3>정해진 예산으로 공원을 고쳐 주세요</h3><p>기본 이동권과 안전을 보장하는 연결 통로는 필수예요. 나머지 예산으로 놀이터·쉼터·정원 등을 선택해 보세요.</p></div><div class="build-grid"><div class="panel"><div class="build-head"><h3>🗺️ 공원 설계도</h3><span class="chip" id="budgetChip">0 / 10</span></div><div id="buildMap" class="build-map"><img src="../publicness/assets/park-map.png" alt="시설이 사라진 별빛공원 픽셀 지도"><div class="build-spot s-play" data-spot="play">🛝<small>놀이터</small></div><div class="build-spot s-square" data-spot="square">🪑<small>광장</small></div><div class="build-spot s-shade" data-spot="shade">🌳<small>쉼터</small></div><div class="build-spot s-garden" data-spot="garden">🌷<small>정원</small></div><div class="build-spot s-lights" data-spot="lights">💡<small>산책길</small></div><div class="build-spot s-path" data-spot="path">♿<small>연결길</small></div></div><p class="small-note">시설 카드를 누르거나 지도 위 표식을 클릭해서 설치·제거할 수 있어요.</p><div class="feedback" id="buildFeedback">공원 개선 예산을 계획해 보세요.</div></div><div class="panel"><h3>🏗️ 시설 선택</h3><div id="facilityList" class="facility-list"></div><div class="metric-strip"><span>👧 놀이 <strong id="playMetric">0</strong></span><span>🌿 휴식 <strong id="restMetric">0</strong></span><span>♿ 접근 <strong id="accessMetric">0</strong></span></div><button id="trialBtn" class="btn primary block">🎉 공원 시범 개장하기</button></div></div></section>
+
+      <section id="trialStage" class="page-section" hidden><div class="chapter-banner"><p class="eyebrow">CHAPTER 04 · 두 번째 개장식</p><h3>우리가 만든 공원에 주민들이 찾아왔어요!</h3><p>설계한 시설에 따라 주민의 반응이 달라집니다. 불편한 점이 남았다면 다시 설계할 수 있어요.</p></div><div class="trial-map"><img src="../publicness/assets/park-map.png" alt="새롭게 개선한 별빛공원"><div id="parkImprovements" class="park-improvements"></div></div><div id="reactions" class="reaction-grid"></div><div class="actions end-actions"><button id="reviseBtn" class="btn">↶ 공원 다시 설계하기</button><button id="meetingBtn" class="btn primary">🏛️ 공원 운영 원칙 정하기</button></div></section>
+
+      <section id="meetingStage" class="page-section" hidden><div class="chapter-banner"><p class="eyebrow">CHAPTER 05 · 공원 운영 원칙</p><h3>파크봇이 설계한 공원을 비교해 보세요</h3><p>우리가 만든 공원은 아직 완벽하지 않을 수 있어요. 앞으로 AI가 공공시설을 설계할 때 지켜야 할 원칙을 제안해 주세요.</p></div><div id="policyList" class="policy-grid"></div><label class="field-label" for="reason">내 판단의 이유 <small>선택 입력 · 최대 300자</small></label><textarea id="reason" rows="4" maxlength="300" placeholder="예: 사람들이 많이 이용하는 시설도 중요하지만, 누구나 갈 수 있도록 길을 연결해야 한다고 생각해요."></textarea><button id="finishBtn" class="btn primary block" disabled>🏅 탐험 마치기</button></section>
+
+      <section id="endStage" class="page-section end" hidden><div class="trophy">🏅</div><p class="eyebrow">ETHICITY · PUBLIC INTEREST</p><h3>모두의 목소리를 담은 공원</h3><p>파크봇이 새 원칙을 배웠어요. 좋은 공원은 하나의 숫자로만 정해지지 않아요.</p><div class="end-summary" id="endSummary"></div><div class="reflection"><b>생각해 보기</b><p>이용객 수가 적어도 꼭 필요한 공공시설은 무엇일까요? 다른 주민의 생각을 들었을 때 내 판단은 어떻게 달라졌나요?</p></div><div class="actions end-actions"><button id="downloadBtn" class="btn">📄 내 탐험 기록 저장</button><button id="replayBtn" class="btn primary">↺ 처음부터 다시 하기</button></div></section>
+    </section>
+  </main>
+  <div id="dialogOverlay" class="overlay" hidden><div class="dialog-card" id="dialogCard" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"></div></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <footer class="foot">윤리시티 공공성 · 사라진 우리들의 공원 v0.1 · 학습용 가상 사례 · 모든 수치는 가상 데이터입니다.</footer>
+  <script src="../publicness/audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
