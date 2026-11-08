@@ -53,16 +53,54 @@
     [475,875,675,950], [930,875,1120,950]
   ];
   const LAB_BLOCKERS=[[80,170,425,350],[1175,170,1520,350]];
+  // Collision lines follow stone fences, curved garden borders and steps.
+  // Coordinates refer to the 1600×1000 park world (character *feet*, not sprite head).
+  // Keep gates and accessible approach to the four residents open.
+  const PARK_STONE_WALLS=[
+    // Eastern terrace garden: sloped retaining wall and its lower bend.
+    {points:[[885,430],[890,525],[935,615],[998,695],[1048,763],[1080,828],[1150,860]],halfWidth:19},
+    // Upper/lower stretches of the stone garden border, excluding the stair opening.
+    {points:[[1130,860],[1200,866],[1250,864]],halfWidth:17},
+    {points:[[1335,845],[1415,845],[1495,815]],halfWidth:18},
+    // Western garden and shrub-bed parapets.
+    {points:[[260,430],[268,520],[284,596],[325,652]],halfWidth:16},
+    {points:[[350,650],[410,665],[465,691]],halfWidth:16}
+  ];
+  function distanceToSegment(px,py,ax,ay,bx,by){
+    const dx=bx-ax,dy=by-ay,length=dx*dx+dy*dy;
+    if(length===0)return Math.hypot(px-ax,py-ay);
+    const t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/length));
+    return Math.hypot(px-ax-dx*t,py-ay-dy*t);
+  }
   function collisionAt(world,x,y){
     const b=SCENES[world];
     if(x<80||x>b.width-80||y<170||y>b.height-65)return true;
     const blockers=world==='park'?PARK_BLOCKERS:LAB_BLOCKERS;
-    return blockers.some(r=>rectContains(r,x,y));
+    if(blockers.some(r=>rectContains(r,x,y)))return true;
+    if(world!=='park')return false;
+    const radius=14; // foot collision radius: sprite body may overlap the edge visually
+    return PARK_STONE_WALLS.some(wall=>wall.points.some((p,i)=>{
+      if(!i)return false;
+      const from=wall.points[i-1];
+      return distanceToSegment(x,y,from[0],from[1],p[0],p[1])<=wall.halfWidth+radius;
+    }));
   }
   function moveSafe(nx,ny){
     const ox=player.x,oy=player.y;
-    if(!collisionAt(state.world,nx,oy))player.x=nx;else motion.vx=0;
-    if(!collisionAt(state.world,player.x,ny))player.y=ny;else motion.vy=0;
+    // Continuous collision: split each frame movement into short steps so a fast
+    // character cannot skip over a narrow fence between two frames.
+    const dx=nx-ox,dy=ny-oy;
+    const steps=Math.max(1,Math.ceil(Math.hypot(dx,dy)/4));
+    let blockedX=false,blockedY=false;
+    for(let i=0;i<steps;i++){
+      const sx=dx/steps,sy=dy/steps;
+      if(!collisionAt(state.world,player.x+sx,player.y))player.x+=sx;
+      else blockedX=true;
+      if(!collisionAt(state.world,player.x,player.y+sy))player.y+=sy;
+      else blockedY=true;
+    }
+    if(blockedX)motion.vx=0;
+    if(blockedY)motion.vy=0;
     return Math.hypot(player.x-ox,player.y-oy);
   }
   let collectWithSpace=null;
