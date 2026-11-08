@@ -38,6 +38,33 @@
   const images={};
   for (const [key,src] of Object.entries({park:'park-map.png',lab:'ai-lab.png',haneul:'haneul-walk.png',jiho:'jiho-walk.png',saebom:'saebom-walk.png',grandmother:'grandmother.png',harin:'harin.png',onyu:'onyu.png',parkbot:'parkbot.png',officer:'town-officer.png'})) { const img=new Image(); img.src='assets/'+src; images[key]=img; }
   let player={x:800,y:860},camera={x:0,y:0},keys=new Set(),target=null,modalOpen=false,nearLock=null,portalCooldown=0,labLock=false,lastFrame=0;
+  const motion={vx:0,vy:0};
+  const TOP_SPEED=.33,ACCEL=.0023,BRAKE=.00185;
+  const reducedMotion=typeof window.matchMedia==='function'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let portalPhase=null;
+  const resetMotion=()=>{motion.vx=0;motion.vy=0;walkingFrame=1;walkClock=0;};
+  function ease(from,to,step){return from<to?Math.min(from+step,to):Math.max(from-step,to);}
+  function rectContains(r,x,y,pad=12){return x>r[0]-pad&&x<r[2]+pad&&y>r[1]-pad&&y<r[3]+pad;}
+  // Park landmarks: permanent buildings, fenced gardens, flower beds and pond.
+  // NPC footprints and portal remain on the accessible paths between these regions.
+  const PARK_BLOCKERS=[
+    [80,170,220,275], [410,170,675,295], [910,170,1095,295], [1375,170,1520,350],
+    [500,420,672,627], [930,430,1110,635], [80,435,245,655], [1385,440,1520,666],
+    [475,875,675,950], [930,875,1120,950]
+  ];
+  const LAB_BLOCKERS=[[80,170,425,350],[1175,170,1520,350]];
+  function collisionAt(world,x,y){
+    const b=SCENES[world];
+    if(x<80||x>b.width-80||y<170||y>b.height-65)return true;
+    const blockers=world==='park'?PARK_BLOCKERS:LAB_BLOCKERS;
+    return blockers.some(r=>rectContains(r,x,y));
+  }
+  function moveSafe(nx,ny){
+    const ox=player.x,oy=player.y;
+    if(!collisionAt(state.world,nx,oy))player.x=nx;else motion.vx=0;
+    if(!collisionAt(state.world,player.x,ny))player.y=ny;else motion.vy=0;
+    return Math.hypot(player.x-ox,player.y-oy);
+  }
   let collectWithSpace=null;
   const sound=window.ParkAudio||{enabled:false,supported:false,status:'unsupported',lastError:'오디오 기능을 사용할 수 없습니다.',start(){},pause(){},play(){},toggle(){return false;},test(){},onChange(){}};
   function updateSoundButton(){const b=$('soundToggle'),test=$('soundTest'),status=$('soundStatus');b.textContent=sound.supported?(sound.enabled?'🔊 사운드 켜짐':'🔇 사운드 꺼짐'):'🔇 오디오 미지원';b.setAttribute('aria-pressed',String(!!sound.enabled&&sound.supported));b.disabled=!sound.supported;test.disabled=!sound.supported;const labels={ready:'게임 시작 후 음악 재생',playing:'♪ 배경음악 재생 중',effects:'♪ 효과음 재생됨','test-ok':'✓ 테스트 소리가 재생됐어요',muted:'음소거 상태',paused:'첫 화면에서는 음악 일시정지',blocked:sound.lastError,error:sound.lastError,unsupported:sound.lastError};status.textContent=labels[sound.status]||'오디오 준비 중';status.classList.toggle('audio-error',['blocked','error','unsupported'].includes(sound.status));}
@@ -48,7 +75,7 @@
   let visualTime=0;
   const loaded = img => img?.complete && img.naturalWidth>0;
   function toast(msg){const box=$('toast');box.textContent=msg;box.hidden=false;clearTimeout(toast.handle);toast.handle=setTimeout(()=>box.hidden=true,3300);}
-  function openModal(title,body,buttons=''){modalOpen=true;collectWithSpace=null;keys.clear();target=null;sound.play('dialogue');$('dialogOverlay').hidden=false;$('dialogCard').innerHTML=`<div class="dialog-head"><div><p class="eyebrow">ETHICITY · 별빛공원 이야기</p><h3 id="dialogTitle">${esc(title)}</h3></div><button id="dialogClose" class="dialog-close" aria-label="닫기">✕</button></div>${body}<div class="dialog-actions">${buttons}</div>`;$('dialogClose').addEventListener('click',closeModal);$('dialogClose').focus();}
+  function openModal(title,body,buttons=''){modalOpen=true;collectWithSpace=null;keys.clear();target=null;resetMotion();sound.play('dialogue');$('dialogOverlay').hidden=false;$('dialogCard').innerHTML=`<div class="dialog-head"><div><p class="eyebrow">ETHICITY · 별빛공원 이야기</p><h3 id="dialogTitle">${esc(title)}</h3></div><button id="dialogClose" class="dialog-close" aria-label="닫기">✕</button></div>${body}<div class="dialog-actions">${buttons}</div>`;$('dialogClose').addEventListener('click',closeModal);$('dialogClose').focus();}
   function closeModal(){modalOpen=false;collectWithSpace=null;$('dialogOverlay').hidden=true;if(!$('gameScreen').hidden&&state.stage==='explore')canvas.focus({preventScroll:true});}
   $('dialogOverlay').addEventListener('click',e=>{if(e.target===$('dialogOverlay'))closeModal();});
   window.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalOpen)closeModal();if(modalOpen&&collectWithSpace&&(e.code==='Space'||e.key===' ')){e.preventDefault();if(!e.repeat)collectWithSpace();}});
@@ -69,26 +96,97 @@
   function sprite(key,x,y,size=1,direction='down',frame=1){const img=images[key];if(!loaded(img))return;const row={down:0,left:1,right:2,up:3}[direction]||0;ctx.imageSmoothingEnabled=false;ctx.drawImage(img,(frame%4)*96,row*128,96,128,x-48*size,y-120*size,96*size,128*size);}
   function portrait(key,x,y,w=95,h=118){const img=images[key];if(!loaded(img))return;ctx.imageSmoothingEnabled=false;ctx.drawImage(img,x-w/2,y-h,w,h);}
   function marker(x,y,label,icon,done=false){ctx.fillStyle=done?'#ddf4d9':'#fff9df';ctx.strokeStyle='#294b40';ctx.lineWidth=3;ctx.fillRect(x-75,y-145,150,34);ctx.strokeRect(x-75,y-145,150,34);ctx.fillStyle='#294b40';ctx.textAlign='center';ctx.font='bold 16px Galmuri,sans-serif';ctx.fillText(icon+' '+label,x,y-122);}
-  function portal(x,y,title){const pulse=Math.sin(visualTime/430)*6;ctx.fillStyle='rgba(77,228,215,.28)';ctx.fillRect(x-42-pulse/2,y-105-pulse,84+pulse,98+pulse);ctx.strokeStyle='#f1e39a';ctx.lineWidth=5;ctx.strokeRect(x-38,y-102,76,96);ctx.fillStyle='#fff9d5';ctx.font='bold 16px Galmuri,sans-serif';ctx.textAlign='center';ctx.fillText('✦ '+title,x,y-115);}
+  function portal(x,y,title){
+    const pulse=Math.sin(visualTime/430)*6;
+    ctx.save();
+    ctx.fillStyle='rgba(77,228,215,.28)';ctx.fillRect(x-42-pulse/2,y-105-pulse,84+pulse,98+pulse);
+    ctx.strokeStyle='#f1e39a';ctx.lineWidth=5;ctx.strokeRect(x-38,y-102,76,96);
+    if(!reducedMotion){
+      const t=visualTime/650;
+      for(let i=0;i<9;i++){
+        const a=t+i*Math.PI*2/9,px=x+Math.cos(a)*47,py=y-58+Math.sin(a)*48;
+        ctx.fillStyle=i%2===0?'#f1e39a':'#d4fff2';
+        ctx.fillRect(Math.round(px),Math.round(py),i%3===0?7:5,i%3===0?7:5);
+      }
+    }
+    ctx.fillStyle='#fff9d5';ctx.font='bold 16px Galmuri,sans-serif';ctx.textAlign='center';
+    ctx.fillText('✦ '+title,x,y-115);ctx.restore();
+  }
   function drawScene(){const scene=SCENES[state.world],img=images[state.world];camera.x=Math.max(0,Math.min(scene.width-W,player.x-W/2));camera.y=Math.max(0,Math.min(scene.height-H,player.y-H/2));ctx.clearRect(0,0,W,H);ctx.fillStyle='#b9d9bd';ctx.fillRect(0,0,W,H);ctx.save();ctx.translate(-Math.floor(camera.x),-Math.floor(camera.y));if(loaded(img)){ctx.imageSmoothingEnabled=false;ctx.drawImage(img,0,0,scene.width,scene.height);}if(state.world==='park'){
       portal(805,190,'AI 관리실');
       for(const n of NPCS){if(n.img)portrait(n.img,n.x,n.y);else sprite(n.sprite,n.x,n.y,.85);marker(n.x,n.y,n.name,n.icon,state.visited.includes(n.id));}
     } else {marker(800,325,'파크봇','🤖',state.criteriaPassed);portal(800,850,'공원으로');}
     sprite(state.avatar,player.x,player.y,.9,walkingDirection,walkingFrame);ctx.font='bold 17px Galmuri,sans-serif';ctx.textAlign='center';ctx.fillStyle='#fffde9';ctx.strokeStyle='#294b40';ctx.lineWidth=4;ctx.strokeText(state.name,player.x,player.y-111);ctx.fillText(state.name,player.x,player.y-111);
     if(target){ctx.strokeStyle='#fff4af';ctx.lineWidth=4;ctx.beginPath();ctx.arc(target.x,target.y,13+3*Math.sin(visualTime/220),0,2*Math.PI);ctx.stroke();}
-    ctx.restore();}
+    ctx.restore();drawTransitionOverlay();}
   function nearest(){const items=state.world==='park'?NPCS:[{id:'parkbot',x:800,y:325}];let best=null,dist=Infinity;for(const n of items){const d=Math.hypot(player.x-n.x,player.y-n.y);if(d<dist){best=n;dist=d;}}return {npc:best,dist};}
-  function changeWorld(world){sound.play('portal');state.world=world;save();keys.clear();target=null;nearLock=null;labLock=false;player=world==='lab'?{x:800,y:725}:{x:800,y:820};portalCooldown=performance.now()+1900;$('sceneLabel').textContent=world==='lab'?'🤖 파크봇 관리실':'🌳 별빛공원';$('sceneHelp').textContent=world==='lab'?'파크봇에게 다가가서 분석 보고서 확인':'방향키 / WASD 이동 · 접근 시 자동 대화 · 스페이스로 단서 수집';$('mapHint').textContent=world==='lab'?'파크봇에게 접근해 이야기하세요. 아래쪽 포털로 공원에 돌아갈 수 있어요.':'아바타가 움직이면 카메라가 따라와요. 청록색 관리실 문으로 들어갈 수 있어요.';toast(world==='lab'?'AI 관리실에 들어왔어요.':'별빛공원으로 돌아왔어요.');}
+  function changeWorld(world){sound.play('portal');state.world=world;save();keys.clear();target=null;nearLock=null;labLock=false;resetMotion();player=world==='lab'?{x:800,y:725}:{x:800,y:820};portalCooldown=performance.now()+1900;$('sceneLabel').textContent=world==='lab'?'🤖 파크봇 관리실':'🌳 별빛공원';$('sceneHelp').textContent=world==='lab'?'파크봇에게 다가가서 분석 보고서 확인':'방향키 / WASD 이동 · 접근 시 자동 대화 · 스페이스로 단서 수집';$('mapHint').textContent=world==='lab'?'파크봇에게 접근해 이야기하세요. 아래쪽 포털로 공원에 돌아갈 수 있어요.':'아바타가 움직이면 카메라가 따라와요. 청록색 관리실 문으로 들어갈 수 있어요.';toast(world==='lab'?'AI 관리실에 들어왔어요.':'별빛공원으로 돌아왔어요.');}
+  function beginPortal(nextWorld){
+    if(portalPhase||performance.now()<portalCooldown)return;
+    keys.clear();target=null;resetMotion();
+    if(reducedMotion){changeWorld(nextWorld);return;}
+    portalPhase={world:nextWorld,elapsed:0,changed:false};
+    sound.play('portal');
+  }
+  function updatePortal(dt){
+    if(!portalPhase)return;
+    portalPhase.elapsed+=dt;
+    if(!portalPhase.changed&&portalPhase.elapsed>=260){
+      portalPhase.changed=true;changeWorld(portalPhase.world);
+    }
+    if(portalPhase.elapsed>=520)portalPhase=null;
+  }
+  function drawTransitionOverlay(){
+    if(!portalPhase)return;
+    const t=Math.min(1,portalPhase.elapsed/520);
+    const opacity=Math.max(0,1-Math.abs(t-.5)*2);
+    ctx.save();ctx.fillStyle='rgba(255,249,232,'+(opacity*.94)+')';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#f4d477';ctx.lineWidth=9;ctx.globalAlpha=opacity;
+    ctx.beginPath();ctx.arc(W/2,H/2,28+Math.sin(Math.PI*t)*92,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+  }
   function talk(n){if(!n)return;nearLock=n.id;target=null;keys.clear();const got=state.visited.includes(n.id);openModal(n.place,`<div class="dialogue">${n.img?`<img src="assets/${n.img}.png" alt="${esc(n.name)}">`:`<span class="dialog-sprite ${n.sprite}" aria-hidden="true"></span>`}<div><p class="quote-label">${esc(n.name)} · ${esc(n.role)}</p><p>“${esc(n.line)}”</p></div></div><div class="evidence"><b>📓 ${got?'다시 읽는 증거 카드':'새로운 증거 카드'}</b><p>${esc(n.fact)}</p><p><b>생각해 보기:</b> ${esc(n.question)}</p></div><p class="keyboard-hint">⌨️ 스페이스바를 누르면 ${got?'확인':'단서 수집'} · 마우스 클릭도 가능</p>`,`<button class="btn primary" id="collectBtn">${got?'확인':'🔎 단서 수집'} [SPACE]</button>`);$('collectBtn').addEventListener('click',()=>{sound.play('collect');if(!state.visited.includes(n.id))state.visited.push(n.id);save();renderJournal();closeModal();toast(state.visited.length===4?'단서를 모두 모았어요! 공원 위쪽 AI 관리실로 가 보세요.':'증거 카드를 수집했어요!');});collectWithSpace=()=>{$('collectBtn')?.click();};}
   function talkLab(){nearLock='parkbot';const done=state.visited.length===NPCS.length;openModal('파크봇의 분석 보고서',`<div class="dialogue"><img src="assets/parkbot.png" alt="픽셀아트 AI 파크봇"><div><p class="quote-label">파크봇</p><p>“저는 이용객 수, 운영비, 예상 수익을 계산했어요. 하지만 주민들의 실제 생활은 제 계산에 없었습니다.”</p></div></div><div class="evidence">${done?'주민 4명의 의견을 모았군요. 함께 제 계산 기준을 고쳐 주세요.':`아직 단서가 ${NPCS.length-state.visited.length}개 부족해요. 공원에 돌아가 주민들을 조사해 주세요.`}</div>`,`<button class="btn primary" id="reportBtn" ${done?'':'disabled'}>🤖 AI 판단 기준 분석</button>`);$('reportBtn').addEventListener('click',()=>{if(done){closeModal();changeStage('analysis');}});}
-  function checkInteractions(){const locked=state.world==='park'?NPCS.find(n=>n.id===nearLock):nearLock==='parkbot'?{x:800,y:325}:null;if(locked&&Math.hypot(player.x-locked.x,player.y-locked.y)>160)nearLock=null;if(performance.now()>portalCooldown){const p=state.world==='park'?{x:805,y:190}:{x:800,y:850};if(Math.hypot(player.x-p.x,player.y-p.y)<65){changeWorld(state.world==='park'?'lab':'park');return;}}const {npc,dist}=nearest();if(npc&&dist<112&&!nearLock){target=null;keys.clear();state.world==='park'?talk(npc):talkLab();}}
-  function walkable(x,y){if(state.world==='lab')return true;const obstacles=[{x1:680,y1:390,x2:920,y2:535},{x1:1120,y1:20,x2:1570,y2:245},{x1:685,y1:0,x2:925,y2:120}];return !obstacles.some(o=>x>o.x1&&x<o.x2&&y>o.y1&&y<o.y2);}
-  function tick(t){const dt=Math.min(50,t-(lastFrame||t));lastFrame=t;visualTime=t;if(state.stage==='explore'&&!$('gameScreen').hidden&&!modalOpen){let dx=0,dy=0;if(keys.has('left'))dx--;if(keys.has('right'))dx++;if(keys.has('up'))dy--;if(keys.has('down'))dy++;if(dx||dy)target=null;else if(target){const vx=target.x-player.x,vy=target.y-player.y,d=Math.hypot(vx,vy);if(d<8)target=null;else{dx=vx/d;dy=vy/d;}}if(dx||dy){const d=Math.hypot(dx,dy)||1,b=SCENES[state.world],step=dt*.33,oldX=player.x,oldY=player.y;const nextX=Math.max(80,Math.min(b.width-80,player.x+dx/d*step)),nextY=Math.max(170,Math.min(b.height-65,player.y+dy/d*step));if(walkable(nextX,player.y))player.x=nextX;if(walkable(player.x,nextY))player.y=nextY;const movedX=player.x-oldX,movedY=player.y-oldY;if(Math.hypot(movedX,movedY)>.1){walkingDirection=Math.abs(movedX)>Math.abs(movedY)?(movedX>0?'right':'left'):(movedY>0?'down':'up');walkClock+=dt;walkingFrame=Math.floor(walkClock/150)%4;}else walkingFrame=1;}else{walkingFrame=1;walkClock=0;}drawScene();checkInteractions();}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+  function checkInteractions(){const locked=state.world==='park'?NPCS.find(n=>n.id===nearLock):nearLock==='parkbot'?{x:800,y:325}:null;if(locked&&Math.hypot(player.x-locked.x,player.y-locked.y)>160)nearLock=null;if(!portalPhase&&performance.now()>portalCooldown){const p=state.world==='park'?{x:805,y:190}:{x:800,y:850};if(Math.hypot(player.x-p.x,player.y-p.y)<65){beginPortal(state.world==='park'?'lab':'park');return;}}const {npc,dist}=nearest();if(npc&&dist<112&&!nearLock){target=null;keys.clear();state.world==='park'?talk(npc):talkLab();}}
+  function walkable(x,y){return !collisionAt(state.world,x,y);}
+  function tick(t){
+    const dt=Math.min(50,Math.max(0,t-(lastFrame||t)));lastFrame=t;visualTime=t;
+    if(state.stage==='explore'&&!$('gameScreen').hidden){
+      if(portalPhase){updatePortal(dt);}
+      else if(!modalOpen){
+        let dx=0,dy=0;
+        if(keys.has('left'))dx--;if(keys.has('right'))dx++;if(keys.has('up'))dy--;if(keys.has('down'))dy++;
+        if(dx||dy)target=null;
+        else if(target){
+          const vx=target.x-player.x,vy=target.y-player.y,d=Math.hypot(vx,vy);
+          if(d<12){target=null;}
+          else {const desired=Math.min(TOP_SPEED,Math.sqrt(2*BRAKE*d));dx=vx/d*desired/TOP_SPEED;dy=vy/d*desired/TOP_SPEED;}
+        }
+        const length=Math.hypot(dx,dy),tx=length?dx/Math.max(1,length)*TOP_SPEED:0,ty=length?dy/Math.max(1,length)*TOP_SPEED:0;
+        motion.vx=ease(motion.vx,tx,dt*(length?ACCEL:BRAKE));
+        motion.vy=ease(motion.vy,ty,dt*(length?ACCEL:BRAKE));
+        if(Math.abs(motion.vx)<.002)motion.vx=0;if(Math.abs(motion.vy)<.002)motion.vy=0;
+        const b=SCENES[state.world];
+        const nx=Math.max(80,Math.min(b.width-80,player.x+motion.vx*dt));
+        const ny=Math.max(170,Math.min(b.height-65,player.y+motion.vy*dt));
+        const moved=moveSafe(nx,ny);
+        if(moved>.03){
+          walkingDirection=Math.abs(motion.vx)>Math.abs(motion.vy)?(motion.vx>0?'right':'left'):(motion.vy>0?'down':'up');
+          walkClock+=dt;walkingFrame=Math.floor(walkClock/150)%4;
+        }else{walkingFrame=1;walkClock=0;}
+        if(target&&moved<.01){target=null;resetMotion();}
+        checkInteractions();
+      }
+      drawScene();
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
   const keyMap={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',a:'left',d:'right',w:'up',s:'down'};
-  window.addEventListener('keydown',e=>{if(modalOpen||state.stage!=='explore'||$('gameScreen').hidden||['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))return;const d=keyMap[e.key.length===1?e.key.toLowerCase():e.key];if(d){keys.add(d);e.preventDefault();}if(e.key.toLowerCase()==='e'||e.key==='Enter'){const n=nearest();if(n.dist<190){state.world==='park'?talk(n.npc):talkLab();}else toast('주민이나 파크봇에게 조금 더 가까이 가 보세요.');e.preventDefault();}});
-  window.addEventListener('keyup',e=>{const d=keyMap[e.key.length===1?e.key.toLowerCase():e.key];if(d)keys.delete(d);});window.addEventListener('blur',()=>keys.clear());
+  window.addEventListener('keydown',e=>{if(modalOpen||portalPhase||state.stage!=='explore'||$('gameScreen').hidden||['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))return;const d=keyMap[e.key.length===1?e.key.toLowerCase():e.key];if(d){keys.add(d);e.preventDefault();}if(e.key.toLowerCase()==='e'||e.key==='Enter'){const n=nearest();if(n.dist<190){state.world==='park'?talk(n.npc):talkLab();}else toast('주민이나 파크봇에게 조금 더 가까이 가 보세요.');e.preventDefault();}});
+  window.addEventListener('keyup',e=>{const d=keyMap[e.key.length===1?e.key.toLowerCase():e.key];if(d)keys.delete(d);});window.addEventListener('blur',()=>{keys.clear();resetMotion();});
   document.querySelectorAll('[data-dir]').forEach(btn=>{const d=btn.dataset.dir;btn.addEventListener('pointerdown',e=>{e.preventDefault();btn.setPointerCapture(e.pointerId);keys.add(d);});for(const event of ['pointerup','pointercancel','lostpointercapture'])btn.addEventListener(event,()=>keys.delete(d));});
-  canvas.addEventListener('click',e=>{if(modalOpen||state.stage!=='explore')return;const rect=canvas.getBoundingClientRect();const x=Math.max(80,Math.min(SCENES[state.world].width-80,camera.x+(e.clientX-rect.left)*W/rect.width));const y=Math.max(170,Math.min(SCENES[state.world].height-65,camera.y+(e.clientY-rect.top)*H/rect.height));target={x,y};canvas.focus({preventScroll:true});});
+  canvas.addEventListener('click',e=>{if(modalOpen||portalPhase||state.stage!=='explore')return;const rect=canvas.getBoundingClientRect();const x=Math.max(80,Math.min(SCENES[state.world].width-80,camera.x+(e.clientX-rect.left)*W/rect.width));const y=Math.max(170,Math.min(SCENES[state.world].height-65,camera.y+(e.clientY-rect.top)*H/rect.height));if(!walkable(x,y)){toast('담장·건물·화단 위로는 이동할 수 없어요. 바닥길을 선택해 주세요.');return;}target={x,y};canvas.focus({preventScroll:true});});
   function renderJournal(){$('clueList').innerHTML=NPCS.map(n=>`<button class="clue-row ${state.visited.includes(n.id)?'got':''}" data-clue="${n.id}"><span class="clue-icon">${n.icon}</span><span><b>${state.visited.includes(n.id)?'✓':'○'} ${esc(n.place)}</b><small>${state.visited.includes(n.id)?esc(n.name)+' · 기록 완료':'공원에서 조사하기'}</small></span></button>`).join('');document.querySelectorAll('[data-clue]').forEach(btn=>btn.addEventListener('click',()=>{const n=NPCS.find(x=>x.id===btn.dataset.clue);if(state.visited.includes(n.id))talk(n);else toast('아바타를 움직여 해당 주민에게 다가가 보세요.');}));$('progressChip').textContent=`단서 ${state.visited.length}/4`;$('labActionBtn').disabled=state.visited.length<4;$('labActionBtn').textContent=state.visited.length===4?'🤖 분석 단계로 이동':'🔒 단서 '+(4-state.visited.length)+'개 더 필요';}
   $('talkBtn').addEventListener('click',()=>{const n=nearest();if(n.dist<190){state.world==='park'?talk(n.npc):talkLab();}else toast('가까운 주민에게 다가가세요.');});
   $('labActionBtn').addEventListener('click',()=>{if(state.visited.length===4){if(state.world==='park')toast('관리실 포털에 다가가면 이동할 수 있어요. 직접 조사한 후 계속 진행해 보세요.');else changeStage('analysis');}});
