@@ -5,3 +5,44 @@ html{scroll-behavior:auto}.shell{width:100%}.appbar{padding:7px 18px;gap:12px}.t
 @media(min-width:700px) and (max-height:820px){.shell{padding-top:8px!important;padding-bottom:8px!important}.ee-panel{padding:8px 12px}.case-screen,.result-screen{gap:16px}.scene-context{font-size:18px}.dialogue-bubble.ee-speech{font-size:18px}.result-screen .dialogue-turn>canvas{width:48px!important;height:48px!important}.result-screen .dialogue-bubble.ee-speech{font-size:16px;line-height:1.55;padding:5px 8px}.result-screen .conversation{margin:4px 0}.consequence{padding-top:6px}.consequence-scene>canvas{width:40px!important;height:40px!important}.consequence-scene p{font-size:16px;line-height:1.6}.result-screen .feedback-page>.tag{font-size:12px}.score-reasons p{font-size:16px}.discussion-prompt{font-size:17px;margin:4px 0}.bridge-context{font-size:12px;margin:5px 0}.result-screen .page-controls{padding-top:4px}.result-screen .page-controls .ee-button{min-height:38px;font-size:13px;border-width:9px}.result-screen .action-panel>.buttons .ee-button{min-height:38px;font-size:14px;border-width:9px}.result-screen .narration-toolbar{margin-top:3px;min-height:24px}.judge-options{margin-top:4px}.judgement p{font-size:15px;margin:5px 0}.judgement h3{font-size:16px}.teacher-summary>div{font-size:14px}.teacher-heading h2{font-size:23px}.teacher-tabs{margin:6px 0}.teacher-bottom{margin-top:6px}.invitation p{margin:5px 0}.lesson-qr{width:180px}.nickname-grid{gap:4px}.barlabel{font-size:16px}.bars{gap:10px}.teacher-expanded .barlabel{font-size:20px}.compact-setup .character-card canvas{width:100px!important;height:100px!important}.compact-setup h1{font-size:27px}.compact-ending>canvas{width:70px!important;height:70px!important}}
 @media(max-width:699px){.appbar{display:flex;flex-wrap:wrap;padding:7px 10px}.brand{font-size:14px}.topright{margin:0;gap:2px;justify-content:flex-start}.topright .ee-button{font-size:10px;min-height:34px;border-width:8px}.topright .pill{font-size:11px;padding:3px}.music-controls{gap:3px}.music-volume input[type=range]{width:45px}.music-volume output{display:none}.shell{padding:8px}.footer{font-size:10px}.score-bars{gap:5px 10px}.score-metric>div:first-child{display:block;font-size:11px}.score-metric>div:first-child span{display:block;font-size:11px}.score-bars>small{font-size:10px}.student-scoreboard{padding:5px 8px}.round-head h2{font-size:20px}.screen-trail{gap:4px;flex-wrap:wrap}.screen-trail li{font-size:10px;padding:3px}.screen-trail li span{display:none}.round-content>.panel{height:auto}.case-screen,.result-screen{display:flex;flex-direction:column;gap:12px}.case-screen>.scene-picture,.result-picture{width:100%}.scene-picture .case-illustration{max-height:190px}.scene-picture figcaption strong{font-size:12px}.scene-picture figcaption span{font-size:10px}.scene-context{font-size:18px}.dialogue-turn{display:flex;gap:12px}.dialogue-turn>canvas{width:44px!important;height:44px!important;margin:0}.dialogue-bubble.ee-speech{font-size:17px;padding:6px}.dialogue-speaker{font-size:13px;margin-bottom:5px}.conversation{margin:10px 0}.character-card{flex-direction:column;gap:5px}.character-card canvas{width:96px!important;height:96px!important}.character-card strong{font-size:15px}.compact-setup h1{font-size:23px}.compact-setup .field small{font-size:12px}.compact-intro{display:flex;flex-direction:column;gap:10px}.intro-art canvas{max-height:170px;object-fit:contain}.choice-list{grid-template-columns:1fr;gap:8px}.choice.ee-choice{font-size:17px;padding:12px}.signals{grid-template-columns:1fr}.signal.ee-choice{font-size:16px}.signal small{font-size:14px}.signal-screen .screen-intro{align-items:flex-start}.signal-screen .screen-intro p{font-size:16px}.signal-explanation-page{font-size:19px}.signal-explanation-page h3{font-size:21px}.consequence-scene{flex-wrap:wrap}.consequence-scene p{font-size:17px;flex:1 1 180px}.device-layout{display:flex;flex-direction:column;gap:14px}.phone-frame{width:310px;height:465px;flex:none}.phone-row dd{font-size:18px}.tablet-frame{width:100%;height:300px;min-height:300px}.tablet-frame .phone-row dd{font-size:22px}.observation-copy{width:100%}.observation-copy .screen-intro p{font-size:16px}.observation-copy>.small{font-size:12px}.observation-controls{margin-top:8px}.observation-copy .page-controls{padding-top:4px}.teacher-start{grid-template-columns:1fr}.teacher-heading h2{font-size:20px}.teacher-live-count{font-size:12px;flex-direction:column;gap:4px}.teacher-tabs{flex-wrap:wrap}.teacher-tabs .ee-button{font-size:13px}.teacher-scene-grid,.teacher-projector{display:flex;flex-direction:column}.teacher-summary{display:block}.teacher-summary>div{font-size:15px}.lobby-layout{display:flex;flex-direction:column;gap:16px}.invitation h2{font-size:20px}.lobby-roster{width:100%}.teacher-bottom{gap:12px}.judge-choice.ee-button{font-size:12px}.judge-choice span{font-size:9px}.judge-options{grid-template-columns:repeat(2,1fr)}.teacher-content>.panel{height:auto}.report-students>div{flex-wrap:wrap}.report-students span{font-size:12px}.qr-large{display:flex}.qr-large .lesson-qr{width:260px}.teacher-expanded .barlabel{font-size:18px}.teacher-expanded .roster td{font-size:16px}.compact-ending>canvas{float:none;width:70px!important;height:70px!important}.compact-ending h1{font-size:23px}.compact-ending p{font-size:16px}.compact-ending blockquote{font-size:19px}.page-controls .ee-button{font-size:13px}.result-screen .action-panel{width:100%}.report-modal{padding:8px}.report-modal h1{font-size:23px}}
 @media(min-width:700px) and (orientation:portrait){.case-screen>.scene-picture,.result-picture>.scene-picture{height:100%;max-height:100%;display:flex;flex-direction:column}.result-picture{height:100%}.case-screen>.scene-picture>.case-illustration,.result-picture>.scene-picture>.case-illustration{flex:1;min-height:0;aspect-ratio:auto;max-height:none}.scene-picture figcaption{flex-shrink:0}}
+
+/* 장면은 남은 높이 안에서 줄어듭니다. 그림의 원래 비율이 패널 높이를 밀어내지 않습니다. */
+@media(min-width:700px){
+  .round-content{min-height:390px}
+  .round-content[data-round-screen=signals]{min-height:450px}
+  .round-content>.case-screen,.round-content>.result-screen{min-height:0}
+  .case-screen>.scene-vignette,.result-picture>.scene-vignette{
+    height:auto;max-height:100%;min-height:0;display:flex;flex-direction:column;margin:auto;
+  }
+  .result-picture{height:100%;min-height:0}
+  .case-screen>.scene-vignette>.case-illustration,.result-picture>.scene-vignette>.case-illustration{
+    flex:0 1 auto;min-height:0;aspect-ratio:1672/941;max-height:none;
+  }
+  .scene-vignette figcaption{flex-shrink:0}
+  .case-illustration>.scene-photo-cast{object-fit:contain}
+}
+@media(min-width:700px) and (orientation:landscape){
+  .round-content>.case-screen,.round-content>.result-screen{grid-template-rows:minmax(0,1fr)}
+}
+/* 높이가 작은 창이나 확대된 화면에서는 내용을 자르지 않고 페이지가 이어집니다. */
+@media(min-width:700px) and (max-height:649px),
+       (min-width:700px) and (orientation:portrait) and (max-height:899px){
+  body[data-view=round]{height:auto;min-height:100dvh;display:block}
+  body[data-view=round]>.shell{display:block}
+  .round-content,.round-content[data-round-screen=signals]{min-height:0}
+  .round-content>.panel{height:auto}
+  .case-screen,.result-screen{grid-template-rows:auto;align-items:start}
+  .case-screen>.scene-vignette,.result-picture>.scene-vignette{height:auto;max-height:none}
+  .result-picture{height:auto;max-height:none}
+  .case-screen>.scene-vignette>.case-illustration,.result-picture>.scene-vignette>.case-illustration{
+    flex:none;aspect-ratio:1672/941;max-height:260px;
+  }
+  .case-dialogue,.result-screen .action-panel{height:auto;max-height:none}
+  .device-layout{height:auto}
+  .phone-frame{height:500px;width:min(100%,334px)}
+  .tablet-frame{height:340px}
+}
+@media(min-width:700px) and (max-width:999px) and (max-height:649px){
+  .case-screen,.result-screen{grid-template-columns:1fr;gap:18px}
+  .case-screen>.scene-vignette,.result-picture>.scene-vignette{max-width:480px}
+}

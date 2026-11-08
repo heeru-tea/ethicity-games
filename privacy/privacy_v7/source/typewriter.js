@@ -36,7 +36,7 @@ function mountNarration(){
   narration.total=start;
   narration.gates.forEach(node=>{node.classList.add('narration-gated');node.inert=true;node.setAttribute('aria-hidden','true');});
   const bar=document.createElement('div');bar.className='narration-toolbar';bar.innerHTML='<span aria-hidden="true" class="narration-pulse">●</span><span>이야기가 이어집니다</span><button type="button" data-reveal-story>클릭해서 모두 보기 <span aria-hidden="true">↵</span></button><span class="sr">화면을 누르거나 Enter 또는 스페이스 키를 누르면 이 장면의 글이 모두 보입니다.</span>';
-  const host=S.view==='round'?main.querySelector('.case-dialogue,.observation-screen,.signal-screen,.action-panel'):S.view==='intro'?main.querySelector('.dialogue'):main.querySelector('.learning-card');
+  const host=S.view==='round'?main.querySelector('.case-dialogue,.observation-copy,.signal-screen,.action-panel'):S.view==='intro'?main.querySelector('.dialogue'):main.querySelector('.learning-card');
   host?.append(bar);applyCommonUI();narration.active=true;paintNarration();scheduleNarration();
 }
 function paintNarration(){
