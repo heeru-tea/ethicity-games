@@ -671,13 +671,13 @@ const STAGE_FN = {
     const lines = on ? [
       { who: 'onyu', mood: 'explaining', text: '「AI 도움받음」이라고 써 있네. 어디까지 AI고 어디까지 너야?' },
       { who: 'player', mood: 'happy', text: `편집과 목소리는 루미 AI가 했고, 사실 카드는 내가 모았어. 문장 3개 중 ${3 - S.aiUsed}개는 내가 썼어.` },
-      { who: 'saebom', mood: 'happy', text: '그럼 믿을 수 있겠다. 솔직하게 말해 줘서 고마워!' },
-      { who: 'teacher', mood: 'happy', text: '표시가 있으니 친구들이 무엇을 믿어도 되는지 알 수 있어요. 그게 믿음을 만들어요.' }
+      { who: 'saebom', mood: 'happy', text: '어떻게 만들었는지 알겠어. 솔직하게 말해 줘서 고마워!' },
+      { who: 'teacher', mood: 'happy', text: '표시가 있으니 AI가 도운 부분을 알 수 있어요. 내용이 맞는지는 출처와 함께 확인해야 해요.' }
     ] : [
       { who: 'saebom', mood: 'happy', text: '와, 이거 네가 다 만든 거야? 목소리도 멋지다!' },
       { who: 'player', mood: 'neutral', text: '응… 그게…' },
       { who: 'daon', mood: 'worried', text: '어? 이 목소리 루미 AI 목소리 아니야? 미리 말해 줬으면 좋았을 텐데.' },
-      { who: 'teacher', mood: 'explaining', text: '{nick}을(를) 탓하려는 게 아니에요. AI 도움을 받았다고 알려 주면, 친구들이 무엇을 믿어도 되는지 알 수 있어요.' }
+      { who: 'teacher', mood: 'explaining', text: '{nick}을(를) 탓하려는 게 아니에요. AI 도움을 받은 부분을 알려 주면 친구들이 자료를 살펴보는 데 도움이 돼요. 내용이 맞는지는 출처와 함께 확인해야 해요.' }
     ];
     lines.push({ who: 'robot', mood: 'explaining', text: 'AI가 만든 걸 표시하고 왜 추천했는지 알려 주는 것, 그게 투명성이에요. {nickHon}이 AI를 썼을 때도 똑같아요.' });
     if (on) playFx('correct', 640, 170); else playFx('retry', 640, 170);
