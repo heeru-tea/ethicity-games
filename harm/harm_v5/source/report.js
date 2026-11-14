@@ -13,7 +13,7 @@ async function downloadReport(){
   const width=1400,pad=64,lineHeight=38,probe=document.createElement('canvas').getContext('2d');
   const sections=[];const add=(text,{size=25,bold=false,color='#294b40',gap=16}={})=>sections.push({text,size,bold,color,gap});
   add('윤리시티 · 나의 AI 윤리 탐험 리포트',{size:39,bold:true,gap:28});
-  add(`${S.player.nickname}  |  침해금지 v5  |  ${new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul'}).format(new Date())}`,{size:22});
+  add(`${S.player.nickname}  |  안전성  |  ${new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul'}).format(new Date())}`,{size:22});
   add(`우리 반 엔딩 ${S.outcome.ending} · ${STORY.endings[S.outcome.ending].title}`,{size:30,bold:true});
   const p=narrativeRules.progress(S.decisions);add(`최종 축제 인기 ${p.popularity}/16 · 마을의 믿음 ${p.trust}/16`,{size:23});
   add('내 선택의 결과는 당시 상황에서의 예상입니다. 게임에는 학급이 확정한 선택과 변화가 실제로 반영됩니다.',{size:22,gap:30});
@@ -42,5 +42,5 @@ async function downloadReport(){
   for(const line of lines){ctx.fillStyle=line.color;ctx.font=`${line.bold?'bold ':''}${line.size}px Ethicity`;ctx.fillText(line.text,pad,line.y);}
   const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('리포트 이미지 생성에 실패했어요. 다시 시도해 주세요.');
   if(reportPreviewURL)URL.revokeObjectURL(reportPreviewURL);reportPreviewURL=URL.createObjectURL(blob);
-  downloadBlob(blob,'image/png',`harm-v5-${S.player.nickname.replaceAll(' ','')}-배움리포트.png`);openModal('report-preview');
+  downloadBlob(blob,'image/png',`harm-${S.player.nickname.replaceAll(' ','')}-배움리포트.png`);openModal('report-preview');
 }

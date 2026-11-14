@@ -1,6 +1,8 @@
 {
   "game": "harm",
-  "element": "침해금지",
+  "element": "안전성",
+  "principleRelated": "연계: 책임성·프라이버시 보호",
+  "principleSummary": "AI로 남을 속이거나 괴롭히는 일을 막는 것은 안전성의 오남용 예방에 해당한다.",
   "question": "AI가 누군가에게 피해를 줄 수 있을 때, 우리는 어떤 위험 신호를 알아차리고 어떻게 함께 막을 수 있을까?",
   "elements": {
     "1": {

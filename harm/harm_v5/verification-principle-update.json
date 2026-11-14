@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-11-14T06:05:22.735Z",
+  "checks": [
+    "Only principle label, relation label, and one summary sentence differ in scenario data",
+    "All 6561 paths retain incident history, scores, endings and completion values",
+    "Classroom version, Firebase config, access rules, storage IDs and all embedded assets unchanged",
+    "Each of the three actual ending renderers includes the sentence exactly once",
+    "Visible title and report labels omit version numbers; source syntax valid"
+  ],
+  "limit": "Pure-function and generated-HTML checks; live browser appearance checked separately."
+}

@@ -69,10 +69,10 @@ music = {'id':'background_pixel_adventure','title':'Pixel Adventure','src':'data
 license_text = (PACK/'ui'/'fonts'/'LICENSE.txt').read_text(encoding='utf-8')
 output = '''<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="윤리시티 매직메이커AI 공방 ver5. 8라운드 학급 투표로 AI의 위험을 살피고 함께 고치고 돕는다.">
-<meta name="theme-color" content="#294b40"><title>윤리시티 매직메이커AI 공방 ver5 · 침해금지</title>
+<meta name="description" content="윤리시티 매직메이커AI 공방. 8라운드 학급 투표로 AI의 위험을 살피고 함께 고치고 돕는다.">
+<meta name="theme-color" content="#294b40"><title>윤리시티 매직메이커AI 공방 · 안전성</title>
 <style>''' + css + '''</style></head>
-<body class="ee-theme"><header class="appbar"><div class="brand"><span class="brandmark" aria-hidden="true"><canvas class="ee-icon" width="64" height="64" data-common-icon="robot"></canvas></span><span>윤리시티<small>매직메이커AI 공방 · 침해금지 ver5</small></span></div><div id="topright" class="topright"></div></header>
+<body class="ee-theme"><header class="appbar"><div class="brand"><span class="brandmark" aria-hidden="true"><canvas class="ee-icon" width="64" height="64" data-common-icon="robot"></canvas></span><span>윤리시티<small>매직메이커AI 공방 · 안전성</small></span></div><div id="topright" class="topright"></div></header>
 <main id="main" class="shell"></main><footer class="footer">모든 인물과 자료는 가상입니다. · 우리 반의 한 표씩, 함께 만드는 이야기
 <details class="font-license"><summary>글꼴 이용 조건</summary><pre>''' + html.escape(license_text) + '''</pre></details></footer>
 <div id="toast" class="toast ee-notice hidden" role="status"></div>
