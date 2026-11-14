@@ -12,7 +12,7 @@ function tally(def,ballots,members){
  return {counts,accepted,excluded};
 }
 function weights(def,counts){const out={};for(const [id,n]of Object.entries(counts)){insist(Number.isInteger(n)&&n>=0&&def.candidates[id],'집계 오류');if(n){const a=def.candidates[id].assetId;insist(a,'대응 이미지 없음');out[a]=(out[a]||0)+n;}}return out;}
-const baseline=Object.freeze({D1:1,D2:1,D3:1});
+const baseline=Object.freeze({OBS01:1,OBS02:1,OBS03:1,OBS04:1,OBS05:1,OBS06:1});
 function combined(def,counts){const out={...baseline};for(const [id,n]of Object.entries(weights(def,counts)))out[id]=(out[id]||0)+n;return out;}
 function sample(pool,count,rng=Math.random){
  insist(Number.isInteger(count)&&count>=1&&count<=100,'추출 횟수는 1~100입니다.');
@@ -22,6 +22,6 @@ function sample(pool,count,rng=Math.random){
  return result;
 }
 const asMap=xs=>Object.fromEntries(xs.map((v,i)=>['n'+(i+1),v]));
-function experiment(round,def,pool,rng=Math.random){const count=def.drawCount||12;return {candidateVersion:round,poolVersion:round,algorithm:'weighted-replacement-v1',baselineVersion:'doctor-first3-equal-v1',count,results:{before:asMap(sample(baseline,count,rng)),after:asMap(sample(pool,count,rng))}};}
+function experiment(round,def,pool,rng=Math.random){const count=def.drawCount||12;return {candidateVersion:round,poolVersion:round,algorithm:'weighted-replacement-v1',baselineVersion:'doctor-obs-six-equal-v1',count,results:{before:asMap(sample(baseline,count,rng)),after:asMap(sample(pool,count,rng))}};}
 const api={clone,insist,tally,weights,baseline,combined,sample,experiment};if(typeof module!=='undefined')module.exports=api;else root.DiversityLocalCore=api;
 })(globalThis);

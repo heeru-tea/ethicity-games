@@ -2,7 +2,7 @@
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const MATERIAL={
-  "id": "ai-doctor-first3-20261029",
+  "id": "ai-doctor-obs-six-20261114",
   "kind": "AI 생성 이미지 · 실제 의료 사진 아님",
   "prompt": "의사가 일하는 모습을 그려 줘.",
   "features": [
@@ -17,8 +17,58 @@ const MATERIAL={
     "하는 일",
     "진찰하는 의사 수"
   ],
-  "notice": "같은 대화에서 연속 생성한 첫 결과 3장입니다. 독립 통제 표본이 아니며 AI 전체의 편향 빈도를 뜻하지 않습니다. 외양으로 실제 성별·민족·장애를 단정하지 않습니다. 뒤쪽 인물의 직업은 그림만으로 확정하지 않습니다.",
+  "notice": "수업용으로 구성한 AI 생성 그림 6장입니다. 실제 의료 사진이 아니며, 이 그림만으로 AI 전체의 표현 경향을 판단할 수는 없습니다. 외양으로 실제 성별·민족·장애를 단정하지 않습니다.",
   "cards": [
+    {
+      "id": "OBS01",
+      "image": "assets/ai_doctor/obs/OBS01_listening.png",
+      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상을 사이에 두고 환자와 마주 보며 이야기를 듣는다. 뒤쪽에 수액 거치대와 모니터가 보인다.",
+      "text": "환자의 이야기를 듣는 의사",
+      "sha256": "b0c5aeedc1a005950918589f820980064081594b5e92ae725e0ac287cae235cb",
+      "libraryId": "libfile_fde3_f-f454dff4a2148191a474b3e764d7e210_ebe1f7f5eb0c8191badd5375779be355"
+    },
+    {
+      "id": "OBS02",
+      "image": "assets/ai_doctor/obs/OBS02_results.png",
+      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 병상 옆에 서서 환자에게 클립보드의 그래프를 가리키며 설명한다.",
+      "text": "병상 옆에서 검사 결과를 설명하는 의사",
+      "sha256": "0b850a3502d1d4234fec6e7e10fe3defbd4832cc9f104e684eedee7cd15cd23d",
+      "libraryId": "libfile_fde3_f-2fd51b95250c81918496c9e3216ed266_ebe1f7f5eb0c8191badd5375779be355"
+    },
+    {
+      "id": "OBS03",
+      "image": "assets/ai_doctor/obs/OBS03_scan.png",
+      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상에 앉아 모니터의 흉부 CT 영상을 살펴본다.",
+      "text": "모니터의 의료 영상을 살펴보는 의사",
+      "sha256": "3d1a58cb3aafcc4659e75f2fe02f4206dd1a989f659118e6abca0ead517f153c",
+      "libraryId": "libfile_fde3_f-35a192f1aa1481918b775cd5775f4627_ebe1f7f5eb0c8191badd5375779be355"
+    },
+    {
+      "id": "OBS04",
+      "image": "assets/ai_doctor/obs/OBS04_records.png",
+      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상에서 안경을 쓰고 클립보드에 진료 기록을 작성한다.",
+      "text": "책상에서 진료 기록을 작성하는 의사",
+      "sha256": "c4bc364cfc0137ead87ed00ff176b48092f41f4985dd2407aaba2fae18a832eb",
+      "libraryId": "libfile_fde3_f-8e95948d36748191b9ec1e250f4fdc31_ebe1f7f5eb0c8191badd5375779be355"
+    },
+    {
+      "id": "OBS05",
+      "image": "assets/ai_doctor/obs/OBS05_plan.png",
+      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 복약 일정표를 들고 환자에게 가리키며 설명한다.",
+      "text": "환자에게 치료 계획을 설명하는 의사",
+      "sha256": "b66c46f8d9a37a57ab7ca3c65ff185e815f10a4a163e6c3d19091e4ae4243c79",
+      "libraryId": "libfile_fde3_f-53e56099215081919ae7c1f4daafa754_ebe1f7f5eb0c8191badd5375779be355"
+    },
+    {
+      "id": "OBS06",
+      "image": "assets/ai_doctor/obs/OBS06_rounds.png",
+      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 병상 옆에 서서 환자와 웃으며 대화한다.",
+      "text": "병실을 찾아 환자와 대화하는 의사",
+      "sha256": "222f3103a02cd36f11c6e9b0ffdb253dd390d9e47eddde2915e3c0ecf48f445c",
+      "libraryId": "libfile_fde3_f-0c2f487a6cb08191bbd24220cbf44db4_ebe1f7f5eb0c8191badd5375779be355"
+    }
+  ],
+  "legacyCards": [
     {
       "id": "D1",
       "image": "assets/ai_doctor/ethicity_doctor_first3/doctor_01.png",
