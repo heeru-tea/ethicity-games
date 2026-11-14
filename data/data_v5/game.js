@@ -370,7 +370,7 @@ function retentionChoice(protect){
  run([L(protect?'S5-R2':'S5-R1'),L('S5-03')],()=>earn('꾸준한 점검',5,showResult));
 }
 
-function showResult(){window.EthicityClassroomBridge?.update({...state,scene:6});mode='result';queue=[];afterQueue=null;actionHandlers=[];resultStep=0;resultPage=0;renderResultStep();}
+function showResult(){if(window.EthicityClassroomBridge?.gate(6,showResult))return;state.scene=6;window.EthicityClassroomBridge?.update(state);mode='result';queue=[];afterQueue=null;actionHandlers=[];resultStep=0;resultPage=0;renderResultStep();}
 function renderResultStep(){
  const result=M.result(state),titles=['급식안 확인','우리가 발견한 것','남은 확인 항목','학습한 점 고르기','약속 고르기','마지막 확인'];
  let body='',pages=1;
@@ -425,11 +425,19 @@ setMotion(reducedMotion);$('motion-setting').onchange=e=>setMotion(e.target.chec
 document.addEventListener('keydown',e=>{if(e.repeat||e.ctrlKey||e.altKey||e.metaKey||document.querySelector('dialog[open]'))return;const tag=e.target.tagName;if(['INPUT','TEXTAREA','SELECT'].includes(tag)||e.target.isContentEditable)return;if(/^[1-4]$/.test(e.key)&&actionHandlers[Number(e.key)-1]){e.preventDefault();actionHandlers[Number(e.key)-1]();return;}if(e.code==='Space'&&!e.target.closest('button,a')){const next=$('next-line');if(next){e.preventDefault();next.click();}}});
 function restoreClassroom(checkpoint){
  if(!window.EthicityClassroomModel.validateCheckpoint(checkpoint))return;
- const next=checkpoint.completedScene+1;state=checkpoint.state;state.completed=false;reported=next;reflection='';customPledge='';customPledgeIndex=null;
- mode='resume';setMain('<section class="ee-panel step-page"><p class="eyebrow">수업 다시 연결</p><h1>내 선택을 이어가요</h1><p class="step-copy">이야기 '+next+'까지 끝낸 선택을 불러왔어요. '+(next<6?'이야기 '+(next+1)+'부터 이어가요.':'학습한 내용을 정리해요.')+'</p><p class="ee-notice">끝내지 않은 이야기는 다시 시작해요. 직접 쓴 글은 저장하지 않아 복원되지 않아요.</p><button class="ee-button" id="resume-game">이어서 탐험하기</button></section>');
- $('resume-game').onclick=()=>{musicStarted=true;void updateMusic();next<6?startScene(next):showResult();};
+ state=checkpoint.state;state.completed=false;reported=checkpoint.completedScene+1;
+ reflection='';customPledge='';customPledgeIndex=null;
 }
-async function boot(){try{if(!window.ETHICITY_COMMON_MANIFEST||!window.EthicityAssets)throw Error('공통 패키지를 찾지 못했어요.');assets=await EthicityAssets.load(ETHICITY_COMMON_MANIFEST,COMMON);await Promise.all(Object.values(scenePictures).map(src=>new Promise((resolve,reject)=>{const image=new Image();image.onload=resolve;image.onerror=()=>reject(Error('장면 그림을 찾지 못했어요: '+src));image.src=src;})));paintIcons();showStart();window.EthicityClassroomBridge?.ready(restoreClassroom);if(window.EthicityClassroomBridge?.isClassroom())document.getElementById('privacy-note').textContent='수업에서는 닉네임과 미리 정한 선택·진행을 선생님과 공유해요. 성찰·약속에 직접 쓴 글과 PNG는 서버로 보내지 않아요. 새로고침하면 마지막으로 끝낸 이야기 다음부터 이어가요.';emit('ready');}catch(error){setMain('<div class="ee-panel loading"><h1>공통 자료를 불러오지 못했어요</h1><p class="small-gap">게임 폴더와 shared 폴더를 함께 열어 주세요.</p><p class="muted small-gap" id="load-error"></p><button class="ee-button spaced" id="reload-game">다시 불러오기</button></div>');$('load-error').textContent=error.message;$('reload-game').onclick=()=>location.reload();}}
+function setupClassroom(explorer){state.explorer=explorer==='B'?'B':'A';intro();}
+function moveClassroom(n){
+ // A teacher transition cancels every old dialogue/action without inventing an answer.
+ finishTyping(false);queue=[];afterQueue=null;actionHandlers=[];busy=false;
+ document.querySelectorAll('dialog[open]').forEach(d=>d.close());
+ cancelAnimationFrame(effectFrame);$('feedback-effect').hidden=true;
+ if(n===6)showResult();else startScene(n);
+ announce(n===6?'선생님과 함께 학습 정리를 시작해요.':'선생님과 함께 이야기 '+(n+1)+'로 이동했어요. 내 선택은 그대로 유지해요.');
+}
+async function boot(){try{if(!window.ETHICITY_COMMON_MANIFEST||!window.EthicityAssets)throw Error('공통 패키지를 찾지 못했어요.');assets=await EthicityAssets.load(ETHICITY_COMMON_MANIFEST,COMMON);await Promise.all(Object.values(scenePictures).map(src=>new Promise((resolve,reject)=>{const image=new Image();image.onload=resolve;image.onerror=()=>reject(Error('장면 그림을 찾지 못했어요: '+src));image.src=src;})));paintIcons();showStart();window.EthicityClassroomBridge?.ready({restore:restoreClassroom,setup:setupClassroom,move:moveClassroom});if(window.EthicityClassroomBridge?.isClassroom())document.getElementById('privacy-note').textContent='수업에서는 닉네임과 미리 정한 선택·진행을 선생님과 공유해요. 성찰·약속에 직접 쓴 글과 PNG는 서버로 보내지 않아요. 새로고침하면 저장된 선택을 불러와 선생님이 진행 중인 이야기로 이동해요.';emit('ready');}catch(error){setMain('<div class="ee-panel loading"><h1>공통 자료를 불러오지 못했어요</h1><p class="small-gap">게임 폴더와 shared 폴더를 함께 열어 주세요.</p><p class="muted small-gap" id="load-error"></p><button class="ee-button spaced" id="reload-game">다시 불러오기</button></div>');$('load-error').textContent=error.message;$('reload-game').onclick=()=>location.reload();}}
 window.addEventListener('resize',fitStage);
 void boot();
 })();

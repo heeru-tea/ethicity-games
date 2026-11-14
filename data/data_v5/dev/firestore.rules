@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // dataV5Rooms/{code}: anonymous owner UID, control state, 24-hour expiry.
+    // dataV5Rooms/{code}: owner UID; current teacher stage -1..6 (6 = result); 24-hour expiry.
     // members/{uid}: chosen nickname and numeric choices; only self and room owner can read.
     // answers/{uid_scene}: one completed-story summary per student; owner-only class query.
     // checkpoints/{uid}: own private boundary checkpoint, custom writing removed by client.
@@ -28,7 +28,7 @@ service cloud.firestore {
           && d.ownerUid is string && d.ownerUid.size() <= 128
           && d.createdAt is timestamp && d.expiresAt is timestamp && d.heartbeatAt == request.time
           && d.expiresAt > d.createdAt && d.expiresAt <= d.createdAt + duration.value(24,'h')
-          && numberIn(d.unlockedScene,-1,5) && numberIn(d.revealScene,-1,5) && d.revealScene <= d.unlockedScene
+          && numberIn(d.unlockedScene,-1,6) && numberIn(d.revealScene,-1,5) && d.revealScene <= d.unlockedScene
           && d.paused is bool && d.ended is bool;
       }
       allow get: if signedIn() && (resource.data.expiresAt > request.time || resource.data.ownerUid == request.auth.uid);
@@ -54,8 +54,8 @@ service cloud.firestore {
             && d.nickname.matches('.*[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9].*')
             && d.joinedAt is timestamp && d.lastSeen == request.time && d.mode in ['classroom','preview']
             && numberIn(d.currentScene,-1,6) && numberIn(d.completedScene,-1,5) && d.completedScene <= d.currentScene
-            && (d.currentScene <= room().unlockedScene || (d.currentScene == 6 && room().unlockedScene == 5))
-            && d.completed is bool && (!d.completed || d.completedScene == 5) && validMetrics(d.metrics);
+            && (d.currentScene <= room().unlockedScene || (d.currentScene == 6 && room().unlockedScene == 6))
+            && d.completed is bool && (!d.completed || (d.currentScene == 6 && room().unlockedScene == 6)) && validMetrics(d.metrics);
         }
         allow read: if (isSelf(uid) && room().expiresAt > request.time) || owner();
         allow create: if isSelf(uid) && active() && validMember(request.resource.data)
@@ -84,7 +84,7 @@ service cloud.firestore {
       match /checkpoints/{uid} {
         function validCheckpoint(d) {
           return d.keys().hasAll(['completedScene','json','updatedAt']) && d.keys().hasOnly(['completedScene','json','updatedAt'])
-            && numberIn(d.completedScene,0,5) && d.completedScene <= room().unlockedScene
+            && numberIn(d.completedScene,-1,5) && d.completedScene <= room().unlockedScene
             && d.json is string && d.json.size() <= 60000 && d.updatedAt == request.time;
         }
         allow read: if isSelf(uid) && member();

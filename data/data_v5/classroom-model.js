@@ -7,9 +7,9 @@ function checkpoint(s,completedScene){
  // Only predefined game choices cross this boundary. All custom prose stays in the game iframe.
  copy.question=null;
  copy.history=copy.history.filter(row=>!row.choice.startsWith('기준 후보: ')).slice(-400);
- return {schema:1,completedScene,state:copy};
+ return {schema:2,completedScene,state:copy};
 }
-function validateCheckpoint(cp){return !!cp&&cp.schema===1&&Number.isInteger(cp.completedScene)&&cp.completedScene>=0&&cp.completedScene<=5&&cp.state&&Array.isArray(cp.state.history)&&Array.isArray(cp.state.visited)&&Array.isArray(cp.state.words)&&cp.state.sort&&cp.state.scope&&cp.state.criteria&&cp.state.tests;}
+function validateCheckpoint(cp){return !!cp&&[1,2].includes(cp.schema)&&Number.isInteger(cp.completedScene)&&cp.completedScene>=-1&&cp.completedScene<=5&&cp.state&&Array.isArray(cp.state.history)&&Array.isArray(cp.state.visited)&&Array.isArray(cp.state.words)&&cp.state.sort&&cp.state.scope&&cp.state.criteria&&cp.state.tests;}
 function aggregate(rows,members,scene){
  const active=new Set(members.filter(x=>x.mode==='classroom').map(x=>x.uid));
  const answers=rows.filter(x=>x.scene===scene&&active.has(x.uid));
@@ -23,6 +23,6 @@ function aggregate(rows,members,scene){
  ];
  return {scene,total:answers.length,items:definitions[scene].map(([label,key,value])=>({label,count:answers.filter(x=>typeof value==='function'?value(x.metrics[key]):x.metrics[key]===value).length}))};
 }
-function gate({independent,room,scene}){if(independent)return null;if(!room)return 'connecting';if(room.ended)return 'ended';if(room.paused)return 'paused';if(scene>room.unlockedScene)return 'waiting';return null;}
+function gate({independent,room,scene}){if(independent)return null;if(!room)return 'connecting';if(room.ended)return 'ended';if(room.paused)return 'paused';if(scene!==room.unlockedScene)return 'waiting';return null;}
 root.EthicityClassroomModel={metrics,checkpoint,validateCheckpoint,aggregate,gate};
 })(typeof window!=='undefined'?window:globalThis);
