@@ -225,7 +225,7 @@ render();
     const hasLetter = !!ending?.letters?.length;
     if (hasLetter && ending.stage === 'record') state.integrationCompleted = true;
     const rounds = new Set(judgments.map(j => j.round).filter(n => Number.isInteger(n) && n >= 0 && n < 4)).size;
-    const current = Math.min(6, rounds + (hasLetter ? 1 : 0) + (hasLetter && state.integrationCompleted ? 1 : 0));
+    const current = state.flowVersion === 'second-feedback-20261115' ? (state.simpleCompleted ? 6 : judgments.length ? 4 : sourcesNow().length ? 2 : 0) : Math.min(6, rounds + (hasLetter ? 1 : 0) + (hasLetter && state.integrationCompleted ? 1 : 0));
     if (!rounds && !hasLetter) completedSent = false;
     if (current !== lastProgress) {
       send({type:'ethicity:progress', gameId:'accountability', current, total:6});
