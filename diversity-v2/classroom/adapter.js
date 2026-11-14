@@ -48,7 +48,8 @@ class LocalAdapter{
  }
  async roundData(round){const rp=this.base+'rounds/'+round+'/';const out={};for(const k of ['definition','aggregate','pool','experiments'])out[k]=await this.get(rp+k);return out;}
  async compile(){const c=await this.control();insist(['review','pool'].includes(c.phase)&&c.activeRound,'투표 마감 후 결과 검토 단계에서 집계하세요.');const rp=this.base+'rounds/'+c.activeRound+'/';
-  const existing=await this.get(rp+'pool');if(existing)return '이미 확정된 표본을 유지했습니다. 새 구성은 새 라운드에서 확정하세요.';const def=await this.get(rp+'definition');if(c.phase==='pool'){const a=await this.get(rp+'aggregate');insist(a,'확정 집계 없음');await this.immutable(rp+'pool',{candidateVersion:c.activeRound,poolVersion:c.activeRound,items:Core.combined(def,a.counts)});return {counts:a.counts,resumed:true};}
+  const existing=await this.get(rp+'pool');if(existing){const a=await this.get(rp+'aggregate');insist(a,'확정 집계 없음');if(c.phase!=='pool')await this.transition('pool');return {counts:a.counts,resumed:true};}
+  const def=await this.get(rp+'definition');
   const members=await this.get(this.base+'members'),votes=await this.get(rp+'votes');
   const check=await this.get(this.base+'members'),latest=await this.control();insist(same(members,check)&&same(c,latest),'집계 중 참여/단계가 변경됐습니다. 다시 확인하세요.');
   const tally=Core.tally(def,votes,members),items=Core.combined(def,tally.counts);insist(Object.keys(items).length,'유효 선택이 없습니다. 임의 표본을 만들지 않습니다.');
