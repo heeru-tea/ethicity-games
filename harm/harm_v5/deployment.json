@@ -1,9 +1,9 @@
 {
-  "verifiedAt": "2026-11-05T14:09:34.759Z",
-  "hostingVersion": "sites/ethicity-privacy-20261011/versions/851b460f15d648dc",
-  "sha256": "6bfbfc88be979f6d0d4a4951983b17a63b514605917e8f60393a30059bb16a9c",
-  "bytes": 35096302,
-  "existingFilesPreserved": 333,
+  "verifiedAt": "2026-11-14T06:08:59.971Z",
+  "hostingVersion": "sites/ethicity-privacy-20261011/versions/95620fd7fd2ade3d",
+  "sha256": "a9d7e0ea169059457591eca80e68cc2f8f19c5c6efb7b0d095886cf1d8121f34",
+  "bytes": 35096571,
+  "existingFilesPreserved": 475,
   "hostingConfigPreserved": true,
   "gameUrl": "https://ethicity-privacy-20261011.web.app/harm/harm_v5/",
   "teacherUrl": "https://ethicity-privacy-20261011.web.app/harm/harm_v5/?mode=teacher"

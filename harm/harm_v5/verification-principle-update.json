@@ -7,5 +7,11 @@
     "Each of the three actual ending renderers includes the sentence exactly once",
     "Visible title and report labels omit version numbers; source syntax valid"
   ],
-  "limit": "Pure-function and generated-HTML checks; live browser appearance checked separately."
+  "limit": "Pure-function and generated-HTML checks; live browser appearance checked separately.",
+  "liveBrowser": {
+    "verifiedAt": "2026-11-14T06:10:00.203Z",
+    "home": "Safety label and related principles visible; no display version",
+    "teacher": "Connected, no console errors",
+    "limit": "No new live classroom was created for this text-only update."
+  }
 }
