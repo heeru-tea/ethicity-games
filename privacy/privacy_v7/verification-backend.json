@@ -1,5 +1,5 @@
 {
-  "testedAt": "2026-11-08T09:45:21.122Z",
+  "testedAt": "2026-11-14T07:06:47.888Z",
   "scenarioRevision": "20261104",
   "method": "Authenticated REST against deployed Firebase rules using disposable synthetic participants",
   "endingsAccepted": [
@@ -15,5 +15,9 @@
   "teacherCanReadResults": true,
   "signalMetadataValidated": true,
   "scoreTamperingRejected": true,
-  "otherStudentReportReadRejected": true
+  "otherStudentReportReadRejected": true,
+  "ownReflectionReadWrite": true,
+  "teacherReadsReflection": true,
+  "peerReflectionReadWriteDenied": true,
+  "reflectionLengthAndFieldsValidated": true
 }

@@ -1,0 +1,19 @@
+'use strict';
+const PRACTICE={safe:{icon:'✔',label:'보호 방법 실천'},check:{icon:'△',label:'일부 확인'},risk:{icon:'↻',label:'다시 살펴보기'}};
+const PROCESS={direct:'바로 진행',check:'확인·설정 후 진행',pause:'이번에는 이용 보류'};
+function practiceText(c){const p=PRACTICE[c.kind];return p.icon+' '+p.label;}
+function reviewButtons(){const missed=Object.entries(revealedAnswers()).filter(([i,a])=>STORY.rounds[i].choices[a.choice].kind!=='safe');return missed.length?`<details class="ending-review"><summary>다시 살펴볼 선택 · ${missed.length}개</summary><div class="buttons">${missed.map(([i])=>btn(`${Number(i)+1}라운드 다시 보기`,'review-round','',`data-index="${i}"`)).join('')}</div></details>`:'';}
+function reflectionField(key,label,reflections,editable){const value=reflections?.[key]||'';return editable?`<label class="reflection-field"><span>${esc(label)}</span><textarea data-reflection="${key}" maxlength="500" rows="3" placeholder="게임 속 선택에 대한 생각을 적습니다. 실제 이름이나 연락처는 쓰지 않습니다.">${esc(value)}</textarea><small>선택 작성 · 최대 500자 · 자동 저장</small></label>`:`<section class="reflection-written"><b>${esc(label)}</b><p>${value?esc(value):'아직 작성하지 않았습니다.'}</p></section>`;}
+function csvCell(value){let s=String(value??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
+function exportCSV(){if(!S.room)return;const rows=[['참여번호','닉네임','탐험가','라운드','상황','나의 선택','처음 짚은 신호','확인 뒤 신호','확인 횟수','보호 실천','보호 판정 이유','이용 과정','과정 설명','가상 결과','선택 이유','다음 실천 계획','완료']];teacherParticipants().forEach(([uid,m],j)=>{const answers=validateAnswers(S.room.answers?.[uid]),notes=cleanReflections(S.room.reflections?.[uid]);STORY.rounds.forEach((r,i)=>{const a=answers[i],c=r.choices[a?.choice];rows.push([j+1,memberNickname(m,j),m.character==='char_04'?'B':'A',i+1,r.title,c?.text||'미응답',a?signalNames(r,a.firstSignals):'',a?signalNames(r,a.signals):'',a?.signalChecks||'',c?practiceText(c):'',c?.privacyReason||'',c?PROCESS[c.useProcess.kind]:'',c?.useProcess.text||'',c?.possibleOutcome||'',notes[i]||'',notes.plan||'',S.room.results?.[uid]?.completed?'완료':'진행 중']);});});downloadBlob('\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n'),'text/csv;charset=utf-8','프라이버시-학생별-선택기록.csv');}
+let reflectionTimer=null;const reflectionFlights=new Set();
+function reflectionStatus(){const e=document.getElementById('reflection-status');if(e)e.textContent=S.progressStored===false?'기기에 저장하지 못했습니다. 닫기 전에 리포트 파일로 보관합니다.':S.mode==='student'?(Object.keys(S.reflectionPending||{}).length?'기기에 저장했습니다. 수업 서버에 전달할 때까지 이 브라우저에 보관합니다.':'수업 서버에서 작성 내용을 확인했습니다.'):'이 기기에 저장했습니다. 리포트 파일에도 포함됩니다.';}
+async function flushReflections(){
+ if(S.mode!=='student'||!S.uid||!S.cloud||!S.network)return;const c=S.cloud,room=S.roomId,uid=S.uid,gen=S.liveGeneration;
+ for(const [key,value]of Object.entries(S.reflectionPending||{})){const id=room+':'+uid+':'+key;if(reflectionFlights.has(id))continue;reflectionFlights.add(id);
+ try{await c.D.set(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${room}/reflections/${uid}/${key}`),value);if(gen===S.liveGeneration&&S.reflectionPending?.[key]===value)delete S.reflectionPending[key];}
+ catch{/* 기기에 남긴 내용을 연결이 돌아오면 다시 전송합니다. */}
+ finally{reflectionFlights.delete(id);if(gen===S.liveGeneration){persistProgress();reflectionStatus();if(Object.hasOwn(S.reflectionPending||{},key)&&S.reflectionPending[key]!==value){clearTimeout(reflectionTimer);reflectionTimer=setTimeout(flushReflections,100);}}}
+ }
+}
+document.addEventListener('input',event=>{const key=event.target.dataset?.reflection;if(S.mode==='teacher'||!/^(?:[0-7]|plan)$/.test(key||''))return;const value=event.target.value.replace(/\u0000/g,'').slice(0,500);S.reflections||={};S.reflections[key]=value;if(S.mode==='student'){S.reflectionPending||={};S.reflectionPending[key]=value;}persistProgress();reflectionStatus();clearTimeout(reflectionTimer);reflectionTimer=setTimeout(flushReflections,500);});

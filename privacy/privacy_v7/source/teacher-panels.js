@@ -13,7 +13,7 @@ function teacherRosterPanel(large=false){
 }
 function renderTeacherPanel(){
  const title=S.teacherPanel==='choices'?'선택 집계':'입장 명단';
- return `<section class="teacher-expanded"><header class="expanded-header"><div><span class="tag">v6 · 교사 확대 화면</span>${heading(title,2)}<p>${esc(phaseLabel(S.room.control))} · <strong class="${S.network?'':'error'}">${S.network?'● 실시간 연결됨':'! 재연결 중 · 마지막으로 받은 기록입니다'}</strong></p></div><div class="buttons">${btn('화면 가득 보기','panel-fullscreen','primary')}${btn('교사 전체 화면으로','panel-back','')}</div></header>${S.panelNotice?`<p class="notice" role="status">${esc(S.panelNotice)}</p>`:''}${S.error?`<p class="notice error" role="alert">${esc(S.error)}</p>${btn('수업 다시 연결','teacher-reconnect','')}`:''}${S.teacherPanel==='choices'?teacherChoicePanel(true):teacherRosterPanel(true)}</section>`;
+ return `<section class="teacher-expanded"><header class="expanded-header"><div><span class="tag">교사 확대 화면</span>${heading(title,2)}<p>${esc(phaseLabel(S.room.control))} · <strong class="${S.network?'':'error'}">${S.network?'● 실시간 연결됨':'! 재연결 중 · 마지막으로 받은 기록입니다'}</strong></p></div><div class="buttons">${btn('화면 가득 보기','panel-fullscreen','primary')}${btn('교사 전체 화면으로','panel-back','')}</div></header>${S.panelNotice?`<p class="notice" role="status">${esc(S.panelNotice)}</p>`:''}${S.error?`<p class="notice error" role="alert">${esc(S.error)}</p>${btn('수업 다시 연결','teacher-reconnect','')}`:''}${S.teacherPanel==='choices'?teacherChoicePanel(true):teacherRosterPanel(true)}</section>`;
 }
 function openTeacherPanel(panel){
  if(!S.roomId||!S.teacherAllowed||!['choices','participants'].includes(panel))return;

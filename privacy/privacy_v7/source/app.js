@@ -56,7 +56,7 @@ let unsubs=[],clockTick=null,toastTimeout=null;
 function showToast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.remove('hidden');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.add('hidden'),4500);}
 function setError(message){S.error=message;render();}
 function draftKey(){return S.mode==='student'?'ethicity.privacy.v7.classroom20261108.draft.'+S.roomId:'ethicity.privacy.v7.classroom20261108.draft.solo';}
-function saveDraft(){writeStore(draftKey(),{version:1,uid:S.uid,player:S.player,answers:S.answers,pending:S.pending,round:S.round});}
+function saveDraft(){return persistProgress();}
 function clearLive(){S.liveGeneration++;unsubs.forEach(f=>{try{f();}catch{}});unsubs=[];}
 function preparePlayerSetup(){S.characterDraft=S.player?CONFIG.characters.findIndex(c=>c.id===S.player.character):null;S.nicknameDraft=S.player?.nickname||'';S.friendDraft=S.friendName;S.view='setup';S.error='';}
 function playerSetup(mode){resetNarration();S.mode=mode;preparePlayerSetup();render(true);}
@@ -68,8 +68,8 @@ function render(focus=false){
   const active=document.activeElement;const priorAction=active?.dataset?.action,priorIndex=active?.dataset?.index;
   topBarElement.innerHTML=headerV7();
   document.body.dataset.view=S.view;document.body.dataset.mode=S.mode;
-  const screens={home:renderHome,setup:renderSetup,intro:renderIntro,round:renderRound,wait:renderWait,ending:renderEnding,teacher:renderTeacher,config:renderConfig,loading:renderLoading};
-  main.innerHTML=studentMetrics()+(screens[S.view]||renderHome)();paintArt();mountNarration();applyCommonUI();mountClassroom();
+  const screens={home:renderHome,resume:renderResume,setup:renderSetup,intro:renderIntro,round:renderRound,wait:renderWait,ending:renderEnding,teacher:renderTeacher,config:renderConfig,loading:renderLoading};
+  main.innerHTML=studentMetrics()+(screens[S.view]||renderHome)();paintArt();mountNarration();applyCommonUI();mountClassroom();persistProgress();
   if(focus){const heading=main.querySelector('[data-heading]');heading?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});}
   else if(priorAction){const candidates=Array.from(document.querySelectorAll('[data-action]'));candidates.find(e=>e.dataset.action===priorAction&&e.dataset.index===priorIndex&&!e.disabled)?.focus({preventScroll:true});}
 }
@@ -83,14 +83,14 @@ function submittedHTML(){const a=S.answers[S.round];return `<div style="text-ali
 function saveStatusText(){if(S.mode==='solo')return '혼자 탐험 중 · 인터넷 없이도 진행할 수 있습니다.';if(S.mode==='teacher')return '';if(S.pending[S.round])return S.network?'⏳ 서버가 저장했는지 확인하고 있습니다.':'⏳ 연결을 기다립니다. 선택은 이 화면에 임시 보관됩니다.';if(S.answers[S.round])return '✔ 서버에서 저장을 확인했습니다.';return S.network?'수업에 연결됐습니다.':'연결을 확인하고 있습니다. 화면을 닫지 말고 잠시 기다립니다.';}
 function renderWait(){const n=Object.keys(S.answers).length;return `<section class="panel wait">${canvasChar('bot',112)}<span class="tag" style="display:block;margin-top:15px">함께하는 교실 탐험</span>${heading(S.control?.phase==='lobby'?'친구들이 모이고 있습니다':'다음 발자국을 기다립니다')}<p>${esc('당신은')} 선생님의 안내를 기다립니다.</p><div class="progress-pips">${STORY.rounds.map((r,i)=>`<span class="${S.answers[i]?'done':''}" aria-label="${i+1}라운드 ${S.answers[i]?'응답함':'아직'}">${S.answers[i]?'✔':i+1}</span>`).join('')}</div><p class="small">${n} / 8개의 선택을 마쳤습니다.</p>${S.error?`<p class="notice error">${esc(S.error)}</p>`:''}<p class="statusline" id="save-status">${S.network?'✔ 수업에 연결됐습니다.':'연결을 다시 확인하고 있습니다. 화면을 닫지 말고 기다립니다.'}</p>${S.control&&S.control.round>=0&&S.answers[S.control.round]&&S.control.phase==='reveal'?btn('이번 결과 다시 보기','current-feedback',''):''}${!S.network?btn('연결 다시 확인하기','reconnect',''):''}${S.player?btn('혼자 이어서 탐험하기','solo-fallback',''):''}</section>`;}
 function renderLoading(){return `<section class="panel loading"><span class="spinner" aria-hidden="true"></span>${heading('연결을 확인하고 있습니다',2)}<p>${esc(S.loadingText||'잠시만 기다려 주시기 바랍니다.')}</p><p class="small">인터넷 연결과 수업 설정을 확인합니다.</p>${S.error?`<p class="notice error">${esc(S.error)}</p>`:''}${btn('처음 화면으로','home','')}</section>`;}
-function startSolo(resume=false){resetNarration();clearLive();S.mode='solo';S.pending={};S.error='';S.ended=false;S.cloudResult='';if(resume){const d=readStore('ethicity.privacy.v7.classroom20261108.draft.solo');S.answers=validateAnswers(d?.answers);S.round=STORY.rounds.findIndex((r,i)=>!S.answers[i]);if(S.round<0)S.round=0;}else{S.answers={};S.round=0;}saveDraft();moveRound(S.round);}
-async function finishGame(){const end=endingOf(S.answers);if(!end)return;const result={game:'privacy',completed:true,ending:end,card:STORY.endings[end].card};S.resultSaved=writeStore(RESULT_KEY,result);S.ended=true;S.view='ending';removeStore(draftKey());render(true);if(S.mode==='student')await saveCloudResult(result);}
+function startSolo(resume=false){if(resume)return resumeProgress();resetNarration();clearLive();S.mode='solo';S.progressActive=true;S.pending={};S.error='';S.ended=false;S.cloudResult='';S.answers={};S.round=0;moveRound(0);}
+async function finishGame(){const end=endingOf(S.answers);if(!end)return;const result={game:'privacy',completed:true,ending:end,card:STORY.endings[end].card};S.resultSaved=writeStore(RESULT_KEY,result);S.ended=true;S.view='ending';render(true);if(S.mode==='student')await saveCloudResult(result);}
 async function submitChoice(){if(S.selected===null||!S.signals||!S.signalChecked||S.answers[S.round])return;const i=S.round,a={choice:S.selected,signals:S.signals,firstSignals:S.firstSignals??S.signals,signalChecks:Math.max(1,S.signalChecks||1)};S.answers[i]=a;if(S.mode==='student'){S.pending[i]=a;saveDraft();render();sendAnswer(i,a);}else{saveDraft();S.feedback=true;render(true);}}
 function nextRound(){if(S.mode==='solo'){if(S.round===7)finishGame();else moveRound(S.round+1);return;}if(S.control?.phase==='ended'){const missing=STORY.rounds.findIndex((r,i)=>!S.answers[i]||S.pending[i]);if(missing<0)finishGame();else moveRound(missing);return;}if(S.round===7&&endingOf(S.answers)&&Object.keys(S.pending).length===0){finishGame();return;}S.view='wait';render(true);}
 function modal(title,content,actions){const host=document.getElementById('modal-host');host.innerHTML=`<div class="modal"><section class="modalbox" role="dialog" aria-modal="true" aria-labelledby="modal-title"><h2 id="modal-title">${esc(title)}</h2>${content}<div class="buttons" style="margin-top:20px">${actions}</div></section></div>`;applyCommonUI(host);host.querySelector('button')?.focus();}
 function closeModal(){document.getElementById('modal-host').innerHTML='';}
 function confirmLeave(action){modal('처음 화면으로 돌아가겠습니까?','<p>이미 저장한 완료 기록은 유지됩니다. 진행 중인 선택은 이 기기에 임시 보관합니다.</p>',btn('돌아갑니다',action)+btn('계속 탐험합니다','close-modal',''));}
-async function onAction(action,el){if(await landingActionV7(action,el))return;if(await classroomAction(action,el))return;const i=Number(el?.dataset?.index);switch(action){
+async function onAction(action,el){if(await progressAction(action,el))return;if(await landingActionV7(action,el))return;if(await classroomAction(action,el))return;const i=Number(el?.dataset?.index);switch(action){
   case 'toggle-sound':toggleSound();break;
   case 'toggle-typing':toggleNarration();break;
   case 'start-solo':S.roomId=null;playerSetup('solo');break;

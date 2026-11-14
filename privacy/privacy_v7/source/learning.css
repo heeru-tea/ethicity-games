@@ -1,0 +1,51 @@
+/* 원본 공통 UI를 유지하고 진행 버튼·실천 기록·성찰 작성 영역만 배치합니다. */
+.ee-theme{--game-button-size:18px}
+.ee-theme .ee-button,.ee-theme .page-controls .ee-button,.ee-theme .stage-buttons .ee-button{font-size:var(--game-button-size);min-height:48px;line-height:1.4}
+.page-controls{display:grid;grid-template-columns:max-content 1fr max-content;align-items:center;gap:8px;width:100%;flex-shrink:0}
+.page-controls>.ee-button{white-space:nowrap;margin:0;border-width:8px;padding:4px 6px}
+.page-counter{text-align:center;justify-self:center}
+.page-controls>:last-child{justify-self:end}
+.practice-summary{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;font-size:14px;line-height:1.45}
+.practice-summary strong{font-size:14px}.practice-summary small{display:block;font-size:11px}
+.practice-trail{display:flex;list-style:none;gap:4px;padding:0;margin:4px 0}
+.practice-trail li{border:1px solid var(--ee-sage);padding:2px 6px;white-space:nowrap}
+.practice-trail .safe{background:#e4efd9}.practice-trail .check{background:#f4e8ba}.practice-trail .risk{background:#f3ded4}
+.process-summary p{margin:4px 0;font-size:14px}
+.resume-screen{max-width:900px;margin:auto;width:100%}
+.reflection-field{display:block;margin:20px 0}.reflection-field>span{display:block;font-weight:bold;margin-bottom:8px}
+.reflection-field textarea{min-height:100px;font-size:18px;line-height:1.6;resize:vertical}
+.reflection-field small{display:block;font-size:13px}.reflection-written p{white-space:pre-wrap;overflow-wrap:anywhere}
+.ending-review{text-align:left;margin-top:12px}.ending-review summary{cursor:pointer;min-height:44px}
+.ending-review .buttons{padding-top:8px}.learning-right{border-top:2px solid var(--ee-sage);padding-top:12px}
+body[data-view=ending]{height:auto;min-height:100dvh}
+.compact-ending{margin:12px auto}
+@media(min-width:700px){.compact-intro .dialogue{width:100%}.round-content{min-height:420px}.round-content[data-round-screen=signals]{min-height:450px}}
+@media(min-width:700px) and (orientation:portrait){
+ .observation-controls .page-controls{grid-template-columns:max-content 1fr;row-gap:4px}
+ .observation-controls .page-counter{grid-column:1/-1;grid-row:1}
+ .observation-controls .page-controls>:first-child{grid-row:2;grid-column:1}
+ .observation-controls .page-controls>:last-child{grid-row:2;grid-column:2}
+}
+@media(max-width:699px){
+ .ee-theme{--game-button-size:16px}
+ .ee-theme .ee-button,.ee-theme .page-controls .ee-button{border-width:8px;padding:4px 6px}
+ .page-controls{grid-template-columns:max-content 1fr;row-gap:4px}
+ .page-counter{grid-column:1/-1;grid-row:1}
+ .page-controls>:first-child{grid-row:2;grid-column:1}
+ .page-controls>:last-child{grid-row:2;grid-column:2}
+ .practice-summary{grid-template-columns:1fr;gap:6px}
+ .process-summary{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.process-summary small{width:100%}
+ .practice-trail{gap:3px}.practice-trail li{padding:2px 5px}
+ .dialogue-bubble.ee-speech{font-size:17px}.resume-screen .buttons{gap:8px}
+ .round-content,.round-content[data-round-screen=signals]{min-height:0}
+}
+@media(min-width:700px) and (max-height:699px),(min-width:700px) and (orientation:portrait) and (max-height:899px){
+ body[data-view=round]{height:auto;min-height:100dvh;display:block}
+ body[data-view=round]>.shell{display:block}
+ .round-content,.round-content[data-round-screen=signals]{min-height:0}
+ .round-content>.panel{height:auto}.case-screen,.result-screen{grid-template-rows:auto;align-items:start}
+ .case-screen>.scene-vignette,.result-picture>.scene-vignette{height:auto;max-height:none}
+ .result-picture,.case-dialogue,.result-screen .action-panel{height:auto;max-height:none}
+ .case-screen>.scene-vignette>.case-illustration,.result-picture>.scene-vignette>.case-illustration{flex:none;aspect-ratio:1672/941;max-height:260px}
+ .device-layout{height:auto}.phone-frame{height:500px;width:min(100%,334px)}.tablet-frame{height:340px}
+}

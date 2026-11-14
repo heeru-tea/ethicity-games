@@ -104,6 +104,15 @@
         },
         "$other": {
           ".validate": false
+        },
+        "reflections": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            ".write": "auth != null && auth.uid == $uid && newData.exists() && root.child('roomsPrivacyV7Classroom20261108').child($room).child('members').child(auth.uid).exists()",
+            "$field": {
+              ".validate": "$field.matches(/^([0-7]|plan)$/) && newData.isString() && newData.val().length <= 500"
+            }
+          }
         }
       }
     }

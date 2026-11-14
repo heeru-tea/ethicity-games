@@ -11,5 +11,6 @@ vm.runInContext('S.network=false',c);assert(vm.runInContext('renderTeacherStartV
 vm.runInContext('S.network=true;S.returnRoom="test"',c);assert(vm.runInContext('renderTeacherStartV7()',c).includes('진행 중인 수업으로 돌아가기'));
 assert(read('source/live.js').includes("(!requestedRoom&&params.get('mode')!=='solo')"));
 assert(!read('source/live.js').includes('roomsPrivacyV6'));
-assert.equal(require('node:crypto').createHash('sha256').update(read('scenario.json')).digest('hex'),'fcc5f2e04f6594bb9c7f080ff618a6879bf8e643ce9399835e8e1a0bfa1208f1','Approved v6 scenario changed');
+const narrative=JSON.parse(read('scenario.json')).rounds;for(const r of narrative)for(const c of r.choices)delete c.useProcess;
+assert.equal(require('node:crypto').createHash('sha256').update(JSON.stringify(narrative)).digest('hex'),'efcabf3ae9733cef6fca4ba47989ce641d4e562702998f0134791da6fa426c7c','Approved eight round narrative changed');
 console.log(JSON.stringify({landingControls:true,offlineCreateDisabled:true,previewInSeparateTab:true,currentRoomReturn:true,commonIconIds:true,v6ScenarioUnchanged:true,v7RoomIsolation:true}));

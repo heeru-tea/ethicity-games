@@ -10,28 +10,32 @@ async function loadFirebase(){if(!firebaseModules){firebaseModules=Promise.all([
 ]).catch(e=>{firebaseModules=null;throw e;});}return firebaseModules;}
 function timed(p,ms=20000){let t;return Promise.race([p,new Promise((_,reject)=>{t=setTimeout(()=>reject(new Error('연결 시간 초과: 인터넷 연결을 확인하고 다시 시도합니다.')),ms);})]).finally(()=>clearTimeout(t));}
 async function prepareCloud(role){if(!cloudConfigured())throw new Error('아직 Firebase 연결 설정이 없습니다. 교사 화면의 연결 설정에서 준비합니다.');if(location.protocol==='file:')throw new Error('실시간 수업은 Firebase에 올린 웹 주소에서 엽니다. 이 파일에서는 혼자 탐험하기를 사용할 수 있습니다.');const [appMod,authMod,dbMod]=await timed(loadFirebase());if(!cloudInstances[role]){const app=appMod.initializeApp(CONFIG.firebase,'ethicity-privacy-v7-'+role);let persistent=true;try{const probe='ethicity.privacy.v7.authProbe.'+role;localStorage.setItem(probe,'1');localStorage.removeItem(probe);}catch{persistent=false;}const auth=authMod.initializeAuth(app,{persistence:persistent?authMod.browserLocalPersistence:authMod.inMemoryPersistence}),db=dbMod.getDatabase(app);cloudInstances[role]={app,auth,db,A:authMod,D:dbMod,persistent};}return cloudInstances[role];}
-function watchConnection(cloud){unsubs.push(cloud.D.onValue(cloud.D.ref(cloud.db,'.info/connected'),snap=>{S.network=!!snap.val();S.networkKnown=true;const e=document.getElementById('connection-status');if(e){e.textContent=S.network?'연결됨':'재연결 중';e.classList.toggle('off',!S.network);}const status=document.getElementById('save-status');if(status)status.textContent=saveStatusText();if(S.mode==='teacher')render();if(S.network&&S.mode==='student'){flushPending();if(S.view==='ending'&&S.cloudResult&&!S.cloudResult.startsWith('✔')){const ending=endingOf(S.answers);if(ending)saveCloudResult({game:'privacy',completed:true,ending,card:STORY.endings[ending].card});}}}));}
+function watchConnection(cloud){unsubs.push(cloud.D.onValue(cloud.D.ref(cloud.db,'.info/connected'),snap=>{S.network=!!snap.val();S.networkKnown=true;const e=document.getElementById('connection-status');if(e){e.textContent=S.network?'연결됨':'재연결 중';e.classList.toggle('off',!S.network);}const status=document.getElementById('save-status');if(status)status.textContent=saveStatusText();if(S.mode==='teacher')render();if(S.network&&S.mode==='student'){flushPending();flushReflections();if(S.view==='ending'&&S.cloudResult&&!S.cloudResult.startsWith('✔')){const ending=endingOf(S.answers);if(ending)saveCloudResult({game:'privacy',completed:true,ending,card:STORY.endings[ending].card});}}}));}
 async function joinRoom(){if(!S.roomId){S.error='올바른 입장 링크가 아닙니다. 선생님이 보낸 링크로 다시 엽니다.';S.view='wait';render(true);return;}clearLive();const gen=S.liveGeneration;S.view='loading';S.loadingText='이메일 없이 임시 참여번호로 수업에 입장합니다.';S.error='';render(true);try{
   const c=await prepareCloud('student');if(gen!==S.liveGeneration)return;S.cloud=c;
-  await c.auth.authStateReady();let user=c.auth.currentUser;if(!user){const cred=await timed(c.A.signInAnonymously(c.auth));user=cred.user;}if(gen!==S.liveGeneration)return;S.uid=user.uid;
+  await c.auth.authStateReady();let user=c.auth.currentUser;if(!user){const cred=await timed(c.A.signInAnonymously(c.auth));user=cred.user;}if(gen!==S.liveGeneration)return;S.uid=user.uid;const resumeData=S.restoreProgress||storedProgress();S.restoreProgress=null;if(resumeData?.uid&&resumeData.uid!==S.uid)throw new Error('저장 기록의 참여번호가 다릅니다. 기록을 저장했던 브라우저로 다시 엽니다.');
   const controlSnap=await timed(c.D.get(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/control`)));const control=controlSnap.val();if(!control)throw new Error('수업을 찾을 수 없습니다. 선생님에게 새 입장 링크를 받습니다.');
   const memberRef=c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/members/${S.uid}`);const member=await timed(c.D.get(memberRef));
   if(!member.exists()){if(!control.accepting)throw new Error('이 수업은 새 입장을 마감했습니다. 선생님에게 입장을 열어 달라고 합니다.');await timed(c.D.set(memberRef,{joinedAt:c.D.serverTimestamp(),nickname:S.player.nickname,character:S.player.character}));}
   if(member.exists()&&(member.val().nickname!==S.player.nickname||member.val().character!==S.player.character))await timed(c.D.update(memberRef,{nickname:S.player.nickname,character:S.player.character}));
   const data=await timed(c.D.get(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/answers/${S.uid}`)));if(gen!==S.liveGeneration)return;
   S.answers=validateAnswers(data.val());S.pending={};S.ended=false;S.cloudResult='';
-  const draft=readStore(draftKey());if(draft?.uid===S.uid){const pending=validateAnswers(draft.pending);for(const [i,a]of Object.entries(pending)){if(!S.answers[i]){S.pending[i]=a;S.answers[i]=a;}}}
-  S.control=control;watchConnection(c);
+  const draft=resumeData;if(draft?.uid===S.uid){const pending=validateAnswers(draft.pending);for(const [i,a]of Object.entries(pending)){if(!S.answers[i]){S.pending[i]=a;S.answers[i]=a;}}}
+  S.control=control;S.progressActive=true;S.archiveView=false;S.restoreAfterJoin=resumeData;
+  const noteSnap=await timed(c.D.get(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/reflections/${S.uid}`)));if(gen!==S.liveGeneration)return;
+  S.reflectionPending=cleanReflections(resumeData?.reflectionPending);S.reflections={...cleanReflections(noteSnap.val()),...S.reflectionPending};
+  unsubs.push(c.D.onValue(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/reflections/${S.uid}`),snap=>{if(gen!==S.liveGeneration)return;S.reflections={...cleanReflections(snap.val()),...S.reflectionPending};persistProgress();reflectionStatus();},liveFailure));
+  watchConnection(c);
   unsubs.push(c.D.onValue(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/answers/${S.uid}`),snap=>{if(gen!==S.liveGeneration)return;const server=validateAnswers(snap.val());for(const [i,a]of Object.entries(server)){if(!S.pending[i])S.answers[i]=a;}saveDraft();},liveFailure));
   unsubs.push(c.D.onValue(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/control`),snap=>{if(gen!==S.liveGeneration)return;const v=snap.val();if(!v){S.error='선생님이 수업 기록을 정리했습니다. 혼자 탐험으로 마무리할 수 있습니다.';S.view='wait';render();return;}const changed=JSON.stringify(S.control)!==JSON.stringify(v);S.control=v;if(changed||S.view==='loading')syncStudentScreen();flushPending();},liveFailure));
-  syncStudentScreen();flushPending();
+  syncStudentScreen();flushPending();flushReflections();
 }catch(e){if(gen!==S.liveGeneration)return;S.error=friendlyError(e);S.view='wait';render(true);}}
 function liveFailure(e){S.error=friendlyError(e);S.network=false;render();}
-function syncStudentScreen(){if(S.mode!=='student'||S.ended)return;const c=S.control;if(!c)return;
+function syncStudentScreen(){if(S.mode!=='student'||S.ended)return;const c=S.control;if(!c)return;if(S.restoreAfterJoin?.completed&&endingOf(S.answers)&&(c.phase==='ended'||(c.phase==='reveal'&&c.round===7))){S.restoreAfterJoin=null;finishGame();return;}
   if(c.phase==='lobby'){S.view='wait';render(true);return;}
   if(c.phase==='ended'){const missing=STORY.rounds.findIndex((r,i)=>!S.answers[i]||S.pending[i]);if(missing>=0){moveRound(missing);}else finishGame();return;}
   if(c.round<0||c.round>7)return;const previous=S.round;S.round=c.round;
-  if(previous!==S.round||S.view!=='round'){resetRoundUI();S.view='round';render(true);}else{S.feedback=!!S.answers[S.round]&&studentCanReveal();render();}
+  if(previous!==S.round||S.view!=='round'){resetRoundUI();restoreRoundUI(S.restoreAfterJoin);S.restoreAfterJoin=null;S.view='round';render(true);}else{S.feedback=!!S.answers[S.round]&&studentCanReveal();render();}
 }
 function canSendRound(i){return S.control&&(S.control.phase==='ended'||(S.control.phase==='collect'&&Number(i)===S.control.round));}
 async function sendAnswer(i,a){if(!S.cloud||!S.uid||!canSendRound(i))return;const id=S.roomId+':'+i;if(inFlight.has(id))return;const gen=S.liveGeneration,c=S.cloud;S.pending[i]=a;saveDraft();const promise=c.D.set(c.D.ref(c.db,`roomsPrivacyV7Classroom20261108/${S.roomId}/answers/${S.uid}/${i}`),{choice:a.choice,signals:a.signals,firstSignals:a.firstSignals,signalChecks:a.signalChecks,at:c.D.serverTimestamp()});inFlight.set(id,promise);
@@ -88,7 +92,7 @@ async function saveConfiguration(){const error=document.getElementById('config-e
 
 // ==================== 첫 화면 ====================
 if(params.get('mode')==='teacher'||(!requestedRoom&&params.get('mode')!=='solo')){S.mode='teacher';S.view='teacher';}
-else if(requestedRoom){if(!S.roomId){S.view='wait';S.error='입장 링크가 올바르지 않습니다. 선생님에게 새 링크를 받습니다.';}else preparePlayerSetup();}
-else preparePlayerSetup();
+else if(requestedRoom){if(!S.roomId){S.view='wait';S.error='입장 링크가 올바르지 않습니다. 선생님에게 새 링크를 받습니다.';}else prepareEntry();}
+else prepareEntry();
 render();
 if(S.mode==='teacher')connectTeacher();
