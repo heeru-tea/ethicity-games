@@ -331,3 +331,9 @@ to{opacity:1;transform:none}
 .game-diversity[data-role=teacher] .teacher-now p{margin:0}.game-diversity[data-role=teacher] .teacher-now-do{font-size:18px;font-weight:800}.game-diversity[data-role=teacher] .teacher-now-cond{margin-top:4px;font-size:15px}
 .game-diversity[data-role=teacher] .dashboard-progress .teacher-next>button:not(.rollback-button){min-height:68px;font-size:22px;font-weight:800}
 .game-diversity[data-role=teacher] .dashboard-progress .teacher-next>.rollback-button{width:100%;margin-top:10px;min-height:44px;font-size:15px;text-decoration:underline}
+
+/* Short, persistent question guide: observation before interpretation. */
+.observation-guide{border-left:6px solid var(--ee-primary,#40644c);padding:16px;margin:12px 0;background:#fffdf3;color:#253e30}
+.observation-guide p{font-size:1.15rem;font-weight:700;line-height:1.5;margin:8px 0 14px}
+.observation-guide button{min-height:44px;padding:8px 16px;margin-right:8px;font:inherit;cursor:pointer}
+.observation-guide button:disabled{cursor:default;opacity:.5}
