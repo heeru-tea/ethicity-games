@@ -1,5 +1,7 @@
 # 급식 메뉴 AI ‘냠냠봇’
 
+> 최신 공개 버전: **[신뢰성 · 냠냠봇을 믿어도 될까?](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/data/data_v5/)** · [교사 컨트롤 타워](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/data/data_v5/?mode=teacher) · [사용 안내](data_v5/README.md). 혼자 하기와 닉네임으로 참여하는 실시간 수업을 지원합니다. 아래는 보존 중인 초기 데이터 관리 게임 설명입니다.
+
 윤리시티 · AI 윤리 탐험대의 데이터 관리 미니게임입니다. 초등 3~4학년 대상, 예상 8~10분의 메신저형 개인 활동이며 AI API나 서버가 필요하지 않습니다.
 
 ## 실행

@@ -1,0 +1,21 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const model=fs.readFileSync(path.join(__dirname,'../classroom-model.js'),'utf8'),bridge=fs.readFileSync(path.join(__dirname,'../game-bridge.js'),'utf8');
+const elements={},messages=[];let receive;
+function element(){const children={h2:{},p:{},button:{}};return {open:false,querySelector:s=>children[s],setAttribute(){},addEventListener(){},showModal(){this.open=true;},close(){this.open=false;},children};}
+const parent={postMessage:m=>messages.push(m)};
+const document={getElementById:id=>elements[id],createElement:()=>element(),body:{append:e=>elements[e.id]=e}};
+const window={addEventListener:(_,fn)=>receive=fn};
+const context=vm.createContext({window,parent,document,location:{search:'?classroom=1',origin:'http://localhost:8777'},URLSearchParams});
+vm.runInContext(model,context);vm.runInContext(bridge,context);
+const api=window.EthicityClassroomBridge;
+const send=(kind,extra={})=>receive({origin:'http://localhost:8777',source:parent,data:{channel:'ethicity-data-v5',kind,...extra}});
+let entered=0;
+assert.equal(api.gate(0,()=>entered++),true);assert.equal(entered,0);
+send('control',{room:{unlockedScene:-1,paused:false,ended:false}});assert.equal(entered,0);
+send('control',{room:{unlockedScene:0,paused:false,ended:false}});assert.equal(entered,1);
+assert.equal(api.gate(1,()=>entered++),true);send('control',{room:{unlockedScene:1,paused:true,ended:false}});assert.equal(entered,1);
+receive({origin:'https://bad.example',source:parent,data:{channel:'ethicity-data-v5',kind:'independent'}});assert.equal(api.isClassroom(),true);
+send('independent');assert.equal(entered,2);assert.equal(api.isClassroom(),false);assert.equal(elements['classroom-wait'].open,false);
+send('control',{room:{unlockedScene:-1,paused:true,ended:true}});assert.equal(elements['classroom-wait'].open,false);
+assert.equal(api.gate(5,()=>entered++),false);const count=messages.length;api.update({});api.boundary({},5);api.complete({});assert.equal(messages.length,count);
+console.log('PASS: story gate, pause, resume, wrong-origin rejection, independent continuation, no submissions after preview.');

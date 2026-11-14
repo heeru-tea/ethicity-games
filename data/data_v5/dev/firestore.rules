@@ -1,0 +1,109 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // dataV5Rooms/{code}: anonymous owner UID, control state, 24-hour expiry.
+    // members/{uid}: chosen nickname and numeric choices; only self and room owner can read.
+    // answers/{uid_scene}: one completed-story summary per student; owner-only class query.
+    // checkpoints/{uid}: own private boundary checkpoint, custom writing removed by client.
+    // public/{scene}: teacher-released counts only. All unspecified paths are denied.
+    function signedIn() { return request.auth != null; }
+    function isSelf(uid) { return signedIn() && request.auth.uid == uid; }
+    function numberIn(n,lo,hi) { return n is int && n >= lo && n <= hi; }
+    function validMetrics(m) {
+      return m is map && m.keys().hasAll(['visits','sortA','sortB','sortC','scope','criteria','tests','monitor','methods','quiz','reflection','candidate','learning'])
+        && m.keys().hasOnly(['visits','sortA','sortB','sortC','scope','criteria','tests','monitor','methods','quiz','reflection','candidate','learning'])
+        && numberIn(m.visits,0,15) && numberIn(m.sortA,0,2) && numberIn(m.sortB,0,2) && numberIn(m.sortC,0,2)
+        && numberIn(m.scope,0,3) && numberIn(m.criteria,0,3) && numberIn(m.tests,0,3) && numberIn(m.monitor,0,3)
+        && numberIn(m.methods,0,127) && numberIn(m.quiz,0,3) && numberIn(m.reflection,0,3) && numberIn(m.candidate,0,4) && numberIn(m.learning,0,63);
+    }
+    match /dataV5Rooms/{code} {
+      function room() { return get(/databases/$(database)/documents/dataV5Rooms/$(code)).data; }
+      function owner() { return signedIn() && room().ownerUid == request.auth.uid; }
+      function active() { return room().expiresAt > request.time && !room().ended; }
+      function member() { return signedIn() && exists(/databases/$(database)/documents/dataV5Rooms/$(code)/members/$(request.auth.uid)); }
+      function attached() { return member() && get(/databases/$(database)/documents/dataV5Rooms/$(code)/members/$(request.auth.uid)).data.mode == 'classroom'; }
+      function validRoom(d) {
+        return d.keys().hasAll(['ownerUid','createdAt','expiresAt','heartbeatAt','unlockedScene','paused','ended','revealScene'])
+          && d.keys().hasOnly(['ownerUid','createdAt','expiresAt','heartbeatAt','unlockedScene','paused','ended','revealScene'])
+          && d.ownerUid is string && d.ownerUid.size() <= 128
+          && d.createdAt is timestamp && d.expiresAt is timestamp && d.heartbeatAt == request.time
+          && d.expiresAt > d.createdAt && d.expiresAt <= d.createdAt + duration.value(24,'h')
+          && numberIn(d.unlockedScene,-1,5) && numberIn(d.revealScene,-1,5) && d.revealScene <= d.unlockedScene
+          && d.paused is bool && d.ended is bool;
+      }
+      allow get: if signedIn() && (resource.data.expiresAt > request.time || resource.data.ownerUid == request.auth.uid);
+      allow list: if false;
+      allow create: if signedIn() && code.matches('^[A-HJ-NP-Z2-9]{8}$') && validRoom(request.resource.data)
+        && request.resource.data.ownerUid == request.auth.uid && request.resource.data.createdAt == request.time
+        && request.resource.data.unlockedScene == -1 && request.resource.data.revealScene == -1
+        && !request.resource.data.paused && !request.resource.data.ended;
+      allow update: if owner() && validRoom(request.resource.data)
+        && request.resource.data.ownerUid == resource.data.ownerUid && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.expiresAt == resource.data.expiresAt
+        && request.resource.data.unlockedScene >= resource.data.unlockedScene
+        && request.resource.data.unlockedScene <= resource.data.unlockedScene + 1
+        && (!resource.data.ended || request.resource.data.ended);
+      allow delete: if false;
+
+      match /members/{uid} {
+        function validMember(d) {
+          return d.keys().hasAll(['nickname','joinedAt','lastSeen','mode','currentScene','completedScene','completed','metrics'])
+            && d.keys().hasOnly(['nickname','joinedAt','lastSeen','mode','currentScene','completedScene','completed','metrics'])
+            && d.nickname is string && d.nickname.size() >= 1 && d.nickname.size() <= 12
+            && d.nickname.matches('^[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9 _-]{1,12}$')
+            && d.nickname.matches('.*[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9].*')
+            && d.joinedAt is timestamp && d.lastSeen == request.time && d.mode in ['classroom','preview']
+            && numberIn(d.currentScene,-1,6) && numberIn(d.completedScene,-1,5) && d.completedScene <= d.currentScene
+            && (d.currentScene <= room().unlockedScene || (d.currentScene == 6 && room().unlockedScene == 5))
+            && d.completed is bool && (!d.completed || d.completedScene == 5) && validMetrics(d.metrics);
+        }
+        allow read: if (isSelf(uid) && room().expiresAt > request.time) || owner();
+        allow create: if isSelf(uid) && active() && validMember(request.resource.data)
+          && request.resource.data.joinedAt == request.time && request.resource.data.currentScene == -1
+          && request.resource.data.completedScene == -1 && !request.resource.data.completed && request.resource.data.mode == 'classroom';
+        allow update: if isSelf(uid) && active() && validMember(request.resource.data)
+          && request.resource.data.joinedAt == resource.data.joinedAt
+          && request.resource.data.completedScene >= resource.data.completedScene
+          && (!resource.data.completed || request.resource.data.completed)
+          && (resource.data.mode == 'classroom' || request.resource.data == resource.data);
+        allow delete: if false;
+      }
+      match /answers/{id} {
+        function validAnswer(d) {
+          return d.keys().hasAll(['uid','scene','metrics','updatedAt']) && d.keys().hasOnly(['uid','scene','metrics','updatedAt'])
+            && isSelf(d.uid) && d.uid.size() <= 128 && numberIn(d.scene,0,5)
+            && id == d.uid + '_' + string(d.scene) && d.scene <= room().unlockedScene
+            && d.updatedAt == request.time && validMetrics(d.metrics);
+        }
+        allow read: if owner() || (signedIn() && resource.data.uid == request.auth.uid);
+        allow create: if active() && attached() && validAnswer(request.resource.data);
+        allow update: if active() && attached() && validAnswer(request.resource.data)
+          && request.resource.data.uid == resource.data.uid && request.resource.data.scene == resource.data.scene;
+        allow delete: if false;
+      }
+      match /checkpoints/{uid} {
+        function validCheckpoint(d) {
+          return d.keys().hasAll(['completedScene','json','updatedAt']) && d.keys().hasOnly(['completedScene','json','updatedAt'])
+            && numberIn(d.completedScene,0,5) && d.completedScene <= room().unlockedScene
+            && d.json is string && d.json.size() <= 60000 && d.updatedAt == request.time;
+        }
+        allow read: if isSelf(uid) && member();
+        allow create: if isSelf(uid) && active() && attached() && validCheckpoint(request.resource.data);
+        allow update: if isSelf(uid) && active() && attached() && validCheckpoint(request.resource.data)
+          && request.resource.data.completedScene >= resource.data.completedScene;
+        allow delete: if false;
+      }
+      match /public/{scene} {
+        function validCounts(d) {
+          return d.keys().hasAll(['scene','total','c0','c1','c2','c3','updatedAt']) && d.keys().hasOnly(['scene','total','c0','c1','c2','c3','updatedAt'])
+            && numberIn(d.scene,0,5) && scene == string(d.scene) && d.scene <= room().unlockedScene
+            && numberIn(d.total,0,500) && numberIn(d.c0,0,d.total) && numberIn(d.c1,0,d.total)
+            && numberIn(d.c2,0,d.total) && numberIn(d.c3,0,d.total) && d.updatedAt == request.time;
+        }
+        allow read: if owner() || (member() && room().revealScene == int(scene));
+        allow create, update: if owner() && validCounts(request.resource.data);
+        allow delete: if false;
+      }
+    }
+  }
+}

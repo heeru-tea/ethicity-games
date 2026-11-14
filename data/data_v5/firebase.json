@@ -1,0 +1,9 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-northeast3",
+    "edition": "standard",
+    "rules": "dev/firestore.rules"
+  },
+  "auth": { "providers": { "anonymous": true } }
+}

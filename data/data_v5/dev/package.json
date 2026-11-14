@@ -1,0 +1,8 @@
+{
+  "name": "ethicity-data-v5-local-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"build":"node build.mjs", "test":"node ../tests/classroom.mjs"},
+  "dependencies": {"firebase":"13.1.0", "firebase-tools":"15.36.0", "@firebase/rules-unit-testing":"6.0.0", "esbuild":"0.28.0", "qrcode":"1.5.4"}
+}

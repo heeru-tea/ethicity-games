@@ -1,0 +1,9 @@
+node_modules/
+dev/node_modules/
+dev/.cache/
+dev/java/
+dev/*.zip
+dev/*debug.log
+dev/.firebase/
+*-debug.log
+test-results/
