@@ -337,3 +337,28 @@ to{opacity:1;transform:none}
 .observation-guide p{font-size:1.15rem;font-weight:700;line-height:1.5;margin:8px 0 14px}
 .observation-guide button{min-height:44px;padding:8px 16px;margin-right:8px;font:inherit;cursor:pointer}
 .observation-guide button:disabled{cursor:default;opacity:.5}
+
+/* Keep the question and next action above the comparison, including short tablets. */
+.game-diversity #mission-intro .scene-dialogue{position:sticky;top:8px;z-index:5;grid-template-columns:72px minmax(0,1fr);align-items:center;gap:12px;margin:12px 0;background:var(--ee-cream,#fff9e7);border:2px solid var(--ee-ink,#294b40);padding:10px}
+.game-diversity #mission-intro .portrait-window{width:72px;height:72px}
+.game-diversity #mission-intro .ee-speech{font-size:18px;padding:10px;box-shadow:none}
+.game-diversity #mission-intro #intro-text{margin:4px 0 10px;line-height:1.45;font-weight:700}
+.game-diversity #mission-intro .dialogue-actions{gap:8px;align-items:center}
+.game-diversity #mission-intro .dialogue-actions button{min-height:44px}
+.game-diversity #mission-intro #intro-next{font-size:18px;font-weight:800}
+.game-diversity #mission-intro .intro-evidence{margin-top:8px}
+@media(max-height:800px) and (min-width:651px){
+.game-diversity #mission-intro{padding:16px;min-height:0}
+.game-diversity #mission-intro .original-frame img{height:clamp(72px,14vh,112px)}
+.game-diversity #mission-intro .intro-evidence{padding:10px}
+.game-diversity #mission-intro .intro-evidence-grid{gap:8px}
+.game-diversity #mission-intro .ee-speaker{display:none}
+}
+@media(max-width:650px){
+.game-diversity #mission-intro .scene-dialogue{grid-template-columns:minmax(0,1fr);padding:8px;top:0}
+.game-diversity #mission-intro .portrait-window,.game-diversity #mission-intro .ee-speaker{display:none}
+.game-diversity #mission-intro .dialogue-actions{display:flex;flex-wrap:wrap}
+.game-diversity #mission-intro .dialogue-actions button{width:auto}
+.game-diversity #mission-intro #intro-next{flex:1 1 50%}
+.game-diversity #mission-intro #intro-skip{font-size:13px}
+}
