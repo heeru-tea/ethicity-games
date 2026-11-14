@@ -1,7 +1,15 @@
 # ethicity-games
 2026 한국과학창의재단 AI융합교육연구회 윤리시티 게임 10종 모음
 
-## 데이터 관리 · 급식 메뉴 AI ‘냠냠봇’
+## 신뢰성 · 냠냠봇을 믿어도 될까?
+
+- **[신뢰성 게임 바로 플레이](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/data/data_v4/)**
+- [게임 안내 및 실행 방법](data/data_v4/README.md)
+- [게임 실행 파일](data/data_v4/index.html)
+
+기준을 정하고, 여러 상황에서 시험하고, 맡은 일과 작동 범위를 확인하는 교육 탐험입니다. 몇 주 뒤 새 오류를 점검하는 이야기와 개별 PNG 리포트를 포함합니다. `data` 브랜치의 `data/data_v4/`에 있으며, 게임 화면에는 버전 번호를 표시하지 않습니다.
+
+## 이전 데이터 관리 · 급식 메뉴 AI ‘냠냠봇’
 
 - **[냠냠봇 바로 플레이](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/data/data_v3/)**
 - [게임 안내 및 실행 방법](data/data_v3/README.md)

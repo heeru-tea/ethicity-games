@@ -1,0 +1,78 @@
+/* Game layout only; the official palette and component skins are unchanged. */
+body.game-data{margin:0;background:var(--ee-paper);height:100dvh;min-height:0;display:grid;grid-template-rows:64px minmax(0,1fr)}
+.game-data .app-header{height:64px;max-width:1200px;width:100%;padding:8px 20px;margin:auto}
+.game-data .header-actions .series-label{display:inline-block;font-size:14px;font-weight:700;white-space:nowrap}
+.game-data #main{width:100%;max-width:1200px;margin:0 auto;padding:6px 20px 12px;min-height:0;display:flex;flex-direction:column;gap:8px;overflow:visible}
+.game-data .word-strip{margin:0;gap:6px;flex:none}.game-data .word-card{min-height:36px;font-size:12px;padding:4px 6px}
+.game-data .game-layout,.game-data .game-layout.intro-layout{display:flex;flex-direction:column;gap:8px;flex:1;height:auto;min-height:0}
+.game-data .scene-sidebar{display:flex;flex-direction:column;min-height:0;flex:1;gap:6px}
+.game-data .stage-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;flex:none}
+.game-data .stage-heading>div:first-child{display:flex;align-items:baseline;gap:14px}
+.game-data .scene-title{font-size:20px;margin:0}.game-data .scene-tag{font-size:11px}
+.game-data .stage-meta{display:flex;align-items:center;gap:12px;flex:none}.game-data .stage-meta .ee-badge{font-size:11px;padding:4px 8px}.game-data .stage-meta small{font-size:11px}
+.game-data .scene-art{width:100%;max-width:none;margin:0;min-height:0;flex:1;display:flex;flex-direction:column;border:2px solid var(--ee-ink);background:var(--ee-paper);overflow:visible}
+.game-data .scene-view{position:relative;width:100%;height:auto;min-height:0;max-height:none;flex:1;aspect-ratio:auto;background:var(--ee-paper)}
+.game-data .scene-view .scene-image,.game-data #scene-cast{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:left center;image-rendering:pixelated}
+.game-data #scene-material{display:flex;flex-direction:column;justify-content:center;position:absolute;inset:12px 14px 50px 31%;overflow:visible}
+.game-data #scene-material:empty{display:none}
+.game-data #scene-material .material-card,.game-data #scene-material .digital-panel{width:100%;height:auto;max-width:none;min-height:0;margin:0;padding:14px 18px;background:var(--ee-cream)}
+.game-data #scene-material h3{font-size:clamp(17px,2vw,24px);line-height:1.5;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.game-data #scene-material p{font-size:clamp(14px,1.5vw,18px);line-height:1.7;margin:6px 0;overflow-wrap:anywhere}
+.game-data #scene-material .material-count{font-size:clamp(20px,2.5vw,30px);color:var(--ee-green)}
+.game-data #scene-material .eyebrow{font-size:13px}.game-data .menu-pending{border-left:4px solid var(--ee-gold);padding:6px 10px;background:var(--ee-paper)}
+.game-data .scene-response{position:absolute;left:12px;right:12px;bottom:6px;max-height:none;overflow:visible;font-size:12px;line-height:1.5;padding:4px 8px;background:var(--ee-cream);animation:none}
+.game-data .scene-art:has(.material-nav:not([hidden])) .scene-response{display:none}
+.game-data .scene-art figcaption{padding:0;border:0;background:var(--ee-paper);flex:none}
+.game-data #scene-caption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.game-data .material-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 8px}
+.game-data .material-nav>span{font-size:12px}.game-data .material-nav .ee-button{font-size:13px;min-height:48px;padding:4px 12px;min-width:80px}
+.game-data .messenger{width:100%;max-width:none;height:auto;min-height:0;flex:none;margin:0;padding:4px 10px;overflow:visible}
+.game-data .conversation-log{padding:2px 0;min-height:0;height:auto;max-height:none;overflow:visible;flex:none}
+.game-data .conversation-log .message{margin:0;gap:8px;align-items:center}.game-data .message-avatar{display:flex;flex-direction:column;align-items:center;justify-content:center;width:44px;flex:none}
+.game-data .message-avatar .portrait{width:38px;height:38px}.game-data .speaker-label{font-size:10px;line-height:1.3;margin:2px 0;text-align:center}
+.game-data .message-content{max-width:calc(100% - 52px);flex:1}.game-data .conversation-log .message-bubble{min-height:0;font-size:16px;line-height:1.6;padding:6px 10px}
+.game-data .message.player .message-avatar{width:24px}.game-data .message.player .message-content{flex:0 1 auto}
+.game-data .system-message{margin:4px 0;font-size:12px;line-height:1.5}
+.game-data .action-area{max-height:none;overflow:visible;padding-top:4px}.game-data .action-prompt{font-size:13px;line-height:1.5;margin:0 0 4px}
+.game-data .choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.game-data .choice-control{font-size:14px;line-height:1.5;padding:6px 10px;min-height:48px}.game-data .choice-control small{font-size:11px;margin-top:2px}
+.game-data .next-row .muted{display:none}.game-data .next-row .ee-button{min-height:48px}
+.game-data .choice-pager,.game-data .step-pager,.game-data .step-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}
+.game-data .choice-pager>span,.game-data .step-pager>span{font-size:12px;white-space:nowrap}.game-data .choice-pager .ee-button{font-size:12px;min-height:48px;padding:4px 8px}.game-data .method-actions .choice-pager{justify-content:flex-end}
+.game-data .start-page,.game-data .step-page,.game-data .rules-card,.game-data .complete{max-width:850px;width:100%;min-height:0;margin:auto;display:flex;flex-direction:column;gap:12px}
+.game-data .start-page{text-align:center;align-items:center}.game-data .start-page h1{font-size:clamp(30px,5vw,52px)}
+.game-data .start-scene{position:relative;width:min(100%,560px);height:clamp(120px,25dvh,240px);background:var(--ee-paper)}
+.game-data .start-scene>img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}.game-data .start-scene>div{position:absolute;left:calc(50% - 48px);bottom:8px}
+.game-data .start-question{font-size:20px;line-height:1.7}.game-data .start-page>.muted{font-size:12px}
+.game-data .step-page h1,.game-data .rules-card h1{font-size:25px}.game-data .step-icon{text-align:center}.game-data .step-copy{font-size:18px;line-height:1.8}
+.game-data .step-body{display:flex;flex-direction:column;gap:10px}.game-data .step-options{display:grid;gap:8px}.game-data .step-options .ee-choice{min-height:52px;font-size:15px}
+.game-data .step-options [aria-pressed=true]::before{content:'✓ '}.game-data .finding-card{padding:16px;background:var(--ee-paper);border-left:4px solid var(--ee-green);font-size:20px;line-height:1.8}
+.game-data .result-day{margin:0}.game-data .step-needs{display:grid;gap:12px;list-style:none;margin:0;padding:0}.game-data .step-needs li{font-size:16px;background:var(--ee-paper);padding:10px;border-left:4px solid var(--ee-gold)}
+.game-data .step-footer{border-top:2px solid var(--ee-sage);padding-top:8px}.game-data .step-footer .ee-button,.game-data .step-pager .ee-button{min-height:48px;font-size:14px}
+.game-data .result-step .ee-notice{font-size:14px}.game-data .memory-line{font-size:18px;line-height:1.8;margin:6px 0}.game-data .complete{gap:8px}.game-data .complete h1{font-size:28px}.game-data .complete p{font-size:15px}.game-data .complete .result-portraits,.game-data .complete .memory-line{margin:4px auto}
+.game-data .report-dialog{width:min(940px,94vw);max-height:90dvh;overflow:auto}.game-data .report-dialog img{width:100%;height:auto;max-height:55dvh;object-fit:contain}.game-data .report-dialog .report-pager{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}.game-data .report-dialog a{display:inline-flex;align-items:center;text-decoration:none}
+.game-data .pledge-editor{margin:0;min-width:0;max-width:100%}.game-data .pledge-editor select,.game-data .pledge-editor input{width:100%;min-width:0;max-width:100%;text-overflow:ellipsis}
+.game-data .step-page,.game-data .rules-card,.game-data .complete,.game-data .step-body{min-width:0;max-width:100%}
+.game-data .food-options{gap:6px;margin:4px 0}.game-data .food-options .ee-badge{font-size:11px}.game-data .food-options svg{max-width:50px;max-height:50px}
+@media(max-width:700px){
+ body.game-data{grid-template-rows:56px minmax(0,1fr)}.game-data .app-header{height:56px;padding:4px 10px}.game-data #main{padding:4px 8px 8px;gap:6px}
+ .game-data .header-actions .series-label{font-size:12px}.game-data .header-actions{gap:6px}
+ .game-data .word-strip{gap:3px}.game-data .word-card{font-size:10px;min-height:32px;padding:3px 2px}.game-data .word-check{display:none}
+ .game-data .stage-heading>div:first-child{display:block}.game-data .scene-title{font-size:15px}.game-data .scene-tag{font-size:10px}.game-data .stage-meta{flex-direction:column;align-items:flex-end;gap:2px}.game-data .stage-meta .ee-badge{font-size:9px;padding:3px 5px}.game-data .stage-meta small{font-size:9px}
+ .game-data .scene-view .scene-image,.game-data #scene-cast{height:43%;object-position:left top}
+ .game-data .scene-view:not(:has(#scene-material:not(:empty))) .scene-image,.game-data .scene-view:not(:has(#scene-material:not(:empty))) #scene-cast{height:100%;object-position:center}
+ .game-data #scene-material{inset:36% 8px 44px 8px}.game-data #scene-material .material-card{padding:8px 10px}.game-data #scene-material h3{font-size:16px;margin-bottom:4px}.game-data #scene-material p{font-size:13px;line-height:1.6;margin:4px 0}.game-data #scene-material .material-count{font-size:20px}.game-data #scene-material .eyebrow{font-size:11px}
+ .game-data .scene-response{font-size:10px;left:6px;right:6px;bottom:4px;padding:3px 5px}.game-data .material-nav{padding:2px 6px}.game-data .material-nav .ee-button{font-size:11px;padding:3px 8px}
+ .game-data .messenger{padding:4px 6px}.game-data .message-bubble{font-size:14px;padding:5px 8px}.game-data .message-avatar{width:36px}.game-data .message-avatar .portrait{width:32px;height:32px}.game-data .message-content{max-width:calc(100% - 44px)}
+ .game-data .choice-control{font-size:12px;padding:6px;gap:4px}.game-data .choice-control small{font-size:10px}.game-data .action-prompt{font-size:12px}.game-data .choice-pager{gap:4px}.game-data .choice-pager .ee-button{font-size:10px;padding:3px 5px}
+ .game-data .start-question{font-size:17px}.game-data .step-page,.game-data .rules-card{gap:10px}.game-data .step-page h1{font-size:22px}.game-data .step-copy{font-size:16px}.game-data .step-options .ee-choice{font-size:13px;padding:8px}.game-data .step-footer .ee-button,.game-data .step-pager .ee-button{font-size:12px}
+ .game-data .finding-card{font-size:17px;line-height:1.8}.game-data .step-needs li,.game-data .result-step .ee-notice{font-size:13px}.game-data .memory-line{font-size:15px}.game-data .complete h1{font-size:24px}.game-data .complete p{font-size:13px}.game-data .complete .ee-button{font-size:13px}
+}
+@media(max-height:560px) and (min-width:701px){
+ body.game-data{grid-template-rows:52px minmax(0,1fr)}.game-data .app-header{height:52px}.game-data .game-layout,.game-data .game-layout.intro-layout{flex-direction:row;align-items:stretch}.game-data .scene-sidebar{flex:1}.game-data .messenger{width:40%;display:flex;flex-direction:column;justify-content:center}.game-data .stage-meta{display:none}.game-data .stage-heading>div:first-child{display:block}.game-data .stage-title{font-size:15px}
+ .game-data #scene-material{inset:8px 8px 44px 25%}.game-data #scene-material h3{font-size:16px}.game-data #scene-material p{font-size:12px}.game-data #scene-material .material-count{font-size:18px}.game-data #scene-material .material-card{padding:8px}.game-data .message-bubble{font-size:13px}.game-data .choice-control{font-size:11px}.game-data .action-prompt{font-size:11px}
+ .game-data .start-page{display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:left}.game-data .start-scene{grid-column:2;grid-row:1/6;height:190px}.game-data .start-page h1{font-size:32px}.game-data .start-question{font-size:15px}.game-data .step-page{gap:5px;padding:10px 18px}.game-data .step-icon{display:none}.game-data .step-copy{font-size:15px}.game-data .step-options{gap:4px}.game-data .step-options .ee-choice{font-size:12px;min-height:48px}.game-data .result-step .memory-line{font-size:14px}.game-data .complete{gap:3px;padding:8px 16px}.game-data .complete .result-portraits{display:none}.game-data .complete h1{font-size:20px}.game-data .complete h1 br{display:none}.game-data .complete p{font-size:12px}.game-data .complete .memory-line{font-size:13px}
+ .game-data .result-step{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:auto auto 1fr auto;column-gap:18px;height:100%}
+ .game-data .result-step>.eyebrow{grid-column:1;grid-row:1}.game-data .result-step>h1{grid-column:1;grid-row:2;font-size:21px}
+ .game-data .result-step>.step-body{grid-column:2;grid-row:1/5;align-self:center;gap:6px;font-size:12px}.game-data .result-step>.step-pager{grid-column:1;grid-row:3;align-self:end}.game-data .result-step>.step-footer{grid-column:1;grid-row:4}
+ .game-data .result-step .step-footer .ee-button,.game-data .result-step .step-pager .ee-button{font-size:11px;padding:4px 6px;min-width:0}.game-data .result-step .word-card{font-size:9px;padding:2px}.game-data .result-step .memory-line{font-size:12px;line-height:1.6;margin:3px 0}.game-data .result-step .pledge-editor{gap:4px}.game-data .result-step .input-note{margin:2px 0;font-size:10px}.game-data .result-step .pledge-editor select{font-size:12px;padding:5px}.game-data .result-step .result-day{padding:8px}.game-data .result-step .result-day h2{font-size:18px}.game-data .result-step .ee-notice{font-size:11px;padding:6px;line-height:1.6}
+}
