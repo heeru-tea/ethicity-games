@@ -43,7 +43,7 @@
             <div class="dpad" aria-label="화면 이동 버튼"><button data-dir="ArrowLeft" type="button" aria-label="왼쪽">◀</button><button data-dir="ArrowUp" type="button" aria-label="위쪽">▲</button><button data-dir="ArrowDown" type="button" aria-label="아래쪽">▼</button><button data-dir="ArrowRight" type="button" aria-label="오른쪽">▶</button></div><button class="btn small primary" id="interactBtn" type="button">🔍 조사하기</button></div>
         </section>
         <aside class="sidepanel" aria-label="탐험 미션">
-          <p class="eyebrow">MISSION BOARD</p><h3 id="chapterTitle">📌 사건 조사</h3><p id="casePulse" class="case-pulse" aria-live="polite">🔎 조사 기록 0/4</p><button id="notebookBtn" type="button" class="btn notebook-btn">📓 조사 수첩 (0/4)</button><p id="missionCountHint">먼저 주변을 조사해 보세요.</p><div id="missionList" class="mission-list"></div>
+          <p class="eyebrow">MISSION BOARD</p><h3 id="chapterTitle">📌 사건 조사</h3><p id="casePulse" class="case-pulse" aria-live="polite">🔎 조사 기록 0/4</p><button id="notebookBtn" type="button" class="btn notebook-btn">📓 조사 수첩 (0/4)</button><div id="routeGuide" class="route-guide" aria-live="polite">다음 목적지 확인 중…</div><p id="missionCountHint">먼저 주변을 조사해 보세요.</p><div id="missionList" class="mission-list"></div>
           <div class="chapter-box"><b id="chapterBadgeTitle">🗂️ 사건 정리</b><p id="chapterIntro">증거를 모은 뒤 사건을 정리해 보세요.</p><button id="caseBtn" type="button" class="btn green" disabled>🔒 증거 수집 필요</button></div>
           <div class="final-box"><b>🏛️ 학교 AI 인권보장위원회</b><p>두 사건을 모두 조사하면 학교 AI의 사용 원칙을 결정할 수 있어요.</p><button id="finalBtn" type="button" class="btn primary" disabled>🔒 두 사건 해결 필요</button></div>
           <p class="statusline" id="assetStatus">팀 공식 공통 팩 로딩 중…</p>
@@ -55,7 +55,7 @@
   </main>
   <div id="modal" class="overlay" role="presentation" hidden><section id="dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"></section></div>
   <div id="notice" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);max-width:min(90vw,680px);background:#294b40;color:#fff9e7;border:3px solid #f3cf72;padding:12px 18px;z-index:100;box-shadow:5px 5px #789083;font-size:14px" role="status" aria-live="polite" hidden></div>
-  <footer class="wrap foot"><p>2026 AI융합교육연구회 윤리시티 · 인권보장(v0.7.2 · 팀 공통 팩 1.0) | 가상 사례 · 학생용 개인 탐험 | 교사 실시간 방·Firebase 미연결</p></footer>
+  <footer class="wrap foot"><p>2026 AI융합교육연구회 윤리시티 · 인권보장(v0.8.0 · 팀 공통 팩 1.0) | 가상 사례 · 학생용 개인 탐험 | 교사 실시간 방·Firebase 미연결</p></footer>
   <script src="../shared/ethicity-elementary-common-v1/runtime/manifest.js"></script>
   <script src="../shared/ethicity-elementary-common-v1/runtime/common.js"></script>
   <script id="scenario-data" type="application/json">__INLINE_SCENARIO__</script>

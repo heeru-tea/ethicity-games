@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const DATA = JSON.parse(document.querySelector('#scenario-data').textContent);
-  const STORE='ethicity.rights.v0.7.progress';
+  const STORE='ethicity.rights.v0.8.feedback.progress';
   const RESULT='ethicity.result.rights';
   const PLAYER='ethicity.player';
   const CW=1280,CH=720;
@@ -24,12 +24,23 @@
   let modal=false,choicePolicy=null,liveReason='';
   const canvas=$('mapCanvas'),ctx=canvas.getContext('2d');
   let held=new Set(),lastTs=0,justMoved=false,moveDir='down';
+  // Frame-rate independent easing: keyboard/touch acceleration and frictional deceleration.
+  const motion={vx:0,vy:0,walkFrame:0};
+  const MOTION_MAX_SPEED=0.33; // logical pixels per ms, same top speed as v0.8
+  const MOTION_ACCEL=0.0024;
+  const MOTION_BRAKE=0.0020;
+  const reduceMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
+  let portalTransition=null;
+  const resetMotion=()=>{motion.vx=0;motion.vy=0;motion.walkFrame=0;justMoved=false;};
+  function easeVelocity(value,target,amount){
+    return value<target?Math.min(value+amount,target):Math.max(value-amount,target);
+  }
   function currentChapterId(){return state.chapter;}
   function currentChapter(){return chapterMap[currentChapterId()];}
   function totalClueCount(){return Object.values(state.clues).reduce((a,b)=>a+b.length,0)}
   function chapterStations(id=currentChapterId()){return stationsByChapter[id]||[];}
   function chapterDone(id=currentChapterId()){return chapterStations(id).every(s=>state.clues[id]?.includes(s.id));}
-  function chapterReviewed(id=currentChapterId()){return !!state.caseAnswers[id];}
+  function chapterReviewed(id=currentChapterId()){return !!state.caseAnswers[id]?.recovered;}
   function allReviewed(){return chapterList.every(ch=>chapterReviewed(ch.id));}
   function nextChapterId(id){const idx=chapterList.findIndex(ch=>ch.id===id);return idx>=0&&idx<chapterList.length-1?chapterList[idx+1].id:null}
   function getWalkAreas(sceneId=state.scene){
@@ -118,20 +129,47 @@
     ai_lab:[{id:'home',x:640,y:647,r:49,label:'중앙마당으로',dest:'courtyard'}]
   };
   let portalCooldown=0;
-  function goThroughPortal(portal){
-    if(!portal || Date.now()<portalCooldown)return false;
-    portalCooldown=Date.now()+1100;
-    held.clear();justMoved=false;
+  function finishPortal(portal){
     state.scene=portal.dest;
-    // 방에 들어온 후 바로 포털에 다시 닿지 않도록 출발 지점을 멀리 지정합니다.
-    if(portal.dest==='courtyard') {state.x=640;state.y=515;}
+    if(portal.dest==='courtyard'){state.x=640;state.y=515;}
     else {state.x=640;state.y=485;}
-    persist();renderAll();tone(450);
+    resetMotion();persist();renderAll();tone(450);
     notice(portal.dest==='courtyard'?'중앙마당에 도착했어요. 다른 건물 입구로 걸어가 보세요.':`${sceneMap[portal.dest].name}에 들어왔어요. 나갈 때는 아래쪽 초록 포털로 가세요.`);
+  }
+  function goThroughPortal(portal){
+    if(!portal||Date.now()<portalCooldown||portalTransition)return false;
+    portalCooldown=Date.now()+1200;
+    held.clear();resetMotion();
+    if(reduceMotion){finishPortal(portal);return true;}
+    portalTransition={portal,elapsed:0,swapped:false,duration:520};
+    if(assetEngine)assetEngine.playSound('door').catch(()=>{});
     return true;
   }
+  function updatePortalTransition(dt){
+    if(!portalTransition)return;
+    const effect=portalTransition;
+    effect.elapsed+=dt;
+    if(!effect.swapped&&effect.elapsed>=effect.duration/2){
+      effect.swapped=true;
+      finishPortal(effect.portal);
+    }
+    if(effect.elapsed>=effect.duration)portalTransition=null;
+  }
+  function drawPortalTransition(){
+    if(!portalTransition)return;
+    const t=Math.min(1,portalTransition.elapsed/portalTransition.duration);
+    const opacity=t<.5?t*1.9:(1-t)*1.9;
+    ctx.save();
+    ctx.fillStyle=`rgba(255,249,231,${Math.max(0,opacity)*.92})`;
+    ctx.fillRect(0,0,CW,CH);
+    const r=30+Math.sin(Math.PI*t)*115;
+    ctx.globalAlpha=Math.max(0,1-Math.abs(.5-t)*1.7);
+    ctx.strokeStyle='#f3cf72';ctx.lineWidth=11;
+    ctx.beginPath();ctx.arc(CW/2,CH/2,r,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+  }
   function checkPortal(){
-    if(modal||Date.now()<portalCooldown)return;
+    if(modal||portalTransition||Date.now()<portalCooldown)return;
     const portal=(PORTALS[state.scene]||[]).find(p=>Math.hypot(state.x-p.x,state.y-p.y)<p.r);
     if(portal)goThroughPortal(portal);
   }
@@ -149,6 +187,18 @@
       ctx.fillRect(-w/2,-96+bounce,w,44);ctx.strokeRect(-w/2,-96+bounce,w,44);
       ctx.textAlign='center';ctx.fillStyle='#294b40';ctx.font="bold 21px 'Malgun Gothic',sans-serif";
       ctx.fillText('↪ '+p.label,0,-67+bounce);
+      // Small orbiting sparkles, kept outside the label box and in common palette.
+      if(!reduceMotion){
+        const seconds=performance.now()/1000;
+        for(let i=0;i<7;i++){
+          const a=i*Math.PI*2/7+seconds*.85;
+          const sx=Math.cos(a)*(64+Math.sin(seconds*3+i)*6);
+          const sy=Math.sin(a)*20+10;
+          const sparkle=5+Math.sin(seconds*4+i)*2;
+          ctx.fillStyle=i%2?'#fff9e7':'#f3cf72';
+          ctx.fillRect(Math.round(sx-sparkle/2),Math.round(sy-sparkle/2),Math.round(sparkle),Math.round(sparkle));
+        }
+      }
       ctx.restore();
     }
   }
@@ -156,7 +206,7 @@
     // 탭은 접근성을 위한 보조 이동 수단입니다. 기본 플레이는 지도상의 포털을 이용합니다.
     if(!sceneMap[id])return;
     portalCooldown=Date.now()+1100;
-    held.clear();justMoved=false;
+    held.clear();resetMotion();portalTransition=null;
     state.scene=id;state.x=640;state.y=(id==='courtyard'?515:485);
     persist();renderAll();tone(460);
   }
@@ -171,9 +221,14 @@
     $('chapterTitle').textContent=`📌 ${ch.shortTitle} · ${ch.title}`;
     $('chapterIntro').textContent=ch.intro;
     $('chapterBadgeTitle').textContent=`🗂️ ${ch.shortTitle} 정리`;
-    renderMissions(); renderCards(); renderFinish(); renderCasePulse(); drawScene();
+    renderMissions(); renderCards(); renderFinish(); renderCasePulse();renderRoute();drawScene();
   }
 
+  function renderRoute(){
+    const e=$('routeGuide');if(!e)return;
+    const next=chapterStations(currentChapterId()).find(s=>!state.clues[currentChapterId()].includes(s.id));
+    e.textContent=next?'➤ 다음 목적지: '+sceneMap[next.scene].name+' → '+next.title:'➤ 증거 수집 완료! 사건 정리로 이동';
+  }
   function renderCasePulse(){
     const ch=currentChapter(),total=chapterStations(ch.id).length,found=state.clues[ch.id].length;
     $('casePulse').textContent=chapterReviewed(ch.id)?'✅ 사건 정리 완료':`🔎 조사 기록 ${found}/${total} · ${found===0?'첫 제보를 만나 보세요':found===total?'사건을 정리할 준비가 됐어요':'모은 자료와 남은 의문을 확인하세요'}`;
@@ -297,7 +352,16 @@
       const answers={};
       for(const q of ch.review.questions){const picked=document.querySelector(`input[name="q_${q.id}"]:checked`); if(!picked){notice('모든 질문에 답한 뒤 정리해 주세요.'); return;} answers[q.id]=picked.value;}
       answers.reason=$('caseReason').value.trim();
-      state.caseAnswers[ch.id]=answers;
+      const good=ch.id==='saebom'?answers.truth==='direct'&&answers.rights==='review':answers.fairness!=='fair'&&answers.use!=='keep';
+      if(!good){
+        state.caseAnswers[ch.id]={...answers,recovered:false};persist();
+        const msg=ch.id==='saebom'?'초안과 수정 기록을 다시 확인해 주세요. 무엇보다 새봄이가 설명하고 공정하게 재검토받을 권리가 있어요.':'수기 장부와 얼굴인식 기록이 달랐어요. 출입을 제한당한 온유에게 즉시 다른 확인 방법을 제공할 수 있을까요?';
+        elDialog('🔎 다시 살펴보기',ch.title,'<div class="reveal"><h3>아직 권리 회복이 완료되지 않았어요.</h3><p>'+esc(msg)+'</p></div><p>증거를 더 살피고 판단을 고칠 수 있어요.</p><div class="dialog-actions"><button id="evidenceAgain" class="btn green">관련 증거 보기</button><button id="judgeAgain" class="btn primary">다시 판단하기</button></div>');
+        $('judgeAgain').addEventListener('click',openCaseReview);
+        $('evidenceAgain').addEventListener('click',()=>{const st=stationMap[ch.id==='saebom'?'sb_drafts':'oy_logs'];state.scene=st.scene;state.x=640;state.y=485;persist();renderAll();openStation(st.id,true)});
+        return;
+      }
+      state.caseAnswers[ch.id]={...answers,recovered:true};
       const next=nextChapterId(ch.id);
       if(next){state.chapter=next; state.scene=chapterMap[next].startScene; state.x=638; state.y=560;}
       persist(); renderAll(); openCaseResolution(ch.id,false);
@@ -306,7 +370,7 @@
 
   function openCaseResolution(chapterId,repeat=false){
     const ch=chapterMap[chapterId],answers=state.caseAnswers[chapterId]; if(!answers)return;
-    const body=`<div class="ending-banner"><div class="crown">${chapterId==='saebom'?'🔍':'🚪'}</div><div class="muted">${esc(ch.shortTitle)} 정리 결과</div><h3>${esc(ch.review.resolutionTitle)}</h3><p>${esc(ch.review.resolution)}</p></div><div class="decision-trail">${Object.entries(answers).filter(([k])=>k!=='reason').map(([k,v])=>`<div class="trail"><b>${esc(ch.review.questions.find(q=>q.id===k).label)}</b><p>${esc(optionLabel(chapterId,k,v))}</p></div>`).join('')}${answers.reason?`<div class="trail"><b>내가 적은 이유</b><p>${esc(answers.reason)}</p></div>`:''}</div><div class="costcard"><h3>획득한 배지 · ${esc(ch.badge)}</h3><p>${esc(ch.review.principle)}</p></div><p class="muted">${esc(ch.review.unlockNotice)}</p><div class="dialog-actions"><button class="btn primary" id="caseClose" type="button">${repeat?'확인':'다음으로'} →</button></div>`;
+    const body=`<div class="ending-banner"><div class="crown">${chapterId==='saebom'?'🔍':'🚪'}</div><div class="muted">${esc(ch.shortTitle)} 정리 결과</div><h3>${esc(ch.review.resolutionTitle)}</h3><p>${esc(ch.review.resolution)}</p></div><div class="decision-trail">${Object.entries(answers).filter(([k])=>k!=='reason'&&k!=='recovered').map(([k,v])=>`<div class="trail"><b>${esc(ch.review.questions.find(q=>q.id===k).label)}</b><p>${esc(optionLabel(chapterId,k,v))}</p></div>`).join('')}${answers.reason?`<div class="trail"><b>내가 적은 이유</b><p>${esc(answers.reason)}</p></div>`:''}</div><div class="costcard"><h3>획득한 배지 · ${esc(ch.badge)}</h3><p>${esc(ch.review.principle)}</p></div><p class="muted">${esc(ch.review.unlockNotice)}</p><div class="dialog-actions"><button class="btn primary" id="caseClose" type="button">${repeat?'확인':'다음으로'} →</button></div>`;
     elDialog('✅ 사건 해결',ch.review.resolutionTitle,body);
     $('caseClose').addEventListener('click',()=>{closeModal(); if(!repeat){const nextId=nextChapterId(chapterId); if(nextId){notice(ch.review.unlockNotice); setTimeout(()=>openChapterStory(nextId),140);} else notice('두 사건을 모두 해결했어요. 최종 위원회를 열어 보세요.');}});
   }
@@ -315,23 +379,23 @@
     if(!allReviewed()){notice('두 사건을 모두 조사하고 정리한 뒤에 최종 위원회를 열 수 있어요.');return;}
     choicePolicy=null; liveReason='';
     const summaries=chapterList.map(ch=>`<div class="trail"><b>${esc(ch.shortTitle)} · ${esc(ch.title)}</b><p>${esc(ch.review.principle)}</p></div>`).join('');
-    const body=`<div class="reveal"><h3>두 사건에서 무엇을 배웠나요?</h3><p>AI는 편리함을 줄 수 있지만, 학생의 발표·출입처럼 권리에 영향을 줄 때는 더 엄격한 기준이 필요해요. 여러분이라면 학교에 어떤 원칙을 제안할까요?</p></div><div class="decision-trail">${summaries}</div><p class="question">${esc(DATA.final.question)}</p><div class="policy-grid">${DATA.final.policies.map(p=>`<button class="policy" type="button" data-policy="${esc(p.id)}" aria-pressed="false"><b>${esc(p.title)}</b><small>${esc(p.desc)}</small></button>`).join('')}</div><label class="reflection" for="reason">내 선택의 이유 (선택 입력 · 입력하지 않아도 계속할 수 있어요)<textarea id="reason" placeholder="예: 학생의 권리를 제한하는 최종 판단은 사람이 책임져야 한다고 생각해요." maxlength="220"></textarea></label><p class="muted">이유 글은 서버로 전송하거나 저장하지 않아요. 내려받기 버튼을 누를 때만 학습 카드에 포함됩니다.</p><div class="dialog-actions"><button class="btn primary" id="resolveFinal" disabled type="button">우리 학교의 원칙 정하기 →</button></div>`;
+    const body=`<div class="reveal"><h3>두 사건에서 무엇을 배웠나요?</h3><p><b>효율 중시 교사:</b> “AI로 일을 빠르게 처리하면 더 많은 학생을 도울 수 있어요. 오류는 나중에 처리해도 되지 않을까요?”</p><p><b>권리 중시 교사:</b> “그동안 억울하게 제한당한 학생은 어떻게 해야 할까요?”</p><p>AI는 편리함을 줄 수 있지만, 학생의 발표·출입처럼 권리에 영향을 줄 때는 더 엄격한 기준이 필요해요. 여러분이라면 학교에 어떤 원칙을 제안할까요?</p></div><div class="decision-trail">${summaries}</div><p class="question">${esc(DATA.final.question)}</p><div class="policy-grid">${DATA.final.policies.map(p=>`<button class="policy" type="button" data-policy="${esc(p.id)}" aria-pressed="false"><b>${esc(p.title)}</b><small>${esc(p.desc)}</small><small>장점: ${esc(p.benefit)} / 주의: ${esc(p.risk)}</small></button>`).join('')}</div><label class="reflection" for="reason">내 선택의 이유 (선택 입력 · 입력하지 않아도 계속할 수 있어요)<textarea id="reason" placeholder="예: 학생의 권리를 제한하는 최종 판단은 사람이 책임져야 한다고 생각해요." maxlength="220"></textarea></label><p class="muted">이유 글은 서버로 전송하거나 저장하지 않아요. 내려받기 버튼을 누를 때만 학습 카드에 포함됩니다.</p><div class="dialog-actions"><button class="btn primary" id="resolveFinal" disabled type="button">우리 학교의 원칙 정하기 →</button></div>`;
     elDialog('🏛️ 마지막 미션',DATA.final.heading,body);
     $('dialog').querySelectorAll('[data-policy]').forEach(b=>b.addEventListener('click',()=>{choicePolicy=b.dataset.policy; $('dialog').querySelectorAll('[data-policy]').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); $('resolveFinal').disabled=false;}));
-    $('resolveFinal').addEventListener('click',()=>{if(!choicePolicy)return; liveReason=$('reason').value.trim(); state.finalPolicy=choicePolicy; state.completed=true; try{localStorage.setItem(RESULT,JSON.stringify({game:'rights',completed:true,ending:choicePolicy,version:'0.1.0-common1'}))}catch{} persist(); renderAll(); openEnding();});
+    $('resolveFinal').addEventListener('click',()=>{if(!choicePolicy)return; liveReason=$('reason').value.trim(); state.finalPolicy=choicePolicy; state.completed=true; try{localStorage.setItem(RESULT,JSON.stringify({game:'rights',completed:true,ending:choicePolicy,version:'0.8.0-feedback'}))}catch{} persist(); renderAll(); openEnding();});
   }
 
   function openEnding(){
     const p=DATA.final.policies.find(x=>x.id===state.finalPolicy)||DATA.final.policies[0];
     const chapterNotes=chapterList.map(ch=>{
       const ans=state.caseAnswers[ch.id]||{};
-      const bits=Object.entries(ans).filter(([k])=>k!=='reason').map(([k,v])=>`${ch.review.questions.find(q=>q.id===k).label}: ${optionLabel(ch.id,k,v)}`);
+      const bits=Object.entries(ans).filter(([k])=>k!=='reason'&&k!=='recovered').map(([k,v])=>`${ch.review.questions.find(q=>q.id===k).label}: ${optionLabel(ch.id,k,v)}`);
       return `<li><b>${esc(ch.shortTitle)} · ${esc(ch.title)}</b><br>${esc(bits.join(' / '))}</li>`;
     }).join('');
     const body=`<div class="ending-banner"><div class="crown">⚖️</div><div class="muted">윤리시티 학생 자문위원 · ${esc(state.nickname)}</div><h3>${esc(p.ending)}</h3><p>${esc(p.result)}</p></div><div class="costcard"><h3>나의 원칙 카드</h3><p>${esc(p.card)}</p></div><div class="end-note"><b>내가 조사한 사건들</b><ol>${chapterNotes}</ol><b>수업에서 함께 이야기해 봐요.</b><ol>${DATA.final.reflectionPrompts.map(x=>`<li>${esc(x)}</li>`).join('')}</ol><p>처음의 의심과 마지막 판단이 달라졌나요? 정답보다 <b>근거·권리·재검토</b>를 설명하는 것이 더 중요해요.</p></div><p class="muted">완료 배지는 이 브라우저에 저장했어요. 다른 윤리시티 게임 기록은 변경하지 않았습니다.</p><div class="dialog-actions"><button class="btn" id="saveReflection" type="button">📄 학습 카드 내려받기</button><button class="btn primary" id="endClose" type="button">학교로 돌아가기</button></div>`;
     elDialog('🎓 탐험 완료',p.ending,body);
     $('saveReflection').addEventListener('click',()=>{
-      const card=[`윤리시티 인권보장 탐험 · AI의 판결`,`별명: ${state.nickname}`,`완료: ${new Date().toLocaleDateString('ko-KR')}`,'',...chapterList.map(ch=>`${ch.shortTitle} ${ch.title}: ${Object.entries(state.caseAnswers[ch.id]||{}).filter(([k])=>k!=='reason').map(([k,v])=>optionLabel(ch.id,k,v)).join(' / ')}`),'',`최종 원칙: ${p.title}`,`나의 원칙 카드: ${p.card}`,`선택 이유: ${liveReason||'(수업에서 직접 말해 보세요)'}`].join('\n');
+      const card=[`윤리시티 인권보장 탐험 · AI의 판결`,`별명: ${state.nickname}`,`완료: ${new Date().toLocaleDateString('ko-KR')}`,'',...chapterList.map(ch=>`${ch.shortTitle} ${ch.title}: ${Object.entries(state.caseAnswers[ch.id]||{}).filter(([k])=>k!=='reason'&&k!=='recovered').map(([k,v])=>optionLabel(ch.id,k,v)).join(' / ')}`),'',`최종 원칙: ${p.title}`,`나의 원칙 카드: ${p.card}`,`선택 이유: ${liveReason||'(수업에서 직접 말해 보세요)'}`].join('\n');
       const b=new Blob([card],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='윤리시티_인권보장_학습카드.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);notice('학습 카드를 저장했어요.');
     });
     $('endClose').addEventListener('click',closeModal);
@@ -379,16 +443,65 @@
       fill(px-124,py-167,248,64,done?'#dcedcf':'#fff9e7');fill(px-124,py-167,248,5,'#294b40');fill(px-124,py-108,248,5,'#294b40');fill(px-124,py-167,5,64,'#294b40');fill(px+119,py-167,5,64,'#294b40');
       print(px,py-139,done?'✓ 다시 보기':'! 조사하기',23,done?'#347447':'#a66e35');print(px,py-115,s.title,19,'#294b40');
     }
-    if(assetEngine){try{assetEngine.drawCharacter(ctx,state.avatar,state.x,state.y,justMoved?moveDir:'down',justMoved?Math.floor(performance.now()/167)%4:1,.8)}catch{drawFigure(state.x,state.y,'#536d9a')}} else drawFigure(state.x,state.y,'#526c92');
+    if(assetEngine){try{assetEngine.drawCharacter(ctx,state.avatar,state.x,state.y,justMoved?moveDir:'down',justMoved?Math.floor(motion.walkFrame)%4:1,.8)}catch{drawFigure(state.x,state.y,'#536d9a')}} else drawFigure(state.x,state.y,'#526c92');
     print(state.x,state.y-87,state.nickname,22,'#294b40');
   }
-  function drawScene(){ctx.clearRect(0,0,CW,CH); if(assetEngine){try{assetEngine.drawBackground(ctx,state.scene,CW,CH)}catch{drawFallback()}} else drawFallback(); drawPortals(); drawActors()}
+  function drawRouteHint(){
+    const next=chapterStations(currentChapterId()).find(s=>!state.clues[currentChapterId()].includes(s.id));
+    if(!next||chapterReviewed())return;
+    let x=next.pos.x,y=next.pos.y-150,label=next.title;
+    if(state.scene!==next.scene){
+      const p=state.scene==='courtyard'?(PORTALS.courtyard||[]).find(q=>q.dest===next.scene):(PORTALS[state.scene]||[])[0];
+      if(!p)return;
+      x=p.x;y=p.y-105;label=state.scene==='courtyard'?sceneMap[next.scene].name+' 이동':'중앙마당으로 나가기';
+    }
+    const pulse=Math.sin(performance.now()/270)*5;
+    ctx.save();ctx.font="bold 24px 'Malgun Gothic',sans-serif";ctx.textAlign='center';
+    const width=Math.min(410,Math.max(190,ctx.measureText(label).width+55));
+    x=Math.max(width/2+8,Math.min(1280-width/2-8,x));y=Math.max(85,y+pulse);
+    ctx.fillStyle='#fff5ca';ctx.strokeStyle='#294b40';ctx.lineWidth=4;
+    ctx.fillRect(x-width/2,y-35,width,45);ctx.strokeRect(x-width/2,y-35,width,45);
+    ctx.fillStyle='#294b40';ctx.fillText('➤ '+label,x,y-5);ctx.restore();
+  }
+  function drawScene(){ctx.clearRect(0,0,CW,CH); if(assetEngine){try{assetEngine.drawBackground(ctx,state.scene,CW,CH)}catch{drawFallback()}} else drawFallback(); drawPortals(); drawActors();drawPortalTransition()}
 
-  function loop(ts){const dt=Math.min(50,ts-(lastTs||ts)); lastTs=ts;
-    if(state.started&&!$('game').hidden&&!modal){let dx=0,dy=0;
-      if(held.has('ArrowLeft')||held.has('a'))dx--; if(held.has('ArrowRight')||held.has('d'))dx++; if(held.has('ArrowUp')||held.has('w'))dy--; if(held.has('ArrowDown')||held.has('s'))dy++;
-      if(dx||dy){const len=Math.hypot(dx,dy); const nx=Math.min(1170,Math.max(110,state.x+dx/len*(dt*.33))); const ny=Math.min(690,Math.max(100,state.y+dy/len*(dt*.33))); moveTo(nx,ny); checkPortal(); justMoved=true; if(Math.abs(dx)>Math.abs(dy))moveDir=dx>0?'right':'left'; else moveDir=dy>0?'down':'up';}
-      else if(justMoved){justMoved=false; persist()}
+  function loop(ts){
+    const dt=Math.min(50,Math.max(0,ts-(lastTs||ts)));lastTs=ts;
+    if(state.started&&!$('game').hidden){
+      if(!modal&&!portalTransition){
+        let dx=0,dy=0;
+        if(held.has('ArrowLeft')||held.has('a'))dx--;
+        if(held.has('ArrowRight')||held.has('d'))dx++;
+        if(held.has('ArrowUp')||held.has('w'))dy--;
+        if(held.has('ArrowDown')||held.has('s'))dy++;
+        const len=Math.hypot(dx,dy);
+        const targetX=len?dx/len*MOTION_MAX_SPEED:0;
+        const targetY=len?dy/len*MOTION_MAX_SPEED:0;
+        const acceleration=len?MOTION_ACCEL:MOTION_BRAKE;
+        motion.vx=easeVelocity(motion.vx,targetX,acceleration*dt);
+        motion.vy=easeVelocity(motion.vy,targetY,acceleration*dt);
+        if(Math.abs(motion.vx)<0.002)motion.vx=0;
+        if(Math.abs(motion.vy)<0.002)motion.vy=0;
+        const moving=Math.hypot(motion.vx,motion.vy)>0.006;
+        if(moving){
+          const oldX=state.x,oldY=state.y;
+          const nx=Math.min(1170,Math.max(110,oldX+motion.vx*dt));
+          const ny=Math.min(690,Math.max(100,oldY+motion.vy*dt));
+          moveTo(nx,ny);
+          if(Math.abs(state.x-oldX)<0.001)motion.vx=0;
+          if(Math.abs(state.y-oldY)<0.001)motion.vy=0;
+          const speed=Math.hypot(motion.vx,motion.vy);
+          justMoved=speed>0.006;
+          if(justMoved){
+            if(Math.abs(motion.vx)>Math.abs(motion.vy))moveDir=motion.vx>0?'right':'left';
+            else moveDir=motion.vy>0?'down':'up';
+            motion.walkFrame+=dt/170*(speed/MOTION_MAX_SPEED);
+          }
+          checkPortal();
+        }else if(justMoved){
+          resetMotion();persist();
+        }
+      }else if(portalTransition){updatePortalTransition(dt);}
       drawScene();
     }
     requestAnimationFrame(loop);
@@ -405,9 +518,9 @@
     if(['e','Enter',' '].includes(k)){interact();e.preventDefault()}
   });
   window.addEventListener('keyup',e=>{held.delete(e.key.length===1?e.key.toLowerCase():e.key)});
-  window.addEventListener('blur',()=>held.clear());
+  window.addEventListener('blur',()=>{held.clear();resetMotion()});
   for(const b of document.querySelectorAll('[data-dir]')){const key=b.dataset.dir; b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);held.add(key)}); const stop=()=>held.delete(key); b.addEventListener('pointerup',stop); b.addEventListener('pointercancel',stop); b.addEventListener('lostpointercapture',stop)}
-  canvas.addEventListener('click',e=>{if(modal)return; const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*CW,y=(e.clientY-r.top)/r.height*CH; let nearest=null,d=1e9; for(const s of activeStationsInScene()){const dist=Math.hypot(x-s.pos.x,y-(s.pos.y-75)); if(dist<d){d=dist; nearest=s}} if(nearest&&d<190){openStation(nearest.id)} else {if(!moveTo(Math.max(110,Math.min(1170,x)),Math.max(100,Math.min(690,y)))) notice('책상이나 가구 위로는 올라갈 수 없어요. 걸을 수 있는 바닥으로 이동해 보세요.'); checkPortal();persist(); drawScene();}});
+  canvas.addEventListener('click',e=>{if(modal)return; const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*CW,y=(e.clientY-r.top)/r.height*CH; let nearest=null,d=1e9; for(const s of activeStationsInScene()){const dist=Math.hypot(x-s.pos.x,y-(s.pos.y-75)); if(dist<d){d=dist; nearest=s}} if(nearest&&d<190){openStation(nearest.id)} else {if(!moveTo(Math.max(110,Math.min(1170,x)),Math.max(100,Math.min(690,y)))) notice('책상이나 가구 위로는 올라갈 수 없어요. 걸을 수 있는 바닥으로 이동해 보세요.'); resetMotion();checkPortal();persist(); drawScene();}});
   canvas.addEventListener('keydown',e=>{if(e.key==='Enter'){interact();e.preventDefault()}});
 
   async function connectCommonPack(){
