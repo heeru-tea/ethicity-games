@@ -62,3 +62,12 @@
 .evidence p b,.evidence .question,.reflection,.reflection p{font-size:clamp(15px,1.5vw,19px);line-height:1.85;word-break:keep-all;overflow-wrap:break-word}
 .ai-recommend{padding:15px;background:#fff0c5;border:3px solid #294b40;box-shadow:4px 4px #a8bb8c;margin:14px 0;line-height:1.8;word-break:keep-all}
 .ai-recommend p{font-size:13px;margin:7px 0}.ai-recommend h3{font-size:18px;margin:4px 0 10px}
+
+/* Teacher feedback: readable reflection, resident-first results. */
+.evidence .reflection-question{display:block;font-size:clamp(18px,2vw,22px);line-height:1.85;margin:14px 0 4px;padding:14px;border-left:5px solid #477e75;background:#e6efdc;word-break:keep-all}
+.needs-panel{grid-column:1/-1;padding:18px;border:4px solid #294b40;background:#fff9df;min-width:0}
+.needs-panel h3{font-size:21px;margin:0 0 10px}.needs-panel p,.needs-panel li{font-size:15px;line-height:1.85}.needs-panel ul{padding-left:22px}.needs-panel li{margin:8px 0}
+.evaluation-panel summary{cursor:pointer;min-height:44px;font-size:17px;font-weight:900;padding:8px 0}.evaluation-panel p{font-size:14px;line-height:1.8}
+.table-scroll{overflow-x:auto}.model-table{border-collapse:collapse;width:100%;font-size:13px}.model-table td,.model-table th{padding:8px;border:1px solid #8eaa99;text-align:left}
+.trial-episode p,.reaction p,.weight-item small,.small-note{font-size:14px;line-height:1.8}.reaction-grid>details,.reaction-grid>.ai-recommend{grid-column:1/-1}
+.weight-title b{font-size:17px}.weight-item input[type=range]{min-height:40px}.facility small{font-size:13px;line-height:1.65}.facility b{font-size:15px}.facility .cost{white-space:nowrap}
