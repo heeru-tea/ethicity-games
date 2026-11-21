@@ -1,1 +1,25 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 그림을 고쳐줘 · 윤리시티</title><link rel="stylesheet" href="../shared/ethicity-elementary-common-v1/runtime/common.css"><link rel="stylesheet" href="classroom/style.css"></head><body class="ee-theme game-diversity"><main class="ee-panel"><h1>AI 그림을 고쳐줘</h1><p>우리가 더한 자료로 의사의 여러 모습을 살펴봐요.</p><p><a class="ee-button" href="classroom/teacher-retention.html">교실 열기</a> <a class="ee-button secondary" href="classroom/student-retention.html">학생 참여</a></p><p>학생은 선생님이 보여 주는 QR이나 참여 링크를 이용하세요.</p><p>실제 AI를 훈련하는 활동이 아닌 모의실험입니다. 개인정보는 입력하지 마세요.</p><details><summary>교실 보관 안내</summary><p>개설 후 24시간 동안 이용할 수 있으며 교사도 그 전에 기록을 내려받아야 합니다. 7일 이후 삭제 대상 건수를 매일 확인합니다. 실제 삭제는 운영자의 확인·별도 승인 후 처리하며 지연될 수 있습니다.</p></details><details><summary>기존 Google 교사 수업 이어하기</summary><p><a href="teacher-production.html">기존 교사 화면</a> · <a href="student-production.html">기존 학생 화면</a></p><p>기존 수업 기록은 새 교실로 옮겨지지 않습니다.</p></details></main></body></html>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 그림을 고쳐줘 · 윤리시티</title><link rel="stylesheet" href="../shared/ethicity-elementary-common-v1/runtime/common.css"><link rel="stylesheet" href="classroom/style.css"></head><body class="ee-theme game-diversity"><main class="ee-panel"><p class="langRow"><button id="lang" class="ee-button secondary" type="button"></button></p><h1 id="title"></h1><p id="intro"></p><p><a class="ee-button" href="classroom/teacher-retention.html" id="openClassroom"></a> <a class="ee-button secondary" href="classroom/student-retention.html" id="joinClassroom"></a></p><p id="joinHint"></p><p id="simNotice"></p><details><summary id="retentionSummary"></summary><p id="retentionBody"></p></details><details><summary id="legacySummary"></summary><p><a href="teacher-production.html" id="legacyTeacher"></a> · <a href="student-production.html" id="legacyStudent"></a></p><p id="legacyNote"></p></details></main>
+<script>
+let lang=(()=>{try{return JSON.parse(localStorage.getItem('ethicity.settings.diversity'))?.language==='en'?'en':'ko'}catch(e){return 'ko'}})();
+const tr=a=>Array.isArray(a)?a[lang==='en'?1:0]:a,L=(ko,en)=>tr([ko,en]);
+const $=id=>document.getElementById(id);
+function render(){
+ document.documentElement.lang=lang;
+ $('lang').textContent=lang==='ko'?'English':'한국어';
+ $('title').textContent=L('AI 그림을 고쳐줘','Fix the AI Picture');
+ $('intro').textContent=L('우리가 더한 자료로 의사의 여러 모습을 살펴봐요.','See the many ways a doctor can look, using the data we added.');
+ $('openClassroom').textContent=L('교실 열기','Open classroom');
+ $('joinClassroom').textContent=L('학생 참여','Join as a student');
+ $('joinHint').textContent=L('학생은 선생님이 보여 주는 QR이나 참여 링크를 이용하세요.','Students should use the QR code or join link the teacher shows.');
+ $('simNotice').textContent=L('실제 AI를 훈련하는 활동이 아닌 모의실험입니다. 개인정보는 입력하지 마세요.','This is a simulation, not real AI training. Do not enter personal information.');
+ $('retentionSummary').textContent=L('교실 보관 안내','About classroom storage');
+ $('retentionBody').textContent=L('개설 후 24시간 동안 이용할 수 있으며 교사도 그 전에 기록을 내려받아야 합니다. 7일 이후 삭제 대상 건수를 매일 확인합니다. 실제 삭제는 운영자의 확인·별도 승인 후 처리하며 지연될 수 있습니다.','The classroom is available for 24 hours after it opens, and teachers should download their records before then. The number of records due for deletion after 7 days is checked daily. Actual deletion requires operator confirmation and separate approval, and may be delayed.');
+ $('legacySummary').textContent=L('기존 Google 교사 수업 이어하기','Continue an existing Google teacher class');
+ $('legacyTeacher').textContent=L('기존 교사 화면','Previous teacher screen');
+ $('legacyStudent').textContent=L('기존 학생 화면','Previous student screen');
+ $('legacyNote').textContent=L('기존 수업 기록은 새 교실로 옮겨지지 않습니다.','Records from previous classes do not carry over to the new classroom.');
+}
+$('lang').onclick=()=>{lang=lang==='ko'?'en':'ko';try{localStorage.setItem('ethicity.settings.diversity',JSON.stringify({language:lang}))}catch(e){}render();};
+render();
+</script>
+</body></html>

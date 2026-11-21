@@ -38,6 +38,9 @@ function load(file){
     originals:[{id:'D1',image:'',alt:'',text:'원본',}],materials:[],
     histories:()=>'',wireHistory:async()=>{},ending:()=>'',choiceTray:()=>'',persistDrafts(){},bindDraft(){},
     action:async fn=>fn(),
+    // Korean-only passthrough, matching ui-retention.js's own fallback when
+    // i18n.js (not loaded by this harness) is unavailable.
+    tr:a=>Array.isArray(a)?a[0]:a,L:ko=>ko,uiCopy:v=>v,
   };
   const proxy=new Proxy(s,{has:(t,k)=>typeof k==='string'&&k in t,get:(t,k)=>t[k],set:(t,k,v)=>{t[k]=v;return true;}});
   const build=new Function('stubs',`with(stubs){${parts}\n${helpers}\n${studentFn}\nreturn {student,captureUi,restoreUi};}`);

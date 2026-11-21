@@ -22,48 +22,48 @@ const MATERIAL={
     {
       "id": "OBS01",
       "image": "assets/ai_doctor/obs/OBS01_listening.png",
-      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상을 사이에 두고 환자와 마주 보며 이야기를 듣는다. 뒤쪽에 수액 거치대와 모니터가 보인다.",
-      "text": "환자의 이야기를 듣는 의사",
+      "alt": ["실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상을 사이에 두고 환자와 마주 보며 이야기를 듣는다. 뒤쪽에 수액 거치대와 모니터가 보인다.", "Photorealistic AI-generated image. A person in a white coat sits across a desk from a patient, listening to them. An IV stand and a monitor are visible in the background."],
+      "text": ["환자의 이야기를 듣는 의사", "A doctor listening to a patient"],
       "sha256": "b0c5aeedc1a005950918589f820980064081594b5e92ae725e0ac287cae235cb",
       "libraryId": "libfile_fde3_f-f454dff4a2148191a474b3e764d7e210_ebe1f7f5eb0c8191badd5375779be355"
     },
     {
       "id": "OBS02",
       "image": "assets/ai_doctor/obs/OBS02_results.png",
-      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 병상 옆에 서서 환자에게 클립보드의 그래프를 가리키며 설명한다.",
-      "text": "병상 옆에서 검사 결과를 설명하는 의사",
+      "alt": ["실사형 AI 생성 이미지. 흰 가운 차림 인물이 병상 옆에 서서 환자에게 클립보드의 그래프를 가리키며 설명한다.", "Photorealistic AI-generated image. A person in a white coat stands beside a hospital bed, pointing at a graph on a clipboard while explaining it to the patient."],
+      "text": ["병상 옆에서 검사 결과를 설명하는 의사", "A doctor explaining test results beside a hospital bed"],
       "sha256": "0b850a3502d1d4234fec6e7e10fe3defbd4832cc9f104e684eedee7cd15cd23d",
       "libraryId": "libfile_fde3_f-2fd51b95250c81918496c9e3216ed266_ebe1f7f5eb0c8191badd5375779be355"
     },
     {
       "id": "OBS03",
       "image": "assets/ai_doctor/obs/OBS03_scan.png",
-      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상에 앉아 모니터의 흉부 CT 영상을 살펴본다.",
-      "text": "모니터의 의료 영상을 살펴보는 의사",
+      "alt": ["실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상에 앉아 모니터의 흉부 CT 영상을 살펴본다.", "Photorealistic AI-generated image. A person in a white coat sits at a desk, looking at a chest CT scan on a monitor."],
+      "text": ["모니터의 의료 영상을 살펴보는 의사", "A doctor looking at a medical image on a monitor"],
       "sha256": "3d1a58cb3aafcc4659e75f2fe02f4206dd1a989f659118e6abca0ead517f153c",
       "libraryId": "libfile_fde3_f-35a192f1aa1481918b775cd5775f4627_ebe1f7f5eb0c8191badd5375779be355"
     },
     {
       "id": "OBS04",
       "image": "assets/ai_doctor/obs/OBS04_records.png",
-      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상에서 안경을 쓰고 클립보드에 진료 기록을 작성한다.",
-      "text": "책상에서 진료 기록을 작성하는 의사",
+      "alt": ["실사형 AI 생성 이미지. 흰 가운 차림 인물이 책상에서 안경을 쓰고 클립보드에 진료 기록을 작성한다.", "Photorealistic AI-generated image. A person in a white coat, wearing glasses, writes medical records on a clipboard at a desk."],
+      "text": ["책상에서 진료 기록을 작성하는 의사", "A doctor writing medical records at a desk"],
       "sha256": "c4bc364cfc0137ead87ed00ff176b48092f41f4985dd2407aaba2fae18a832eb",
       "libraryId": "libfile_fde3_f-8e95948d36748191b9ec1e250f4fdc31_ebe1f7f5eb0c8191badd5375779be355"
     },
     {
       "id": "OBS05",
       "image": "assets/ai_doctor/obs/OBS05_plan.png",
-      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 복약 일정표를 들고 환자에게 가리키며 설명한다.",
-      "text": "환자에게 치료 계획을 설명하는 의사",
+      "alt": ["실사형 AI 생성 이미지. 흰 가운 차림 인물이 복약 일정표를 들고 환자에게 가리키며 설명한다.", "Photorealistic AI-generated image. A person in a white coat holds a medication schedule and points to it while explaining it to the patient."],
+      "text": ["환자에게 치료 계획을 설명하는 의사", "A doctor explaining a treatment plan to a patient"],
       "sha256": "b66c46f8d9a37a57ab7ca3c65ff185e815f10a4a163e6c3d19091e4ae4243c79",
       "libraryId": "libfile_fde3_f-53e56099215081919ae7c1f4daafa754_ebe1f7f5eb0c8191badd5375779be355"
     },
     {
       "id": "OBS06",
       "image": "assets/ai_doctor/obs/OBS06_rounds.png",
-      "alt": "실사형 AI 생성 이미지. 흰 가운 차림 인물이 병상 옆에 서서 환자와 웃으며 대화한다.",
-      "text": "병실을 찾아 환자와 대화하는 의사",
+      "alt": ["실사형 AI 생성 이미지. 흰 가운 차림 인물이 병상 옆에 서서 환자와 웃으며 대화한다.", "Photorealistic AI-generated image. A person in a white coat stands beside a hospital bed, smiling and talking with the patient."],
+      "text": ["병실을 찾아 환자와 대화하는 의사", "A doctor visiting a hospital room to talk with a patient"],
       "sha256": "222f3103a02cd36f11c6e9b0ffdb253dd390d9e47eddde2915e3c0ecf48f445c",
       "libraryId": "libfile_fde3_f-0c2f487a6cb08191bbd24220cbf44db4_ebe1f7f5eb0c8191badd5375779be355"
     }
@@ -72,24 +72,24 @@ const MATERIAL={
     {
       "id": "D1",
       "image": "assets/ai_doctor/ethicity_doctor_first3/doctor_01.png",
-      "alt": "침대에 누운 환자의 가슴에 청진기를 대는 흰 가운 인물. 뒤쪽에는 다른 인물과 모니터, 수액 장치가 보인다.",
-      "text": "침대에 누운 환자의 가슴에 청진기를 대는 흰 가운 인물. 뒤쪽에는 다른 인물과 모니터, 수액 장치가 보인다.",
+      "alt": ["침대에 누운 환자의 가슴에 청진기를 대는 흰 가운 인물. 뒤쪽에는 다른 인물과 모니터, 수액 장치가 보인다.", "A person in a white coat places a stethoscope on the chest of a patient lying in bed. Another person, a monitor and an IV stand are visible in the background."],
+      "text": ["침대에 누운 환자의 가슴에 청진기를 대는 흰 가운 인물. 뒤쪽에는 다른 인물과 모니터, 수액 장치가 보인다.", "A person in a white coat places a stethoscope on the chest of a patient lying in bed. Another person, a monitor and an IV stand are visible in the background."],
       "sha256": "e800b1b68a30b52bc7e7510fe2104208661a086482811d7be6c262733127cb68",
       "libraryId": "libfile_1a686c313f188191b3918f282f36ecaa"
     },
     {
       "id": "D2",
       "image": "assets/ai_doctor/ethicity_doctor_first3/doctor_02.png",
-      "alt": "침대의 환자를 청진하는 흰 가운 인물. 왼쪽 뒤에는 기록하는 다른 인물, 오른쪽에는 모니터와 수액 장치가 보인다.",
-      "text": "침대의 환자를 청진하는 흰 가운 인물. 왼쪽 뒤에는 기록하는 다른 인물, 오른쪽에는 모니터와 수액 장치가 보인다.",
+      "alt": ["침대의 환자를 청진하는 흰 가운 인물. 왼쪽 뒤에는 기록하는 다른 인물, 오른쪽에는 모니터와 수액 장치가 보인다.", "A person in a white coat listens to a bedridden patient's chest with a stethoscope. Another person writing notes is behind on the left, with a monitor and IV stand on the right."],
+      "text": ["침대의 환자를 청진하는 흰 가운 인물. 왼쪽 뒤에는 기록하는 다른 인물, 오른쪽에는 모니터와 수액 장치가 보인다.", "A person in a white coat listens to a bedridden patient's chest with a stethoscope. Another person writing notes is behind on the left, with a monitor and IV stand on the right."],
       "sha256": "094539449b0cda8701bbae661cbdc0a34258ef3018031e6a7f940907e25005b8",
       "libraryId": "libfile_c022c9755e7c81918180decabdd299b4"
     },
     {
       "id": "D3",
       "image": "assets/ai_doctor/ethicity_doctor_first3/doctor_03.png",
-      "alt": "환자의 가슴을 청진하는 흰 가운 인물. 뒤쪽 모니터와 영상 화면, 왼쪽 기록판이 보인다.",
-      "text": "환자의 가슴을 청진하는 흰 가운 인물. 뒤쪽 모니터와 영상 화면, 왼쪽 기록판이 보인다.",
+      "alt": ["환자의 가슴을 청진하는 흰 가운 인물. 뒤쪽 모니터와 영상 화면, 왼쪽 기록판이 보인다.", "A person in a white coat listens to a patient's chest. A monitor and an imaging screen are visible behind, with a chart on the left."],
+      "text": ["환자의 가슴을 청진하는 흰 가운 인물. 뒤쪽 모니터와 영상 화면, 왼쪽 기록판이 보인다.", "A person in a white coat listens to a patient's chest. A monitor and an imaging screen are visible behind, with a chart on the left."],
       "sha256": "e3ca974bf6c477d59c2f7e2f1b9886ddc70b59eb48502ce0a42a0bbfcf91e3c6",
       "libraryId": "libfile_30683a05666c8191a52ca10606c7deca"
     }
