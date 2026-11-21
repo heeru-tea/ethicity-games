@@ -12,3 +12,5 @@ node shared/i18n/test.cjs
 Translate complete sentences before shorter dynamic fragments. Canvas labels, accessible descriptions, confirmation dialogs and learning-record downloads use the same dictionary. Korean source content remains the reference for switching back.
 
 Learner input must remain unchanged: use `data-user-text` on displayed input, `EthicityI18n.userText()` for canvas input, and pass learner values to `EthicityI18n.record()` for downloads. Never translate choice IDs or saved state.
+
+English wording targets Grades 5–6: use short sentences and concrete actions. Explain evidence as clues, describe face checks before using technical labels, and explain importance points before asking learners to assign them. Keep official principle names, but explain their meaning through the story. Preserve every choice's meaning, including choices that lead to an incomplete outcome. Translate complete dynamic instructions (counts, places and score feedback) before fragments, and check one/many wording. Export park plans using readable facility names rather than internal IDs or raw JSON.
