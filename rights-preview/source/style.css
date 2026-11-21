@@ -165,3 +165,8 @@
 .ee-theme .sidepanel .statusline{font-size:11px;margin-bottom:0}
 .ee-theme .dialog .costcard,.ee-theme .dialog .ending-banner,.ee-theme .decision-trail .trail{border-radius:0}
 @media(max-width:1000px){.ee-theme .game-layout{grid-template-columns:minmax(0,1fr)}}
+.english-cover-cases{display:none}
+html[lang=en] .ee-theme .intro-art{background-image:url('../shared/ethicity-elementary-common-v1/backgrounds/courtyard.png')!important}
+html[lang=en] .english-cover-cases{display:grid;gap:14px;position:absolute;bottom:24px;left:24px;right:24px;font:18px/1.5 Arial,Helvetica,sans-serif;color:#294b40}
+html[lang=en] .english-cover-cases p{margin:0;padding:16px;background:#fff9e7f5;border:3px solid #294b40;box-shadow:4px 4px #b6c5a4}
+html[lang=en] .english-cover-cases b{display:block;color:#8a5a35;font-size:15px;margin-bottom:4px}
