@@ -1,0 +1,12 @@
+/* Korean keeps words together on phones; overlong words can still wrap. */
+@media (max-width: 700px) {
+  html[lang="ko"] body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  html[lang="ko"] :is(.choice > span, .mission-btn > span, .reaction > div,
+    .weight-title > b, .dialog-head h3) {
+    min-width: 0;
+  }
+}
