@@ -170,3 +170,7 @@ html[lang=en] .ee-theme .intro-art{background-image:url('../shared/ethicity-elem
 html[lang=en] .english-cover-cases{display:grid;gap:14px;position:absolute;bottom:24px;left:24px;right:24px;font:18px/1.5 EthicityPixel,monospace;color:#294b40}
 html[lang=en] .english-cover-cases p{margin:0;padding:16px;background:#fff9e7f5;border:3px solid #294b40;box-shadow:4px 4px #b6c5a4}
 html[lang=en] .english-cover-cases b{display:block;color:#8a5a35;font-size:15px;margin-bottom:4px}
+.ee-theme .intro-content,.ee-theme .intro-art{min-width:0;max-width:100%}
+.ee-theme .mission-star{width:fit-content;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:1000px){.ee-theme .introduction{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.ee-theme .mission-star{transform:none}.ee-theme .intro-content{padding:22px 18px}.ee-theme .start-actions .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere}.ee-theme .english-cover-cases{left:14px;right:14px;bottom:16px;font-size:16px}.ee-theme .english-cover-cases p{padding:12px}}
