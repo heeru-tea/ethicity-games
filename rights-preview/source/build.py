@@ -1,6 +1,7 @@
 import json
 from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urlsplit
 root=Path(__file__).resolve().parents[1]
 src=root/'source'
 d=json.loads((root/'scenario.json').read_text(encoding='utf-8'))
@@ -11,7 +12,7 @@ class Resources(HTMLParser):
     def handle_starttag(self,tag,attrs):
         for key,value in attrs:
             if key in ('src','href') and value and not value.startswith(('http:','https:','data:','#','blob:')):
-                assert (root/value).exists(), 'Missing resource: '+value
+                assert (root/urlsplit(value).path).exists(), 'Missing resource: '+value
 Resources().feed(html)
 (root/'index.html').write_text(html,encoding='utf-8')
 print('Built rights-preview/index.html')

@@ -94,13 +94,13 @@
   const playerLocal=getJson(PLAYER)||{};
   const oldAvatar=playerLocal.character==='char_04'?'jiho':playerLocal.character==='char_03'?'haneul':state.avatar;
   if(!state.started)state.avatar=oldAvatar;
-  $('nickname').value=state.nickname==='별고래'&&/^[가-힣]{1,5}$/.test(playerLocal.nickname||'')?playerLocal.nickname:state.nickname;
+  $('nickname').value=state.nickname==='별고래'&&/^(?:[가-힣]{1,5}|[A-Za-z]{1,12})$/.test(playerLocal.nickname||'')?playerLocal.nickname:state.nickname;
   activeAvatar(state.avatar);
   $('resumeBtn').hidden=!state.started;
   document.querySelectorAll('.avatar-btn').forEach(b=>b.addEventListener('click',()=>activeAvatar(b.dataset.avatar)));
   $('startBtn').addEventListener('click',()=>{
     const name=$('nickname').value.trim();
-    if(!/^[가-힣]{1,5}$/.test(name)){notice('실명이 아닌 한글 별명 1~5글자를 입력해 주세요.');$('nickname').focus();return;}
+    if(!/^(?:[가-힣]{1,5}|[A-Za-z]{1,12})$/.test(name)){notice('실명이 아닌 한글 1~5자 또는 영문 1~12자의 별명을 입력해 주세요.');$('nickname').focus();return;}
     const next=defaultState(); next.started=true; next.avatar=state.avatar; next.nickname=name; state=next;
     try{localStorage.setItem(PLAYER,JSON.stringify({character:state.avatar==='jiho'?'char_04':'char_03',nickname:state.nickname}))}catch{}
     persist(); showScreen(true); setTimeout(()=>openChapterStory(currentChapterId()),120);
@@ -247,7 +247,7 @@
     const ch=currentChapter(),stations=chapterStations(ch.id),found=stations.filter(s=>state.clues[ch.id].includes(s.id)),missing=stations.filter(s=>!state.clues[ch.id].includes(s.id));
     const gathered=found.length?found.map(s=>`<li><b>${esc(s.card.title)}</b><p>${esc(s.card.detail)}</p><small>내 선택: ${esc(s.choices.find(c=>c.id===state.decisions[s.id])?.label||'미기록')}</small></li>`).join(''):'<li>아직 모은 자료가 없어요. 첫 번째 인물을 찾아가 보세요.</li>';
     const unknown=missing.length?missing.map(s=>`<li>${esc(sceneMap[s.scene].name)} · ${esc(s.title)}</li>`).join(''):'<li>모든 조사 자료를 모았어요. 이제 근거를 비교해 판단해 보세요.</li>';
-    const body=`<div class="notebook-intro"><b>${esc(state.nickname)} 조사관의 사건 기록</b><p>${esc(ch.intro)}</p></div><div class="notebook-grid"><section><h3>📂 모은 자료 (${found.length})</h3><ul>${gathered}</ul></section><section><h3>❔ 아직 확인할 자료 (${missing.length})</h3><ul>${unknown}</ul><h3>⚖️ 판단하기 전에</h3><p>${esc(ch.review.principle)}</p></section></div><div class="dialog-actions"><button type="button" class="btn green" id="notebookStory">📖 사건 이야기 다시 보기</button><button type="button" class="btn primary" id="notebookClose">탐험 계속 →</button></div>`;
+    const body=`<div class="notebook-intro"><b><span data-user-text>${esc(state.nickname)}</span> 조사관의 사건 기록</b><p>${esc(ch.intro)}</p></div><div class="notebook-grid"><section><h3>📂 모은 자료 (${found.length})</h3><ul>${gathered}</ul></section><section><h3>❔ 아직 확인할 자료 (${missing.length})</h3><ul>${unknown}</ul><h3>⚖️ 판단하기 전에</h3><p>${esc(ch.review.principle)}</p></section></div><div class="dialog-actions"><button type="button" class="btn green" id="notebookStory">📖 사건 이야기 다시 보기</button><button type="button" class="btn primary" id="notebookClose">탐험 계속 →</button></div>`;
     elDialog('📓 조사 수첩',ch.title,body);
     $('notebookStory').addEventListener('click',()=>openChapterStory(ch.id,true));
     $('notebookClose').addEventListener('click',closeModal);
@@ -388,7 +388,7 @@
       else notice('두 사건의 판단을 기록했어요. 최종 위원회에서 운영 원칙을 선택할 수 있어요.');
     };
     const trail=ch.review.questions.map(q=>`<div class="trail"><b>${esc(q.label)}</b><p>${esc(optionLabel(chapterId,q.id,answers[q.id]))}</p></div>`).join('');
-    const body=`<div class="ending-banner outcome-${esc(outcome.status)}"><p>${esc(ch.shortTitle)} · ${outcome.protected?'기회를 지키는 판단':'권리 보호·근거 재검토가 남음'}</p><h3>${esc(outcome.title)}</h3><p>${esc(outcome.text)}</p></div><div class="costcard"><h3>이번 판단의 배지 · ${esc(outcome.badge)}</h3><p>${esc(outcome.feedback)}</p></div><details class="evidence-comparison"><summary>확인한 자료와 내 판단 비교하기</summary><p><b>자료에서 확인한 사실</b> · ${esc(outcome.evidence)}</p>${trail}${answers.reason?`<p><b>내 근거</b> · ${esc(answers.reason)}</p>`:''}</details><div class="reveal"><h3>사건을 마치며 · 어떤 점을 알게 되었나요?</h3><p>${esc(ch.review.principle)}</p></div><div class="dialog-actions"><button class="btn" id="evidenceAgain" type="button">관련 자료 다시 보기</button><button class="btn green" id="judgeAgain" type="button">판단 다시 해보기</button><button class="btn primary" id="caseClose" type="button">${repeat?'탐험 계속':nextId?'사건 2 이야기로':'최종 위원회 준비'} →</button></div>`;
+    const body=`<div class="ending-banner outcome-${esc(outcome.status)}"><p>${esc(ch.shortTitle)} · ${outcome.protected?'기회를 지키는 판단':'권리 보호·근거 재검토가 남음'}</p><h3>${esc(outcome.title)}</h3><p>${esc(outcome.text)}</p></div><div class="costcard"><h3>이번 판단의 배지 · ${esc(outcome.badge)}</h3><p>${esc(outcome.feedback)}</p></div><details class="evidence-comparison"><summary>확인한 자료와 내 판단 비교하기</summary><p><b>자료에서 확인한 사실</b> · ${esc(outcome.evidence)}</p>${trail}${answers.reason?`<p><b>내 근거</b> · <span data-user-text>${esc(answers.reason)}</span></p>`:''}</details><div class="reveal"><h3>사건을 마치며 · 어떤 점을 알게 되었나요?</h3><p>${esc(ch.review.principle)}</p></div><div class="dialog-actions"><button class="btn" id="evidenceAgain" type="button">관련 자료 다시 보기</button><button class="btn green" id="judgeAgain" type="button">판단 다시 해보기</button><button class="btn primary" id="caseClose" type="button">${repeat?'탐험 계속':nextId?'사건 2 이야기로':'최종 위원회 준비'} →</button></div>`;
     // Every exit (button, X, Escape, backdrop) advances through the same handoff.
     elDialog('⚖️ 내 판단의 결과',outcome.title,body,null,repeat?null:advance);
     $('caseClose').addEventListener('click',()=>{closeModal();if(repeat&&nextId)advance();});
@@ -420,14 +420,14 @@
       const lines=['윤리시티 인권보장 탐험 · AI의 판결',`별명: ${state.nickname}`,`최종 원칙: ${p.title}`,`결과: ${title}`,`배지: ${final.badge}`,''];
       for(const ch of chapterList){const a=state.caseAnswers[ch.id],o=caseOutcome(ch.id,a);lines.push(ch.title,`판단 결과: ${o.title}`,`배지: ${o.badge}`,...ch.review.questions.map(q=>q.label+': '+optionLabel(ch.id,q.id,a[q.id])),`근거: ${a.reason||'(미입력)'}`,'');}
       lines.push('최종 선택 이유: '+(liveReason||'(미입력)'));
-      const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='윤리시티_인권보장_학습카드.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('판단과 배지가 포함된 학습 카드를 저장했어요.');
+      const url=URL.createObjectURL(new Blob([window.EthicityI18n.record(lines,[state.nickname,liveReason,...Object.values(state.caseAnswers).map(a=>a.reason)])],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='윤리시티_인권보장_학습카드.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('판단과 배지가 포함된 학습 카드를 저장했어요.');
     });
   }
 
   // --- Canvas map & exploration ---
 
   function fill(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))}
-  function print(x,y,text,size=26,color='#294b40'){ctx.fillStyle=color;ctx.font=`900 ${size}px 'Malgun Gothic',sans-serif`;ctx.textAlign='center';ctx.fillText(text,x,y)}
+  function print(x,y,text,size=26,color='#294b40',maxWidth){ctx.fillStyle=color;ctx.font=`900 ${size}px 'Malgun Gothic',sans-serif`;ctx.textAlign='center';ctx.fillText(text,x,y,maxWidth)}
   function tree(x,y,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);fill(-12,16,24,64,'#765c43');fill(-51,-60,105,76,'#3c805d');fill(-68,-25,132,58,'#4a9263');fill(-48,-75,102,34,'#78ae7a');fill(-57,-65,11,25,'#a9c88c');ctx.restore()}
   function drawFallback(){
     fill(0,0,CW,CH,'#a8d8d9');fill(0,245,CW,475,'#b4d1a0');
@@ -464,10 +464,10 @@
       const done=state.clues[s.chapter].includes(s.id),px=s.pos.x,py=s.pos.y;
       if(assetEngine){try{assetEngine.drawCharacter(ctx,s.npc,px,py+13,'down',1,.70);assetEngine.drawIcon(ctx,done?'check':'clue',px-18,py-220,36)}catch(e){console.warn('NPC drawing failed',e);drawFigure(px,py+12,'#bc8373')}} else drawFigure(px,py+12,'#79a58b');
       fill(px-124,py-167,248,64,done?'#dcedcf':'#fff9e7');fill(px-124,py-167,248,5,'#294b40');fill(px-124,py-108,248,5,'#294b40');fill(px-124,py-167,5,64,'#294b40');fill(px+119,py-167,5,64,'#294b40');
-      print(px,py-139,done?'✓ 다시 보기':'! 조사하기',23,done?'#347447':'#a66e35');print(px,py-115,s.title,19,'#294b40');
+      print(px,py-139,done?'✓ 다시 보기':'! 조사하기',23,done?'#347447':'#a66e35');print(px,py-115,s.title,19,'#294b40',232);
     }
     if(assetEngine){try{assetEngine.drawCharacter(ctx,state.avatar,state.x,state.y,justMoved?moveDir:'down',justMoved?Math.floor(motion.walkFrame)%4:1,.8)}catch{drawFigure(state.x,state.y,'#536d9a')}} else drawFigure(state.x,state.y,'#526c92');
-    print(state.x,state.y-87,state.nickname,22,'#294b40');
+    window.EthicityI18n.userText(()=>print(state.x,state.y-87,state.nickname,22,'#294b40'));
   }
   function drawRouteHint(){
     const next=chapterStations(currentChapterId()).find(s=>!state.clues[currentChapterId()].includes(s.id));
@@ -534,7 +534,7 @@
   $('interactBtn').addEventListener('click',interact);
   window.addEventListener('keydown',e=>{
     if(e.key==='Escape'&&modal){closeModal();return}
-    if(modal||$('game').hidden||['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))return;
+    if(modal||$('game').hidden||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
     const k=e.key.length===1?e.key.toLowerCase():e.key;
     if(document.activeElement?.tagName==='BUTTON'&&['Enter',' '].includes(k))return;
     if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','w','a','s','d'].includes(k)){held.add(k);e.preventDefault()}
