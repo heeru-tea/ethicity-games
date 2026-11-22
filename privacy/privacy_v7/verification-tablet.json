@@ -1,0 +1,14 @@
+{
+  "testedAt": "2026-11-22T01:31:01.263Z",
+  "viewport": {
+    "width": 1024,
+    "height": 600
+  },
+  "states": 137,
+  "allEightRoundsAndAEnding": true,
+  "noPageScroll": true,
+  "noTextClipping": true,
+  "learningSummaryModalFits": true,
+  "realTeacherEndBroadcastVerified": true,
+  "exactACardPngVerified": true
+}

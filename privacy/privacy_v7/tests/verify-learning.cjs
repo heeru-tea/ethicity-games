@@ -4,7 +4,7 @@ const el={textContent:'',innerHTML:'',dataset:{},querySelector:()=>null,querySel
 const doc={body:el,getElementById:id=>id==='game-data'?{textContent:JSON.stringify(story)}:id==='game-config'?{textContent:JSON.stringify(config)}:el,querySelector:()=>null,querySelectorAll:()=>[],addEventListener(){}};
 const context=vm.createContext({console,URL,URLSearchParams,structuredClone,setTimeout,clearTimeout,document:doc,window:{addEventListener(){}},location:{search:'?mode=solo',pathname:'/',href:'https://example.test/?mode=solo'},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)}});
 const run=code=>vm.runInContext(code,context);
-for(const name of ['app','round-screens','case-data','case-screens','reports','classroom','teacher-panels','progress','reflections'])run(read('source/'+name+'.js'));
+for(const name of ['app','round-screens','case-data','case-screens','reports','classroom','teacher-panels','progress','reflections','closure'])run(read('source/'+name+'.js'));
 run("render=()=>{};resetNarration=()=>{};commonIcon=id=>'<i>'+id+'</i>';S.player={nickname:'별빛',character:'char_03'};S.mode='solo';");
 (async()=>{
  assert.equal(story.rounds.length,8);assert.equal(Object.keys(story.elements).length,5);
@@ -16,7 +16,7 @@ run("render=()=>{};resetNarration=()=>{};commonIcon=id=>'<i>'+id+'</i>';S.player
  await run('resumeProgress()');assert.equal(run('S.round'),2);assert.equal(run('S.signals'),5);assert.equal(run('S.selected'),1);assert.equal(run('S.observePage'),3);assert.equal(run('S.reflections[0]'),'다음에는 먼저 확인합니다.');
  const solo=run('progressKey()');run("params.set('preview','1')");assert.notEqual(run('progressKey()'),solo);assert.equal(run('storedProgress()'),null);run("params.delete('preview')");
  run("S.answers=Object.fromEntries(STORY.rounds.map((r,i)=>[i,{choice:r.choices.findIndex(c=>c.score===(i<4?2:0)),signals:1,firstSignals:1,signalChecks:1}]));");assert.equal(run('endingOf(S.answers)'),'B');assert(run('renderEnding()').includes('놓친 보호 방법을 더 연습'));assert(!/\d+\s*점|progressbar/.test(run('scoreBars(S.answers,true)')));
- await run('finishGame()');run('persistProgress()');const completed=JSON.parse(storage.get('ethicity.result.privacy'));assert.deepEqual(Object.keys(completed).sort(),['card','completed','ending','game']);assert.equal(completed.ending,'B');assert(completed.card.length<=40);
+ await run('finishGame()');run('persistProgress()');const completed=JSON.parse(storage.get('ethicity.result.privacy'));assert.deepEqual(Object.keys(completed).sort(),['card','completed','ending','game']);assert.equal(completed.ending,'B');assert(completed.card.length<=story.cardMaxLength);
  run("beginFreshProgress();S.view='intro';persistProgress()");assert(run('storedProgress(true).completed'));assert.equal(run('Object.keys(storedProgress().answers).length'),0);
  await run('resumeProgress(true)');assert(run('S.archiveView'));assert.equal(run('S.view'),'ending');assert.equal(run('Object.keys(storedProgress().answers).length'),0);
  html=run("reportContent({nickname:'별빛',character:'char_03'},S.answers,'',{'0':'<script>bad()</script>\\n다시 확인합니다.'},true)");assert(html.includes('data-reflection="0"'));assert(html.includes('&lt;script&gt;'));assert(!html.includes('<script>bad'));

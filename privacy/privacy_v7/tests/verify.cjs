@@ -6,7 +6,7 @@ const html=read('index.html'),embedded=JSON.parse(html.match(/<script id="game-d
 assert.deepEqual(embedded,story);assert.equal(story.rounds.length,8);
 const tags=new Set();for(const r of story.rounds){assert.equal(r.choices.length,4);assert.equal(r.signals.length,4);for(const c of r.choices){assert(c.tags.length);for(const t of c.tags){assert(story.elements[t]);tags.add(t);}assert(c.feedback&&c.change&&c.reply.text);}}
 assert.deepEqual([...tags].sort(),[1,2,3,4,5]);
-for(const e of Object.values(story.endings)){assert([...e.card].length<=40);assert(e.card.endsWith('니다.'));}
+for(const e of Object.values(story.endings)){assert([...e.card].length<=story.cardMaxLength);assert(e.card.endsWith('니다.'));}
 const main={innerHTML:'',querySelector:()=>null},store=new Map();
 const context=vm.createContext({console,URL,URLSearchParams,structuredClone,setTimeout,clearTimeout,location:{search:'',pathname:'/privacy_v7/'},document:{documentElement:{cloneNode:()=>({})},getElementById:id=>id==='game-data'?{textContent:JSON.stringify(story)}:id==='game-config'?{textContent:JSON.stringify(config)}:main,addEventListener(){}},localStorage:{getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v),removeItem:k=>store.delete(k)}});
 vm.runInContext(read('source/app.js'),context);

@@ -7,8 +7,8 @@ function cleanReflections(value){const out={};if(value&&typeof value==='object')
 function checkedProgress(d){if(!d||!validPlayer(d.player))return null;return {...d,answers:validateAnswers(d.answers),pending:validateAnswers(d.pending),reflections:cleanReflections(d.reflections),reflectionPending:cleanReflections(d.reflectionPending),round:Number.isInteger(d.round)&&d.round>=0&&d.round<8?d.round:0};}
 function storedProgress(last=false){let d=readStore(progressKey()+(last?'.last':''));if(!d&&!last&&S.mode==='solo'&&params.get('preview')!=='1')d=readStore('ethicity.privacy.v7.classroom20261108.draft.solo');if(!d&&!last&&S.mode==='student')d=readStore('ethicity.privacy.v7.classroom20261108.draft.'+S.roomId);return checkedProgress(d);}
 function persistProgress(){
- if(!S.progressActive||S.mode==='teacher'||!validPlayer(S.player)||!['intro','round','wait','ending'].includes(S.view))return false;
- const d={version:2,uid:S.uid||null,player:S.player,answers:validateAnswers(S.answers),pending:validateAnswers(S.pending),round:S.round,view:S.view,completed:S.view==='ending',reflections:cleanReflections(S.reflections),reflectionPending:cleanReflections(S.reflectionPending),savedAt:Date.now(),ui:Object.fromEntries(UI_FIELDS.map(k=>[k,S[k]??null]))};
+ if(!S.progressActive||S.mode==='teacher'||!validPlayer(S.player)||!['intro','round','wait','ending','class-recap'].includes(S.view))return false;
+ const d={version:2,finalReadyRequested:!!S.finalReadyRequested,catchUp:!!S.catchUp,uid:S.uid||null,player:S.player,answers:validateAnswers(S.answers),pending:validateAnswers(S.pending),round:S.round,view:S.view,completed:S.view==='ending',reflections:cleanReflections(S.reflections),reflectionPending:cleanReflections(S.reflectionPending),savedAt:Date.now(),ui:Object.fromEntries(UI_FIELDS.map(k=>[k,S[k]??null]))};
  const ok=writeStore(progressKey()+(S.archiveView?'.last':''),d);if(d.completed&&!S.archiveView)writeStore(progressKey()+'.last',d);S.progressStored=ok;return ok;
 }
 function restoreRoundUI(d){
@@ -30,8 +30,9 @@ async function resumeProgress(last=false){
  clearLive();S.answers=d.answers;S.pending={};S.round=d.round;S.uid=null;S.ended=false;S.cloudResult='';S.progressActive=true;
  S.view=d.completed&&endingOf(S.answers)?'ending':d.view==='intro'?'intro':'round';S.ended=S.view==='ending';resetRoundUI();restoreRoundUI(d);render(true);
 }
-function beginFreshProgress(){S.progressActive=true;S.archiveView=false;S.answers={};S.pending={};S.reflections={};S.reflectionPending={};S.round=0;S.ended=false;S.uid=null;resetRoundUI();}
+function beginFreshProgress(){S.finalReady=false;S.finalReadyRequested=false;S.catchUp=false;S.progressActive=true;S.archiveView=false;S.answers={};S.pending={};S.reflections={};S.reflectionPending={};S.round=0;S.ended=false;S.uid=null;resetRoundUI();}
 async function progressAction(action,el){switch(action){
+ case 'review-list':{const missed=Object.entries(revealedAnswers()).filter(([i,a])=>STORY.rounds[i].choices[a.choice].kind!=='safe');modal('다시 살펴볼 선택','<div class="buttons">'+missed.map(([i])=>btn(`${Number(i)+1}라운드 다시 보기`,'review-round','',`data-index="${i}"`)).join('')+'</div>',btn('닫기','close-modal'));break;}
  case 'resume-progress':await resumeProgress();break;
  case 'last-result':await resumeProgress(true);break;
  case 'new-progress':modal('새 탐험을 시작하겠습니까?','<p>진행 중인 임시 기록은 새 탐험으로 바뀝니다. 마지막 완료 리포트는 보관합니다.</p>',btn('새로 시작','new-progress-confirm')+btn('돌아가기','close-modal',''));break;

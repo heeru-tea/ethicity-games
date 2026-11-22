@@ -22,7 +22,7 @@ function drawCommonStage(canvas){
  const photo=canvas.hasAttribute('data-case-photo');
  if(photo){
   const people=canvas.dataset.casePhoto==='class-photo'?['haneul','jiho','saebom','onyu','daon']:['saebom','onyu'];
-  people.forEach((id,i)=>commonAssets.drawCharacter(x,id,640+(i-(people.length-1)/2)*120,515,'down',1,.9));
+  people.forEach((id,i)=>{const px=640+(i-(people.length-1)/2)*120;commonAssets.drawCharacter(x,id,px,515,'down',1,.9);if(canvas.dataset.casePhoto==='class-photo')drawNameBadge(x,px,515,.9);});
  }else{
   commonAssets.drawCharacter(x,player,520,515,'down',1,.9);
   commonAssets.drawCharacter(x,'saebom',655,510,'down',1,.9);
@@ -41,7 +41,7 @@ function drawScenePhotoCast(canvas){
  canvas.width=1672;canvas.height=941;const x=canvas.getContext('2d');
  const scene=canvas.dataset.scenePhotoCast,people=ROUND_ILLUSTRATIONS[scene]?.cast||[];
  const points=scene==='class-photo'?people.map((_,i)=>[685+i*88,573,.8]):[[855,510,.64],[955,510,.64]];
- people.forEach((id,i)=>commonAssets.drawCharacter(x,id,points[i][0],points[i][1],'down',1,points[i][2]));
+ people.forEach((id,i)=>{const [px,py,scale]=points[i];commonAssets.drawCharacter(x,id,px,py,'down',1,scale);if(scene==='class-photo')drawNameBadge(x,px,py,scale);});
 }
 function paintArt(){
  mountMusicControls();
@@ -64,11 +64,13 @@ function playFeedback(id){
 function toggleSound(){soundEnabled=!soundEnabled;commonAssets?.setSound(soundEnabled);if(soundEnabled)commonAssets?.playSound('tap');render();}
 document.addEventListener('click',e=>{const button=e.target.closest('button');if(!button||button.disabled||!commonAssets)return;const a=button.dataset.action;if(a==='toggle-sound')return;commonAssets.playSound(a==='signal'?'collect':['observe-case','find-signals','next'].includes(a)?'paper':'tap');});
 // 결과 카드에도 공통 자산을 사용합니다. 그림을 새로 생성하지 않습니다.
+function cardTextLines(ctx,text,maxWidth=1060){const lines=[];let line='';for(const word of text.split(' ')){const next=(line?line+' ':'')+word;if(line&&ctx.measureText(next).width>maxWidth){lines.push(line);line=word;}else line=next;}if(line)lines.push(line);return lines;}
 async function downloadCommonCard(){
  try{await loadOriginalArt();await document.fonts.ready;}catch{}
- const ending=STORY.endings[endingOf(S.answers)],c=document.createElement('canvas');c.width=1200;c.height=630;const x=c.getContext('2d');
- x.fillStyle='#fff9e7';x.fillRect(0,0,1200,630);x.fillStyle='#294b40';x.font='bold 32px Ethicity, sans-serif';x.fillText('윤리시티 · AI 윤리 탐험대',64,80);x.font='bold 44px Ethicity, sans-serif';x.fillText('프라이버시 보호 · 배운 점 카드',64,155);
- x.font='32px Ethicity, sans-serif';let line='',y=270;for(const word of ending.card.split(' ')){const next=(line?line+' ':'')+word;if(x.measureText(next).width>1010){x.fillText(line,64,y);line=word;y+=56;}else line=next;}x.fillText(line,64,y);
- if(commonAssets){commonAssets.drawPortrait(x,assetId(characterType(S.player.character)),'happy',900,380,180);commonAssets.drawIcon(x,'check',64,485,48);}x.font='24px Ethicity, sans-serif';x.fillText('여덟 가지 사례를 끝까지 살펴봤습니다.',128,520);
- c.toBlob(blob=>{if(blob)downloadBlob(blob,'image/png','프라이버시-v6-배운점-카드.png');});
+ const ending=STORY.endings[endingOf(S.answers)];if(!ending)return;const c=document.createElement('canvas');c.width=1200;c.height=630;let x=c.getContext('2d');x.font='32px Ethicity, sans-serif';const lines=cardTextLines(x,ending.card),lastTextY=250+(lines.length-1)*56,footerY=Math.max(520,lastTextY+115);c.height=Math.max(630,footerY+100);x=c.getContext('2d');
+ x.fillStyle='#fff9e7';x.fillRect(0,0,c.width,c.height);x.fillStyle='#294b40';x.font='bold 32px Ethicity, sans-serif';x.fillText('윤리시티 · AI 윤리 탐험대',64,80);x.font='bold 44px Ethicity, sans-serif';x.fillText('프라이버시 보호 · 배운 점 카드',64,155);x.font='32px Ethicity, sans-serif';lines.forEach((line,i)=>x.fillText(line,64,250+i*56));
+ if(commonAssets){commonAssets.drawPortrait(x,assetId(characterType(S.player.character)),'happy',930,footerY-70,150);commonAssets.drawIcon(x,'check',64,footerY-35,48);}x.fillStyle='#294b40';x.font='24px Ethicity, sans-serif';x.fillText('여덟 가지 사례를 끝까지 살펴봤습니다.',128,footerY);
+ c.toBlob(blob=>{if(blob)downloadBlob(blob,'image/png','프라이버시-배운점-카드.png');});
 }
+// 공통 캐릭터 파일을 바꾸지 않고, 이 사례에만 필요한 명찰 목걸이를 겹칩니다.
+function drawNameBadge(ctx,x,y,scale){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.strokeStyle='#315c59';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-6,-51);ctx.lineTo(0,-35);ctx.lineTo(6,-51);ctx.stroke();ctx.fillStyle='#fff9e7';ctx.fillRect(-10,-36,20,15);ctx.strokeStyle='#294b40';ctx.strokeRect(-10,-36,20,15);ctx.fillStyle='#294b40';ctx.fillRect(-6,-32,12,2);ctx.fillRect(-5,-27,10,2);ctx.restore();}

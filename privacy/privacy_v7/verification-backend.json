@@ -1,5 +1,5 @@
 {
-  "testedAt": "2026-11-14T07:06:47.888Z",
+  "testedAt": "2026-11-22T01:13:32.715Z",
   "scenarioRevision": "20261104",
   "method": "Authenticated REST against deployed Firebase rules using disposable synthetic participants",
   "endingsAccepted": [
@@ -16,6 +16,15 @@
   "signalMetadataValidated": true,
   "scoreTamperingRejected": true,
   "otherStudentReportReadRejected": true,
+  "copyRevision": "20261122",
+  "teacherEndRequired": true,
+  "readyOnlyAfterEightAnswers": true,
+  "readyPrivateToStudentAndTeacher": true,
+  "approvedCardLengths": [
+    81,
+    46,
+    42
+  ],
   "ownReflectionReadWrite": true,
   "teacherReadsReflection": true,
   "peerReflectionReadWriteDenied": true,

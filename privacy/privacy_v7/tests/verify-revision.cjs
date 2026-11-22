@@ -16,7 +16,7 @@ for(let n=0;n<65536;n++){
  tested++;
 }
 for(const [code,e]of Object.entries(story.endings)){
- const nd=card=>({val:()=>card,parent:()=>({child:()=>({val:()=>code})})});
+ const nd=card=>({isString:()=>typeof card==='string',val:()=>card,parent:()=>({child:()=>({val:()=>code})})});
  assert(checkCard(nd(e.card)));assert(!checkCard(nd('틀린 카드')));
 }
 const app=read('source/app.js'),live=read('source/live.js');

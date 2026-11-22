@@ -12,5 +12,5 @@ vm.runInContext('S.network=true;S.returnRoom="test"',c);assert(vm.runInContext('
 assert(read('source/live.js').includes("(!requestedRoom&&params.get('mode')!=='solo')"));
 assert(!read('source/live.js').includes('roomsPrivacyV6'));
 const narrative=JSON.parse(read('scenario.json')).rounds;for(const r of narrative)for(const c of r.choices)delete c.useProcess;
-assert.equal(require('node:crypto').createHash('sha256').update(JSON.stringify(narrative)).digest('hex'),'efcabf3ae9733cef6fca4ba47989ce641d4e562702998f0134791da6fa426c7c','Approved eight round narrative changed');
-console.log(JSON.stringify({landingControls:true,offlineCreateDisabled:true,previewInSeparateTab:true,currentRoomReturn:true,commonIconIds:true,v6ScenarioUnchanged:true,v7RoomIsolation:true}));
+assert.equal(require('node:crypto').createHash('sha256').update(JSON.stringify(narrative)).digest('hex'),'1656d38bf3e35f3c0db16d0144a1d089c10cd552a14905f7d6144462cfe4df6b','Approved 2026-11-22 narrative changed');
+console.log(JSON.stringify({landingControls:true,offlineCreateDisabled:true,previewInSeparateTab:true,currentRoomReturn:true,commonIconIds:true,approvedScenarioChecked:true,v7RoomIsolation:true}));
