@@ -1,0 +1,29 @@
+{
+  "verifiedAt": "2026-11-22T03:09:39.227Z",
+  "url": "https://ethicity-privacy-20261011.web.app/harm/harm_v5/",
+  "gameCommit": "b352431",
+  "hostingVersion": "sites/ethicity-privacy-20261011/versions/d7fd0123824f34cc",
+  "checks": [
+    "Created an isolated new classroom through the deployed teacher UI",
+    "Student joined through the room invitation link",
+    "Teacher advanced introduction, scene and clues; student synchronized",
+    "Student submitted B to the real Firebase service",
+    "Teacher saw one joined student and one B vote",
+    "All three choices and submit control visible without scrolling at 390x844"
+  ],
+  "student": {
+    "choiceCount": 3,
+    "height": 844,
+    "pageHeight": 844,
+    "scrollY": 0,
+    "status": "✓ B 선택을 제출했어요.",
+    "submitBottom": 797.9999885559082,
+    "width": 390
+  },
+  "teacher": {
+    "members": 1,
+    "votes": 1,
+    "choice": "B"
+  },
+  "realMobileDevicesTested": false
+}
