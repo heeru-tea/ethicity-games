@@ -69,7 +69,7 @@ function render(focus=false){
   const oldFocus=document.activeElement?.dataset,oldScroll=window.scrollY;topbar();
   let html=S.view==='setup'?renderSetup():S.view==='intro-ready'?renderIntroReady():S.view==='loading'?`<section class="ee-panel panel loading">${commonIcon('robot',64)}${heading('수업을 연결하고 있습니다',2)}<p>잠시 기다려 주시기 바랍니다.</p></section>`:S.role==='teacher'&&!S.room?renderTeacherList():S.control?renderSession():renderHome();
   if(S.error)html=`<div class="ee-notice notice error" role="alert">${esc(S.error)} ${btn('안내 닫기','clear-error','')}</div>`+html;
-  main.innerHTML=html;main.dataset.view=S.control?'session':S.view;document.body.dataset.session=!!S.control;document.body.dataset.role=S.role;paintArt();paintStage();paintQR();typeDialogue();updateClock();if(S.control?.phase==='feedback'&&S.decisions[S.control.round])commonFeedback(currentKey(),STORY.rounds[S.control.round].choices[S.decisions[S.control.round].choice].kind);
+  main.innerHTML=html;main.dataset.view=S.control?'session':S.view;document.body.dataset.session=!!S.control;document.body.dataset.role=S.role;document.body.dataset.phase=S.control?.phase||'';paintArt();paintStage();paintQR();typeDialogue();updateClock();if(S.control?.phase==='feedback'&&S.decisions[S.control.round])commonFeedback(currentKey(),STORY.rounds[S.control.round].choices[S.decisions[S.control.round].choice].kind);
   if(focus){main.querySelector('[data-heading]')?.focus({preventScroll:true});window.scrollTo(0,0);}else if(oldFocus?.action){const candidate=[...main.querySelectorAll('[data-action]')].find(e=>e.dataset.action===oldFocus.action&&e.dataset.index===oldFocus.index);candidate?.focus({preventScroll:true});window.scrollTo(0,oldScroll);}
   saveCompletion();
   if(S.modal==='roster')renderModal();

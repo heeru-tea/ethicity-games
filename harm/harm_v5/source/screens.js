@@ -11,7 +11,7 @@ function phaseBeats(c,decisions){
   if(c.phase==='clues')return r.clues.map((text,i)=>({speaker:'robot',text,mood:'explaining',clue:i}));
   if(c.phase==='feedback'){
     const ch=r.choices[decisions?.[c.round]?.choice];if(!ch)return [];
-    return [{speaker:ch.speaker||'robot',text:ch.reply||ch.feedback,mood:ch.kind==='safe'?'happy':'worried'},
+    return [...(ch.reply&&ch.reply!==ch.feedback?[{speaker:ch.speaker||'robot',text:ch.reply,mood:ch.kind==='safe'?'happy':'worried'}]:[]),
       {speaker:'narrator',text:ch.feedback,mood:'neutral'},...(ch.steps||[]).map(text=>({speaker:'narrator',text,mood:'neutral'})),
       {speaker:'robot',text:r.risk,mood:'explaining'}];
   }return [];
@@ -20,15 +20,15 @@ function activeBeat(){return phaseBeats(S.control,S.decisions)[S.control.step]||
 function personName(id){return id==='narrator'?'이야기':STORY.characters[id]||'학생';}
 function beatHTML(beat,key){return `<div class="beat-box" aria-live="polite">${beat.speaker==='narrator'?commonIcon('notebook',32):canvasChar(beat.speaker,64,beat.mood||'explaining')}<div class="beat-copy"><b>${esc(personName(beat.speaker))}</b><p class="dialogue-text" data-speech="${esc(key)}" tabindex="0" role="button">${esc(beat.text)}</p></div></div>`;}
 function pager(index,total,previous,next,extra=''){return `<div class="pager">${btn('이전',previous,'',`aria-label="이전 내용" ${index<=0?'disabled':''} ${extra}`)}<span>${index+1} / ${total}</span>${btn('다음',next,'',`aria-label="다음 내용" ${index>=total-1?'disabled':''} ${extra}`)}</div>`;}
-function miniProgress(){const p=narrativeRules.progress(S.decisions);return `<div class="mini-progress"><span>축제 인기 <b>${p.popularity}</b><small> / 16</small></span><span>마을의 믿음 <b>${p.trust}</b><small> / 16</small></span><span>${p.count}개 선택 완료</span></div>`;}
+function miniProgress(){const p=narrativeRules.progress(S.decisions);return `<div class="mini-progress"><span>인기와 재미 지수 <b>${p.popularity}</b><small> / 16</small></span><span>안전 지수 <b>${p.trust}</b><small> / 16</small></span><span>${p.count}개 선택 완료</span></div>`;}
 function stageHTML(r=null){return `<div class="live-stage"><canvas data-live-stage role="img" aria-label="이야기가 진행될 때마다 인물과 반응이 나타나는 게임 장면"></canvas><div class="stage-label">${esc(r?.title||'매직메이커AI 공방')}</div><span class="stage-note">가상 상황</span></div>`;}
 let choiceArtCache;
-function choiceVisual(r){
+function choiceVisual(r,captionId='choice-visual-caption'){
   choiceArtCache??=JSON.parse(document.getElementById('choice-art').textContent);
   const art=choiceArtCache[r.id];
   if(!art)return stageHTML(r);
   const actors=[...new Set((r.dialogues||[]).map(d=>d.speaker))].filter(id=>id!=='narrator'&&id!=='robot');
-  return `<figure class="choice-visual" aria-labelledby="choice-visual-caption"><div class="choice-visual-picture"><img src="${art.src}" alt="${esc(art.alt)}" width="1448" height="1086"><span class="illustration-label">상황 이해 그림</span></div><figcaption id="choice-visual-caption">${esc(art.caption)}</figcaption><div class="choice-cast" aria-label="이 장면의 인물">${actors.map(id=>`<span class="cast-person">${canvasChar(id,40)}<b>${esc(personName(id))}</b></span>`).join('')}</div></figure>`;
+  return `<figure class="choice-visual" aria-labelledby="${esc(captionId)}"><div class="choice-visual-picture"><img src="${art.src}" alt="${esc(art.alt)}" width="1448" height="1086"><span class="illustration-label">상황 이해 그림</span></div><figcaption id="${esc(captionId)}">${esc(art.caption)}</figcaption><div class="choice-cast" aria-label="이 장면의 인물">${actors.map(id=>`<span class="cast-person">${canvasChar(id,40)}<b>${esc(personName(id))}</b></span>`).join('')}</div></figure>`;
 }
 function stageActors(){
   const c=S.control;if(!c)return ['robot'];
@@ -94,8 +94,8 @@ roundScreen(r){const c=S.control,k=`${S.roomId}:${c.round}:${c.ballot}`;if(S.sel
   return `<div class="play-layout phase-${c.phase}"><div class="stage-column">${visual}${beatHTML(beat,currentKey()+':'+c.step)}<div class="beat-position">${beats.length?`${c.step+1} / ${beats.length} · `:''}${c.phase==='vote'?'선생님이 마감할 때까지 선택을 바꿀 수 있어요':'화면을 누르면 대사를 바로 볼 수 있어요'}</div></div>${side}</div>`;
 },
 voteScreen(r){if(S.role==='teacher'){const t=tally(S.room);return `<aside class="ee-panel side-panel vote-panel"><span class="ee-badge tag">선택을 모으고 있어요 · ${t.total} / ${Object.keys(S.room.members||{}).length}명</span><div class="teacher-choices">${r.choices.map((ch,i)=>`<button class="ee-choice" data-action="explain" data-index="${i}"><b>${LETTERS[i]}</b><span>${esc(ch.text)}</span><small>${t.counts[i]}표 · 해설 보기</small></button>`).join('')}</div><p class="small">자동 마감 없이 교사가 결과를 엽니다.</p></aside>`;}
-  const vote=S.ownVotes[S.control.round],saved=vote?.ballot===S.control.ballot,open=canVote();return `<aside class="ee-panel side-panel vote-panel"><span class="ee-badge tag">나의 선택</span><div class="choice-list">${r.choices.map((ch,i)=>`<button class="ee-choice choice" data-action="choice" data-index="${i}" aria-pressed="${S.selected===i}" ${open&&!S.sending?'':'disabled'}><b>${LETTERS[i]}</b><span>${esc(ch.text)}</span></button>`).join('')}</div>${btn(S.sending?'확인 중…':saved?'선택 바꿔 제출':'이 선택 제출','submit','primary',!open||S.sending||S.selected===null?'disabled':'')}<p class="statusline" id="vote-status" role="status">${saved?`✓ ${LETTERS[vote.choice]} 선택을 제출했어요.`:open?'하나를 고르고 제출해 주세요.':'연결 상태를 확인해 주세요.'}</p></aside>`;},
-feedbackScreen(r){const d=S.decisions[S.control.round];if(!d)return '<aside class="ee-panel side-panel">결과를 확인하고 있어요.</aside>';const ch=r.choices[d.choice],own=S.ownVotes[S.control.round];return `<aside class="ee-panel side-panel feedback-panel"><span class="ee-badge tag">우리 반의 선택 ${LETTERS[d.choice]}</span><h2>${esc(ch.text)}</h2><p class="score-change">인기 +${ch.popularity} · 믿음 +${ch.trust}</p><p>${esc(ch.change)}</p>${bars(d.counts,d.total)}${own?`<p class="personal-choice">내 선택 ${LETTERS[own.choice]} · ${own.choice===d.choice?'우리 반과 같아요':'우리 반과 달랐어요. 결과를 함께 살펴봐요.'}</p>`:''}<span class="small">왼쪽에서 반응과 결과를 한 장면씩 확인해요.</span></aside>`;},
+  const vote=S.ownVotes[S.control.round],saved=vote?.ballot===S.control.ballot,open=canVote();return `<aside class="ee-panel side-panel vote-panel student-vote-panel"><div class="vote-heading"><span class="ee-badge tag">나의 선택</span>${btn('상황·그림 다시 보기','vote-scene','')}</div><p class="vote-question">${esc(r.question)}</p><div class="choice-list">${r.choices.map((ch,i)=>`<button class="ee-choice choice" data-action="choice" data-index="${i}" aria-pressed="${S.selected===i}" ${open&&!S.sending?'':'disabled'}><b>${LETTERS[i]}</b><span>${esc(ch.text)}</span></button>`).join('')}</div><div class="vote-submit">${btn(S.sending?'확인 중…':saved?'선택 바꿔 제출':'이 선택 제출','submit','primary',!open||S.sending||S.selected===null?'disabled':'')}<p class="statusline" id="vote-status" role="status">${saved?`✓ ${LETTERS[vote.choice]} 선택을 제출했어요.`:open?'하나를 고르고 제출해 주세요.':'연결 상태를 확인해 주세요.'}</p></div></aside>`;},
+feedbackScreen(r){const d=S.decisions[S.control.round];if(!d)return '<aside class="ee-panel side-panel">결과를 확인하고 있어요.</aside>';const ch=r.choices[d.choice],own=S.ownVotes[S.control.round];return `<aside class="ee-panel side-panel feedback-panel"><span class="ee-badge tag">우리 반의 선택 ${LETTERS[d.choice]}</span><h2>${esc(ch.text)}</h2><p class="score-change">${esc(ch.change)}</p>${bars(d.counts,d.total)}${own?`<p class="personal-choice">내 선택 ${LETTERS[own.choice]} · ${own.choice===d.choice?'우리 반과 같아요':'우리 반과 달랐어요. 결과를 함께 살펴봐요.'}</p>`:''}<span class="small">왼쪽에서 반응과 결과를 한 장면씩 확인해요.</span></aside>`;},
 endingScreen(){if(!S.outcome||!summarize(S.decisions))return '<p>결과를 확인하고 있어요.</p>';const e=STORY.endings[S.outcome.ending];loadPersonalLearning();
   const tabs=`<div class="ending-tabs" role="tablist">${[['summary','우리 반의 엔딩'],['rounds','라운드 돌아보기'],['learning','나의 배움 · PNG']].map(([id,label])=>`<button role="tab" aria-selected="${S.endingTab===id}" class="ee-button ${S.endingTab===id?'':'secondary'}" data-action="ending-tab" data-tab="${id}">${label}</button>`).join('')}</div>`;
   let body;if(S.endingTab==='rounds')body=reportRoundHTML();else if(S.endingTab==='learning')body=learningHTML();else body=`<div class="ending-summary"><div>${stageHTML()}${beatHTML({speaker:e.speaker,text:e.reply,mood:'explaining'},'ending:'+S.roomId)}</div><section class="ee-panel"><span class="ee-badge tag">엔딩 ${S.outcome.ending}</span><h2>${esc(e.title)}</h2><p>${esc(e.text)}</p><blockquote>${esc(e.card)}</blockquote><p class="principle-summary">${esc(STORY.principleSummary)}</p>${miniProgress()}<p>${esc(narrativeRules.pending(summarize(S.decisions)).join(' · '))}</p>${btn('나의 배움 고르기','ending-learning')}</section></div>`;
@@ -117,9 +117,13 @@ function renderModal(){
   let title='',body='';
   if(S.modal==='invite'){title='학생 입장 안내';body=inviteContents();}
   if(S.modal==='roster'){title='참여 현황';body=V5.teacherRoster();}
+  if(S.modal==='vote-scene'){
+    const r=narrativeRules.resolveRound(S.control.round,S.decisions);title=r.title;
+    body=`${choiceVisual(r,'vote-scene-caption')}<div class="vote-story-copy">${r.narrative.map(t=>`<p>${esc(t)}</p>`).join('')}${r.dialogues.map(d=>`<p><b>${esc(personName(d.speaker))}</b> ${esc(d.text)}</p>`).join('')}<h3>함께 살펴본 단서</h3><ul>${r.clues.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`;
+  }
   if(S.modal==='explain'){
     const r=narrativeRules.resolveRound(S.control.round,S.decisions),ch=r.choices[S.explainChoice];title='선택별 결과 · 교사용 해설';
-    body=`<p class="small">현재까지의 학급 선택을 반영한 예상 결과입니다.</p><div class="explain-tabs">${r.choices.map((_,i)=>`<button class="ee-button ${S.explainChoice===i?'':'secondary'}" data-action="explain-choice" data-index="${i}" aria-pressed="${S.explainChoice===i}">선택 ${LETTERS[i]}</button>`).join('')}</div><h3>${esc(ch.text)}</h3><p class="score-change">축제 인기 +${ch.popularity} · 마을의 믿음 +${ch.trust}</p><p>${esc(ch.feedback)}</p><blockquote>${esc(ch.reply||'')}</blockquote>${ch.steps?`<ol>${ch.steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:''}<p><b>지도할 때</b> ${esc(r.risk)}</p>${tagsHTML(ch.tags)}`;
+    body=`<p class="small">현재까지의 학급 선택을 반영한 예상 결과입니다.</p><div class="explain-tabs">${r.choices.map((_,i)=>`<button class="ee-button ${S.explainChoice===i?'':'secondary'}" data-action="explain-choice" data-index="${i}" aria-pressed="${S.explainChoice===i}">선택 ${LETTERS[i]}</button>`).join('')}</div><h3>${esc(ch.text)}</h3><p class="score-change">인기와 재미 지수 +${ch.popularity} · 안전 지수 +${ch.trust}</p><p>${esc(ch.feedback)}</p><blockquote>${esc(ch.reply||'')}</blockquote>${ch.steps?`<ol>${ch.steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:''}<p><b>지도할 때</b> ${esc(r.risk)}</p>${tagsHTML(ch.tags)}`;
   }
   if(S.modal==='report-preview'){title='나의 배움 리포트';body='<p>다운로드가 시작됐어요. 이미지도 길게 눌러 저장할 수 있어요.</p><img id="report-preview-image" alt="나의 8라운드 선택과 배움 리포트">';}
   d.innerHTML=`<div class="modal-heading"><h2>${title}</h2>${btn('닫기','close-modal','')}</div><div class="modal-body">${body}</div>`;
@@ -127,6 +131,7 @@ function renderModal(){
   if(!d.open)d.showModal();paintArt();paintQR();
 }
 async function handleV5Action(action,el,i){
+  if(action==='vote-scene'){openModal('vote-scene');return true;}
   if(action==='invite'){openModal('invite');return true;}
   if(action==='roster'){openModal('roster');return true;}
   if(action==='explain'){S.explainChoice=Number.isInteger(i)&&i>=0&&i<3?i:0;openModal('explain');return true;}

@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-11-22T02:56:01.429Z",
+  "checks": [
+    "All 6561 paths retain scores, incident history, ending IDs and completion values",
+    "All choice scores, learning tags, 8 rounds, 3 endings, classroom version and storage identifiers preserved",
+    "Approved scenario phrases and all photo/voice branches verified",
+    "Each choice feedback appears exactly once in its sequence",
+    "All original illustrations, common assets, sound/music and Firebase settings unchanged",
+    "Generated HTML matches scenario source; modified JavaScript syntax valid"
+  ]
+}

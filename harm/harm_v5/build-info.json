@@ -3,8 +3,8 @@
   "commonPackVersion": "1.0.0",
   "musicSha256": "e83dc21d6644dfc1b07f2025bd1e699499e68d3a9eac560c85267426f75d2d77",
   "scenarioVersion": "harm-2026-11-05-v5",
-  "bytes": 35096571,
-  "sha256": "a9d7e0ea169059457591eca80e68cc2f8f19c5c6efb7b0d095886cf1d8121f34",
+  "bytes": 35104330,
+  "sha256": "850e31ae9b7eca716eac3577f99f49ac25ea425c46f81f70b403eaf90ca285d3",
   "used": {
     "characters": [
       "haneul",
