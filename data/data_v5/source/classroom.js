@@ -5,6 +5,7 @@ import QRCode from 'qrcode';
 const $=id=>document.getElementById(id), root=$('portal'), C=window.EthicityClassroomModel, M=window.EthicityDataModel;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cfg=window.ETHICITY_CLASSROOM_CONFIG, params=new URLSearchParams(location.search), sessionKey='ethicity.data.v5.room';
+if(params.get('review')==='teacher')document.body.classList.add('review-teacher');
 let db,auth,uid,role='',code='',room=null,members=[],answers=[],selectedStory=0,unsubs=[],ticker=0,publicUnsub=null;
 let detached=false,frameReady=false,restoreCheckpoint=null,restored=false,memberState=null,completedScene=-1,connected=false,lastContact=0,lastWrite=0,writing=Promise.resolve(),generation=0,progressTimer=0,latestProgress=null;
 let entryExplorer='A',soloSetup=null,viewTimer=0,latestView=null;
@@ -48,6 +49,7 @@ async function createRoom(existing){busyEntry(true);const token=generation;try{c
  if(existing){code=existing;const snap=await timeout(getDocFromServer(ref()));if(!snap.exists()||snap.data().ownerUid!==uid)throw new Error('이 탭의 교사 권한으로 수업을 열 수 없어요. 새 수업을 만들어 주세요.');room=snap.data();}
  else{const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',bytes=crypto.getRandomValues(new Uint8Array(8));code=Array.from(bytes,x=>alphabet[x%alphabet.length]).join('');const now=Date.now();await timeout(setDoc(ref(),{ownerUid:uid,createdAt:serverTimestamp(),expiresAt:Timestamp.fromMillis(now+23*60*60*1000),heartbeatAt:serverTimestamp(),unlockedScene:-1,paused:false,ended:false,revealScene:-1}));room=(await getDocFromServer(ref())).data();}
  if(token!==generation)return;saveRoom();teacherScreen();listenTeacher();
+ if(params.get('review')==='teacher'&&parent!==window)parent.postMessage({channel:'ethicity-data-review',kind:'room-ready',code},location.origin);
  }catch(e){if(token===generation)busyEntry(false,humanError(e));}}
 async function joinRoom(value,nicknameInput){busyEntry(true);const token=generation;try{const nickname=String(nicknameInput||'').normalize('NFC').trim().replace(/ +/g,' ');if(!/^[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9 _-]{1,12}$/.test(nickname)||!/[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9]/.test(nickname))throw new Error('닉네임을 한글·영문·숫자로 1~12자 적어 주세요. 실명은 쓰지 않아요.');const connection=await service('student');if(token!==generation)return;({auth,db,uid}=connection);code=value;const snap=await timeout(getDocFromServer(ref()));if(!snap.exists()||snap.data().ended||snap.data().expiresAt.toMillis()<Date.now())throw new Error('수업이 없거나 끝났어요. 코드를 다시 확인해 주세요.');room=snap.data();
  const mine=await timeout(getDoc(ref('members/'+uid)));if(mine.exists()&&mine.data().mode==='preview')throw new Error('이 수업에서 이미 미리보기로 전환했어요. 혼자 탐험을 이어가거나 새 수업에 참여해 주세요.');

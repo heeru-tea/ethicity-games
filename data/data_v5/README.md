@@ -4,12 +4,16 @@
 
 - [게임 시작](https://ethicity-playlab.hollowcorn.chatgpt.site/games/data/data_v5/index.html)
 - [교사 컨트롤 타워](https://ethicity-playlab.hollowcorn.chatgpt.site/games/data/data_v5/index.html?mode=teacher)
+- [교사·학생 나란히 점검](https://ethicity-playlab.hollowcorn.chatgpt.site/games/data/data_v5/review.html)
 - [혼자 하기](https://ethicity-playlab.hollowcorn.chatgpt.site/games/data/data_v5/index.html?mode=solo)
 - [윤리시티 게임 허브](https://ethicity-playlab.hollowcorn.chatgpt.site/)
 
 PC·태블릿·휴대폰에서 위 공개 주소로 접속합니다. 수업 참여 링크와 QR 코드는 교사가 수업을 만든 뒤 공유합니다.
 
 ## 2026-11-22 수정
+
+- 상황 그림·공식 캐릭터·설명 문구가 선택 단계에서도 유지되도록 복구했습니다. `상황 크게 보기`에서 현재 장면과 자료를 확대하고 원래 선택으로 돌아올 수 있습니다.
+- 나란히 점검 페이지에서 왼쪽 교사가 수업을 만들면 오른쪽 학생 참여 화면에 수업 코드가 연결됩니다. 별도 교사·학생 인증과 실제 수업 제어를 그대로 사용합니다. 작은 화면은 위아래로 배치합니다.
 
 - 학습 용어: **성능 기준 / 안정적 작동 / 목적 외 작동 방지 / 성능의 한계 / 지속적 점검**. 다섯 항목은 이 게임의 학습 용어이며 7대 윤리원칙을 새로 나눈 것이 아닙니다.
 - 문장 길이에 따른 자동 대사 분할 제거. 급식실 적용 대화를 포함해 시나리오의 문장 단위로 표시합니다.

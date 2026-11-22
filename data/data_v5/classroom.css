@@ -16,3 +16,15 @@
 @media(max-width:760px){.game-data-classroom .teacher-situation{grid-template-columns:110px minmax(0,1fr);gap:12px}.game-data-classroom .teacher-columns{grid-template-columns:1fr}.game-data-classroom .teacher-situation h2{font-size:16px}.game-data-classroom .phase-counts{font-size:14px;gap:4px}}
 @media(max-height:550px){.game-data-classroom .class-banner{padding:2px 8px;font-size:12px}.game-data-classroom .class-banner #connection-status{display:none}}
 @media(prefers-reduced-motion:reduce){.game-data-classroom *{scroll-behavior:auto!important;transition:none!important}}
+/* Compact teacher column in the side-by-side inspection page. */
+.game-data-classroom.review-teacher .teacher{padding:8px;gap:8px}
+.game-data-classroom.review-teacher .teacher h1{font-size:20px}
+.game-data-classroom.review-teacher .teacher h2{font-size:17px}
+.game-data-classroom.review-teacher .teacher .ee-button{font-size:13px;min-height:48px;padding:4px 7px}
+.game-data-classroom.review-teacher .room-top{padding:8px;display:block}
+.game-data-classroom.review-teacher .room-number{font-size:22px;margin:4px 0}
+.game-data-classroom.review-teacher #room-qr,.game-data-classroom.review-teacher .room-top>.muted,.game-data-classroom.review-teacher .room-top .muted{display:none}
+.game-data-classroom.review-teacher .teacher-controls,.game-data-classroom.review-teacher .teacher-panel{padding:8px}
+.game-data-classroom.review-teacher .teacher-situation{padding:8px;gap:8px}
+.game-data-classroom.review-teacher .teacher-situation img{max-height:70px}
+.game-data-classroom.review-teacher .teacher-columns{grid-template-columns:1fr}

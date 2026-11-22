@@ -58,6 +58,8 @@ function shell(scene,introMode=false){
  <section class="scene-sidebar" aria-label="현재 장면"><div class="stage-heading"><div><span class="scene-tag">${introMode?'탐험 준비':'이야기 '+(scene+1)+' / 6'} · <span id="chat-place">${info.place}</span></span><h1 class="scene-title">${info.title}</h1></div><div class="stage-meta"><span class="ee-badge">${state.explorer}버전 탐험가</span><small id="chat-count">${introMode?'함께 시작해요':'적용한 상황 '+state.visited.length+' / 4'}</small></div></div>
  <figure class="scene-art"><div class="scene-view"><img id="scene-image" class="scene-image" alt=""><canvas id="scene-cast" width="1280" height="720" aria-hidden="true"></canvas><div id="scene-material" tabindex="0" aria-label="장면의 현재 자료"></div><div id="scene-response" class="scene-response ee-badge" hidden></div></div><figcaption><span id="scene-caption"></span><nav id="material-nav" class="material-nav" aria-label="자료 페이지" hidden></nav></figcaption></figure><div id="scene-speaker" hidden></div></section>
  <section class="messenger ee-panel" aria-label="현재 대화"><div class="conversation-log" id="conversation-log" tabindex="0" aria-label="현재 말풍선"></div><div class="action-area" id="action-area"></div></section></div>`);
+ const response=$('scene-response');main.querySelector('.scene-art').append(response);
+ const expand=document.createElement('button');expand.className='ee-button secondary scene-expand';expand.textContent='상황 크게 보기';expand.setAttribute('aria-haspopup','dialog');expand.onclick=showSceneDetail;main.querySelector('.scene-art figcaption').append(expand);
  sceneSpeaker=null;setSceneArt(introMode?'welcome':['meet','collect','sort','menu','repair','privacy'][scene]);
  system(info.goal);
  $('conversation-log').addEventListener('click',e=>{if(e.target.closest('button,a,input,textarea,select'))return;const selection=window.getSelection();if(selection&&!selection.isCollapsed)return;$('next-line')?.click();});
@@ -204,9 +206,17 @@ function renderMaterial(){
  const nav=$('material-nav');nav.hidden=stagePages.length<2;nav.innerHTML=stagePages.length<2?'':`<button class="ee-button secondary" id="material-prev" aria-label="이전 자료" ${stagePage===0?'disabled':''}>이전</button><span>${stagePage+1} / ${stagePages.length}</span><button class="ee-button secondary" id="material-next" aria-label="다음 자료" ${stagePage===stagePages.length-1?'disabled':''}>다음</button>`;
  if(stagePages.length>1){$('material-prev').onclick=()=>{stagePage--;renderMaterial();$(stagePage===0?'material-next':'material-prev').focus({preventScroll:true});};$('material-next').onclick=()=>{stagePage++;renderMaterial();$(stagePage===stagePages.length-1?'material-prev':'material-next').focus({preventScroll:true});};}fitStage();
 }
+function showSceneDetail(){
+ let dialog=$('scene-detail');if(!dialog){dialog=document.createElement('dialog');dialog.id='scene-detail';dialog.className='scene-detail ee-panel';dialog.setAttribute('aria-labelledby','scene-detail-title');document.body.append(dialog);}
+ dialog.innerHTML='<header><h2 id="scene-detail-title">'+esc($('scene-caption').textContent)+'</h2><button class="ee-button secondary" id="scene-detail-close">돌아가기</button></header><div class="scene-detail-art"><img alt="현재 이야기의 학교 장면"><canvas width="1280" height="720" aria-hidden="true"></canvas></div><div class="scene-detail-material"></div>';
+ dialog.querySelector('img').src=$('scene-image').src;dialog.querySelector('canvas').getContext('2d').drawImage($('scene-cast'),0,0);
+ for(const child of $('scene-material').children)dialog.querySelector('.scene-detail-material').append(child.cloneNode(true));
+ if(!$('scene-response').hidden){const p=document.createElement('p');p.textContent=$('scene-response').textContent;dialog.append(p);}
+ paintIcons(dialog);$('scene-detail-close').onclick=()=>closeDialog('scene-detail');openDialog('scene-detail');
+}
 function fitStage(){
  repairOverview();
- const layout=main.querySelector('.menu-layout'),card=layout?.querySelector('#scene-material .material-card'),view=layout?.querySelector('.scene-view');
+ const layout=main.querySelector('.has-material'),card=layout?.querySelector('#scene-material .material-card'),view=layout?.querySelector('.scene-view');
  if(card&&view?.clientHeight>0){const available=Math.max(1,view.clientHeight-12),scale=Math.min(1,available/card.offsetHeight);card.style.transform='scale('+scale+')';}
 }
 window.addEventListener('resize',fitStage);
