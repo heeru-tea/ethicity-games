@@ -1,0 +1,124 @@
+/* Whole-screen activities. Shared colors, fonts and .ee-* skins stay in common.css. */
+.game-data #main{padding:6px 14px 10px;gap:6px}
+.game-data .word-card{font-size:13px;line-height:1.35;padding:4px;min-height:38px}
+.game-data .word-check{display:none}
+.game-data .stage-heading>div:first-child{display:block}
+.game-data .scene-title{font-size:21px}
+.game-data .scene-tag{font-size:13px}
+.game-data .scene-art{width:100%;flex:1 1 0;overflow:hidden}
+.game-data .scene-view{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;min-height:0;overflow:visible}
+.game-data .has-material .scene-view{grid-template-columns:minmax(100px,27%) minmax(0,1fr)}
+.game-data .has-material .scene-image,.game-data .has-material #scene-cast{width:27%;height:100%;object-fit:contain;object-position:center}
+.game-data #scene-material{position:relative;grid-column:2;inset:auto;display:flex;justify-content:center;padding:8px;min-width:0;max-height:100%}
+.game-data #scene-material:empty{display:none}
+.game-data #scene-material .material-card{max-width:100%;padding:10px 14px}
+.game-data #scene-material h3{font-size:20px;line-height:1.4;margin-bottom:6px}
+.game-data #scene-material p{font-size:16px;line-height:1.6;margin:4px 0}
+.game-data #scene-material .material-count{font-size:22px}
+.game-data .scene-response{display:none}
+.game-data .messenger{padding:6px 10px;min-width:0;max-width:100%}
+.game-data .conversation-log .message-bubble{font-size:16px;line-height:1.6;min-height:0;padding:6px 10px}
+.game-data .message-content{min-width:0}
+.game-data .has-choices .conversation-log{display:none}
+.game-data .action-area{max-height:none;overflow:visible}
+.game-data .action-prompt{font-size:16px;line-height:1.4;margin-bottom:6px}
+.game-data .choices,.game-data .method-actions .choices{grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;padding:0;gap:6px;grid-auto-rows:1fr}
+.game-data .choices[data-count="1"]{grid-template-columns:1fr}
+.game-data .choice-control{font-size:16px;line-height:1.4;padding:8px 10px;min-height:48px;align-items:center}
+.game-data .choice-control small{font-size:13px;line-height:1.3}
+.game-data .choice-control .key-hint{font-size:12px;margin:0}
+.game-data .choice-footer:empty{display:none}
+.game-data .choice-footer{display:flex;justify-content:flex-end;padding-top:6px}
+.game-data .choice-footer .ee-button{min-height:48px;font-size:16px;padding:6px 14px}
+.game-data .next-row .ee-button{font-size:16px;padding:6px 16px}
+.game-data .repair-overview{font-size:14px;line-height:1.4;padding:6px 10px;flex:none;margin:0}
+.game-data .repair-overview p{margin:3px 0}
+.game-data .menu-layout .scene-view{grid-template-columns:100px minmax(0,1fr)}
+.game-data .menu-layout .scene-image,.game-data .menu-layout #scene-cast{width:100px}
+.game-data .menu-layout #scene-material{padding:6px;height:100%;max-height:100%;justify-content:center}
+.game-data .menu-layout .material-card{display:flex;flex-direction:column;justify-content:center}
+.game-data .menu-list{margin:0;display:grid;gap:0}
+.game-data .menu-list li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;padding:6px 0;font-size:16px;line-height:1.4}
+.game-data .menu-list .day{min-width:0}
+.game-data .menu-list small{font-size:14px;line-height:1.4;margin-top:2px}
+.game-data #scene-material .safe-label{font-size:14px;line-height:1.4;padding:5px 8px;margin:4px 0 0}
+.game-data .menu-list li.is-current{background:var(--ee-paper);box-shadow:inset 4px 0 var(--ee-gold);padding-left:6px}
+.game-data .menu-layout .repair-overview p{display:none}
+.game-data .menu-layout.has-choices .scene-art{display:none}
+.game-data .result-overview{width:100%;max-width:1160px;min-width:0;min-height:0;flex:1;display:flex;flex-direction:column;gap:8px;margin:0 auto;padding:12px 18px}
+.game-data .result-overview header h1{font-size:25px;letter-spacing:0}
+.game-data .result-overview .eyebrow{font-size:13px;letter-spacing:0}
+.game-data .result-content{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;gap:10px}
+.game-data .summary-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center}
+.game-data .summary-grid h2{font-size:19px;margin:0 0 6px}
+.game-data .summary-grid h2 small{font-size:14px;float:right}
+.game-data .summary-grid p{font-size:14px;line-height:1.4;margin:6px 0}
+.game-data .summary-history table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
+.game-data .summary-history th,.game-data .summary-history td{padding:9px 6px;border-bottom:1px solid var(--ee-sage);text-align:left;vertical-align:top}
+.game-data .summary-history th{width:38%;font-weight:700}
+.game-data .summary-status{font-weight:700;background:var(--ee-paper);padding:6px}
+.game-data .summary-history .ee-button{font-size:14px;min-height:48px;padding:6px 10px}
+.game-data .step-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.game-data .step-options .ee-choice{min-height:56px;padding:8px 10px;font-size:16px;line-height:1.5;position:relative}
+.game-data .step-options [aria-pressed=true]{box-shadow:inset 4px 0 var(--ee-green)}
+.game-data .step-options [aria-pressed=true]::before{content:'✓ ';font-weight:bold}
+.game-data .result-overview .step-footer{flex:none;margin:0;padding-top:8px}
+.game-data .result-overview .step-footer .ee-button{font-size:15px;min-height:48px;padding:6px 12px}
+.game-data .pledge-options{gap:12px}
+.game-data .pledge-options .ee-choice{min-height:80px}
+.game-data .chosen-pledges{margin:0;padding-left:24px;font-size:16px;line-height:1.6}
+.game-data .result-overview .memory-line{font-size:16px;line-height:1.5;margin:4px 0}
+.game-data .result-overview .pledge-editor{font-size:14px;gap:4px}
+.game-data .summary-detail{width:min(900px,96vw);max-height:90dvh;overflow:auto;color:var(--ee-ink);background:var(--ee-cream)}
+.game-data .summary-detail article{padding:12px;margin:8px 0;border-bottom:1px solid var(--ee-sage)}
+.game-data .summary-detail p{margin:6px 0;line-height:1.6}
+.game-data .summary-detail::backdrop{background:#294b4070}
+.game-data .scene-sidebar{min-width:0}
+@media(max-height:560px) and (min-width:701px){
+ .game-data .summary-learning>p{display:none}
+ .game-data .game-layout.menu-layout{flex-direction:column;gap:4px}
+ .game-data .menu-layout .stage-heading{display:none}
+ .game-data .menu-layout .messenger{width:100%;padding:2px 6px;flex-direction:row;align-items:center;gap:8px}
+ .game-data .menu-layout .conversation-log{flex:1}.game-data .menu-layout .action-area{flex:none;padding-top:0}
+ .game-data .menu-layout .menu-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+ .game-data .menu-layout .menu-list li{display:flex;flex-direction:column;justify-content:flex-start;border-bottom:0;border-right:1px solid var(--ee-sage);gap:2px;padding:2px 5px}
+ .game-data .menu-layout .menu-list li:last-child{border-right:0}
+ .game-data .menu-layout .material-top h3{margin:0}
+ .game-data .menu-layout .repair-overview{display:none}
+}
+@media(min-width:1000px) and (min-height:700px){.game-data .many-choices .choices{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){
+ .game-data #main{padding:4px 6px 6px;gap:4px}.game-data .word-card{font-size:11px;min-height:34px;padding:3px 1px}.game-data .word-card>span:last-child{padding:0}
+ .game-data .scene-title{font-size:17px}.game-data .scene-tag{font-size:12px}.game-data .stage-meta{display:none}.game-data .stage-heading{gap:4px}
+ .game-data .has-material .scene-view{grid-template-columns:1fr}.game-data .has-material .scene-image,.game-data .has-material #scene-cast{width:100%;height:100%;opacity:.16;object-fit:contain}
+ .game-data #scene-material{grid-column:1;z-index:1;padding:6px}.game-data #scene-material .material-card{padding:8px 10px;background:var(--ee-cream)}
+ .game-data #scene-material h3{font-size:17px;line-height:1.4}.game-data #scene-material p{font-size:14px;line-height:1.45}.game-data #scene-material .material-count{font-size:19px}
+ .game-data .messenger{padding:4px 6px}.game-data .conversation-log .message-bubble{font-size:15px;line-height:1.5;padding:5px 8px}
+ .game-data .action-prompt{font-size:14px}.game-data .choices,.game-data .method-actions .choices{gap:4px}.game-data .choice-control{font-size:14px;padding:6px;gap:4px;min-height:48px}.game-data .choice-control small{font-size:12px}.game-data .choice-control .key-hint{display:none}
+ .game-data .choice-footer .ee-button,.game-data .next-row .ee-button{font-size:14px;min-height:48px;padding:5px 10px}
+ .game-data .repair-overview{font-size:12px;line-height:1.35;padding:4px 7px}.game-data .repair-overview p{margin:2px 0}
+ .game-data .menu-layout .scene-view{grid-template-columns:1fr}.game-data .menu-layout .scene-image,.game-data .menu-layout #scene-cast{display:none}
+ .game-data .menu-list li{font-size:15px;padding:5px 0;gap:5px;grid-template-columns:22px minmax(0,1fr)}.game-data .menu-list small{font-size:13px;line-height:1.35}.game-data #scene-material .safe-label{font-size:13px}
+ .game-data .result-overview{padding:8px 10px;gap:6px}.game-data .result-overview header h1{font-size:21px}.game-data .summary-grid{grid-template-columns:1fr;gap:8px}.game-data .summary-grid h2{font-size:16px;margin-bottom:3px}.game-data .summary-grid p{font-size:13px;margin:3px 0}
+ .game-data .summary-history table{font-size:13px;line-height:1.35}.game-data .summary-history th,.game-data .summary-history td{padding:5px 3px}.game-data .summary-history th{width:36%}
+ .game-data .summary-history .ee-button{font-size:13px;min-height:48px;padding:4px 8px}.game-data .summary-status{display:inline-block;margin-right:4px!important;padding:3px}
+ .game-data .step-options{gap:4px}.game-data .step-options .ee-choice{font-size:13px;line-height:1.4;padding:6px;min-height:52px}
+ .game-data .result-overview .step-footer{gap:4px;padding-top:5px}.game-data .result-overview .step-footer .ee-button{font-size:13px;padding:4px 6px;min-height:48px}
+ .game-data .pledge-options .ee-choice{font-size:15px;min-height:82px}.game-data .chosen-pledges{font-size:14px}.game-data .result-overview .memory-line{font-size:14px}
+}
+@media(max-height:700px) and (max-width:700px){
+ .game-data .summary-history>h2{display:none}
+ body.game-data{grid-template-rows:46px minmax(0,1fr)}.game-data .app-header{height:46px;padding:2px 8px}.game-data .brand canvas{width:28px!important;height:28px!important}.game-data .brand strong{font-size:18px}.game-data .brand small{display:none}.game-data .settings-trigger{min-height:40px;padding:3px 8px}.game-data .word-strip{display:none}
+ .game-data .scene-title{font-size:15px}.game-data .scene-tag{font-size:11px}.game-data #scene-material h3{font-size:15px}.game-data #scene-material p{font-size:13px}
+ .game-data .many-choices .scene-art{display:none}.game-data .many-choices .scene-sidebar{flex:1}.game-data .menu-list li{font-size:14px;padding:3px 0}.game-data .menu-list small{font-size:12px}.game-data #scene-material .safe-label{font-size:12px}
+ .game-data .result-overview{padding:5px 6px;gap:3px}.game-data .result-overview header h1{font-size:18px}.game-data .result-overview .eyebrow{font-size:11px}.game-data .summary-grid{gap:4px}.game-data .summary-history th,.game-data .summary-history td{padding:3px}.game-data .summary-history table{font-size:12px}.game-data .summary-grid h2{font-size:14px}.game-data .summary-grid p{font-size:12px}.game-data .summary-history .ee-button{min-height:48px;font-size:12px}.game-data .step-options .ee-choice{min-height:48px;padding:4px 5px;font-size:12px}.game-data .result-overview .step-footer .ee-button{font-size:12px}
+}
+@media(max-height:560px) and (min-width:701px){
+ body.game-data{grid-template-rows:42px minmax(0,1fr)}.game-data .app-header{height:42px;padding:2px 10px}.game-data .brand canvas{width:28px!important;height:28px!important}.game-data .brand strong{font-size:18px}.game-data .brand small,.game-data .word-strip{display:none}.game-data .settings-trigger{min-height:36px;padding:2px 8px}
+ .game-data #main{padding:4px 8px;gap:4px}.game-data .game-layout{flex-direction:row;gap:8px}.game-data .scene-sidebar{flex:1;min-width:0}.game-data .messenger{width:48%;justify-content:center}.game-data .scene-title{font-size:16px}.game-data .scene-tag{font-size:12px}
+ .game-data .has-material .scene-view{grid-template-columns:1fr}.game-data .has-material .scene-image,.game-data .has-material #scene-cast{display:none}.game-data #scene-material{grid-column:1;padding:4px}.game-data #scene-material .material-card{padding:6px 8px}.game-data #scene-material h3{font-size:16px}.game-data #scene-material p{font-size:13px;line-height:1.4}.game-data .conversation-log .message-bubble{font-size:14px;line-height:1.4}.game-data .message-avatar{display:none}.game-data .message-content{max-width:100%}
+ .game-data .choice-control{font-size:13px;min-height:48px;padding:4px 6px}.game-data .choice-control small{font-size:11px}.game-data .action-prompt{font-size:13px;margin-bottom:4px}.game-data .choices,.game-data .method-actions .choices{gap:4px}.game-data .choice-footer{padding-top:4px}.game-data .choice-footer .ee-button{font-size:13px;min-height:48px;padding:4px 8px}
+ .game-data .menu-list li{font-size:13px;padding:3px 0;gap:4px;grid-template-columns:20px minmax(0,1fr)}.game-data .menu-list small{font-size:11px;line-height:1.25}.game-data #scene-material .safe-label{font-size:11px;line-height:1.3;padding:3px 5px}.game-data .repair-overview{font-size:11px;padding:3px 6px;line-height:1.3}
+ .game-data .result-overview{padding:6px 10px;gap:4px}.game-data .result-overview header{display:flex;align-items:center;justify-content:space-between;gap:12px}.game-data .result-overview header h1{font-size:18px}.game-data .result-overview .eyebrow{font-size:12px}.game-data .summary-grid{grid-template-columns:1fr 1fr;gap:12px}.game-data .summary-grid h2{font-size:14px;margin-bottom:2px}.game-data .summary-grid p{font-size:12px;margin:3px 0}.game-data .summary-history table{font-size:12px;line-height:1.25}.game-data .summary-history th,.game-data .summary-history td{padding:3px}.game-data .summary-history th{width:35%}.game-data .summary-history .ee-button{font-size:12px;min-height:48px;padding:3px 6px}
+ .game-data .step-options .ee-choice{font-size:12px;line-height:1.3;min-height:48px;padding:5px}.game-data .result-overview .step-footer{padding-top:3px}.game-data .result-overview .step-footer .ee-button{font-size:12px;min-height:48px;padding:4px 8px}.game-data .result-content{gap:4px}.game-data .result-part-2 .result-content{display:grid;grid-template-columns:1fr 1fr;gap:8px}.game-data .result-part-2 .word-strip{display:none}.game-data .result-overview .memory-line,.game-data .chosen-pledges{font-size:13px;line-height:1.4}.game-data .result-overview .input-note{font-size:11px}
+}

@@ -2,7 +2,7 @@
 const M=root.EthicityDataModel;
 function sections(state,promises){
  const result=M.result(state), blocks=[];
- blocks.push({title:'내 탐험 결과',body:[result.title+' · 급식안의 준비 상태',result.note,'시험한 곳 '+state.visited.length+' / 4 · 시험 '+M.count(state)+'번',...result.findings]});
+ blocks.push({title:'내 탐험 결과',body:[result.title+' · 급식안의 준비 상태',result.note,'적용한 상황 '+state.visited.length+' / 4 · 시험 '+M.count(state)+'번',...result.findings]});
  for(let round=0;round<6;round++){
   const events=state.history.filter(e=>e.round===round);
   blocks.push({title:'이야기 '+(round+1)+' · '+M.scenes[round].title,body:events.length?events.flatMap((event,i)=>[(i+1)+'. 선택: '+event.choice,'결과·변화: '+event.outcome]):['이 이야기의 선택 기록이 없어요.']});

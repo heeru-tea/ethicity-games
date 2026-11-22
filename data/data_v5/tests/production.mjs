@@ -40,6 +40,11 @@ try{
   const seen=new Promise((resolve,reject)=>{const timer=setTimeout(()=>{off();reject(Error('Listener timeout'));},15000);const off=onSnapshot(ref(a),s=>{if(s.data()?.unlockedScene===0){clearTimeout(timer);off();resolve();}},reject);});
   await updateDoc(ref(teacher),{unlockedScene:0,heartbeatAt:serverTimestamp()});await seen;
  });
+ await ok('teacher receives live student activity',async()=>{
+  const seen=new Promise((resolve,reject)=>{const timer=setTimeout(()=>{off();reject(Error('Activity listener timeout'));},15000);const off=onSnapshot(ref(teacher,'members/'+a.uid),s=>{if(s.data()?.view?.phase===2&&s.data()?.view?.activity==='criteria'){clearTimeout(timer);off();resolve();}},reject);});
+  await updateDoc(ref(a,'members/'+a.uid),{currentScene:0,view:{phase:2,activity:'criteria'},lastSeen:serverTimestamp()});await seen;
+  await denied(()=>updateDoc(ref(a,'members/'+a.uid),{view:{phase:2,activity:'untrusted-free-text'},lastSeen:serverTimestamp()}));
+ });
  const submit=async(c,choice)=>{const state=M.initial();state.quizChoice=choice;state.scene=0;const batch=writeBatch(c.db);batch.update(ref(c,'members/'+c.uid),{currentScene:0,completedScene:0,metrics:C.metrics(state),lastSeen:serverTimestamp()});batch.set(ref(c,'answers/'+c.uid+'_0'),{uid:c.uid,scene:0,metrics:C.metrics(state),updatedAt:serverTimestamp()});batch.set(ref(c,'checkpoints/'+c.uid),{completedScene:0,json:JSON.stringify(C.checkpoint(state,0)),updatedAt:serverTimestamp()});await batch.commit();};
  await ok('choices stored separately',async()=>{await submit(a,1);await submit(b,2);assert.equal((await getDoc(ref(teacher,'answers/'+a.uid+'_0'))).data().metrics.quiz,1);assert.equal((await getDoc(ref(teacher,'answers/'+b.uid+'_0'))).data().metrics.quiz,2);});
  await ok('private checkpoint protected from teacher',async()=>{await getDoc(ref(a,'checkpoints/'+a.uid));await denied(()=>getDoc(ref(teacher,'checkpoints/'+a.uid)));});

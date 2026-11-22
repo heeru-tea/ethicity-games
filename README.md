@@ -3,12 +3,12 @@
 
 ## 신뢰성 · 냠냠봇을 믿어도 될까?
 
-- **[신뢰성 게임 바로 플레이](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/data/data_v5/)**
-- [교사 컨트롤 타워](https://ethicity-nyamnyam-v2.hollowcorn.chatgpt.site/data/data_v5/?mode=teacher)
+- **[신뢰성 게임 바로 플레이](https://ethicity-playlab.hollowcorn.chatgpt.site/games/data/data_v5/index.html)**
+- [교사 컨트롤 타워](https://ethicity-playlab.hollowcorn.chatgpt.site/games/data/data_v5/index.html?mode=teacher)
 - [게임 안내 및 실행 방법](data/data_v5/README.md)
 - [게임 실행 파일](data/data_v5/index.html)
 
-기준을 정하고, 여러 상황에서 시험하고, 맡은 일과 작동 범위를 확인하는 교육 탐험입니다. 혼자 하기와 Firebase 수업 모드를 제공합니다. 교사가 이야기를 열면 모든 학생이 같은 이야기로 즉시 이동하며, 각자의 선택·결과·PNG 기록은 유지합니다. 처음 닉네임과 A/B 탐험가를 고르는 화면에서 서버 없이 진행하는 미리보기를 선택할 수도 있습니다. `data` 브랜치의 `data/data_v5/`에 있으며, 게임 화면에는 버전 번호를 표시하지 않습니다. [이전 개인 탐험](data/data_v4/README.md)은 보존합니다.
+기준을 정하고, 여러 상황에서 적용하고, 허용된 권한과 작동 범위를 확인하는 교육 탐험입니다. 혼자 하기와 Firebase 수업 모드를 제공합니다. 교사가 이야기를 열면 모든 학생이 같은 이야기로 즉시 이동하며, 각자의 선택·결과·PNG 기록은 유지합니다. 처음 닉네임과 A/B 탐험가를 고르는 화면에서 서버 없이 진행하는 미리보기를 선택할 수도 있습니다. `data` 브랜치의 `data/data_v5/`에 있으며, 게임 화면에는 버전 번호를 표시하지 않습니다. [이전 개인 탐험](data/data_v4/README.md)은 보존합니다.
 
 ## 이전 데이터 관리 · 급식 메뉴 AI ‘냠냠봇’
 

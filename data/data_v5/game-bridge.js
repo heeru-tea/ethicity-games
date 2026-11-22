@@ -35,6 +35,7 @@ window.addEventListener('message',e=>{
  }
 });
 window.EthicityClassroomBridge={
+ view(scene,view){if(!independent&&C.validView(view))post('view',{scene,view});},
  gate(n){if(independent)return false;const reason=C.gate({independent,room,scene:n});if(reason||completedScene>=n&&n<6){waiting=true;dialog(reason||'waiting');return true;}scene=n;waiting=false;return false;},
  update(s){if(!independent)post('progress',{scene:s.scene,metrics:C.metrics(s),checkpoint:C.checkpoint(s,completedScene)});},
  boundary(s,n){if(!independent){completedScene=Math.max(completedScene,n);post('boundary',{scene:n,metrics:C.metrics(s),checkpoint:C.checkpoint(s,completedScene)});waiting=true;refresh();}},

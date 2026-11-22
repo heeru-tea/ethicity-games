@@ -9,6 +9,10 @@ service cloud.firestore {
     function signedIn() { return request.auth != null; }
     function isSelf(uid) { return signedIn() && request.auth.uid == uid; }
     function numberIn(n,lo,hi) { return n is int && n >= lo && n <= hi; }
+    function validView(v) {
+      return v is map && v.keys().hasAll(['phase','activity']) && v.keys().hasOnly(['phase','activity'])
+        && numberIn(v.phase,0,5) && v.activity in ['intro','rules','criteria','collect','box','jiho','saebom','haneul','sort-duplicates','sort-impersonation','sort-genuine','permissions','menu','reflect','candidates','methods','repair-allergy','repair-spice','repair-missing','repair-stickers','repair-teacher','repair-majority','repair-lunchbox','priorities','monitor','plan','summary','pledges','finish','waiting','complete'];
+    }
     function validMetrics(m) {
       return m is map && m.keys().hasAll(['visits','sortA','sortB','sortC','scope','criteria','tests','monitor','methods','quiz','reflection','candidate','learning'])
         && m.keys().hasOnly(['visits','sortA','sortB','sortC','scope','criteria','tests','monitor','methods','quiz','reflection','candidate','learning'])
@@ -48,7 +52,8 @@ service cloud.firestore {
       match /members/{uid} {
         function validMember(d) {
           return d.keys().hasAll(['nickname','joinedAt','lastSeen','mode','currentScene','completedScene','completed','metrics'])
-            && d.keys().hasOnly(['nickname','joinedAt','lastSeen','mode','currentScene','completedScene','completed','metrics'])
+            && d.keys().hasOnly(['nickname','joinedAt','lastSeen','mode','currentScene','completedScene','completed','metrics','view'])
+            && (!('view' in d) || validView(d.view))
             && d.nickname is string && d.nickname.size() >= 1 && d.nickname.size() <= 12
             && d.nickname.matches('^[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9 _-]{1,12}$')
             && d.nickname.matches('.*[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9].*')
