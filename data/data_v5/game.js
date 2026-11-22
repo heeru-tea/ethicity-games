@@ -252,6 +252,7 @@ function protectionOptions(repair,done){activityView('permissions');
 
 function menuHTML(menu){return '<article class="material-card ee-panel"><div class="material-top"><h3>'+esc(menu.title)+'</h3>'+icon('notebook',28)+'</div><ul class="menu-list">'+menu.rows.map(r=>'<li><strong class="day">'+r[0]+'</strong><span class="food">'+esc(r[1])+(r[2]?'<small>'+esc(r[2])+'</small>':'')+'</span></li>').join('')+'</ul><p class="safe-label">'+esc(menu.note)+'</p></article>';}
 function showMenu(menu){
+ currentActivity='menu';
  setSceneArt(menu.kind==='revised'?'revised':'menu',{caption:'월요일부터 금요일까지 함께 확인해요'});
  stagePages=[{html:menuHTML(menu)}];stagePage=0;renderMaterial();main.querySelector('.game-layout').classList.add('menu-layout');fitStage();announce(menu.title+'. '+menu.note);publishView(3);
 }
