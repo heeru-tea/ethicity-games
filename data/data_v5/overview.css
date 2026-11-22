@@ -74,6 +74,11 @@
 .game-data .summary-detail p{margin:6px 0;line-height:1.6}
 .game-data .summary-detail::backdrop{background:#294b4070}
 .game-data .scene-sidebar{min-width:0}
+@media(min-width:900px){
+ .game-data .menu-layout .menu-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+ .game-data .menu-layout .menu-list li{display:flex;flex-direction:column;justify-content:flex-start;border-bottom:0;border-right:1px solid var(--ee-sage);gap:4px;padding:6px}
+ .game-data .menu-layout .menu-list li:last-child{border-right:0}
+}
 @media(max-height:560px) and (min-width:701px){
  .game-data .summary-learning>p{display:none}
  .game-data .game-layout.menu-layout{flex-direction:column;gap:4px}
@@ -108,6 +113,10 @@
 }
 @media(max-height:700px) and (max-width:700px){
  .game-data .summary-history>h2{display:none}
+ .game-data .menu-layout .scene-tag{display:none}
+ .game-data .menu-layout .menu-list li{padding-top:1px;padding-bottom:1px}
+ .game-data .menu-layout #scene-material .safe-label{line-height:1.25;padding:3px 5px}
+ .game-data .menu-layout .conversation-log .message-bubble{font-size:14px;line-height:1.4;padding:4px 6px}
  body.game-data{grid-template-rows:46px minmax(0,1fr)}.game-data .app-header{height:46px;padding:2px 8px}.game-data .brand canvas{width:28px!important;height:28px!important}.game-data .brand strong{font-size:18px}.game-data .brand small{display:none}.game-data .settings-trigger{min-height:40px;padding:3px 8px}.game-data .word-strip{display:none}
  .game-data .scene-title{font-size:15px}.game-data .scene-tag{font-size:11px}.game-data #scene-material h3{font-size:15px}.game-data #scene-material p{font-size:13px}
  .game-data .many-choices .scene-art{display:none}.game-data .many-choices .scene-sidebar{flex:1}.game-data .menu-list li{font-size:14px;padding:3px 0}.game-data .menu-list small{font-size:12px}.game-data #scene-material .safe-label{font-size:12px}
